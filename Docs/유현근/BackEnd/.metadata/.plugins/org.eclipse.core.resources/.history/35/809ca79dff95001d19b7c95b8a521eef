@@ -1,0 +1,25 @@
+package com.ssafy.b102.service;
+
+@Service
+@AllArgsConstructor
+public class CustomUserDetailsService implements UserDetailsService {
+ 
+	private final UserRepository userRepository;
+ 
+	@Override
+	@Transactional(readOnly = true)
+	public UserDetails loadUserByUsername(String id) {
+ 
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+ 
+		com.b102.security.persistence.model.User user = userRepository.findOneById(id);
+ 
+		if (user != null) {
+			grantedAuthorities.add(new SimpleGrantedAuthority("USER")); // USER 라는 역할을 넣어준다.
+			return new User(user.getId(), user.getPassword(), grantedAuthorities);
+		} else {
+			throw new UsernameNotFoundException("can not find User : " + id);
+		}
+	}
+	
+}

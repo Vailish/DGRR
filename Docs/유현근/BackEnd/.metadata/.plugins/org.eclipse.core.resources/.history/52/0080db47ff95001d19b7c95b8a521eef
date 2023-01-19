@@ -1,0 +1,15 @@
+package com.ssafy.b102.controller;
+
+@Controller
+public class HomeController {
+ 
+	@GetMapping({ "/", "/home" })
+	public String home() {
+		return "home";
+	}
+ 
+	@GetMapping("/hello")
+	public String hello() {
+		return "hello";
+	}
+}
