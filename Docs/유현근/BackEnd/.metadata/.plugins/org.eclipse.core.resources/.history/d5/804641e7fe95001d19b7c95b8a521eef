@@ -1,0 +1,5 @@
+package com.ssafy.b102.persistence.model;
+
+public class Role {
+
+}
