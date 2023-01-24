@@ -1,0 +1,27 @@
+package com.ssafy.b102.model.dto;
+
+import java.util.Set;
+
+import com.ssafy.b102.persistence.model.Role;
+import com.ssafy.b102.persistence.model.User;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class UserDto {
+	private long id;
+	
+	private String username;
+ 
+	private String password;
+ 
+	private String name;
+ 
+	public User toEntity(Set<Role> roles) {
+		return User.builder().username(name).password(password).name(name).roles(roles).build();
+	}
+}
