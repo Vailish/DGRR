@@ -1,0 +1,5 @@
+package com.ssafy.b102.controller;
+
+public class JwtHomeController {
+
+}

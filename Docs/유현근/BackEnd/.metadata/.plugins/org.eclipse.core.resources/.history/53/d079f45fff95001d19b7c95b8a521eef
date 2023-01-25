@@ -1,0 +1,5 @@
+package com.ssafy.b102.persistence.dao;
+
+public interface UserRepository extends JpaRepository<User, String> {
+	User findOneById(String id);
+}

@@ -1,0 +1,25 @@
+package com.ssafy.b102.controller;
+
+@Controller
+@AllArgsConstructor
+public class LoginController {
+ 
+	private final UserService userService;
+ 
+	@GetMapping("/login")
+	public String login(HttpServletRequest request) {
+		return "login";
+	}
+ 
+	@GetMapping("/signUp")
+	public String signUp(Model model) {
+		model.addAttribute("userDto", new UserDto());
+		return "signUp";
+	}
+ 
+	@PostMapping("/signUp")
+	public String signUp(@ModelAttribute("userDto") UserDto userDto) {
+		userService.insert(userDto);
+		return "redirect:/login";
+	}
+}
