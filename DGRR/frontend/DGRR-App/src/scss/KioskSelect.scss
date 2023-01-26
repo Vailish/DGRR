@@ -1,0 +1,48 @@
+.TitleBox {
+  position: absolute;
+  width: 2560px;
+  height: 622px;
+  left: 0px;
+  top: 0px;
+  background: #501766;
+  .pin {
+    position: absolute;
+    width: 219.01px;
+    height: 34.95px;
+    left: 1820.69px;
+    top: 481.12px;
+
+    border: 6px solid #FFFFFF;
+    transform: rotate(-90deg);
+  }
+  .TitleText {
+    /* DG.RR */
+
+
+    position: absolute;
+    width: 1600px;
+    height: 400px;
+    left: 413px;
+    top: 160px;
+    padding-left: 700px;
+    padding-right: 100px;
+
+    font-family: 'Poller One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 232px;
+    line-height: 276px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFFFF;
+    border: 1px solid black;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black, 0px 0px 45px #FE259B;
+    .RealText {
+        display: flex;
+        text-align: center;
+        align-items: center;
+    }
+  }
+}
