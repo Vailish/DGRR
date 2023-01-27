@@ -164,12 +164,12 @@
         border-radius: 16px;
         margin-top: 12rem;
         margin-bottom: 16rem;
-        margin-left: 40rem;
-        margin-right: 8rem;
+        margin-left: 48rem;
+        margin-right: 16rem;
         background-color: #fff;
         box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
         .TitleForm {
-          margin: 56px 24px;
+          margin: 2rem auto;
           text-align: center;
           text-decoration: underline;
           font-family: 'Poller One';
@@ -177,7 +177,8 @@
         }
         .LoginInput {
           max-width: 640px;
-
+          margin-top: 2rem;
+          margin-bottom: 2rem;
           margin-left: 24px;
           margin-right: 24px;
           text-align: center;
@@ -186,13 +187,13 @@
             height: 48px;
             margin-top: 16px;
             margin-bottom: 8px;
-            border: 3px solid black;
             border-radius: 8px;
-            box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
             font-family: 'Archivo';
-            font-size: 24px;
+            font-size: 16px;
             color: #501766;
             font-weight: 400px;
+            background: linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #686868, #686868),
+              linear-gradient(0deg, #686868, #686868), #686868;
             &::placeholder {
               color: #501766;
             }
@@ -200,7 +201,7 @@
         }
         .Button {
           max-width: 512px;
-          margin: 2rem 2rem;
+          margin: auto 2rem;
           text-align: center;
           button {
             width: 320px;
@@ -220,8 +221,9 @@
           }
         }
         .JoinAndFind {
-          width: 56%;
-          margin: auto auto;
+          width: 72%;
+          margin: 4rem auto;
+          text-align: center;
           font-family: 'Archivo';
           a {
             text-decoration: none;
