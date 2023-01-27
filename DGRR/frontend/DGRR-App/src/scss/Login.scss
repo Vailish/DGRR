@@ -1,74 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poller+One&display=swap');
+
+body {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 .Login {
-  max-width: 1920px;
-  max-height: 1080px;
-  border: 2px solid black;
-  background-size: 80%;
+  width: 100%;
+  height: 45rem;
   background-image: url('../img/background.jpg');
   background-size: cover;
   display: inline-flex;
   .Text {
-    width: 90%;
+    max-width: 640px;
     height: 640px;
     margin-top: 72px;
     margin-bottom: 40px;
     margin-left: 80px;
-    margin-right: 56px;
-    border: 2px solid brown;
     text-align: center;
     color: #fff;
-    font-family: 'Archivo';
     .TitleText {
-      margin-top: 80px;
-      border: 2px solid salmon;
+      margin-top: 16px;
+      margin-bottom: 64px;
+      font-family: 'Poller One';
+      font-size: 64px;
+      font-weight: 400px;
+      font-style: normal;
+      line-height: 96px;
+      text-shadow: 0px 4px 45px #000;
     }
     .SubTitleText {
-      border: 2px solid orange;
+      font-size: 24px;
+      font-family: 'Inter';
+      font-weight: 400px;
+      line-height: 40px;
+      text-shadow: 0px 4px 45px #000;
     }
   }
   .LoginForm {
-    width: 240%;
-    height: 640px;
-    border: 2px solid blue;
+    width: 448px;
+    height: 586px;
     border-radius: 16px;
     margin-top: 72px;
-    margin-bottom: 40px;
-    margin-left: 560px;
+    margin-bottom: 72px;
+    margin-left: 408px;
     margin-right: 80px;
     background-color: #fff;
     box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
-    .LoginInput {
-      border: 2px solid purple;
+    .TitleForm {
+      margin: 56px 24px;
       text-align: center;
-      margin-top: 168px;
-      margin-bottom: 120px;
-      margin-left: 80px;
-      margin-right: 80px;
+      text-decoration: underline;
+      font-family: 'Poller One';
+      font-size: 40px;
+    }
+    .LoginInput {
+      max-width: 640px;
+      margin-top: 32px;
+      margin-bottom: 80px;
+      margin-left: 24px;
+      margin-right: 24px;
+      text-align: center;
       input {
-        width: 64%;
+        width: 320px;
         height: 48px;
         margin-top: 16px;
         margin-bottom: 8px;
-        border: 1px solid black;
+        border: 3px solid black;
         border-radius: 8px;
         box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+        font-family: 'Archivo';
+        font-size: 24px;
+        color: #501766;
+        font-weight: 400px;
+        &::placeholder {
+          color: #501766;
+        }
       }
     }
     .Button {
       max-width: 512px;
-      margin: auto 108px;
-      // border: 2px solid pink;
+      margin: 72px 24px;
       text-align: center;
       button {
-        width: 72%;
+        width: 320px;
         height: 48px;
         border: 1px solid black;
         border-radius: 32px;
         box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
         font-family: 'Archivo';
-        font-size: normal;
+        font-size: 24px;
         font-weight: 400;
         color: #fff;
         background-color: #501766;
+        cursor: pointer;
+        &:hover {
+          background-color: #290b34;
+        }
+      }
+    }
+    .JoinAndFind {
+      margin: 24px 24px;
+      text-align: center;
+      font-family: 'Archivo';
+      a {
+        text-decoration: none;
+        &:hover {
+          color: green;
+        }
       }
     }
   }
