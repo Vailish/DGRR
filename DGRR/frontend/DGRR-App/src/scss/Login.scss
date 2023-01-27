@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poller+One&display=swap');
 
-@media screen and (min-width: 1536px) {
+@media screen and (max-width: 1536px) {
   body {
     &::-webkit-scrollbar {
       display: none;
@@ -8,7 +8,7 @@
   }
   .Login {
     width: 100%;
-    height: 45rem;
+    height: 100vh;
     background-image: url('../img/background.jpg');
     background-size: cover;
     display: inline-flex;
@@ -44,8 +44,8 @@
       border-radius: 16px;
       margin-top: 72px;
       margin-bottom: 72px;
-      margin-left: 408px;
-      margin-right: 80px;
+      margin-left: 320px;
+      margin-right: 40px;
       background-color: #fff;
       box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
       .TitleForm {
@@ -59,7 +59,7 @@
         max-width: 640px;
         margin-top: 32px;
         margin-bottom: 80px;
-        margin-left: 24px;
+        margin-left: 40px;
         margin-right: 24px;
         text-align: center;
         input {
@@ -131,12 +131,12 @@
       min-width: 1280px;
       width: 100%;
       height: 100vh;
-      margin: auto 32px;
+      margin: auto 64px;
       display: inline-flex;
       .Text {
         max-width: 640px;
         height: 640px;
-        margin-top: 72px;
+        margin-top: 12rem;
         margin-bottom: 40px;
         text-align: center;
         color: #fff;
@@ -164,9 +164,9 @@
         min-width: 240px;
         height: 586px;
         border-radius: 16px;
-        margin-top: 72px;
-        margin-bottom: 72px;
-        margin-left: 56rem;
+        margin-top: 12rem;
+        margin-bottom: 24rem;
+        margin-left: 48rem;
         background-color: #fff;
         box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
         .TitleForm {

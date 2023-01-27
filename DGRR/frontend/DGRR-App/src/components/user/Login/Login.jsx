@@ -47,7 +47,7 @@ const Login = () => {
           <div className="SubTitleText">
             <p>
               DG.RR는 <br /> 자신의 볼링점수를 <br />
-              관리하기 위한
+              관리하기 위한 
               <br /> 사이트입니다.
             </p>
           </div>
