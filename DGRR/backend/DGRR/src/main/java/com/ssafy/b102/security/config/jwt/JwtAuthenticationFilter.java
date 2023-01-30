@@ -20,8 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.b102.model.dto.LoginRequestDto;
-import com.ssafy.b102.model.dto.UserDto;
+import com.ssafy.b102.request.dto.LoginRequestDto;
 import com.ssafy.b102.security.config.auth.PrincipalDetails;
 
 import lombok.RequiredArgsConstructor;
