@@ -1,194 +1,200 @@
-@import "./mixins";
+// .myClass {
+//   ├── 객체의 노출여부와 표현방식
+//   │   ├── display
+//   │   └── list-style
+//   │
+//   ├── 위치와 좌표
+//   │   ├── position
+//   │   ├── float
+//   │   └── clear
+//   │
+//   ├── 크기와 여백
+//   │   ├── width / height
+//   │   └── padding / margin
+//   │
+//   ├── 윤곽과 배경
+//   │   └── border / background
+//   │
+//   ├── 글자와 정렬
+//   │   ├── corlor / font
+//   │   ├── text-decoration
+//   │   ├── text-align / vertical-align
+//   │   └── white-space
+//   │
+//   └── 내용
+//       └── content
+
+@import './mixins';
 
 @include desktop {
-.KioskBackground {
-  position: relative;
-width: 100vw;
-height: 100vh;
-margin:0px;
+  .KioskBackground {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
 
+    background: #f8f8fb;
 
-background: #F8F8FB;
+    .TitleBlock {
+      width: 100%;
+      height: 38.8%;
 
+      background: #501766;
+      display: block;
+      justify-content: center;
+      align-items: center;
 
+      .HelpCircleBlock {
+        justify-content: end;
 
-.TitleBlock {
-  // position: absolute;
-  // width: 2560px;
-  // height: 622px;
-  width: 100%;
-  height: 38.8%;
-  // left: 0px;
-  // top: 0px;
-  background: #501766;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  // .pin {
-  //   position: absolute;
-  //   width: 219.01px;
-  //   height: 34.95px;
-  //   left: 1820.69px;
-  //   top: 481.12px;
+        .HelpCircle {
+          /* Group 303 */
 
-  //   border: 6px solid #FFFFFF;
-  //   transform: rotate(-90deg);
-  // }
-  .HelpCircleBlock {
-    justify-content: end;
+          display: flex;
+          justify-content: center;
 
-  .HelpCircle { 
-    /* Group 303 */
+          width: 2vw;
+          height: 2vw;
+          margin-left: 92.1%;
+          border-radius: 50%;
 
-display: flex;
-justify-content: center;
-// position: absolute;
-width: 2vw;
-height: 2vw;
-margin-left: 92.1%;
-// margin-top: 0.1vh;
-border-radius: 50%;
+          /* Ellipse 47 */
 
-/* Ellipse 47 */
+          background: #f8f8fb;
 
-background: #F8F8FB;
+          /* ? */
 
-/* ? */
+          font-family: 'Archivo';
+          // font-style: normal;
+          font-weight: 700;
+          font-size: 1vw;
+          // line-height: 109px;
+          // text-align: center;
+          align-items: center;
 
-font-family: 'Archivo';
-// font-style: normal;
-font-weight: 700;
-font-size: 1vw;
-// line-height: 109px;
-// text-align: center;
-align-items: center;
+          color: #501766;
+        }
+      }
+      .TitleTextBlock {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .TitleText {
+          /* DG.RR */
 
-color: #501766;
+          // position: absolute;
+          width: 62.5%;
+          height: 25%;
+          // left: 413px;
+          // top: 160px;
+
+          font-family: 'Poller One';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18vw;
+          line-height: 18vw;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          justify-content: center;
+
+          color: #ffffff;
+          // border: 1px solid black;
+          text-shadow: -0.1vw 0vw black, 0vw 0.1vw black, 0.1vw 0vw black, 0vw -0.1vw black, 0px 0px 4.5vw #fe259b;
+        }
+      }
+    }
+    .ButtonBlock {
+      width: 100%;
+      height: 61.2%;
+      display: flex;
+      justify-content: center;
+      padding: none;
+
+      .Competition {
+        /* Rectangle 8 */
+
+        text-decoration: none;
+
+        // position: absolute;
+        width: 28.13%;
+        height: 57.26%;
+        margin-left: 6%;
+        margin-top: 6%;
+
+        background: #501766;
+        box-shadow: 1vw 2vw 2vw rgba(0, 0, 0, 0.25);
+        border-radius: 5%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        .CompetitionText {
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 5vw;
+          line-height: 5vw;
+          // border: 1px solid black;
+          color: #ffffff;
+        }
+      }
+
+      .Friendly {
+        /* Rectangle 10 */
+
+        text-decoration: none;
+
+        // position: absolute;
+        // width: 720px;
+        // height: 560px;
+        // left: 1520px;
+        // top: 720px;
+
+        width: 28.13%;
+        height: 57.26%;
+        margin-left: 12.5%;
+        margin-top: 6%;
+
+        background: #501766;
+        box-shadow: 1vw 2vw 2vw rgba(0, 0, 0, 0.25);
+        border-radius: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .FriendlyText {
+          /* 친선전 */
+
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 5vw;
+          line-height: 5vw;
+
+          color: #ffffff;
+        }
+      }
+    }
+
+    .HelpMessageBlock {
+      /* Frame 1039 */
+
+      position: absolute;
+      width: 2080px;
+      height: 1312px;
+      left: 240px;
+      top: 144px;
+      z-index: 10;
+
+      background: #ffffff;
+      /* Stroke/light */
+
+      border: 1px solid #dee2e6;
+      /* Shadow / Small */
+
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 20px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 50px;
+    }
   }
-}
-  .TitleTextBlock {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  .TitleText {
-    /* DG.RR */
-
-    // position: absolute;
-    width: 62.5%;
-    height: 25%;
-    // left: 413px;
-    // top: 160px;
-
-    font-family: 'Poller One';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18vw;
-    line-height: 18vw;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-
-    color: #FFFFFF;
-    // border: 1px solid black;
-    text-shadow: -0.1vw 0vw black, 0vw 0.1vw black, 0.1vw 0vw black, 0vw -0.1vw black, 0px 0px 4.5vw #FE259B;
-  }
-}
-}
-.ButtonBlock{
-  width: 100%;
-  height: 61.2%;
-  display: flex;
-  justify-content: center;
-  padding: none;
-
-.Competition {
-  /* Rectangle 8 */
-
-  text-decoration: none;
-
-// position: absolute;
-width: 28.13%;
-height: 57.26%;
-margin-left: 6%;
-margin-top: 6%;
-
-background: #501766;
-box-shadow: 1vw 2vw 2vw rgba(0, 0, 0, 0.25);
-border-radius: 5%;
-display: flex;
-align-items: center;
-text-align: center;
-justify-content: center;
-  .CompetitionText {
-    font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 5vw;
-line-height: 5vw;
-// border: 1px solid black;
-color: #FFFFFF;
-  }
-}
-
-.Friendly{
-  /* Rectangle 10 */
-  
-  text-decoration: none;
-  
-  
-  // position: absolute;
-  // width: 720px;
-  // height: 560px;
-  // left: 1520px;
-  // top: 720px;
-
-  width: 28.13%;
-height: 57.26%;
-margin-left: 12.5%;
-margin-top: 6%;
-  
-  background: #501766;
-  box-shadow: 1vw 2vw 2vw rgba(0, 0, 0, 0.25);
-  border-radius: 5%;
-display: flex;
-align-items: center;
-justify-content: center;
-
-  .FriendlyText {
-    /* 친선전 */
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 5vw;
-line-height: 5vw;
-
-color: #FFFFFF;
-  }
-  }
-}
-
-.HelpMessageBlock {
-  /* Frame 1039 */
-
-
-position: absolute;
-width: 2080px;
-height: 1312px;
-left: 240px;
-top: 144px;
-z-index: 10;
-
-background: #FFFFFF;
-/* Stroke/light */
-
-border: 1px solid #DEE2E6;
-/* Shadow / Small */
-
-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 20px 20px rgba(0, 0, 0, 0.08);
-border-radius: 50px;
-}
-}
-
 }

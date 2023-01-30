@@ -1,9 +1,9 @@
-import { combineReducers } from 'redux';
-import KioskSelect from './KioskSelect';
+import { combineReducers } from 'redux'
+import KioskSelect from './KioskSelect'
 // import todos from './todos';
 
 const RootReducer = combineReducers({
-  KioskSelect
-});
+  KioskSelect,
+})
 
-export default RootReducer;
+export default RootReducer
