@@ -1,41 +1,51 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "../../scss/KioskSelect.scss"
+import { useDispatch } from 'react-redux'
+import KioskSelectHelp from './KioskSelectHelp'
+import { Link } from 'react-router-dom';
+import { openHelp, closeHelp } from '../../store/KioskSelect';
 
-let wanthelp = false
 
-const HelpMessage = () => {
-  wanthelp = !wanthelp
-  console.log(wanthelp)
-}
-
-const HelpMessageBlock = () => {
-  return (
-    <div className='HelpMessageBlock'>시작하기</div>
-  )
-}
 
 const KioskSelect = () => {
-    
-    return (
-      <div className='KioskBackground'>
-        <div className='TitleBox'>
-          <div className='HelpCircleBlock'>
-            <div className='HelpCircle' onClick={HelpMessage}>?</div>
-          </div>
+
+
+  const dispatch = useDispatch();
+
+  const onOpenHelp = () => dispatch(openHelp())
+  const onCloseHelp = () => dispatch(closeHelp())
+  
+  // const [modalOpen, setModalOpen] = useState(false);
+
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // };
+  
+  return (
+    <div className='KioskBackground'>
+      <KioskSelectHelp closeHelp={onCloseHelp}/>
+      <div className='TitleBlock'>
+        <div className='HelpCircleBlock'>
+          <div className='HelpCircle' onClick={onOpenHelp}>?</div>
+        </div>
+        <div className='TitleTextBlock'>
             <div className='TitleText'>DG.RR</div>
-          <hr className='Pin'/>
+        {/* <hr className='Pin'/> */}
         </div>
-        <div className='Competition'>
-          <div className='CompetitionText'>경쟁전</div>
-        </div>
-        <div className='Friendly'>
-          <div className='FriendlyText'>친선전</div>
-        </div>
-        {
-          wanthelp ? <HelpMessageBlock/> : null
-        }
       </div>
-    )
+      <div className='ButtonBlock'>
+      <Link to='/' className='Competition'>
+        <div className='CompetitionText'>경쟁전</div>
+      </Link>
+      <Link to='/' className='Friendly'>
+        <div className='FriendlyText'>친선전</div>
+      </Link>
+      </div>
+    </div>
+  )
 }
 
 
