@@ -1,0 +1,57 @@
+ .MainPage {
+  height: 100vh;
+  background: linear-gradient(180deg, #501766 30%, #F8F8FB 30%);
+}
+
+.nav {
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 3vh;
+  padding-top: 32px;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  position: fixed;
+  left: 12.5vw;
+  width: 10vw;
+  margin: 0;
+
+  //로고 이미지 대체시 삭제
+  font-family: 'Poller One';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.5vw;
+  line-height: 57px;
+}
+
+.nav__avatar {
+  display: flex;
+  position: fixed;
+  right: 12.5vw;
+  width: 12vw;
+  justify-content: space-between;
+
+  //임시 텍스트 처리
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.25vw;
+  line-height: 22px;
+}
+
+.MyAvg {
+  display: flex;
+  width: 75vw;
+  height: 51vh;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+}
+
