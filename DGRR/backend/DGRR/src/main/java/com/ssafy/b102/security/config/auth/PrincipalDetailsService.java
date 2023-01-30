@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.b102.model.dto.UserDto;
+import com.ssafy.b102.Entity.User;
 import com.ssafy.b102.persistence.dao.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,8 @@ public class PrincipalDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("PrincipalDetailsService : 진입");
-		UserDto user = userRepository.findByUsername(username);
+//		UserDto user = userRepository.findByUsername(username);
+		User user = userRepository.findByUsername(username);
 
 		// session.setAttribute("loginUser", user);
 		return new PrincipalDetails(user);

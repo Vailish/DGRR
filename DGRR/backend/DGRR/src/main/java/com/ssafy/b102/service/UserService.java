@@ -1,16 +1,16 @@
 package com.ssafy.b102.service;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.b102.model.dto.UserDto;
-//import com.ssafy.b102.persistence.dao.RoleRepository;
+import com.ssafy.b102.Entity.User;
 import com.ssafy.b102.persistence.dao.UserRepository;
-//import com.ssafy.b102.persistence.model.Role;
+import com.ssafy.b102.request.dto.UserRequestDto;
+import com.ssafy.b102.response.dto.UserResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,16 +20,58 @@ public class UserService {
 
 	private final UserRepository userRepository;
 
-//	private final RoleRepository roleRepository;
-
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public void signUp(UserDto userDto) {
-		userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+	public UserResponseDto signUp(UserRequestDto userRequestDto) {
+		userRequestDto.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
+		User user = userRequestDto.toEntity();
+		user.setCreateDate(LocalDateTime.now());
+		this.userRepository.save(user);
 		
-//		Set<Role> rolesSet = new HashSet<Role>();
-//		rolesSet.add(roleRepository.findQneById(2L)); // id : 2 ROLE_USER 역할
-		userRepository.save(userDto);
-
+		return UserResponseDto.builder()
+				.username(user.getUsername())
+				.age(user.getAge())
+				.email(user.getEmail())
+				.name(user.getName())
+				.nickname(user.getNickname())
+				.createDate(user.getCreateDate())
+				.gender(user.getGender())
+				.points(user.getPoints())
+				.birthday(user.getBirthday())
+				.build();
 	}
+	
+	public UserResponseDto getUser(String username) {
+		User user = userRepository.findByUsername(username);
+		return UserResponseDto.builder()
+				.username(user.getUsername())
+				.age(user.getAge())
+				.email(user.getEmail())
+				.name(user.getName())
+				.nickname(user.getNickname())
+				.createDate(user.getCreateDate())
+				.gender(user.getGender())
+				.points(user.getPoints())
+				.birthday(user.getBirthday())
+				.build();
+	};
+	
+	public List<UserResponseDto> getAllUser() {
+		List<UserResponseDto> userList = new ArrayList<>();
+		userRepository.findAll().forEach(user ->
+		 userList.add(UserResponseDto.builder()
+				.username(user.getUsername())
+				.age(user.getAge())
+				.email(user.getEmail())
+				.createDate(user.getCreateDate())
+				.gender(user.getGender())
+				.points(user.getPoints())
+				.birthday(user.getBirthday())
+				.build()
+				)
+		 ); 
+		return userList;
+		
+	};
+	
 }
