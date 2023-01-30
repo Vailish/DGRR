@@ -5,17 +5,19 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ssafy.b102.model.dto.UserDto;
+import com.ssafy.b102.Entity.User;
 
 public class PrincipalDetails implements UserDetails{
 
-	private UserDto user;
+//	private UserDto user;
+	private User user;
 
-    public PrincipalDetails(UserDto user){
+//    public PrincipalDetails(UserDto user){
+   	public PrincipalDetails(User user){
         this.user = user;
     }
 
-    public UserDto getUser() {
+    public User getUser() {
 		return user;
 	}
 

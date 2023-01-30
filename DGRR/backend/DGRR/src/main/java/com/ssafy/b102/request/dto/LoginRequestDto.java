@@ -1,4 +1,4 @@
-package com.ssafy.b102.model.dto;
+package com.ssafy.b102.request.dto;
 
 import lombok.Data;
 
