@@ -421,7 +421,7 @@ public class RtcController {
 			}
 			
 			// 사용자 녹화본 url로 변환
-			String uRecordUrl = "https:" + File.separator + File.separator + "i5a204.p.ssafy.io" + File.separator + 
+			String uRecordUrl = "https:" + File.separator + File.separator + "i8b102.p.ssafy.io" + File.separator + 
 					"openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + recordName;
 			System.out.println("uRecordUrl: " + uRecordUrl);
 			
