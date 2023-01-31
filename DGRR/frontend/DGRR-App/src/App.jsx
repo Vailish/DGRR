@@ -2,7 +2,6 @@ import React from 'react'
 import LoginForm from './containers/user/LoginForm'
 import RegisterForm from './containers/user/RegisterForm'
 import { Routes, Route } from 'react-router-dom'
-import MainPage from './containers/mainPage/MainPage'
 import MainPage from './pages/MainPage'
 
 const App = () => {

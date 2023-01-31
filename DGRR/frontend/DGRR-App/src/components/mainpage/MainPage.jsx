@@ -1,10 +1,10 @@
 import React from 'react'
-import { useState } from 'react'
-import Nav from '../components/mainpage/Nav'
-import '../scss/MianPage.scss'
+import { useState, useEffect } from 'react'
+import Nav from './Nav'
+import '../../scss/MianPage.scss'
 
 const Mainpage = () => {
-  const [myInfo, setMyInfo] = useState(second)
+  const [myInfo, setMyInfo] = useState("")
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Mainpage = () => {
     const myInfoRequest = await fetch("https:/login", {
       method: "POST",
       headers: {
-        'Authorization':'Bearer '+token,
+        // 'Authorization':'Bearer '+token,
       },
     })
     const myData = await myInfoRequest;
@@ -23,7 +23,7 @@ const Mainpage = () => {
 
     const userInfoRequest = await fetch(`https:/user/${myInfo.nickname}`, {
       headers: {
-        'Authorization':'Bearer '+token,
+        // 'Authorization':'Bearer '+token,
       }
     })
     const userData = await userInfoRequest;
