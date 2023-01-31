@@ -100,7 +100,7 @@ public class RtcController {
 		System.out.println(json);
 		
 		// redirect하면서 데이터 전달
-		URI uri = new URI("https://i5a204.p.ssafy.io:5000/");
+		URI uri = new URI("https://i8b102.p.ssafy.io:5000/");
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setLocation(uri);
 		httpHeaders.add("sessinInfo", sName + "," + nName);
