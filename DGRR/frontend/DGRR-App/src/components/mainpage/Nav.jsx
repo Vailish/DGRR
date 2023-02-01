@@ -3,9 +3,9 @@ import '../../scss/MianPage.scss'
 
 const Nav = () => {
   return (
-    <nav className='nav'>
-      <p className='nav__logo'>DG.RR</p>
-      <div className='nav__avatar'>
+    <nav className='Nav'>
+      <p className='NavLogo'>DG.RR</p>
+      <div className='NavAvatar'>
         <p>user102</p>
         <p>|</p>
         <p>Logout</p>

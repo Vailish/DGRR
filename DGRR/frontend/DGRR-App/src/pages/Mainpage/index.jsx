@@ -1,0 +1,51 @@
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import baseaxios from '../../api/baseaxios'
+import Nav from '../../components/mainpage/Nav'
+import '../../scss/MianPage.scss'
+
+const Mainpage = () => {
+  const [userInfo, setUserInfo] = useState([]);
+  const { nickName } = useParams();
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
+  const fetchData = async () => {
+    const request = await baseaxios.get(`/api/v1/user/${nickName}`)
+    const userData = request.data
+    console.log(userData)
+    setUserInfo(userData)
+  }
+  
+  return (
+    <div className='PageBase'>
+      <Nav />
+      <div className='MainBox'>
+        {userInfo.username}
+      </div>
+      <div>
+        <div className='MainBox TierBox'>
+          Tier
+        </div>
+        <div className='MainBox RateBox'>
+          Rate
+        </div>
+        <div className='MainBox UserRankingBox'>
+          rankingBox
+        </div>
+      </div>
+
+      <div>
+        <div className='MainBox RecordBox'>
+          Record
+        </div>
+      </div>
+
+
+    </div>
+  )
+}
+
+export default Mainpage

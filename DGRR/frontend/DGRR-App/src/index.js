@@ -8,13 +8,13 @@ import { Provider } from 'react-redux'
 import RootReducer from './store/RootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const store = createStore(RootReducer, composeWithDevTools());
+// const store = createStore(RootReducer, composeWithDevTools());
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
+  // <Provider store={store}>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+  // </Provider>
+  , document.getElementById('root')
 )
