@@ -21,7 +21,6 @@ dependencies {
    implementation 'org.springframework.boot:spring-boot-starter-validation'
    implementation 'org.springframework.boot:spring-boot-starter-web'
    implementation 'com.querydsl:querydsl-jpa'
-   implementation group: 'org.javassist', name: 'javassist', version: '3.29.0-GA'
    implementation("com.auth0:java-jwt:3.10.3")
    //implementation("com.querydsl:querydsl-apt:4.4.0")
    compileOnly 'org.projectlombok:lombok'
