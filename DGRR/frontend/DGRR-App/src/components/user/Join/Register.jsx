@@ -1,7 +1,7 @@
 import '../../../scss/Login.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
-const Login = ({ form, onChange, onSubmit }) => {
+const Register = ({ form, onChange, onSubmit }) => {
   return (
     <div className="LoginTheme">
       <div className="Login">
@@ -54,4 +54,4 @@ const Login = ({ form, onChange, onSubmit }) => {
   )
 }
 
-export default Login
+export default Register
