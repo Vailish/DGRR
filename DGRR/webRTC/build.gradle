@@ -8,28 +8,7 @@ group = 'com.ssafy'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-sourceSets {
-//    main {
-//        java {
-//            srcDirs = ['src/main/java', querydslDir]
-//        }
-//    }
-	main.java.srcDir querydslDir
-}
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
 
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
-}
-
-//[끝]
 
 
 repositories {
@@ -42,6 +21,7 @@ dependencies {
    implementation 'org.springframework.boot:spring-boot-starter-validation'
    implementation 'org.springframework.boot:spring-boot-starter-web'
    implementation 'com.querydsl:querydsl-jpa'
+   implementation group: 'org.javassist', name: 'javassist', version: '3.29.0-GA'
    implementation("com.auth0:java-jwt:3.10.3")
    //implementation("com.querydsl:querydsl-apt:4.4.0")
    compileOnly 'org.projectlombok:lombok'
