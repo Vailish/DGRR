@@ -1,57 +1,119 @@
- .MainPage {
-  height: 100vh;
-  background: linear-gradient(180deg, #501766 30%, #F8F8FB 30%);
-}
-
-.nav {
+// .myClass {
+//   ├── 객체의 노출여부와 표현방식
+//   │   ├── display
+//   │   └── list-style
+//   │
+//   ├── 위치와 좌표
+//   │   ├── position
+//   │   ├── float
+//   │   └── clear
+//   │
+//   ├── 크기와 여백
+//   │   ├── width / height
+//   │   └── padding / margin
+//   │
+//   ├── 윤곽과 배경
+//   │   └── border / background
+//   │
+//   ├── 글자와 정렬
+//   │   ├── corlor / font
+//   │   ├── text-decoration
+//   │   ├── text-align / vertical-align
+//   │   └── white-space
+//   │
+//   └── 내용
+//       └── content
+ 
+ .PageBase {
   display: flex;
-  position: fixed;
-  top: 0;
-  z-index: 1;
-  width: 100vw;
-  height: 3vh;
-  padding-top: 32px;
-  color: white;
+  flex-wrap: wrap;
+  padding-top: 7vh;
+  padding-right: 12.5vw;
+  padding-left: 12.5vw;
   justify-content: space-between;
-  align-items: center;
+  background: linear-gradient(180deg, #501766 50vh, #F8F8FB 50vh);
+
+  .Nav {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 4vh;
+    padding-top: 16px;
+    padding-bottom: 8px;
+    background-color: #501766;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+
+    .NavLogo {
+      position: fixed;
+      left: 12.5vw;
+      width: 10vw;
+      margin: 0;
+    
+      //로고 이미지 대체시 삭제
+      font-family: 'Poller One';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 2.5vw;
+      line-height: 57px;
+    }
+    
+    .NavAvatar {
+      display: flex;
+      position: fixed;
+      right: 12.5vw;
+      width: 12vw;
+      justify-content: space-between;
+    
+      //임시 텍스트 처리
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 1.25vw;
+      line-height: 22px;
+    }
+  }
+  
+  .MainBox {
+    display: flex;
+    width: 75vw;
+    height: 51vh;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .TierBox {
+    width: 464 / 1920 * 100vw;
+    height: 312 / 1080 * 100vh;
+    margin-top: 80 / 1080 * 100vh;
+    align-self: flex-start;
+  }
+
+  .RateBox {
+    width: 464 / 1920 * 100vw;
+    height: 173 / 1080 * 100vh;
+    margin-top: 16 / 1080 * 100vh;
+  }
+
+  .RecordBox {
+    width: 944 / 1920 * 100vw;
+    height: 1088 / 1080 * 100vh;
+    margin-top: 80 / 1080 * 100vh;
+  }
+
+  .UserRankingBox {
+    width: 464 / 1920 * 100vw;
+    height: 445 / 1080 * 100vh;
+    margin-top: 16 / 1080 * 100vh;
+  }
+
+  .TotalRankingBox {
+    
+  }
 }
-
-.nav__logo {
-  position: fixed;
-  left: 12.5vw;
-  width: 10vw;
-  margin: 0;
-
-  //로고 이미지 대체시 삭제
-  font-family: 'Poller One';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 2.5vw;
-  line-height: 57px;
-}
-
-.nav__avatar {
-  display: flex;
-  position: fixed;
-  right: 12.5vw;
-  width: 12vw;
-  justify-content: space-between;
-
-  //임시 텍스트 처리
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.25vw;
-  line-height: 22px;
-}
-
-.MyAvg {
-  display: flex;
-  width: 75vw;
-  height: 51vh;
-  border: none;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
-}
-
