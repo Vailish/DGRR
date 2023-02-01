@@ -171,7 +171,7 @@ const RegisterForm = () => {
             </div>
           </div>
           <div className="RegisterForm">
-            <MultiStepProgressBar page={page} onPageNumberClick={nextPageNumber} />
+            <MultiStepProgressBar page={page} onPageNumberClick={nextPageNumber} className="progress" />
             {
               {
                 pageone: <PageOne form={form} onChange={onChange} onSubmit={onSubmitPageOne} />,
