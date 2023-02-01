@@ -1,7 +1,9 @@
 package com.ssafy.b102.controller;
 
 import io.openvidu.java.client.Recording;
+import lombok.Data;
 
+@Data
 public class RecordUrlDto {
 	Recording recording;
 	String url;

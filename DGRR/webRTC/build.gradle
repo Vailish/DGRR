@@ -13,25 +13,51 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
+sourceSets {
+//    main {
+//        java {
+//            srcDirs = ['src/main/java', querydslDir]
+//        }
+//    }
+	main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+//[끝]
+
 
 repositories {
-	mavenCentral()
+   mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-	 implementation 'io.openvidu:openvidu-java-client:2.25.0'
-}
+   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+   implementation 'org.springframework.boot:spring-boot-starter-security'
+   implementation 'org.springframework.boot:spring-boot-starter-validation'
+   implementation 'org.springframework.boot:spring-boot-starter-web'
+   implementation 'com.querydsl:querydsl-jpa'
+   implementation("com.auth0:java-jwt:3.10.3")
+   //implementation("com.querydsl:querydsl-apt:4.4.0")
+   compileOnly 'org.projectlombok:lombok'
+   runtimeOnly 'mysql:mysql-connector-java'
+   annotationProcessor 'org.projectlombok:lombok'
+   developmentOnly("org.springframework.boot:spring-boot-devtools")
+   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+   testImplementation 'org.springframework.security:spring-security-test'
+   compile("com.querydsl:querydsl-jpa")
+   //compile("com.querydsl:querydsl-apt")
+   implementation 'com.google.code.gson:gson:2.8.6'
+   // 파일업로드
+   // https://mvnrepository.com/artifact/commons-io/commons-io
+	implementation 'commons-io:commons-io:2.8.0'
 
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }
