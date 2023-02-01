@@ -27,9 +27,6 @@ dependencies {
    runtimeOnly 'mysql:mysql-connector-java'
    annotationProcessor 'org.projectlombok:lombok'
    developmentOnly("org.springframework.boot:spring-boot-devtools")
-   testImplementation 'org.springframework.boot:spring-boot-starter-test'
-   testImplementation 'org.springframework.security:spring-security-test'
-   compile("com.querydsl:querydsl-jpa")
    //compile("com.querydsl:querydsl-apt")
    implementation 'com.google.code.gson:gson:2.8.6'
    // 파일업로드
