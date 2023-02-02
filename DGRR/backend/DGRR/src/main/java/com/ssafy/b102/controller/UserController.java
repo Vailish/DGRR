@@ -72,7 +72,6 @@ public class UserController {
 //		UserResponseDto userResponseDto = userService.getUser(username);
 //		return new ResponseEntity<UserResponseDto>(userResponseDto, HttpStatus.OK);
 //	}
-
 //	@PostMapping("/login")
 //	public ResponseEntity<?> logIn(@RequestBody LoginRequestDto loginRequestDto){
 //		LoginRequestDto user = userService.logIn(loginRequestDto);
