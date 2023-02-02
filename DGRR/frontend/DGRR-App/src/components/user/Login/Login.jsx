@@ -1,7 +1,10 @@
 import '../../../scss/Login.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
-const Login = ({ form, onChange, onSubmit }) => {
+import { useState, useEffect } from 'react'
+const Login = ({ form, onChange, onSubmit, onKeyUp }) => {
+  const [keyPressed, setKeyPressed] = useState(false)
+
   return (
     <div className="LoginTheme">
       <div className="Login">
@@ -21,7 +24,7 @@ const Login = ({ form, onChange, onSubmit }) => {
           <div className="TitleForm">
             <p>DG.RR</p>
           </div>
-          <form onSubmit={onSubmit}>
+          <form>
             <div className="LoginInput">
               <input
                 name="username"
@@ -40,7 +43,9 @@ const Login = ({ form, onChange, onSubmit }) => {
               />
             </div>
             <div className="Button">
-              <button type="submit">로그인</button>
+              <button type="button" onClick={onSubmit}>
+                로그인
+              </button>
             </div>
           </form>
           <div className="JoinAndFind">
