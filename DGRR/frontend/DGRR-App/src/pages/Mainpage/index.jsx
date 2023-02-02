@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import baseaxios from '../../api/baseaxios'
 import Nav from '../../components/mainpage/Nav'
+import PieChart from '../../components/mainpage/PieChart'
 import '../../scss/MianPage.scss'
+import profileimg from '../../img/profile.jpg'
 
 const Mainpage = () => {
   const [userInfo, setUserInfo] = useState([]);
@@ -23,7 +25,20 @@ const Mainpage = () => {
     <div className='PageBase'>
       <Nav />
       <div className='MainBox'>
-        {userInfo.username}
+        <h2>크리스티아누 호날두</h2>
+        <p>좋아요 댓글 구독 알람설정까지!</p>
+        <div className='MainInnerBox'>
+          <img
+            src={profileimg}
+            alt="ProfileImage"
+            className='ProfileImg'
+          />
+          <div className='PieCharts'>
+            <PieChart title="Last Score" id="LS"/>
+            <PieChart title="3 Games Avg" id="GA"/>
+            <PieChart title="High Score" id="HS"/>
+          </div>
+        </div>
       </div>
       <div>
         <div className='MainBox TierBox'>
