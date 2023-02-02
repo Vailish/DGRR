@@ -1,0 +1,46 @@
+// .myClass {
+//   ├── 객체의 노출여부와 표현방식
+//   │   ├── display
+//   │   └── list-style
+//   │
+//   ├── 위치와 좌표
+//   │   ├── position
+//   │   ├── float
+//   │   └── clear
+//   │
+//   ├── 크기와 여백
+//   │   ├── width / height
+//   │   └── padding / margin
+//   │
+//   ├── 윤곽과 배경
+//   │   └── border / background
+//   │
+//   ├── 글자와 정렬
+//   │   ├── corlor / font
+//   │   ├── text-decoration
+//   │   ├── text-align / vertical-align
+//   │   └── white-space
+//   │
+//   └── 내용
+//       └── content
+
+@import './mixins';
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+
+    .ChartBlock {
+      width: 100vw - 96 /2560 * 100vw;
+      height: 50vh;
+      //   margin-left: 48 /2560 * 100vw;
+      //   margin-right: 48/2560 * 100vw;
+    }
+  }
+}

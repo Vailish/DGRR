@@ -35,10 +35,10 @@ const KioskSelect = () => {
         </div>
       </div>
       <div className="ButtonBlock">
-        <Link to="/" className="Competition">
+        <Link to="/KioskLogin" className="Competition">
           <div className="CompetitionText">경쟁전</div>
         </Link>
-        <Link to="/" className="Friendly">
+        <Link to="/KioskLogin" className="Friendly">
           <div className="FriendlyText">친선전</div>
         </Link>
       </div>
