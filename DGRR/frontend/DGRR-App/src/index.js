@@ -11,6 +11,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 const store = createStore(rootReducer, composeWithDevTools())
 ReactDOM.render(
+  // <Provider store={store}>
   <BrowserRouter>
     <Provider store={store}>
       <App />
