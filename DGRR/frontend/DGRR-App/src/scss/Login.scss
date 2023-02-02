@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poller+One&display=swap');
 
 @media screen and (max-width: 1536px) {
+  html,
   body {
+    height: 100%;
     &::-webkit-scrollbar {
       display: none;
     }
   }
   .Login {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-image: url('../img/background.jpg');
     background-size: cover;
     display: inline-flex;
@@ -39,7 +41,7 @@
       }
     }
     .LoginForm {
-      width: 448px;
+      width: 448rem;
       height: 586px;
       border-radius: 16px;
       margin-top: 72px;

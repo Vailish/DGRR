@@ -12,10 +12,13 @@
     "node-sass": "^8.0.0",
     "node-scss": "^7.0.3",
     "react": "^16.12.0",
+    "react-datepicker": "^4.10.0",
     "react-dom": "^16.12.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
+    "react-step-progress-bar": "^1.0.3",
+    "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.9",
     "web-vitals": "^2.1.4"
