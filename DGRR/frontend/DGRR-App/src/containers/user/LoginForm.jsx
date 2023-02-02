@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import Login from '../../components/user/Login/Login'
-import axios, { Axios } from 'axios'
-
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const LoginForm = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { form } = useSelector(({ auth }) => ({
     form: auth.login,
@@ -26,33 +27,16 @@ const LoginForm = () => {
       console.log(response)
       if (response.status === 200) {
         // console.log(response.headers.get('Authorization'))
+        alert('로그인 성공')
         const accessToken = response.headers.get('Authorization')
         localStorage.setItem('access-token', accessToken)
-        reqUser(accessToken)
-        console.log(localStorage.get('user'))
+        navigate('/main')
       }
     } catch (e) {
       console.log(e)
     }
   }
 
-  const reqUser = async token => {
-    try {
-      const response = await axios.post(
-        'http://192.168.31.142/login',
-
-        JSON.stringify(token),
-        {
-          headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-          },
-        },
-      )
-      console.log(response)
-    } catch (e) {
-      console.log(e)
-    }
-  }
   const onChange = e => {
     const { name, value } = e.target
     dispatch(
