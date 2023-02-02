@@ -2,15 +2,15 @@ import React from 'react'
 import './PageOne.scss'
 const PageOne = ({ form, onSubmit, onChange }) => {
   return (
-    <div>
+    <div className="PageOne">
       {/* <div style={{ margin: '20px' }}></div> */}
       <div className="FormTitle">
         <h2>회원가입</h2>
       </div>
       <form onSubmit={onSubmit}>
-        <div className="PageOneInput">
+        <div className="PageInput">
           <input
-            className="PageOneText"
+            className="PageText"
             name="username"
             value={form.username}
             onChange={onChange}
@@ -19,7 +19,7 @@ const PageOne = ({ form, onSubmit, onChange }) => {
           <br />
 
           <input
-            className="PageOneText"
+            className="PageText"
             name="password"
             value={form.password}
             onChange={onChange}
@@ -28,7 +28,7 @@ const PageOne = ({ form, onSubmit, onChange }) => {
           <br />
 
           <input
-            className="PageOneText"
+            className="PageText"
             name="passwordConfirm"
             value={form.passwordConfirm}
             onChange={onChange}
@@ -37,7 +37,9 @@ const PageOne = ({ form, onSubmit, onChange }) => {
         </div>
         <br />
         <div className="NextButton">
-          <button className="Button" type="submit">다음</button>
+          <button className="Button" type="submit">
+            다음
+          </button>
         </div>
       </form>
     </div>

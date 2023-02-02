@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import Login from '../../components/user/Login/Login'
-import axios from 'axios'
-import { useNavigate } from "react-router-dom"
+import axios, { Axios } from 'axios'
+
 const LoginForm = () => {
   const dispatch = useDispatch()
   const { form } = useSelector(({ auth }) => ({
@@ -17,10 +17,38 @@ const LoginForm = () => {
         'http://192.168.31.142/login',
 
         JSON.stringify(user),
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+          },
+        },
       )
-        if (response.status === 20) {
-           //로그인이 성공적으로 완료가 되었다면 메인 페이지로 이동한다. 
+      console.log(response)
+      if (response.status === 200) {
+        // console.log(response.headers.get('Authorization'))
+        const accessToken = response.headers.get('Authorization')
+        localStorage.setItem('access-token', accessToken)
+        reqUser(accessToken)
+        console.log(localStorage.get('user'))
       }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const reqUser = async token => {
+    try {
+      const response = await axios.post(
+        'http://192.168.31.142/login',
+
+        JSON.stringify(token),
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+          },
+        },
+      )
+      console.log(response)
     } catch (e) {
       console.log(e)
     }
@@ -39,7 +67,7 @@ const LoginForm = () => {
   const onSubmit = e => {
     e.preventDefault()
     // console.log(form);
-    
+
     reqLogin(form)
   }
 
