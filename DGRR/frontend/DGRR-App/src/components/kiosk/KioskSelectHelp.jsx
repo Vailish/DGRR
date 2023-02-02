@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import '../../scss/KioskSelectHelp.scss'
+import '../../store/KioskSelect'
 
 const KioskSelectHelp = props => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아
