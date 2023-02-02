@@ -25,8 +25,8 @@ const Mainpage = () => {
     <div className='PageBase'>
       <Nav />
       <div className='MainBox'>
-        <h2>크리스티아누 호날두</h2>
-        <p>좋아요 댓글 구독 알람설정까지!</p>
+        <h2 className='UserNickName'>크리스티아누 호날두</h2>
+        <p className='UserText'>좋아요 댓글 구독 알람설정까지!</p>
         <div className='MainInnerBox'>
           <img
             src={profileimg}

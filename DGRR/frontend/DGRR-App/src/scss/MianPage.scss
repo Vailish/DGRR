@@ -86,7 +86,7 @@
     background-color: white;
     box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
 
-    h2 {
+    .UserNickName {
       margin-top: 72 / 1080 * 100vh;
       margin-bottom: 8 / 1080 * 100vh;
       padding-left: 112 / 1920 * 100vw;
@@ -95,12 +95,14 @@
       font-weight: 600;
       font-size: 3vmin;
       line-height: 22px;
+      text-align: start;
     }
-    p {
+    .UserText {
       margin-top: 16 / 1080 * 100vh;
       margin-bottom: 8 / 1080 * 100vh;
       padding-left: 112 / 1920 * 100vw;
       font-size: 1.5vmin;
+      text-align: start;
     }
     .MainInnerBox {
       display: flex;
