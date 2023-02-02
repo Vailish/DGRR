@@ -17,12 +17,12 @@ public class UserRequestDto {
 	private String username;
  
 	private String password;
+	
+	private String passwordConfirm;
  
 	private String name;
 	
 	private String email;
-	
-	private String age;
 	
 	private String gender;
 	
@@ -37,7 +37,6 @@ public class UserRequestDto {
 				.name(name)
 				.email(email)
 				.password(password)
-				.age(Integer.parseInt(age))
 				.gender(gender)
 				.nickname(nickname)
 				.birthday(LocalDate.parse(birthday, DateTimeFormatter.ISO_LOCAL_DATE))
