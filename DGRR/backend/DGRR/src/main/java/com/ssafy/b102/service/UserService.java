@@ -30,7 +30,7 @@ public class UserService {
 		
 		return UserResponseDto.builder()
 				.username(user.getUsername())
-				.age(user.getAge())
+//				.age(user.getAge())
 				.email(user.getEmail())
 				.name(user.getName())
 				.nickname(user.getNickname())
@@ -41,11 +41,11 @@ public class UserService {
 				.build();
 	}
 	
-	public UserResponseDto getUser(String username) {
-		User user = userRepository.findByUsername(username);
+	public UserResponseDto getUser(String nickname) {
+		User user = userRepository.findByNickname(nickname);
 		return UserResponseDto.builder()
 				.username(user.getUsername())
-				.age(user.getAge())
+//				.age(user.getAge())
 				.email(user.getEmail())
 				.name(user.getName())
 				.nickname(user.getNickname())
@@ -61,7 +61,7 @@ public class UserService {
 		userRepository.findAll().forEach(user ->
 		 userList.add(UserResponseDto.builder()
 				.username(user.getUsername())
-				.age(user.getAge())
+//				.age(user.getAge())
 				.email(user.getEmail())
 				.createDate(user.getCreateDate())
 				.gender(user.getGender())
