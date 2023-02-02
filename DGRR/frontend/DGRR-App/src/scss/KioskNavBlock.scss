@@ -1,0 +1,39 @@
+.NavBlock {
+  display: flex;
+  width: 100vw;
+  height: 200px / 1600px * 100vh;
+  background: #501766;
+  .LogoBlock {
+    display: flex;
+    align-items: center;
+    width: 10vw;
+    height: 10vh;
+    // border: 1px solid black;
+    .Logo {
+      color: white;
+      font-size: 4vw;
+    }
+  }
+  .spaceBlock {
+    width: 80vw;
+  }
+  .BackBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5vw;
+
+    margin-top: 2vh;
+    // border: 1px solid black;
+    .Back {
+      color: white;
+    }
+    .BackLine {
+      background: white;
+      width: 5vw;
+      height: 0.1vh;
+      border: 0px;
+    }
+  }
+}

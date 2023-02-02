@@ -1,0 +1,31 @@
+@import './mixins';
+
+@include desktop {
+  .KioskSelectHelp {
+    position: absolute;
+    left: 15vw;
+    // background-color: white;
+    .KioskSelectHelpInner {
+      width: 70vw;
+      height: 70vw;
+      background-color: white;
+      .Header {
+        display: flex;
+        justify-content: right;
+        .Close {
+          border-radius: 50%;
+          border: none;
+          width: 3vw;
+          height: 3vw;
+          font-size: 4vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .Start {
+        font-size: 5vw;
+      }
+    }
+  }
+}
