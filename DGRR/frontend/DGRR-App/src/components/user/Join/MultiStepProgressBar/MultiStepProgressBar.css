@@ -2,7 +2,8 @@
   color: rgb(190, 190, 190);
   width: 40px;
   height: 40px;
-  font-size: 4px;
+  font-size: 20px;
+  font-family: 'Archivo';
   background-color: rgb(255, 255, 255);
   border-radius: 50%;
   border-style: solid;
@@ -15,7 +16,7 @@
 }
 
 .indexedStep.accomplished {
-  background-color: #664de5;
+  background-color: #501766;
   color: white;
   border-style: none;
 }
@@ -47,7 +48,6 @@
 
 .RSPBprogressBar {
   margin-top: 24px;
-  bottom: 8%;
 }
 
 .RSPBprogressBar .RSPBprogression {
@@ -57,7 +57,8 @@
   top: 0;
   bottom: 0;
   border-radius: 10px;
-  background: #664de5;
+  background: #501766;
+  font-family: 'Archivo';
   z-index: -1;
 }
 
@@ -65,6 +66,6 @@
   .indexedStep {
     width: 15px;
     height: 15px;
-    font-size: 6px;
+    font-size: 400px;
   }
 }
