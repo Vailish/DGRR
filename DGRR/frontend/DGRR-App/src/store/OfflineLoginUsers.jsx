@@ -69,6 +69,9 @@ const initialState = {
 const OfflineLoginUsers = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PLAYER: {
+      if (state.players.length === 4) {
+        return state
+      }
       const players = [...state.players.filter(player => player.nickname), action.playerInfo]
       return { players }
     }
