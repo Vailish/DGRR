@@ -14,11 +14,11 @@ const SEND_ALL_SCORE = 'KioskOffline/SEND_ALL_SCORE'
 //   apis.~~~
 // })
 
-export const addPlayer = () => ({
+export const addPlayer = playerUsername => ({
   type: ADD_PLAYER,
   playerInfo: {
     username: 'kimbowling',
-    nickname: '김볼링',
+    nickname: `${playerUsername}`,
     profile: null,
     rank: 216,
     record: [15, 8, 7],
@@ -72,6 +72,7 @@ const OfflineLoginUsers = (state = initialState, action) => {
       if (state.players.length === 4) {
         return state
       }
+      // const playerInfo = apis.getPlayers()
       const players = [...state.players.filter(player => player.nickname), action.playerInfo]
       return { players }
     }

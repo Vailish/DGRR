@@ -10,8 +10,20 @@ import KioskLoginPlayer from './KioskLoginPlayer'
 import KioskNavBlock from './KioskNavBlock'
 
 const KioskLogin = () => {
+  let pinNumber = undefined
   const dispatch = useDispatch()
-  const onAddPlayer = () => dispatch(addPlayer())
+  const inputPinNumber = e => {
+    pinNumber = e.target.value
+  }
+  const CustomInput = props => {
+    const { InputValue, InputPin, InputClassName } = props
+    return <input value={InputValue} onChange={InputPin} className={InputClassName} />
+  }
+  const onAddPlayer = () => {
+    // pinNumber = ''
+    dispatch(addPlayer(pinNumber))
+    console.log(pinNumber)
+  }
   const players = useSelector(state => state.OfflineLoginUsers.players)
   const always4Blocks = () => {
     const playersList = [...players]
@@ -33,7 +45,7 @@ const KioskLogin = () => {
             </div>
           </div>
           <div className="PinInputBlock">
-            <input className="PinInput"></input>
+            <CustomInput InputClassName="PinInput" InputPin={inputPinNumber} InputValue={pinNumber}></CustomInput>
             <button className="PinPlus" onClick={onAddPlayer}>
               +
             </button>
