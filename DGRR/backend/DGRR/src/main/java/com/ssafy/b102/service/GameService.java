@@ -50,7 +50,9 @@ public class GameService {
 		Game game = new Game();
 		game.setGameDate(gameDate);
 		game.setGameType(gameType);
-		
+		System.out.println("분기 들어갑니다~~~~~~~~");
+		System.out.println(gameRequestDto.getGameData().size());
+		System.out.println("진짜로 들어가유~~~~~~~~");
 		switch(gameRequestDto.getGameData().size()) {
 			case 2:
 				String nickname2_1 = gameRequestDto.getGameData().get(0).getNickname();
@@ -62,12 +64,17 @@ public class GameService {
 				UserGame userGame1 = new UserGame();
 				UserGame userGame2 = new UserGame();
 				
-				userGame1.setGameScore(nickname2_1);
-				userGame2.setGameScore(nickname2_2);
+				userGame1.setGameScore(score2_1);
+				userGame2.setGameScore(score2_2);
 
 				int sum1 = score2_1.stream().mapToInt(Integer::intValue).sum();
 				int sum2 = score2_2.stream().mapToInt(Integer::intValue).sum();
-						
+				
+				System.out.println("#####################################################");
+				System.out.println(score2_1.toString());
+				System.out.println(score2_2.toString());
+				System.out.println("#####################################################");
+				
 				if(sum1 >= sum2) {
 					userGame1.setGameRank(1);
 					userGame2.setGameRank(2);
@@ -109,9 +116,9 @@ public class GameService {
 				UserGame userGame3_2 = new UserGame();
 				UserGame userGame3_3 = new UserGame();
 				
-				userGame3_1.setGameScore(nickname3_1);
-				userGame3_2.setGameScore(nickname3_2);
-				userGame3_3.setGameScore(nickname3_3);
+				userGame3_1.setGameScore(score3_1);
+				userGame3_2.setGameScore(score3_2);
+				userGame3_3.setGameScore(score3_3);
 
 				int sum3_1 = score3_1.stream().mapToInt(Integer::intValue).sum();
 				int sum3_2 = score3_2.stream().mapToInt(Integer::intValue).sum();
@@ -170,10 +177,10 @@ public class GameService {
 				UserGame userGame4_3 = new UserGame();
 				UserGame userGame4_4 = new UserGame();
 				
-				userGame4_1.setGameScore(nickname4_1);
-				userGame4_2.setGameScore(nickname4_2);
-				userGame4_3.setGameScore(nickname4_3);
-				userGame4_4.setGameScore(nickname4_4);
+				userGame4_1.setGameScore(score4_1);
+				userGame4_2.setGameScore(score4_2);
+				userGame4_3.setGameScore(score4_3);
+				userGame4_4.setGameScore(score4_4);
 
 				int sum4_1 = score4_1.stream().mapToInt(Integer::intValue).sum();
 				int sum4_2 = score4_2.stream().mapToInt(Integer::intValue).sum();

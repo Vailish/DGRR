@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameDetail {
-//	private Long user_id;
 	private String nickname;
 	private List<Integer> game_score;
 	private Integer game_rank;

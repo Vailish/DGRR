@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.b102.request.dto.GameRequestDto;
-import com.ssafy.b102.response.dto.GameDetail;
 import com.ssafy.b102.response.dto.GameInfoResponseDto;
 import com.ssafy.b102.response.dto.GameResponseDto;
 import com.ssafy.b102.service.GameService;
@@ -21,7 +20,7 @@ import com.ssafy.b102.service.GameService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v2")
+@RequestMapping("api/v1")
 @RequiredArgsConstructor
 public class GameController {
 	

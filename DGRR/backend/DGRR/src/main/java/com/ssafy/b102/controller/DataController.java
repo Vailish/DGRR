@@ -12,7 +12,7 @@ import com.ssafy.b102.response.dto.DataResponseDto;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v3")
+@RequestMapping("api/v1")
 @RequiredArgsConstructor
 public class DataController {
 	

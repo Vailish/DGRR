@@ -3,8 +3,6 @@ package com.ssafy.b102.request.dto;
 
 import java.util.List;
 
-import com.mysql.cj.xdevapi.JsonArray;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
