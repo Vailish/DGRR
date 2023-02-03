@@ -29,10 +29,13 @@ const Mainpage = () => {
         <p className="UserText">좋아요 댓글 구독 알람설정까지!</p>
         <div className="MainInnerBox">
           <img src={profileimg} alt="ProfileImage" className="ProfileImg" />
-          <div className="PieCharts">
-            <PieChart title="Last Score" id="LS" />
-            <PieChart title="3 Games Avg" id="GA" />
-            <PieChart title="High Score" id="HS" />
+            <div className='AvgBox'>
+              <div className="PieCharts">
+                <PieChart title="Last Score" id="LS" startColor="#FF4C61" endColor="#FFD2D7"/>
+                <PieChart title="3 Games Avg" id="GA" startColor="#FFB800" endColor="#FFF7E1"/>
+                <PieChart title="High Score" id="HS" startColor="#3CBA94" endColor="#D4F3E9"/>
+              </div>
+              <button className='Button'>점수 그래프</button>
           </div>
         </div>
       </div>

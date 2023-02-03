@@ -117,13 +117,41 @@
         border-radius: 80%;
         object-fit: cover;
       }
-      .PieCharts{
-        border:solid blue;
+
+      .AvgBox{
+        border: solid red;
         display: flex;
+        flex-wrap: wrap;
         width: 800 / 1920 * 100vw;
-        justify-content: space-between;
         margin-left: 96 / 1920 * 100vw;
+        
+        .PieCharts{
+          border:solid blue;
+          display: flex;
+          width: 800 / 1920 * 100vw;
+          justify-content: space-between;
+          // margin-left: 96 / 1920 * 100vw;
+        }
+
+        .Button {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          font-family: 'Archivo';
+          font-size: 1rem;
+          font-weight: 700;
+          border-radius: 0.2vw;
+          padding: 0.4rem 1.8rem 0.4rem 1rem;
+          margin-right: 1rem;
+          color: #fff;
+          background-color: #501766;
+        }
       }
+
     }
   }
 
