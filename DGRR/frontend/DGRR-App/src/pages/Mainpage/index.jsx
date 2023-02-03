@@ -42,7 +42,13 @@ const Mainpage = () => {
       <div>
         <div className="MainBox TierBox">
           <h2 className='BoxTitle'>RANK</h2>
-          <img src={require("../../img/tierdia.png")} alt="tier" className='TierImg' />
+          <div className='TierInnerBox'>
+            <img src={require("../../img/tierdia.png")} alt="tier" className='TierImg' />
+            <div>
+              <h2 className='TierText'>Diamond</h2>
+              <p className='TierSubText'>랭킹 161위</p>
+            </div>
+          </div>
         </div>
         <div className="MainBox RateBox">
           <h2 className='BoxTitle'>

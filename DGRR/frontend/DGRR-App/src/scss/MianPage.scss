@@ -42,7 +42,7 @@
     width: 100vw;
     height: 3.2vh;
     padding-top: 16px;
-    padding-bottom: 8px;
+    padding-bottom: 4px;
     background-color: #501766;
     color: white;
     justify-content: space-between;
@@ -77,6 +77,7 @@
       line-height: 22px;
     }
   }
+
   .BoxTitle {
     margin: 0;
     padding-top: 24 / 1080 * 100vh;
@@ -86,7 +87,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 2.4vmin;
+    font-size: 2.5vmin;
     line-height: 22px;
   }
 
@@ -166,7 +167,6 @@
           }
         }
       }
-
     }
   }
 
@@ -175,10 +175,35 @@
     height: 312 / 1080 * 100vh;
     margin-top: 80 / 1080 * 100vh;
 
-    .TierImg {
-      width: 30vmin;
-      height: 30vmin;
-      object-fit: contain;
+    .TierInnerBox {
+      display: flex;
+      justify-content: space-between;
+      padding: 16/1080*100vh 64/1920*100vw 0;
+
+      .TierImg {
+        width: 18vmin;
+        height: 18vmin;
+        object-fit: contain;
+      }
+
+      .TierText {
+        padding-top: 32/1080*100vh;
+        margin-bottom: 0;
+        color: #444444;
+        font-weight: 600;
+        font-size: 2.3vmin;
+        font-family: 'Inter';
+        font-style: normal;        
+      }
+
+      .TierSubText {
+        margin-top: 16/1080*100vh;
+        color: #444444;
+        font-weight: 600;
+        font-size: 1.8vmin;
+        font-family: 'Inter';
+        font-style: normal;     
+      }
     }
   }
 

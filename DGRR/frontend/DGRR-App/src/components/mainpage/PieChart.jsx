@@ -58,7 +58,7 @@ const PieGraph = ({ title, startColor, endColor }) => {
   };
   
   return (
-    <PieChart width={190} height={190}>
+    <PieChart width={180} height={180}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
