@@ -19,7 +19,7 @@ export const apis = {
   // 보낼 위치로 수정
   sendresult: data =>
     api
-      .post('/v2/game', JSON.stringify(data))
+      .post('/v1/game', JSON.stringify(data))
       .then(res => {
         console.log(res.data)
       })

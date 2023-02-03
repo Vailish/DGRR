@@ -33,7 +33,7 @@ const KioskOfflineResult = () => {
 
   return (
     <div className="KioskBackground">
-      <KioskNavBlock />
+      <KioskNavBlock goFrontTo="/KioskLogin" />
       <div className="ResultContentBlock">
         <div className="EachPlayerBlock">
           <div className="PlayerProfile"></div>

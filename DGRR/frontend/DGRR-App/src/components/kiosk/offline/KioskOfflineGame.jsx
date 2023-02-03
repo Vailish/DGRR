@@ -16,7 +16,7 @@ const KioskOfflineGame = () => {
 
   return (
     <div className="KioskBackground">
-      <KioskNavBlock />
+      <KioskNavBlock goBackTo="/KioskLogin" />
       <div className="OfflineGameContentBlock">
         <div className="EllipseBlock">
           <div className="FirstEllipse">

@@ -17,9 +17,27 @@ const KioskLoginPlayer = props => {
 
   const onAddPlayer = () => dispatch(addPlayer())
 
-  const player = props.player
+  const { player } = props
   const playerClass = player === '' ? 'EachPlayer' : 'EachPlayer PlayerLogin'
-  return <div className={playerClass}> {player.playerNickname} </div>
+  return (
+    <div className={playerClass}>
+      <div className="PlayerProfileBlock">
+        <div className="PlayerProfile"></div>
+      </div>
+      <div className="PlayerInfoBlock">
+        <div className="PalyerNameAndRank">
+          <div className="PlayerName"></div>
+          <div className="PlayerRank"></div>
+        </div>
+        <div className="PlayerRecordBlock">
+          <div className="PlayerRecordTitle"></div>
+          <div className="PlayerRecordContent"></div>
+        </div>
+      </div>
+      <div className="PlayerAverageScore"></div>
+      <div className="PlayerCancelCircle"></div>
+    </div>
+  )
 }
 
 const axiosSend = async () => {
@@ -33,7 +51,7 @@ const KioskLogin = () => {
 
   return (
     <div className="KioskBackground">
-      <KioskNavBlock />
+      <KioskNavBlock goBackTo="/KioskSelect" />
       <div className="ContentBlock">
         <div className="PinQRBlock">
           <div className="QRBlock">
@@ -53,7 +71,7 @@ const KioskLogin = () => {
             <div className="PlayerText">Players</div>
             <div className="PlayersList">
               {players.map(player => {
-                return player === null ? <KioskLoginPlayer player="" /> : <KioskLoginPlayer player={player} />
+                return player.nickname ? <KioskLoginPlayer player={player} /> : <KioskLoginPlayer player="" />
               })}
               {/* <div className="Player"></div>
               <div className="Player"></div>

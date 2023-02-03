@@ -55,8 +55,8 @@ const initialState = {
       average: 85,
       gameScore: [0, 10, 5, 5, 3, 5, 1, 2, 5, 2, 2, 8, 5, 4, 3, 9, 9, 1, 10, 9, 1],
     },
-    // null,
-    // null,
+    {},
+    {},
   ],
 }
 

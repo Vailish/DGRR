@@ -5,11 +5,10 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-const KioskLoginPlayer = () => {
-  const players = useSelector(state => state.OfflineLoginUsers.players)
-  console.log(players)
+const KioskLoginPlayer = props => {
+  // const players = useSelector(state => state.OfflineLoginUsers.players)
+  const { player } = props
   const playersNow = players.map(player => `<div class='Player'> ${{ ...player }} </div>`)
-  console.log(playersNow)
   return { ...playersNow }
 }
 
