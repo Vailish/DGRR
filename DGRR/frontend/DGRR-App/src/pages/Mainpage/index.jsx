@@ -40,13 +40,28 @@ const Mainpage = () => {
         </div>
       </div>
       <div>
-        <div className="MainBox TierBox">Tier</div>
-        <div className="MainBox RateBox">Rate</div>
-        <div className="MainBox UserRankingBox">rankingBox</div>
+        <div className="MainBox TierBox">
+          <h2 className='BoxTitle'>RANK</h2>
+          <img src={require("../../img/tierdia.png")} alt="tier" className='TierImg' />
+        </div>
+        <div className="MainBox RateBox">
+          <h2 className='BoxTitle'>
+            최근 랭킹전 20Games 승률
+          </h2>
+        </div>
+        <div className="MainBox UserRankingBox">
+          <h2 className='BoxTitle'>
+            나의 랭킹
+          </h2>
+        </div>
       </div>
 
       <div>
-        <div className="MainBox RecordBox">Record</div>
+        <div className="MainBox RecordBox">
+          <h2 className='BoxTitle'>
+            전적관리
+          </h2>
+        </div>
       </div>
     </div>
   )

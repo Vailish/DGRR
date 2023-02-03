@@ -4,7 +4,7 @@ import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 const PieGraph = ({ title, startColor, endColor }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const data = [
-    { name: "Group A", value: 200, fill: startColor },
+    { name: "Group A", value: 230, fill: startColor },
     { name: "Group B", value: 100, fill: endColor },
   ];
   
@@ -58,14 +58,14 @@ const PieGraph = ({ title, startColor, endColor }) => {
   };
   
   return (
-    <PieChart width={200} height={200}>
+    <PieChart width={190} height={190}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
         data={data}
         cx={"50%"}
         cy={"47%"}
-        innerRadius={"70%"}
+        innerRadius={"77%"}
         outerRadius={"100%"}
         // fill="#8884d8"
         dataKey="value"
