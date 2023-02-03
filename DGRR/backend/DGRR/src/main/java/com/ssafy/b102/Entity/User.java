@@ -2,13 +2,19 @@ package com.ssafy.b102.Entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +40,7 @@ public class User {
 	@Column(length = 128, nullable = false)
 	private String password;
 	
-	@Column(nullable = false) // not null
+	@Column(nullable = true) // not null
 	private Integer age;
 	
 	@Column(length = 32, nullable = false)
@@ -59,5 +65,9 @@ public class User {
 	private LocalDate birthday;
 	
 //	private String user_img;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<UserGame> userGames = new ArrayList<>(); 
 	
 }
