@@ -6,49 +6,20 @@ import { Link } from 'react-router-dom'
 import { addPlayer } from '../../../store/OfflineLoginUsers'
 // import axios from 'axios'
 import { apis } from '../../../API/api'
+import KioskLoginPlayer from './KioskLoginPlayer'
 import KioskNavBlock from './KioskNavBlock'
 
-const ShowNumber = () => {
-  return
-}
-
-const KioskLoginPlayer = props => {
-  const dispatch = useDispatch()
-
-  const onAddPlayer = () => dispatch(addPlayer())
-
-  const { player } = props
-  const playerClass = player === '' ? 'EachPlayer' : 'EachPlayer PlayerLogin'
-  return (
-    <div className={playerClass}>
-      <div className="PlayerProfileBlock">
-        <div className="PlayerProfile"></div>
-      </div>
-      <div className="PlayerInfoBlock">
-        <div className="PalyerNameAndRank">
-          <div className="PlayerName"></div>
-          <div className="PlayerRank"></div>
-        </div>
-        <div className="PlayerRecordBlock">
-          <div className="PlayerRecordTitle"></div>
-          <div className="PlayerRecordContent"></div>
-        </div>
-      </div>
-      <div className="PlayerAverageScore"></div>
-      <div className="PlayerCancelCircle"></div>
-    </div>
-  )
-}
-
-const axiosSend = async () => {
-  let myData = await apis.random()
-  console.log(myData)
-}
-
 const KioskLogin = () => {
+  const dispatch = useDispatch()
+  const onAddPlayer = () => dispatch(addPlayer())
   const players = useSelector(state => state.OfflineLoginUsers.players)
-  const playersNow = players.map(player => `<div class='Player'> ${{ ...player }} </div>`)
-
+  const always4Blocks = () => {
+    const playersList = [...players]
+    for (let i = playersList.length; i < 4; i++) {
+      playersList.push({})
+    }
+    return playersList
+  }
   return (
     <div className="KioskBackground">
       <KioskNavBlock goBackTo="/KioskSelect" />
@@ -63,15 +34,21 @@ const KioskLogin = () => {
           </div>
           <div className="PinInputBlock">
             <input className="PinInput"></input>
-            <button className="PinPlus" onClick={axiosSend}></button>
+            <button className="PinPlus" onClick={onAddPlayer}>
+              +
+            </button>
           </div>
         </div>
         <div className="UsersBlock">
           <div className="PlayersBlock">
             <div className="PlayerText">Players</div>
             <div className="PlayersList">
-              {players.map(player => {
-                return player.nickname ? <KioskLoginPlayer player={player} /> : <KioskLoginPlayer player="" />
+              {always4Blocks().map((player, index) => {
+                return player.nickname ? (
+                  <KioskLoginPlayer player={player} key={`KioskLoginPlayer-${index}`} />
+                ) : (
+                  <KioskLoginPlayer player="" key={`KioskLoginPlayer-${index}`} />
+                )
               })}
               {/* <div className="Player"></div>
               <div className="Player"></div>
