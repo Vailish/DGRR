@@ -16,5 +16,5 @@ public class GameResponseDto {
 	private Long gameId;
 	private Boolean gameType;
 	private LocalDateTime gameDate;
-	private List<UserGame> gameDetail;
+	private List<GameDetail> gameDetail;
 }

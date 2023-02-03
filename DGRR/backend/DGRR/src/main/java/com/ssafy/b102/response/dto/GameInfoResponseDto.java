@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 @Builder
 public class GameInfoResponseDto {
-	private Long game_id;
-	private Boolean game_type;
-	private LocalDateTime game_date;
-	private List<GameDetail> game_detail;
+	private Long gameId;
+	private Boolean gameType;
+	private LocalDateTime gameDate;
+	private List<GameDetail> gameDetail;
 }
