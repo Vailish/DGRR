@@ -1,6 +1,21 @@
 import React from 'react'
 import './PageOne.scss'
-const PageOne = ({ form, onSubmit, onChange }) => {
+const PageOne = ({
+  form,
+  onSubmit,
+  onChange,
+  userNameError,
+  passwordError,
+  passwordConfirmError,
+  pageOneError,
+  isUserName,
+  isPw,
+  isPwConfirm,
+  isSub,
+}) => {
+  const changeHandlerId = () => {
+    console.log('테스트할게요')
+  }
   return (
     <div className="PageOne">
       {/* <div style={{ margin: '20px' }}></div> */}
@@ -10,6 +25,7 @@ const PageOne = ({ form, onSubmit, onChange }) => {
       <form onSubmit={onSubmit}>
         <div className="PageInput">
           <input
+            style={isSub && !isUserName ? { border: '2px solid red' } : {}}
             className="PageText"
             name="username"
             value={form.username}
@@ -17,27 +33,39 @@ const PageOne = ({ form, onSubmit, onChange }) => {
             placeholder="아이디를 입력해주세요"
           />
           <br />
-
+          <div>
+            <span style={{ color: 'red' }}>{userNameError}</span>
+          </div>
           <input
+            style={isSub && !isPw ? { border: '2px solid red' } : {}}
             className="PageText"
+            type="password"
             name="password"
             value={form.password}
             onChange={onChange}
             placeholder="비밀번호를 입력해주세요"
           />
           <br />
+          <div>
+            <span style={{ color: 'red' }}>{passwordError} </span>
+          </div>
 
           <input
+            style={isSub && !isPwConfirm ? { border: '2px solid red ' } : {}}
             className="PageText"
+            type="password"
             name="passwordConfirm"
             value={form.passwordConfirm}
             onChange={onChange}
             placeholder="비밀번호를 다시 입력해주세요"
           />
         </div>
-        <br />
+        <div>
+          <span style={{ color: 'red' }}>{passwordConfirmError} </span>
+          <span style={{ color: 'red' }}>{pageOneError} </span>
+        </div>
         <div className="NextButton">
-          <button className="Button" type="submit">
+          <button className="Button1" type="submit">
             다음
           </button>
         </div>
