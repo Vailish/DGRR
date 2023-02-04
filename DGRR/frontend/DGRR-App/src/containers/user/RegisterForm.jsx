@@ -46,6 +46,7 @@ const RegisterForm = () => {
   })
 
   const [isRegisterThreeError, setIsRegisterThreeError] = useState({
+    pagethree: false,
     gender: false,
     date: false,
   })
@@ -88,6 +89,7 @@ const RegisterForm = () => {
   const dispatch = useDispatch()
   const onChange = e => {
     const { name, value } = e.target
+    console.log(value)
     dispatch(
       changeField({
         form: 'register',
@@ -225,7 +227,7 @@ const RegisterForm = () => {
     if (name === 'nickname') {
       if (value.length === 0) {
         setRegisterTwoError({
-          ...setRegisterTwoError,
+          ...registerTwoError,
           nickname: '',
         })
         setIsRegisterTwoError({
@@ -235,11 +237,11 @@ const RegisterForm = () => {
       } else {
         if (checkNickname(value)) {
           setIsRegisterTwoError({
-            ...setIsRegisterTwoError,
+            ...isRegisterTwoError,
             nickname: true,
           })
           setRegisterTwoError({
-            ...setRegisterTwoError,
+            ...registerTwoError,
             nickname: '',
           })
         } else {
@@ -257,13 +259,12 @@ const RegisterForm = () => {
     if (name === 'email') {
       if (value.length === 0) {
         setRegisterTwoError({
-          ...setRegisterTwoError,
+          ...registerTwoError,
           email: '',
         })
         setRegisterTwoError({
-          ...setIsRegisterTwoError({
-            email: false,
-          }),
+          ...isRegisterTwoError,
+          email: false,
         })
       } else {
         if (checkEmail(value)) {
@@ -335,10 +336,15 @@ const RegisterForm = () => {
         }),
       )
     }
+
+    //날짜가 비었음 false
+
+    console.log(date)
   }
   //성별
   const onChangeGender = checkThis => {
     const genderBoxes = document.getElementsByName('gender')
+    const check = checkThis.checked
 
     for (let i = 0; i < genderBoxes.length; i++) {
       if (genderBoxes[i] !== checkThis) {
@@ -351,6 +357,55 @@ const RegisterForm = () => {
             value: genderBoxes[i].value,
           }),
         )
+
+        //남자
+        if (genderBoxes[i].value === 'male') {
+          //남자 선택
+          if (check) {
+            console.log('선택')
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: true,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '',
+            })
+          } else {
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: false,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '성별 하나 필수로 선택하셔야 됩니다.',
+            })
+          }
+          //남자 선택 하지 않음
+        }
+        if (genderBoxes[i].value === 'female') {
+          if (check) {
+            console.log('선택')
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: true,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '',
+            })
+          } else {
+            console.log('선택안해')
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: false,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '성별 하나 필수로 선택하셔야 됩니다.',
+            })
+          }
+        }
       }
     }
   }
@@ -389,6 +444,8 @@ const RegisterForm = () => {
   const onSubmitPageTwo = e => {
     e.preventDefault()
     setIsSubTwo(true)
+
+    console.log(isRegisterTwoError.name + ' ' + isRegisterTwoError.nickname + ' ' + isRegisterTwoError.email)
     if (isRegisterTwoError.name && isRegisterTwoError.nickname && isRegisterTwoError.email) {
       setIsRegisterTwoError({
         ...isRegisterTwoError,
@@ -413,9 +470,65 @@ const RegisterForm = () => {
 
   const onSubmitPageThree = e => {
     e.preventDefault()
+
     const { name, birthday, gender } = form
+    console.log(birthday.length === 10)
+    console.log(isRegisterThreeError.gender + ' ' + isRegisterThreeError.date)
     console.log(birthday + ' ' + gender)
-    reqRegister(form)
+    setIsSubThree(true)
+    console.log(isRegisterThreeError.gender + ' ' + isRegisterThreeError.date)
+    if (isRegisterThreeError.gender && birthday.length === 10) {
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        date: true,
+        pagethree: true,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        date: '',
+        pagethree: '',
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '',
+      })
+      reqRegister(form)
+    } else if (!isRegisterThreeError.gender && birthday.length === 10) {
+      console.log(isRegisterThreeError.gender)
+
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        gender: false,
+        date: true,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '성별을 필수로 하나 입력해주세요',
+        date: '날짜를 선택해 주세요',
+      })
+    } else if (isRegisterThreeError.gender && !(birthday.length === 10)) {
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        gender: true,
+        date: false,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '',
+        date: '날짜를 선택해 주세요',
+      })
+    } else {
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        gender: false,
+        date: false,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '성별을 필수로 하나 선택해주세요',
+        date: '날짜를 선택해 주세요',
+      })
+    }
   }
 
   useEffect(() => {
@@ -494,6 +607,12 @@ const RegisterForm = () => {
                     onChangeDate={onChangeDate}
                     onChangeGender={onChangeGender}
                     onSubmit={onSubmitPageThree}
+                    genderError={registerThreeError.gender}
+                    dateError={registerThreeError.date}
+                    pageThreeError={registerThreeError.pagethree}
+                    isGender={isRegisterThreeError.gender}
+                    isDate={isRegisterThreeError.date}
+                    isSub={isSubThree}
                   />
                 ),
               }[page]
