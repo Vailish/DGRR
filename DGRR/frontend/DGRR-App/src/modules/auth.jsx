@@ -3,7 +3,8 @@ import produce from 'immer'
 
 const CHANGE_FIELD = 'auth/CHANGE_FIELD'
 const INITIAL_FORM = 'auth/INITIAL_FORM'
-
+const FIND_USERNAME = 'auth/FIND_USERNAME'
+const FIND_PASSWORD = 'auth/FIND_PASSWORD'
 export const changeField = createAction(CHANGE_FIELD, ({ form, key, value }) => ({
   form,
   key,
@@ -27,7 +28,14 @@ const initalState = {
     birthday: '',
     gender: '',
   },
-  testId: '',
+  findid: {
+    nickname: '',
+    email : '',
+  },
+  findpw: {
+    username: '',
+    email : ''
+  }
 }
 
 const auth = handleActions(

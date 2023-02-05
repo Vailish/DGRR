@@ -2,8 +2,6 @@ import '../../../scss/Login.scss'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 const Login = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
-  const [styleId, setStyleId] = useState({})
-
   return (
     <div className="LoginTheme">
       <div className="Login">
@@ -55,9 +53,7 @@ const Login = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
               ''
             )}
             <div className="Button">
-              <button   onClick={onSubmit}>
-                로그인
-              </button>
+              <button onClick={onSubmit}>로그인</button>
             </div>
           </form>
           <div className="JoinAndFind">
