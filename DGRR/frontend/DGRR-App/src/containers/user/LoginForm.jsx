@@ -15,6 +15,13 @@ const LoginForm = () => {
     form: auth.login,
   }))
 
+  useEffect(() => {
+    if (localStorage.getItem('access-token')) {
+      navigate('/main')
+    } else {
+      navigate('/')
+    }
+  }, [localStorage.getItem('access-token')])
   const reqLogin = async user => {
     console.log(user)
     console.log(isLogin)
