@@ -284,6 +284,27 @@
     width: 464 / 1920 * 100vw;
     height: 445 / 1080 * 100vh;
     margin-top: 16 / 1080 * 100vh;
+
+    .RankingTextBox {
+      display: flex;
+      // padding: 1% 1%;
+      margin-top: 26 / 1080 * 100vh;
+      margin-left: 22 / 1920 * 100vw;
+      width: 90%;
+      height: 10%;
+      background: #D9D9D9;
+      border-radius: 5px;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 24/1080*100vh;
+      font-weight: 600;
+    }
+
+    .MyRankingTextBox {
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgb(0, 0, 0) inset;
+      border-radius: 5px;
+    }
   }
 
   .TotalRankingBox {

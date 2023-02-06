@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
-const PieGraph = ({ title, startColor, endColor }) => {
+const PieGraph = ({ title, startColor, endColor, score }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const data = [
-    { name: "Group A", value: 230, fill: startColor },
-    { name: "Group B", value: 100, fill: endColor },
+    { name: "Group A", value: score, fill: startColor },
+    { name: "Group B", value: 300-score, fill: endColor },
   ];
   
   const renderActiveShape = (props) => {
@@ -41,7 +41,7 @@ const PieGraph = ({ title, startColor, endColor }) => {
             {title}
           </tspan>
           <tspan x={cx} dy="30%" fontSize="300%" fontWeight="100%">
-            {123}
+            {score}
           </tspan>
         </text> 
         <Sector
