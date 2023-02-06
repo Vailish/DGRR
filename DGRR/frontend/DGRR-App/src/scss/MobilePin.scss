@@ -7,21 +7,21 @@
       display: none;
     }
   }
-  .MobileTheme {
+  .MobilePinTheme {
     width: 100vw;
     height: 100vh;
     text-align: center;
     background: linear-gradient(#fff, #4b185f);
     background-size: cover;
-    .Mobile {
+    .MobilePin {
       width: 100%;
       height: 100vh;
       margin: auto auto;
 
-      .MobileText {
+      .MobilePinText {
         text-align: center;
         color: #fff;
-        .MobileTitleText {
+        .MobilePinTitleText {
           margin-top: 4%;
           margin-bottom: 64px;
           font-family: 'Poller One';
@@ -31,44 +31,29 @@
           line-height: 40px;
           text-shadow: 0px 4px 45px #000;
         }
-        .MobileSubTitleText {
-          font-family: 'Inter';
-          font-weight: 400px;
-          line-height: 40px;
-          text-shadow: 0px 4px 45px #000;
-        }
       }
-      .MobileForm {
+      .MobilePinForm {
         width: 55%;
-        height: 64%;
+        height: 48%;
         border-radius: 16px;
         margin: auto auto;
-
-        .MobileLoginInput {
-          margin-top: 2rem;
-          margin-bottom: 16px;
-          text-align: center;
-
-          input {
-            width: 88%;
-            height: 24px;
-            margin-top: 16px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            font-family: 'Archivo';
-            font-size: 16px;
-            color: #501766;
-            font-weight: 400px;
-            box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
-            background: linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #686868, #686868),
-              linear-gradient(0deg, #686868, #686868), #686868;
-            &::placeholder {
-              color: #501766;
-            }
-          }
+        background-color: #fff;
+        box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+        .MobilePinCount {
+          width: 48%;
+          position: absolute;
+          margin: 4rem 14px;
         }
-        .MobileButton {
-          margin: 8px 2rem;
+        .MobilePinNumber {
+          width: 48%;
+          position: absolute;
+          margin: 8rem 14px;
+        }
+        .MobilePinButton {
+          width: 48vw;
+          margin: 8px 14px;
+          position: absolute;
+          bottom: 8rem;
           text-align: center;
           button {
             width: 88%;

@@ -9,6 +9,7 @@ import NotFound from './components/notfound/NotFound'
 import IdFindSuccess from './components/user/Find/IdFindSuccess'
 import PwFindSuccess from './components/user/Find/PwFindSuccess'
 import MobileForm from './containers/user/MobileForm'
+import MobilePin from './components/Mobile/MobilePin'
 const App = () => {
   return (
     <Routes>
@@ -20,6 +21,7 @@ const App = () => {
       <Route path="/findPw" element={<FindPwForm />} />
       <Route path="/findPwSuccess" element={<PwFindSuccess />} />
       <Route path="/mLogin" element={<MobileForm />} />
+      <Route path="/mPin" element={<MobilePin />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   )

@@ -14,34 +14,13 @@ const MobileForm = () => {
   const { form } = useSelector(({ auth }) => ({
     form: auth.login,
   }))
-  useEffect(() => {
-    if (localStorage.getItem('access-token')) {
-      navigate('/main')
-      dispatch(
-        changeField({
-          form: 'login',
-          key: form.username,
-          value: '',
-        }),
-      )
-      dispatch(
-        changeField({
-          form: 'login',
-          key: form.password,
-          value: '',
-        }),
-      )
-    } else {
-      navigate('/')
-    }
-  }, [localStorage.getItem('access-token')])
   const reqLogin = async user => {
     console.log(user)
     console.log(isLogin)
     try {
       const response = await axios.post(
+        //URI 바꿔야지.......
         'http://192.168.31.142:8080/login',
-
         JSON.stringify(user),
         {
           headers: {
@@ -54,19 +33,20 @@ const MobileForm = () => {
         // console.log(response.headers.get('Authorization'))
         alert('로그인 성공')
         setError(' ')
-        const accessToken = response.headers.get('Authorization')
-        localStorage.setItem('access-token', accessToken)
-        navigate('/main')
+        // const accessToken = response.headers.get('Authorization')
+        // localStorage.setItem('access-token', accessToken)
+        navigate('/mPin', {
+          state: {
+            username: user.username,
+            password: user.password,
+          },
+        })
       }
     } catch (e) {
-      console.log(e)
+      setError('존재하지 않는 아이디 입니다.')
     }
   }
-  useEffect(() => {
-    if (isLogin) {
-      setError(' ')
-    }
-  })
+
   const onChange = e => {
     const { name, value } = e.target
     dispatch(
