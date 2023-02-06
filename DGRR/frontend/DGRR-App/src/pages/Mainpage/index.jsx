@@ -54,6 +54,12 @@ const Mainpage = () => {
           <h2 className='BoxTitle'>
             최근 랭킹전 20Games 승률
           </h2>
+          <div className='RecordRateBar'>
+            <div className='ProgressLine'>16패<span className='SpanBar'>14승</span></div>
+            <div className='Info'>
+              <span className='ProgressLineText'>70%</span>
+            </div>
+          </div>
         </div>
         <div className="MainBox UserRankingBox">
           <h2 className='BoxTitle'>

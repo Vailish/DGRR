@@ -211,6 +211,67 @@
     width: 464 / 1920 * 100vw;
     height: 173 / 1080 * 100vh;
     margin-top: 16 / 1080 * 100vh;
+
+    .RecordRateBar {
+      display: flex;
+      margin: 48/1080*100vh 40/1920*100vw 42/1080*100vh;
+      
+      .Info {
+        display: flex;
+        margin-left: 16px;
+        align-items: center;
+        font-size: 24/1080*100vh;
+        font-weight: 500;
+
+        .ProgressLineText {
+          opacity: 0;
+          animation: showText2 0.5s 1.5s linear forwards;
+        }
+        @keyframes showText2 {
+          100%{
+            opacity: 1;
+          }
+        }
+      }
+
+      .ProgressLine {
+        position: relative;
+        height: 32/1080*100vh;
+        width: 100%;
+        background: #E84057;
+        border-radius: 10px;
+        box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.05), 0px 1px rgba(255, 255, 255, 0.8);
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: animate 1s cubic-bezier(1, 0, 0.5, 1) forwards;
+        font-size: 20/1080*100vh;
+        font-weight: 500;
+        color:#fff;
+        text-align: right;
+        padding-right: 1%;
+
+        .SpanBar {
+          position: absolute;
+          left: 0;
+          height: 100%;
+          width: 70%;
+          background: #5383E8;
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          transform: scaleX(0);
+          transform-origin: left;
+          animation: animate 1s 0.5s cubic-bezier(1, 0, 0.5, 1) forwards;
+          text-align: left;
+          padding-left: 1%;
+        }
+
+        @keyframes animate {
+          100%{
+            transform: scaleX(1);    
+          }
+        }
+      }
+    }
   }
 
   .RecordBox {
