@@ -8,10 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.b102.request.dto.CheckPasswordInfoDto;
+import com.ssafy.b102.request.dto.LoginRequestDto;
+import com.ssafy.b102.request.dto.RequestUsernameDto;
+import com.ssafy.b102.request.dto.SetPasswordDto;
 import com.ssafy.b102.request.dto.UserRequestDto;
 import com.ssafy.b102.response.dto.UserResponseDto;
 import com.ssafy.b102.service.UserService;
@@ -63,6 +68,50 @@ public class UserController {
 		UserResponseDto userResponseDto = userService.getUser(username);
 		return new ResponseEntity<UserResponseDto>(userResponseDto, HttpStatus.OK);
 	}
+	
+	@GetMapping("/check/username/{username}")
+	public ResponseEntity<?> checkUsername(@PathVariable String username){
+		String response = userService.checkUsername(username);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/check/nickname/{nickname}")
+	public ResponseEntity<?> checkNickname(@PathVariable String nickname){
+		String response = userService.checkNickname(nickname);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/check/email/{email}")
+	public ResponseEntity<?> checkEmail(@PathVariable String email){
+		String response = userService.checkEmail(email);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@PostMapping("/request/username")
+	public ResponseEntity<?> requestUsername(@RequestBody RequestUsernameDto requestUsernameDto){
+			String response = userService.requestUsername(requestUsernameDto);
+			return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	@PostMapping("/request/setpassword")
+	public ResponseEntity<?> checkInfo(@RequestBody CheckPasswordInfoDto checkPasswordInfoDto){
+		Boolean response = userService.checkInfo(checkPasswordInfoDto);
+		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
+	}
+	
+	@PutMapping("/request/setpassword")
+	public ResponseEntity<?> setPassword(@RequestBody SetPasswordDto setPasswordDto){
+		Boolean response = userService.setPassword(setPasswordDto);
+		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
+	}
+	
+	@PostMapping("/request/pin")
+	public ResponseEntity<?> createPin(@RequestBody LoginRequestDto loginRequestDto){
+		String response = userService.createPin(loginRequestDto);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
+}
+	
+	
 	
 //	@PutMapping("/user/{username}")
 //	public ResponseEntity<?> updateUser(@PathVariable String username){

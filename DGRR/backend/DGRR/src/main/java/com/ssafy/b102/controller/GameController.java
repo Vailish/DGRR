@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.b102.request.dto.GameRequestDto;
-import com.ssafy.b102.response.dto.GameInfoResponseDto;
 import com.ssafy.b102.response.dto.GameResponseDto;
+import com.ssafy.b102.response.dto.MatchingResponseDto;
+import com.ssafy.b102.response.dto.UserGamesResponseDto;
+import com.ssafy.b102.response.dto.WinRate;
 import com.ssafy.b102.service.GameService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,17 +44,32 @@ public class GameController {
 //	}
 	
 	
-//	@GetMapping("/games/{nickname}")
 	@GetMapping("/games/{nickname}")
 	public ResponseEntity<?> getUserGames(@PathVariable String nickname){
-		List<GameInfoResponseDto> gameInfoResponseDtos = gameService.getUserGames(nickname);
-		return new ResponseEntity<List<GameInfoResponseDto>>(gameInfoResponseDtos, HttpStatus.OK);
+		List<UserGamesResponseDto> userGamesResponseDtos = gameService.getUserGames(nickname);
+		return new ResponseEntity<List<UserGamesResponseDto>>(userGamesResponseDtos, HttpStatus.OK);
 	}
 	
 	@PostMapping("/game")
 	public ResponseEntity<?> createGame(@RequestBody GameRequestDto gameRequestDto){
 		GameResponseDto gameResponseDto = gameService.createGame(gameRequestDto);
 		return new ResponseEntity<GameResponseDto>(gameResponseDto, HttpStatus.OK);
+	}
+	
+//	@GetMapping("/matching/{pinNumber}")
+//	public ResponseEntity<?> getMatchingProfiles(@PathVariable String pinNumber){
+//		System.out.println("매칭 프로필 요청");
+//		WinRate winrate = new WinRate(10, 7, 3);
+//		
+//		MatchingResponseDto matchingResponseDto = new MatchingResponseDto("testzzang1", "갓냥이", "null", 135, winrate, 163);
+//		
+//		return new ResponseEntity<MatchingResponseDto>(matchingResponseDto, HttpStatus.OK);
+//	}
+
+	@GetMapping("/matching/{pinNumber}")
+	public ResponseEntity<?> getMatchingProfile(@PathVariable Integer pinNumber){
+		MatchingResponseDto matchingResponseDto = gameService.getMatchingProfile(pinNumber);
+		return new ResponseEntity<MatchingResponseDto>(matchingResponseDto, HttpStatus.OK);
 	}
 	
 }

@@ -34,7 +34,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(length = 32, nullable = false, unique = true) // 10글자 제한, not null, 중복금지
+	@Column(length = 16, nullable = false, unique = true) // 10글자 제한, not null, 중복금지
 	private String username;
 	
 	@Column(length = 128, nullable = false)
@@ -46,7 +46,7 @@ public class User {
 	@Column(length = 32, nullable = false)
 	private String name;
 	
-	@Column(length = 64, nullable = false)
+	@Column(length = 64, nullable = false, unique = true)
 	private String email;
 	
 	@Column(nullable = false) // not null
@@ -63,6 +63,12 @@ public class User {
 	
 	@Column(nullable = false)
 	private LocalDate birthday;
+	
+	@Column(nullable = true)
+	private Integer pin;
+	
+	@Column(nullable = true)
+	private LocalDateTime pinCreateTime;
 	
 //	private String user_img;
 	

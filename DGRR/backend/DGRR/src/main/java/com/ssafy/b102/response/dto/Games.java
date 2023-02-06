@@ -3,13 +3,15 @@ package com.ssafy.b102.response.dto;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
+@Data
+@Builder
 @AllArgsConstructor
-public class GameDetail {
+@NoArgsConstructor
+public class Games {
 	private String nickname;
 	private List<Integer> game_score;
 	private Integer game_rank;

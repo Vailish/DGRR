@@ -1,7 +1,5 @@
 package com.ssafy.b102.Entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +28,7 @@ public class UserGame {
 	private Long id;
 	
 	@Column(nullable = false)
-	private List<Integer> gameScore;  // 일단 진행하고, 후에 바꿔보자
+	private String gameScore;
 	
 	@Column(nullable = false)
 	private Integer gameRank;
