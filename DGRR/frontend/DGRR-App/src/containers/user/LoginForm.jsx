@@ -21,7 +21,7 @@ const LoginForm = () => {
     setError('아이디와 비밀번호가 일치하지 않습니다.')
     try {
       const response = await axios.post(
-        'http://192.168.31.142/login',
+        'http://192.168.31.142:8080/login',
 
         JSON.stringify(user),
         {

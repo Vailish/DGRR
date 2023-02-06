@@ -61,7 +61,9 @@ const PageOne = ({
           />
         </div>
         <div>
-          <span style={{ color: 'red' }}>{passwordConfirmError} </span>
+          <span style={{ color: 'red' }}>
+            {passwordConfirmError} <br />
+          </span>
           <span style={{ color: 'red' }}>{pageOneError} </span>
         </div>
         <div className="NextButton">

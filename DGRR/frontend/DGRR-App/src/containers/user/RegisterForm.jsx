@@ -63,10 +63,11 @@ const RegisterForm = () => {
   const reqRegister = async user => {
     console.log(user)
     try {
-      const response = await axios.post('http://192.168.31.142/api/v1/signup', JSON.stringify(user), {
+      const response = await axios.post('http://192.168.31.142:8080/api/v1/signup', JSON.stringify(user), {
         headers: { 'Content-Type': 'application/json' },
       })
       console.log(response)
+
       if (response.status === 200) {
         {
           alert('회원가입성공')
@@ -79,13 +80,95 @@ const RegisterForm = () => {
   }
   //아이디 중복체크
   const reqDuplcateCheckUserName = async username => {
+    console.log('중복체크 들어갑니다.' + username)
     try {
-      const response = await axios.get(`http://192.168.31.142/api/vi/username${username}`)
+      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/username/${username}`)
+      console.log(response)
+      if (response.data === true) {
+        setIsRegisterOneError({
+          ...setIsRegisterOneError,
+          username: true,
+        })
+        setRegisterOneError({
+          ...setIsRegisterOneError,
+          username: '',
+        })
+      } else if (response.data === false) {
+        setIsRegisterOneError({
+          ...setIsRegisterOneError,
+          username: false,
+        })
+        setRegisterOneError({
+          ...setIsRegisterOneError,
+          username: '존재하는 아이디입니다.',
+        })
+      }
     } catch (e) {
       console.log(e)
     }
   }
 
+  //닉네임 중복체크
+  const reqDuplcateCheckNickname = async nickname => {
+    console.log('중복체크 들어갑니다.' + nickname)
+    try {
+      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/nickname/${nickname}`)
+      console.log(response.data)
+      if (response.data === true) {
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          nickname: true,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          nickname: '',
+        })
+      } else if (response.data === false) {
+        console.log('존재하는 닉네임입니다.')
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          nickname: false,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          nickname: '존재하는 닉네임입니다.',
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //이메일 중복체크
+  const reqDuplcateCheckEmail = async email => {
+    console.log('중복체크 들어갑니다.' + email)
+    try {
+      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/email/${email}`)
+      console.log(response.data)
+      if (response.data === true) {
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          email: true,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          email: '',
+        })
+      } else if (response.data === false) {
+        console.log('존재하는 닉네임입니다.')
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          email: false,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          email: '존재하는 이메일입니다.',
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const dispatch = useDispatch()
   const onChange = e => {
     const { name, value } = e.target
@@ -114,6 +197,7 @@ const RegisterForm = () => {
           setRegisterOneError({ ...registerOneError, username: '' })
           //통과를 했다면 아이디 중복 체크를 해야한다.
           //비동기 통신 처리하기 위한 코드
+          reqDuplcateCheckUserName(value)
           console.log('비동기 처리')
         } else {
           setIsRegisterOneError({
@@ -244,6 +328,7 @@ const RegisterForm = () => {
             ...registerTwoError,
             nickname: '',
           })
+          reqDuplcateCheckNickname(value)
         } else {
           setIsRegisterTwoError({
             ...isRegisterTwoError,
@@ -276,6 +361,7 @@ const RegisterForm = () => {
             ...registerTwoError,
             email: '',
           })
+          reqDuplcateCheckEmail(value)
         } else {
           setIsRegisterTwoError({
             ...isRegisterTwoError,
