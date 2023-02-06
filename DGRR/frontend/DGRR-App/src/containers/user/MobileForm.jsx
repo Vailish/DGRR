@@ -14,7 +14,27 @@ const MobileForm = () => {
   const { form } = useSelector(({ auth }) => ({
     form: auth.login,
   }))
-
+  useEffect(() => {
+    if (localStorage.getItem('access-token')) {
+      navigate('/main')
+      dispatch(
+        changeField({
+          form: 'login',
+          key: form.username,
+          value: '',
+        }),
+      )
+      dispatch(
+        changeField({
+          form: 'login',
+          key: form.password,
+          value: '',
+        }),
+      )
+    } else {
+      navigate('/')
+    }
+  }, [localStorage.getItem('access-token')])
   const reqLogin = async user => {
     console.log(user)
     console.log(isLogin)
@@ -37,20 +57,6 @@ const MobileForm = () => {
         const accessToken = response.headers.get('Authorization')
         localStorage.setItem('access-token', accessToken)
         navigate('/main')
-        dispatch(
-          changeField({
-            form: 'login',
-            key: user.username,
-            value: '',
-          }),
-        )
-        dispatch(
-          changeField({
-            form: 'login',
-            key: user.password,
-            value: '',
-          }),
-        )
       }
     } catch (e) {
       console.log(e)

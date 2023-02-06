@@ -1,12 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 const IdFind = ({ form, onSubmit, onChange }) => {
+  const navigate = useNavigate()
   return (
     <div className="FindIdTheme">
       <div className="FindId">
         <div className="Text">
           <div className="TitleText">
-            <h1>DG.RR</h1>
+            <h1
+              onClick={() => {
+                navigate('/')
+              }}
+            >
+              DG.RR
+            </h1>
           </div>
           <div className="SubTitleText">
             <p>

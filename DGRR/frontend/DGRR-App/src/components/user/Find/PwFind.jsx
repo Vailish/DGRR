@@ -1,14 +1,21 @@
 import React from 'react'
 import '../../../scss/FindPw.scss'
 import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
 const PwFind = ({ form, onChange, onSubmit }) => {
+  const navigate = useNavigate()
   return (
     <div className="FindPwTheme">
       <div className="FindPw">
         <div className="Text">
           <div className="TitleText">
-            <h1>DG.RR</h1>
+            <h1
+              onClick={() => {
+                navigate('/')
+              }}
+            >
+              DG.RR
+            </h1>
           </div>
           <div className="SubTitleText">
             <p>

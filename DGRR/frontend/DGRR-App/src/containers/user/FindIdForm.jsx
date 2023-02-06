@@ -16,14 +16,44 @@ const FindIdForm = () => {
   const reqFindUserName = async (nickname, email) => {
     console.log(nickname + ' ' + email)
     const username = '테스트'
+    const findIdinfo = {
+      nickname: nickname,
+      email: email,
+    }
     try {
-      const response = await axios.get('링크가 있겠죠?')
+      const response = await axios.post(
+        'http://192.168.31.142:8080/api/v1/request/username',
+        JSON.stringify(findIdinfo),
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+          },
+        },
+      )
+      console.log(response)
       if (response.status === 200) {
+        alert('아이디를 찾았어요!!')
         navigate('/findIdSuccess', {
           state: {
-            username: username,
+            username: response.data,
           },
         })
+        dispatch(
+          changeField({
+            form: 'findid',
+            key: 'nickname',
+            value: '',
+          }),
+        )
+        dispatch(
+          changeField({
+            form: 'findid',
+            key: 'email',
+            value: '',
+          }),
+        )
+      } else {
+        alert('존재하지 않는 아이디입니다.')
       }
     } catch (e) {
       console.log(e)

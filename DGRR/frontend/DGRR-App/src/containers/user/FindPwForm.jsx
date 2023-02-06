@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import { checkEmail } from '../../regex/regex'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const FindPwForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -11,11 +12,27 @@ const FindPwForm = () => {
     form: auth.findpw,
   }))
 
-  const reqFindPassword = async (nickname, email) => {
-    const username = '테스트 '
+  const reqFindPassword = async (username, email) => {
+    console.log(username + ' ' + email)
+    const findUserinfo = {
+      username: username,
+      email: email,
+    }
+    const response = await axios.post(
+      'http://192.168.31.142:8080/api/v1/request/setpassword',
+      JSON.stringify(findUserinfo),
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+      },
+    )
+    console.log(response)
+
     navigate('/findPwSuccess', {
       state: {
         username: username,
+        email: email,
       },
     })
   }

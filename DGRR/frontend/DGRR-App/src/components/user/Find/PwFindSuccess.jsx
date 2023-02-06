@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { checkPassword } from '../../../regex/regex'
+
+import axios from 'axios'
 const PwFindSuccess = () => {
+  const navigate = useNavigate()
   const location = useLocation()
-  const { username } = location.state
+  const { username, email } = location.state
+  console.log(username, email)
   const [pwError, setPwError] = useState(false)
   const [pwConfirmError, setPwConfirmError] = useState('')
   const [newUser, setNewUser] = useState({
     username: username,
+    email: email,
     password: '',
     passwordConfirm: '',
   })
@@ -26,6 +31,37 @@ const PwFindSuccess = () => {
     })
   }
 
+  const reqUpdatePassword = async (username, email, password, passwordConfirm) => {
+    const updateUserInfo = {
+      username: username,
+      email: email,
+      password: password,
+      passwordConfirm: passwordConfirm,
+    }
+    const response = await axios.put(
+      'http://192.168.31.142:8080/api/v1/request/setpassword',
+      JSON.stringify(updateUserInfo),
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+      },
+    )
+    if (response.data === true) {
+      alert('비밀번호 수정완료하였습니다.')
+      navigate('/')
+    } else {
+      alert('아이디를 찾지 못했습니다.')
+      navigate('/')
+    }
+    setNewUser({
+      ...newUser,
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+    })
+  }
   const onSubmit = e => {
     e.preventDefault()
     const { username, password, passwordConfirm } = newUser
@@ -35,6 +71,7 @@ const PwFindSuccess = () => {
       if (password === passwordConfirm) {
         setPwConfirmError(false)
         console.log(username + ' ' + password + ' ' + passwordConfirm)
+        reqUpdatePassword(username, email, password, passwordConfirm)
       } else {
         setPwConfirmError(true)
       }
@@ -66,8 +103,10 @@ const PwFindSuccess = () => {
           <div className="FindPwInput">
             <form onSubmit={onSubmit}>
               <input style={{ background: '#D3D3D3' }} name="username" value={username} readOnly />
+              <input style={{ background: '#D3D3D3' }} name="email" value={email} readOnly />
               <input
                 name="password"
+                type="password"
                 value={password}
                 onChange={onPasswordHandler}
                 placeholder="비밀번호를 새로 입력해주세요"
@@ -81,6 +120,7 @@ const PwFindSuccess = () => {
               ) : null}
               <input
                 name="passwordConf"
+                type="password"
                 value={passwordConfirm}
                 onChange={onPasswordConfirmHandler}
                 placeholder="비밀번호 다시 입력해주세요"

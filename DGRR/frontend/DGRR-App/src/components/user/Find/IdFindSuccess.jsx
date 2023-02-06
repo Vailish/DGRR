@@ -1,9 +1,16 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import '../../../scss/FindIdSuccess.scss'
 const IdFindSuccess = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const { username } = location.state
+  useEffect(() => {
+    if (username) {
+    } else {
+      navigate('/findId')
+    }
+  }, [username])
   return (
     <div className="FindIdTheme">
       <div className="FindId">
@@ -25,11 +32,18 @@ const IdFindSuccess = () => {
           </div>
 
           <div className="FindIdInput">
-            <div>
+            <div className="findUserName">
               <span>{username} </span>
             </div>
             <div className="Button">
-              <button type="button">확인</button>
+              <button
+                type="button"
+                onClick={() => {
+                  navigate('/')
+                }}
+              >
+                확인
+              </button>
             </div>
           </div>
         </div>

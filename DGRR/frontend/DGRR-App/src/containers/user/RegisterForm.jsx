@@ -643,7 +643,13 @@ const RegisterForm = () => {
         <div className="Register">
           <div className="Text">
             <div className="TitleText">
-              <h1>DG.RR</h1>
+              <h1
+                onClick={() => {
+                  navigate('/')
+                }}
+              >
+                DG.RR
+              </h1>
             </div>
             <div className="SubTitleText">
               <p>
