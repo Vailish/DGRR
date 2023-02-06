@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
-import MobileLogin from "../../components/Mobile/MobileLogin"
+import MobileLogin from '../../components/Mobile/MobileLogin'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 const MobileForm = () => {
@@ -18,10 +18,9 @@ const MobileForm = () => {
   const reqLogin = async user => {
     console.log(user)
     console.log(isLogin)
-    setError('아이디와 비밀번호가 일치하지 않습니다.')
     try {
       const response = await axios.post(
-        'http://192.168.31.142/login',
+        'http://192.168.31.142:8080/login',
 
         JSON.stringify(user),
         {
@@ -34,13 +33,27 @@ const MobileForm = () => {
       if (response.status === 200) {
         // console.log(response.headers.get('Authorization'))
         alert('로그인 성공')
+        setError(' ')
         const accessToken = response.headers.get('Authorization')
         localStorage.setItem('access-token', accessToken)
         navigate('/main')
+        dispatch(
+          changeField({
+            form: 'login',
+            key: user.username,
+            value: '',
+          }),
+        )
+        dispatch(
+          changeField({
+            form: 'login',
+            key: user.password,
+            value: '',
+          }),
+        )
       }
     } catch (e) {
       console.log(e)
-      setError('아이디와 비밀번호가 일치하지 않습니다.')
     }
   }
   useEffect(() => {
