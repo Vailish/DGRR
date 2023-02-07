@@ -1,7 +1,5 @@
 package com.ssafy.b102.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,21 +27,6 @@ public class GameController {
 	@Autowired
 	public GameService gameService;
 
-	// 테스트용, 후에 삭제예정
-//	@GetMapping("/games/{nickname}")
-//	public ResponseEntity<?> dummy(@PathVariable String nickname){
-//		
-//		GameDetail gameDetail1 = new GameDetail("아이유", List.of(10, 0, 10, 0, 9, 1, 8, 1, 6, 2, 5, 5, 10, 0, 7, 2, 4, 4, 10, 10, 10), 1);
-//		GameDetail gameDetail2 = new GameDetail("태연", List.of(7, 3, 8, 2, 9, 1, 8, 1, 6, 2, 5, 5, 10, 0, 7, 2, 4, 4, 10, 8, 2), 2);
-//		GameDetail gameDetail3 = new GameDetail("아이린", List.of(5, 3, 4, 2, 3, 1, 8, 1, 3, 2, 5, 5, 7, 0, 7, 2, 4, 4, 9, 1, 2), 3);
-//		GameDetail gameDetail4 = new GameDetail("수지", List.of(2, 1, 3, 2, 3, 2, 4, 2, 0, 2, 2, 5, 2, 0, 1, 1, 4, 4, 1, 1, 2), 4);
-//		
-//		GameInfoResponseDto gameInfoResponseDto = new GameInfoResponseDto(1L, false, LocalDateTime.now(), List.of(gameDetail1, gameDetail2, gameDetail3, gameDetail4));
-//		
-//		return new ResponseEntity<GameInfoResponseDto>(gameInfoResponseDto, HttpStatus.OK);
-//	}
-	
-	
 	@GetMapping("/games/{nickname}")
 	public ResponseEntity<?> getUserGames(@PathVariable String nickname){
 		System.out.println("특정 유저의 게임정보 컨트롤러 진입!");
@@ -57,16 +40,6 @@ public class GameController {
 		return new ResponseEntity<GameResponseDto>(gameResponseDto, HttpStatus.OK);
 	}
 	
-//	@GetMapping("/matching/{pinNumber}")
-//	public ResponseEntity<?> getMatchingProfiles(@PathVariable String pinNumber){
-//		System.out.println("매칭 프로필 요청");
-//		WinRate winrate = new WinRate(10, 7, 3);
-//		
-//		MatchingResponseDto matchingResponseDto = new MatchingResponseDto("testzzang1", "갓냥이", "null", 135, winrate, 163);
-//		
-//		return new ResponseEntity<MatchingResponseDto>(matchingResponseDto, HttpStatus.OK);
-//	}
-
 	@GetMapping("/matching/{pinNumber}")
 	public ResponseEntity<?> getMatchingProfile(@PathVariable Integer pinNumber){
 		MatchingResponseDto matchingResponseDto = gameService.getMatchingProfile(pinNumber);
