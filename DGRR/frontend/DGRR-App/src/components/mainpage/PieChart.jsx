@@ -1,13 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
-const PieGraph = ({ title }) => {
+const PieGraph = ({ title, startColor, endColor, score }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const data = [
-    { name: "Group A", value: 150, fill:"#8884d8" },
-    { name: "Group B", value: 150 },
-    // { name: "Group C", value: 300 },
-    // { name: "Group D", value: 200 }
+    { name: "Group A", value: score, fill: startColor },
+    { name: "Group B", value: 300-score, fill: endColor },
   ];
   
   const renderActiveShape = (props) => {
@@ -37,13 +35,13 @@ const PieGraph = ({ title }) => {
     // const textAnchor = cos >= 0 ? "start" : "end";
     return (
       <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill="black">
           {/* {payload.name} */}
-          <tspan x={cx} dy="0" alignmentBaseline="middle" fontSize="120%">
+          <tspan x={cx} dy="-32" alignmentBaseline="middle" fontSize="110%" fontWeight="100%">
             {title}
           </tspan>
-          <tspan x={cx} dy="-10" fontSize="14">
-            {123}
+          <tspan x={cx} dy="30%" fontSize="300%" fontWeight="100%">
+            {score}
           </tspan>
         </text> 
         <Sector
@@ -60,14 +58,14 @@ const PieGraph = ({ title }) => {
   };
   
   return (
-    <PieChart width={200} height={200}>
+    <PieChart width={180} height={180}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
         data={data}
         cx={"50%"}
-        cy={"50%"}
-        innerRadius={"70%"}
+        cy={"47%"}
+        innerRadius={"77%"}
         outerRadius={"100%"}
         // fill="#8884d8"
         dataKey="value"

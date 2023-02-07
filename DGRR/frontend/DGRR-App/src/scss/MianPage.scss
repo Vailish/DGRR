@@ -24,7 +24,7 @@
 //   └── 내용
 //       └── content
  
- .PageBase {
+.PageBase {
   display: flex;
   flex-wrap: wrap;
   padding-top: 64 / 1080 * 100vh;
@@ -42,7 +42,7 @@
     width: 100vw;
     height: 3.2vh;
     padding-top: 16px;
-    padding-bottom: 8px;
+    padding-bottom: 4px;
     background-color: #501766;
     color: white;
     justify-content: space-between;
@@ -77,7 +77,20 @@
       line-height: 22px;
     }
   }
-  
+
+  .BoxTitle {
+    margin: 0;
+    padding-top: 24 / 1080 * 100vh;
+    padding-left: 24 / 1980 * 100vw;
+    text-align: start;
+    color: #505050;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2.5vmin;
+    line-height: 22px;
+  }
+
   .MainBox {
     width: 75vw;
     height: 51vh;
@@ -90,23 +103,24 @@
       margin-top: 72 / 1080 * 100vh;
       margin-bottom: 8 / 1080 * 100vh;
       padding-left: 112 / 1920 * 100vw;
+      text-align: start;
       font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
       font-size: 3vmin;
       line-height: 22px;
-      text-align: start;
     }
     .UserText {
       margin-top: 16 / 1080 * 100vh;
       margin-bottom: 8 / 1080 * 100vh;
       padding-left: 112 / 1920 * 100vw;
-      font-size: 1.5vmin;
       text-align: start;
+      font-size: 1.5vmin;
+      color: #8a8a8a;
+      font-weight: 500;
     }
     .MainInnerBox {
       display: flex;
-      border: solid black 2px;
       padding-top: 16 / 1080 * 100vh;
       padding-left: 112 / 1920 * 100vw;
       padding-right: 112 / 1920 * 100vw;
@@ -117,12 +131,41 @@
         border-radius: 80%;
         object-fit: cover;
       }
-      .PieCharts{
-        border:solid blue;
+
+      .AvgBox{
         display: flex;
+        flex-wrap: wrap;
         width: 800 / 1920 * 100vw;
-        justify-content: space-between;
         margin-left: 96 / 1920 * 100vw;
+        
+        .PieCharts{
+          display: flex;
+          width: 800 / 1920 * 100vw;
+          justify-content: space-between;
+          // margin-left: 96 / 1920 * 100vw;
+        }
+
+        .Button {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          font-family: 'Archivo';
+          font-size: 0.9rem;
+          font-weight: 700;
+          border-radius: 0.2vw;
+          padding: 0.1rem 0.6rem 0.1rem 0.6rem;
+          // margin-right: 1rem;6
+          color: #fff;
+          background-color: #707070;
+          &:hover {
+            background-color: #501766;
+            transition: all 0.3s;
+          }
+        }
       }
     }
   }
@@ -131,25 +174,169 @@
     width: 464 / 1920 * 100vw;
     height: 312 / 1080 * 100vh;
     margin-top: 80 / 1080 * 100vh;
-    align-self: flex-start;
+
+    .TierInnerBox {
+      display: flex;
+      justify-content: space-between;
+      padding: 16/1080*100vh 64/1920*100vw 0;
+
+      .TierImg {
+        width: 18vmin;
+        height: 18vmin;
+        object-fit: contain;
+      }
+
+      .TierText {
+        padding-top: 32/1080*100vh;
+        margin-bottom: 0;
+        color: #444444;
+        font-weight: 600;
+        font-size: 2.3vmin;
+        font-family: 'Inter';
+        font-style: normal;        
+      }
+
+      .TierSubText {
+        margin-top: 16/1080*100vh;
+        color: #444444;
+        font-weight: 600;
+        font-size: 1.8vmin;
+        font-family: 'Inter';
+        font-style: normal;     
+      }
+    }
   }
 
   .RateBox {
     width: 464 / 1920 * 100vw;
     height: 173 / 1080 * 100vh;
     margin-top: 16 / 1080 * 100vh;
+
+    .RecordRateBar {
+      display: flex;
+      margin: 48/1080*100vh 40/1920*100vw 42/1080*100vh;
+      
+      .Info {
+        display: flex;
+        margin-left: 16px;
+        align-items: center;
+        font-size: 24/1080*100vh;
+        font-weight: 500;
+
+        .ProgressLineText {
+          opacity: 0;
+          animation: showText2 0.5s 1s linear forwards;
+        }
+        @keyframes showText2 {
+          100%{
+            opacity: 1;
+          }
+        }
+      }
+
+      .ProgressLine {
+        position: relative;
+        height: 32/1080*100vh;
+        width: 100%;
+        background: #E84057;
+        border-radius: 10px;
+        box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.05), 0px 1px rgba(255, 255, 255, 0.8);
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: animate 1s cubic-bezier(1, 0, 0.5, 1) forwards;
+        font-size: 20/1080*100vh;
+        font-weight: 500;
+        color:#fff;
+        text-align: right;
+        padding-right: 1%;
+
+        .SpanBar {
+          position: absolute;
+          left: 0;
+          height: 100%;
+          width: 70%;
+          background: #5383E8;
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          transform: scaleX(0);
+          transform-origin: left;
+          animation: animate 1s 0.3s cubic-bezier(1, 0, 0.5, 1) forwards;
+          text-align: left;
+          padding-left: 1%;
+        }
+
+        @keyframes animate {
+          100%{
+            transform: scaleX(1);    
+          }
+        }
+      }
+    }
   }
 
   .RecordBox {
     width: 944 / 1920 * 100vw;
     height: 1088 / 1080 * 100vh;
     margin-top: 80 / 1080 * 100vh;
+
+    .RecordNav {
+      display: flex;
+
+      .NavCategory {
+        padding-top: 28 / 1080 * 100vh;
+        padding-left: 16 / 1980 * 100vw;
+
+        .Category {
+          padding-left: 16 / 1980 * 100vw;
+          color: #919191;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .SelectCategory {
+          color:#444444;
+          font-weight: 900;
+        }
+      }
+    }
   }
 
   .UserRankingBox {
     width: 464 / 1920 * 100vw;
     height: 445 / 1080 * 100vh;
     margin-top: 16 / 1080 * 100vh;
+
+    .UserRankingBoxTitle {
+      display: flex;
+      justify-content: space-between;
+
+      .RankingNav {
+        padding-top: 24 / 1080 * 100vh;
+        padding-right: 24 / 1980 * 100vw;
+        text-align: end;
+        cursor: pointer;
+      }
+    }
+
+    .RankingTextBox {
+      display: flex;
+      margin-top: 26 / 1080 * 100vh;
+      margin-left: 22 / 1920 * 100vw;
+      width: 90%;
+      height: 10%;
+      background: #D9D9D9;
+      border-radius: 5px;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 24/1080*100vh;
+      font-weight: 600;
+    }
+
+    .MyRankingTextBox {
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgb(0, 0, 0) inset;
+      border-radius: 5px;
+    }
   }
 
   .TotalRankingBox {
