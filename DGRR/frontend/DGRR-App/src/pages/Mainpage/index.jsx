@@ -11,13 +11,13 @@ const Mainpage = () => {
   const [pointsInfo, setpointsInfo] = useState({})
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
-  // const [seletedCategory, setseletedCategory] = useState(second)
+  const [seletedCategory, setSeletedCategory] = useState("totalgame")
   const { nickName } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (localStorage.getItem('access-token')) {
-      navigate('/main')
+      navigate('/ttest01')
     } else {
       navigate('/')
     }
@@ -38,6 +38,12 @@ const Mainpage = () => {
     setUserInfo(userData)
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
+  }
+
+  const handleClick = (selected) => {
+    if (selected !== seletedCategory) {
+      setSeletedCategory(selected)
+    }
   }
 
   return (
@@ -120,9 +126,18 @@ const Mainpage = () => {
           <div className="RecordNav">
             <h2 className="BoxTitle">전적관리</h2>
             <div className="NavCategory">
-              <span className="Category">전체</span>
-              <span className="Category">랭킹전</span>
-              <span className="Category">친선전</span>
+              <span
+                className={`Category ${(seletedCategory === "totalgame" ? "SelectedCategory" : undefined)}`}
+                onClick={() => handleClick("totalgame")}
+              >전체</span>
+              <span
+                className={`Category ${(seletedCategory === "rankgame" ? "SelectedCategory" : undefined)}`}
+                onClick={() => handleClick("rankgame")}
+              >랭킹전</span>
+              <span
+                className={`Category ${(seletedCategory === "normalgame" ? "SelectedCategory" : undefined)}`}
+                onClick={() => handleClick("normalgame")}
+              >친선전</span>
             </div>
           </div>
         </div>
