@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import baseaxios from '../../API/baseaxios'
 import Nav from '../../components/mainpage/Nav'
 import PieChart from '../../components/mainpage/PieChart'
@@ -11,7 +11,9 @@ const Mainpage = () => {
   const [pointsInfo, setpointsInfo] = useState({})
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState("")
+  const [seletedCategory, setseletedCategory] = useState(second)
   const { nickName } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchData()
@@ -21,13 +23,7 @@ const Mainpage = () => {
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
     const requestRankings = await baseaxios.get(`/api/v1/data/ranking/${nickName}`)
-    const userData = requestUser.data
-    const pointsData = requestPoints.data
-    const rankingData = requestRankings.data
     setMyRanking(rankingData[2].ranking)
-    console.log(requestUser)
-    console.log(requestPoints)
-    console.log(requestRankings)
     setUserInfo(userData)
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
@@ -74,9 +70,12 @@ const Mainpage = () => {
           </div>
         </div>
         <div className="MainBox UserRankingBox">
-          <h2 className='BoxTitle'>
-            나의 랭킹
-          </h2>
+          <div className='UserRankingBoxTitle'>
+            <h2 className='BoxTitle'>
+              나의 랭킹
+            </h2>
+            <span className='RankingNav' onClick={() => (window.location.href = "/ranking")}>more▶</span>
+          </div>
           {rankingInfo.map((data, index) => {
             return(
               <div index={index} key={index} className={`RankingTextBox ${(index === 2) && "MyRankingTextBox"}`}>
@@ -89,10 +88,14 @@ const Mainpage = () => {
 
       <div>
         <div className="MainBox RecordBox">
-          <h2 className='BoxTitle'>
-            전적관리
-          </h2>
-
+          <div className='RecordNav'>
+            <h2 className='BoxTitle'>전적관리</h2>
+            <div className='NavCategory'>
+              <span className='Category'>전체</span>
+              <span className='Category'>랭킹전</span>
+              <span className='Category'>친선전</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
