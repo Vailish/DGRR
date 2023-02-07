@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Poller+One&display=swap');
+
+@media screen and (max-width: 768px) {
+  body {
+    margin: 0;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .MobilePinTheme {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background: linear-gradient(#fff, #4b185f);
+    background-size: cover;
+    .MobilePin {
+      width: 100%;
+      height: 100vh;
+      margin: auto auto;
+
+      .MobilePinText {
+        text-align: center;
+        color: #fff;
+        .MobilePinTitleText {
+          margin-top: 4%;
+          margin-bottom: 64px;
+          font-family: 'Poller One';
+
+          font-weight: 400px;
+          font-style: normal;
+          line-height: 40px;
+          text-shadow: 0px 4px 45px #000;
+        }
+      }
+      .MobilePinForm {
+        width: 55%;
+        height: 48%;
+        border-radius: 16px;
+        margin: auto auto;
+        background-color: #fff;
+        box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+        .MobilePinCount {
+          width: 48%;
+          position: absolute;
+          margin: 4rem 14px;
+        }
+        .MobilePinNumber {
+          width: 48%;
+          position: absolute;
+          margin: 8rem 14px;
+        }
+        .MobilePinButton {
+          width: 48vw;
+          margin: 8px 14px;
+          position: absolute;
+          bottom: 8rem;
+          text-align: center;
+          button {
+            width: 88%;
+            height: 4vh;
+            border: 1px solid black;
+            border-radius: 32px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+            font-family: 'Archivo';
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
+            background-color: #501766;
+            cursor: pointer;
+            &:hover {
+              background-color: #290b34;
+            }
+          }
+        }
+      }
+    }
+  }
+}

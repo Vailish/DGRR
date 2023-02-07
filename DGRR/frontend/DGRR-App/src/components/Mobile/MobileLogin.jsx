@@ -1,15 +1,14 @@
-import '../../../scss/Login.scss'
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-const Login = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
+import React from 'react'
+import '../../scss/MobileLogin.scss'
+const MobileLogin = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
   return (
-    <div className="LoginTheme">
-      <div className="Login">
-        <div className="Text">
-          <div className="TitleText">
+    <div className="MobileTheme">
+      <div className="Mobile">
+        <div className="MobileText">
+          <div className="MobileTitleText">
             <h1>DG.RR</h1>
           </div>
-          <div className="SubTitleText">
+          <div className="MobileSubTitleText">
             <p>
               DG.RR는 <br /> 자신의 볼링점수를 <br />
               관리하기 위한
@@ -17,12 +16,9 @@ const Login = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
             </p>
           </div>
         </div>
-        <div className="LoginForm">
-          <div className="TitleForm">
-            <p>DG.RR</p>
-          </div>
-          <form>
-            <div className="LoginInput">
+        <div className="MobileForm">
+          <form onSubmit={onSubmit}>
+            <div className="MobileLoginInput">
               <input
                 style={isId ? { border: '2px solid red' } : {}}
                 name="username"
@@ -52,19 +48,14 @@ const Login = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
             ) : (
               ''
             )}
-            <div className="Button">
-              <button onClick={onSubmit}>로그인</button>
+            <div className="MobileButton">
+              <button type="submit">로그인</button>
             </div>
           </form>
-          <div className="JoinAndFind">
-            <Link to="/register">회원가입 </Link>
-            <Link to="/findId">아이디찾기 </Link>
-            <Link to="/findPw">비밀번호찾기 </Link>
-          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default Login
+export default MobileLogin

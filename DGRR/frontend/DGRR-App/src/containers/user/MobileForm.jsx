@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
-import Login from '../../components/user/Login/Login'
+import MobileLogin from '../../components/Mobile/MobileLogin'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-const LoginForm = () => {
+const MobileForm = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [error, setError] = useState('')
   const [isId, setisId] = useState(false)
@@ -14,21 +14,13 @@ const LoginForm = () => {
   const { form } = useSelector(({ auth }) => ({
     form: auth.login,
   }))
-
-  useEffect(() => {
-    if (localStorage.getItem('access-token')) {
-      navigate('/main')
-    } else {
-      navigate('/')
-    }
-  }, [localStorage.getItem('access-token')])
   const reqLogin = async user => {
     console.log(user)
     console.log(isLogin)
     try {
       const response = await axios.post(
+        //URI 바꿔야지.......
         'http://192.168.31.142:8080/login',
-
         JSON.stringify(user),
         {
           headers: {
@@ -41,33 +33,20 @@ const LoginForm = () => {
         // console.log(response.headers.get('Authorization'))
         alert('로그인 성공')
         setError(' ')
-        const accessToken = response.headers.get('Authorization')
-        localStorage.setItem('access-token', accessToken)
-        navigate('/main')
-        dispatch(
-          changeField({
-            form: 'login',
-            key: user.username,
-            value: '',
-          }),
-        )
-        dispatch(
-          changeField({
-            form: 'login',
-            key: user.password,
-            value: '',
-          }),
-        )
+        // const accessToken = response.headers.get('Authorization')
+        // localStorage.setItem('access-token', accessToken)
+        navigate('/mPin', {
+          state: {
+            username: user.username,
+            password: user.password,
+          },
+        })
       }
     } catch (e) {
-      console.log(e)
+      setError('존재하지 않는 아이디 입니다.')
     }
   }
-  useEffect(() => {
-    if (isLogin) {
-      setError(' ')
-    }
-  })
+
   const onChange = e => {
     const { name, value } = e.target
     dispatch(
@@ -107,7 +86,7 @@ const LoginForm = () => {
   }, [dispatch])
 
   return (
-    <Login
+    <MobileLogin
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
@@ -119,4 +98,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default MobileForm

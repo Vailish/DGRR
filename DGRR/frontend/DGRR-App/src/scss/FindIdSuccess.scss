@@ -7,13 +7,13 @@
       display: none;
     }
   }
-  .LoginTheme {
+  .FindIdTheme {
     width: 100vw;
     height: 100vh;
     background-image: url('../img/background.jpg');
     background-position: 50%;
     background-size: cover;
-    .Login {
+    .FindId {
       max-width: 1920px;
       min-width: 1280px;
       width: 100%;
@@ -28,7 +28,6 @@
         margin-top: 4rem;
         text-align: center;
         color: #fff;
-
         .TitleText {
           margin-top: 16%;
           margin-bottom: 64px;
@@ -47,7 +46,7 @@
           text-shadow: 0px 4px 45px #000;
         }
       }
-      .LoginForm {
+      .FindIdForm {
         width: 24%;
         height: 64%;
         border-radius: 16px;
@@ -59,17 +58,33 @@
         .TitleForm {
           margin: 2rem auto;
           text-align: center;
-          text-decoration: underline;
+
           font-family: 'Poller One';
           font-size: 40px;
         }
-        .LoginInput {
+        .Category {
+          font-size: 24px;
+          a {
+            text-decoration: none;
+          }
+        }
+        .FindIdInput {
           max-width: 640px;
           margin-top: 2rem;
           margin-bottom: 16px;
           margin-left: 24px;
           margin-right: 24px;
           text-align: center;
+          .findUserName {
+            margin: 4rem 2rem;
+            text-align: center;
+            border: 1px solid black;
+            box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+            font-family: 'Archivo';
+            border-radius: 16px;
+            width: 16vw;
+            height: 4vh;
+          }
           input {
             width: 88%;
             height: 48px;
@@ -104,18 +119,6 @@
             cursor: pointer;
             &:hover {
               background-color: #290b34;
-            }
-          }
-        }
-        .JoinAndFind {
-          width: 72%;
-          margin: 16px auto;
-          text-align: center;
-          font-family: 'Archivo';
-          a {
-            text-decoration: none;
-            &:hover {
-              color: green;
             }
           }
         }

@@ -7,7 +7,18 @@ import './PageThree.scss'
 import './DatePicker.css'
 const _ = require('lodash')
 
-const PageThree = ({ form, onChangeGender, onChangeDate, onSubmit }) => {
+const PageThree = ({
+  form,
+  onChangeGender,
+  onChangeDate,
+  onSubmit,
+  genderError,
+  dateError,
+  pageThreeError,
+  isGender,
+  isDate,
+  isSub,
+}) => {
   const [startDate, setStartDate] = useState(new Date())
   const years = _.range(1990, getYear(new Date()) + 1, 1) // 수정
   const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
@@ -21,16 +32,18 @@ const PageThree = ({ form, onChangeGender, onChangeDate, onSubmit }) => {
           <span className="Male">
             <label htmlFor="male">남</label>
             <input
+              type="checkbox"
+              style={{ border: '2px solid red' }}
               className="CheckMale"
               name="gender"
               value="male"
-              type="checkbox"
               onChange={e => onChangeGender(e.target)}
             />
           </span>
           <span className="FeMale">
             <label htmlFor="female">여</label>
             <input
+              style={isSub && isGender === false ? { border: '2px solid red' } : {}}
               className="CheckFeMale"
               name="gender"
               value="female"
@@ -38,6 +51,13 @@ const PageThree = ({ form, onChangeGender, onChangeDate, onSubmit }) => {
               onChange={e => onChangeGender(e.target)}
             />
           </span>
+          {isSub && !isGender ? (
+            <div>
+              <span style={{ color: 'red' }}>{genderError} </span>
+            </div>
+          ) : (
+            ''
+          )}
           <div className="custom-react-datepicker__wrapper">
             <DatePicker
               renderCustomHeader={({
@@ -89,6 +109,7 @@ const PageThree = ({ form, onChangeGender, onChangeDate, onSubmit }) => {
               autoComplete="off"
             />
           </div>
+          <div>{isSub && !isDate ? <span style={{ color: 'red' }}>{dateError} </span> : ''}</div>
         </div>
         <div className="NextButton3">
           <button className="Button" type="submit">

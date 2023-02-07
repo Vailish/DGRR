@@ -6,22 +6,68 @@ import '../../scss/Register.scss'
 import React, { useState, useEffect } from 'react'
 import { changeField, initialForm } from '../../modules/auth'
 import { useSelector, useDispatch } from 'react-redux'
-import { getYear, getMonth, getDate, fromUnixTime } from 'date-fns'
+import { getYear, getMonth, getDate } from 'date-fns'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { checkUserName, checkPassword, checkNickname, checkEmail } from '../../regex/regex'
 const RegisterForm = () => {
+  const [registerOneError, setRegisterOneError] = useState({
+    pageone: '',
+    username: '',
+    password: '',
+    passwordConfirm: '',
+  })
+
+  const [registerTwoError, setRegisterTwoError] = useState({
+    pagetwo: '',
+    name: '',
+    nickname: '',
+    email: '',
+  })
+
+  const [registerThreeError, setRegisterThreeError] = useState({
+    pagethree: '',
+    gender: '',
+    date: '',
+  })
+
+  const [isRegisterOneError, setIsRegisterOneError] = useState({
+    pageone: false,
+    username: false,
+    password: false,
+    passwordConfirm: false,
+  })
+
+  const [isRegisterTwoError, setIsRegisterTwoError] = useState({
+    pagetwo: false,
+    name: false,
+    nickname: false,
+    email: false,
+  })
+
+  const [isRegisterThreeError, setIsRegisterThreeError] = useState({
+    pagethree: false,
+    gender: false,
+    date: false,
+  })
+
+  const [isSubOne, setIsSubOne] = useState(false)
+  const [isSubTwo, setIsSubTwo] = useState(false)
+  const [isSubThree, setIsSubThree] = useState(false)
   const navigate = useNavigate()
   const { form } = useSelector(({ auth }) => ({
     form: auth.register,
   }))
 
+  //회원가입 비동기 api 통신
   const reqRegister = async user => {
     console.log(user)
     try {
-      const response = await axios.post('http://192.168.31.142/api/v1/signup', JSON.stringify(user), {
+      const response = await axios.post('http://192.168.31.142:8080/api/v1/signup', JSON.stringify(user), {
         headers: { 'Content-Type': 'application/json' },
       })
       console.log(response)
+
       if (response.status === 200) {
         {
           alert('회원가입성공')
@@ -32,9 +78,101 @@ const RegisterForm = () => {
       console.log(e)
     }
   }
+  //아이디 중복체크
+  const reqDuplcateCheckUserName = async username => {
+    console.log('중복체크 들어갑니다.' + username)
+    try {
+      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/username/${username}`)
+      console.log(response)
+      if (response.data === true) {
+        setIsRegisterOneError({
+          ...setIsRegisterOneError,
+          username: true,
+        })
+        setRegisterOneError({
+          ...setIsRegisterOneError,
+          username: '',
+        })
+      } else if (response.data === false) {
+        setIsRegisterOneError({
+          ...setIsRegisterOneError,
+          username: false,
+        })
+        setRegisterOneError({
+          ...setIsRegisterOneError,
+          username: '존재하는 아이디입니다.',
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //닉네임 중복체크
+  const reqDuplcateCheckNickname = async nickname => {
+    console.log('중복체크 들어갑니다.' + nickname)
+    try {
+      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/nickname/${nickname}`)
+      console.log(response.data)
+      if (response.data === true) {
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          nickname: true,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          nickname: '',
+        })
+      } else if (response.data === false) {
+        console.log('존재하는 닉네임입니다.')
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          nickname: false,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          nickname: '존재하는 닉네임입니다.',
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //이메일 중복체크
+  const reqDuplcateCheckEmail = async email => {
+    console.log('중복체크 들어갑니다.' + email)
+    try {
+      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/email/${email}`)
+      console.log(response.data)
+      if (response.data === true) {
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          email: true,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          email: '',
+        })
+      } else if (response.data === false) {
+        console.log('존재하는 닉네임입니다.')
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          email: false,
+        })
+        setRegisterTwoError({
+          ...registerTwoError,
+          email: '존재하는 이메일입니다.',
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const dispatch = useDispatch()
   const onChange = e => {
     const { name, value } = e.target
+    console.log(value)
     dispatch(
       changeField({
         form: 'register',
@@ -42,8 +180,203 @@ const RegisterForm = () => {
         value,
       }),
     )
+    //아이디 정규식 표현을 위해 e.target.name기준으로 잡아준다.
+    if (name === 'username') {
+      if (value.length === 0) {
+        setRegisterOneError({ ...registerOneError, username: '' })
+        setIsRegisterOneError({
+          ...isRegisterOneError,
+          username: false,
+        })
+      } else {
+        if (checkUserName(value)) {
+          setIsRegisterOneError({
+            ...isRegisterOneError,
+            username: true,
+          })
+          setRegisterOneError({ ...registerOneError, username: '' })
+          //통과를 했다면 아이디 중복 체크를 해야한다.
+          //비동기 통신 처리하기 위한 코드
+          reqDuplcateCheckUserName(value)
+          console.log('비동기 처리')
+        } else {
+          setIsRegisterOneError({
+            ...isRegisterOneError,
+            username: false,
+          })
+          setRegisterOneError({
+            ...registerOneError,
+            username: '영문자 시작8자 이상 16자 이하로 입력해주세요',
+          })
+        }
+      }
+    }
+    console.log(isRegisterOneError.username)
+    if (name === 'password') {
+      console.log('비밀번호 정규식 할차례에요')
+      if (value.length === 0) {
+        setRegisterOneError({
+          ...registerOneError,
+          password: '',
+        })
+        setIsRegisterOneError({
+          ...isRegisterOneError,
+          password: false,
+        })
+        console.log(isRegisterOneError.password)
+      } else {
+        //비밀번호는 소문자와 숫자 그리고 특수문자 조합으로 간다.
+        if (checkPassword(value)) {
+          setIsRegisterOneError({
+            ...isRegisterOneError,
+            password: true,
+          })
+          setRegisterOneError({
+            ...registerOneError,
+            password: '',
+          })
+        } else {
+          setRegisterOneError({
+            ...isRegisterOneError,
+            password: false,
+          })
+          setRegisterOneError({
+            ...registerOneError,
+            password: '영문,숫자,특수문자 조합으로 8~16자 이하로 입력!',
+          })
+        }
+      }
+    }
+    if (name === 'passwordConfirm') {
+      if (value.length === 0) {
+        setRegisterOneError({
+          ...registerOneError,
+          passwordConfirm: '',
+        })
+        setIsRegisterOneError({
+          ...isRegisterOneError,
+          passwordConfirm: false,
+        })
+      } else {
+        if (form.password.length === 0) {
+          setRegisterOneError({
+            ...registerOneError,
+            passwordConfirm: '비밀번호를 먼저 입력해주세요',
+          })
+          setIsRegisterOneError({
+            ...isRegisterOneError,
+            passwordConfirm: false,
+          })
+        } else {
+          if (value === form.password) {
+            setRegisterOneError({
+              ...registerOneError,
+              passwordConfirm: '',
+            })
+            setIsRegisterOneError({
+              ...isRegisterOneError,
+              passwordConfirm: true,
+            })
+          } else {
+            setRegisterOneError({
+              ...registerOneError,
+              passwordConfirm: '비밀번호가 일치하지 않습니다.',
+            })
+            setIsRegisterOneError({
+              ...isRegisterOneError,
+              passwordConfirm: false,
+            })
+          }
+        }
+      }
+    }
+    if (name === 'name') {
+      console.log('하이')
+      if (value.length === 0) {
+        setRegisterTwoError({
+          ...setRegisterTwoError,
+          name: '',
+        })
+        setIsRegisterTwoError({
+          ...setIsRegisterTwoError,
+          name: false,
+        })
+      } else {
+        setIsRegisterTwoError({
+          ...setIsRegisterTwoError,
+          name: true,
+        })
+      }
+    }
+    if (name === 'nickname') {
+      if (value.length === 0) {
+        setRegisterTwoError({
+          ...registerTwoError,
+          nickname: '',
+        })
+        setIsRegisterTwoError({
+          ...isRegisterTwoError,
+          nickname: false,
+        })
+      } else {
+        if (checkNickname(value)) {
+          setIsRegisterTwoError({
+            ...isRegisterTwoError,
+            nickname: true,
+          })
+          setRegisterTwoError({
+            ...registerTwoError,
+            nickname: '',
+          })
+          reqDuplcateCheckNickname(value)
+        } else {
+          setIsRegisterTwoError({
+            ...isRegisterTwoError,
+            nickname: false,
+          })
+          setRegisterTwoError({
+            ...registerTwoError,
+            nickname: '닉네임 6~12자로 입력해주세요',
+          })
+        }
+      }
+    }
+    if (name === 'email') {
+      if (value.length === 0) {
+        setRegisterTwoError({
+          ...registerTwoError,
+          email: '',
+        })
+        setRegisterTwoError({
+          ...isRegisterTwoError,
+          email: false,
+        })
+      } else {
+        if (checkEmail(value)) {
+          setIsRegisterTwoError({
+            ...isRegisterTwoError,
+            email: true,
+          })
+          setRegisterTwoError({
+            ...registerTwoError,
+            email: '',
+          })
+          reqDuplcateCheckEmail(value)
+        } else {
+          setIsRegisterTwoError({
+            ...isRegisterTwoError,
+            email: false,
+          })
+          setRegisterTwoError({
+            ...registerTwoError,
+            email: '이메일 양식에 맞게 작성해주세요 ',
+          })
+        }
+      }
+    }
   }
   const onChangeDate = date => {
+    //날짜 format 맞추기 10월 이하의 달과 10일 이하의 날들을 앞에 0을 붙혀준다.
     date.name = 'birthday'
     let year = getYear(date)
     let month = ''
@@ -89,9 +422,15 @@ const RegisterForm = () => {
         }),
       )
     }
+
+    //날짜가 비었음 false
+
+    console.log(date)
   }
+  //성별
   const onChangeGender = checkThis => {
     const genderBoxes = document.getElementsByName('gender')
+    const check = checkThis.checked
 
     for (let i = 0; i < genderBoxes.length; i++) {
       if (genderBoxes[i] !== checkThis) {
@@ -104,32 +443,178 @@ const RegisterForm = () => {
             value: genderBoxes[i].value,
           }),
         )
+
+        //남자
+        if (genderBoxes[i].value === 'male') {
+          //남자 선택
+          if (check) {
+            console.log('선택')
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: true,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '',
+            })
+          } else {
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: false,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '성별 하나 필수로 선택하셔야 됩니다.',
+            })
+          }
+          //남자 선택 하지 않음
+        }
+        if (genderBoxes[i].value === 'female') {
+          if (check) {
+            console.log('선택')
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: true,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '',
+            })
+          } else {
+            console.log('선택안해')
+            setIsRegisterThreeError({
+              ...isRegisterThreeError,
+              gender: false,
+            })
+            setRegisterThreeError({
+              ...registerThreeError,
+              gender: '성별 하나 필수로 선택하셔야 됩니다.',
+            })
+          }
+        }
       }
     }
   }
+  //page이동을 위한
   const [page, setPage] = useState('pageone')
   const nextPage = page => {
     setPage(page)
   }
+
+  //pageone입력을 다하면 page 2로 이동
+  //그전에 유효성 검사를 치뤄야한다.
+
   const onSubmitPageOne = e => {
     e.preventDefault()
-    const { username, password, passwordConfirm } = form
-    console.log(username + ' ' + password + ' ' + passwordConfirm)
-    nextPage('pagetwo')
+    //여기서 각 input이 빈값이라면 막아주어야한다.
+    //그럼 if~else가 아니라 if~elseif~else문으로 해줘야함.
+    //경우의 수가 좀 많은데? 잠시만 쉬었다가 생각좀해볼게
+
+    //순열로 돌릴 수 있을 것 같음 일단 이렇게 구현해보고 리팩토링때 수정할게
+    //조건이 많으면 그렇게 시간적인 측면으로 보았을 때 효율적이지 않음
+    setIsSubOne(true)
+    if (isRegisterOneError.username && isRegisterOneError.password && isRegisterOneError.passwordConfirm) {
+      setRegisterOneError({
+        ...setRegisterOneError,
+        pageone: '',
+      })
+      nextPage('pagetwo')
+    } else {
+      setRegisterOneError({
+        ...setRegisterOneError,
+        pageone: '조건을 충족시켜주세요',
+      })
+    }
   }
 
   const onSubmitPageTwo = e => {
     e.preventDefault()
-    const { name, nickname, email } = form
-    console.log(name + ' ' + nickname + ' ' + email)
-    nextPage('pagethree')
+    setIsSubTwo(true)
+
+    console.log(isRegisterTwoError.name + ' ' + isRegisterTwoError.nickname + ' ' + isRegisterTwoError.email)
+    if (isRegisterTwoError.name && isRegisterTwoError.nickname && isRegisterTwoError.email) {
+      setIsRegisterTwoError({
+        ...isRegisterTwoError,
+        pagetwo: true,
+      })
+      setRegisterTwoError({
+        ...setRegisterTwoError,
+        pagetwo: '',
+      })
+      nextPage('pagethree')
+    } else {
+      setIsRegisterTwoError({
+        ...isRegisterTwoError,
+        pagetwo: false,
+      })
+      setRegisterTwoError({
+        ...setRegisterTwoError,
+        pagetwo: '조건을 충족시켜주세요',
+      })
+    }
   }
 
   const onSubmitPageThree = e => {
     e.preventDefault()
+
     const { name, birthday, gender } = form
+    console.log(birthday.length === 10)
+    console.log(isRegisterThreeError.gender + ' ' + isRegisterThreeError.date)
     console.log(birthday + ' ' + gender)
-    reqRegister(form)
+    setIsSubThree(true)
+    console.log(isRegisterThreeError.gender + ' ' + isRegisterThreeError.date)
+    if (isRegisterThreeError.gender && birthday.length === 10) {
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        date: true,
+        pagethree: true,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        date: '',
+        pagethree: '',
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '',
+      })
+      reqRegister(form)
+    } else if (!isRegisterThreeError.gender && birthday.length === 10) {
+      console.log(isRegisterThreeError.gender)
+
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        gender: false,
+        date: true,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '성별을 필수로 하나 입력해주세요',
+        date: '날짜를 선택해 주세요',
+      })
+    } else if (isRegisterThreeError.gender && !(birthday.length === 10)) {
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        gender: true,
+        date: false,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '',
+        date: '날짜를 선택해 주세요',
+      })
+    } else {
+      setIsRegisterThreeError({
+        ...isRegisterThreeError,
+        gender: false,
+        date: false,
+      })
+      setRegisterThreeError({
+        ...registerThreeError,
+        gender: '성별을 필수로 하나 선택해주세요',
+        date: '날짜를 선택해 주세요',
+      })
+    }
   }
 
   useEffect(() => {
@@ -147,8 +632,6 @@ const RegisterForm = () => {
       case '3':
         setPage('pagethree')
         break
-      case '4':
-        break
       default:
         setPage('1')
     }
@@ -160,7 +643,13 @@ const RegisterForm = () => {
         <div className="Register">
           <div className="Text">
             <div className="TitleText">
-              <h1>DG.RR</h1>
+              <h1
+                onClick={() => {
+                  navigate('/')
+                }}
+              >
+                DG.RR
+              </h1>
             </div>
             <div className="SubTitleText">
               <p>
@@ -174,14 +663,48 @@ const RegisterForm = () => {
             <MultiStepProgressBar page={page} onPageNumberClick={nextPageNumber} className="progress" />
             {
               {
-                pageone: <PageOne form={form} onChange={onChange} onSubmit={onSubmitPageOne} />,
-                pagetwo: <PageTwo form={form} onChange={onChange} onSubmit={onSubmitPageTwo} />,
+                pageone: (
+                  <PageOne
+                    form={form}
+                    onChange={onChange}
+                    onSubmit={onSubmitPageOne}
+                    userNameError={registerOneError.username}
+                    passwordError={registerOneError.password}
+                    passwordConfirmError={registerOneError.passwordConfirm}
+                    pageOneError={registerOneError.pageone}
+                    isUserName={isRegisterOneError.username}
+                    isPw={isRegisterOneError.password}
+                    isPwConfirm={isRegisterOneError.passwordConfirm}
+                    isSub={isSubOne}
+                  />
+                ),
+                pagetwo: (
+                  <PageTwo
+                    form={form}
+                    onChange={onChange}
+                    onSubmit={onSubmitPageTwo}
+                    pageTwoError={registerTwoError.pagetwo}
+                    nameError={registerTwoError.name}
+                    nicknameError={registerTwoError.nickname}
+                    emailError={registerTwoError.email}
+                    isName={isRegisterTwoError.name}
+                    isNickname={isRegisterTwoError.nickname}
+                    isEmail={isRegisterTwoError.email}
+                    isSub={isSubTwo}
+                  />
+                ),
                 pagethree: (
                   <PageThree
                     form={form}
                     onChangeDate={onChangeDate}
                     onChangeGender={onChangeGender}
                     onSubmit={onSubmitPageThree}
+                    genderError={registerThreeError.gender}
+                    dateError={registerThreeError.date}
+                    pageThreeError={registerThreeError.pagethree}
+                    isGender={isRegisterThreeError.gender}
+                    isDate={isRegisterThreeError.date}
+                    isSub={isSubThree}
                   />
                 ),
               }[page]
