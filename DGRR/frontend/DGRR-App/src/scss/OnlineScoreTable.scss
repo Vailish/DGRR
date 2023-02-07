@@ -27,33 +27,9 @@
 @import './mixins';
 
 @include desktop {
-  .KioskBackground {
-    position: relative;
-
-    width: 100vw;
-    height: 100vh;
-    margin: 0px;
-
-    background: #f8f8fb;
-    .OfflineGameContentBlock {
-      /* Group 302 */
-
-      position: relative;
-      width: 100vw;
-      height: 1344 / 1600 * 100vh;
-      //   margin-top: 1vh;
-      // margin-left: 10 / 2560 * 100vw;
-      //   top: 568px;
-      background: blue;
-      .EllipseBlock {
-        height: 30%;
-      }
-      .GameScoreTable {
-        position: absolute;
-        top: 576 / 1600 * 100vh;
-        left: 10 / 2560 * 100vw;
-        // height: 70%;
-      }
-    }
+  .OnlineScoreTable {
+    display: flex;
+    width: 1920 / 2560 * 100vw;
+    height: 320 / 1600 * 100vh;
   }
 }

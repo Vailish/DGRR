@@ -1,0 +1,122 @@
+// .myClass {
+//   ├── 객체의 노출여부와 표현방식
+//   │   ├── display
+//   │   └── list-style
+//   │
+//   ├── 위치와 좌표
+//   │   ├── position
+//   │   ├── float
+//   │   └── clear
+//   │
+//   ├── 크기와 여백
+//   │   ├── width / height
+//   │   └── padding / margin
+//   │
+//   ├── 윤곽과 배경
+//   │   └── border / background
+//   │
+//   ├── 글자와 정렬
+//   │   ├── corlor / font
+//   │   ├── text-decoration
+//   │   ├── text-align / vertical-align
+//   │   └── white-space
+//   │
+//   └── 내용
+//       └── content
+
+@import './mixins';
+
+@keyframes bounce_frames {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 10vh, 0);
+  }
+}
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+    .OnlineFindContentBlock {
+      display: flex;
+      justify-content: center;
+      width: 100vw;
+      height: 87.5vh;
+      .OnlineFindCenterAlign {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .LoadingBounceBallBlock {
+          display: flex;
+          justify-content: space-between;
+          width: 20vw;
+          height: 10vh;
+          .LoadingBounceBall {
+            // .ball {
+            //     position: absolute;
+            //     top: 20px;
+            //     left: 20px;
+            width: 5vw;
+            height: 5vw;
+            //     text-align: center;
+            //     line-height: 100px;
+            border-radius: 50%;
+            background: #ff5722;
+
+            //   }
+
+            //   .bounce {
+            animation: bounce_frames 0.5s;
+            animation-direction: alternate;
+            animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+            animation-iteration-count: infinite;
+            //   }
+          }
+          .Bouncing {
+            animation-delay: 0s;
+            background: #f4b7d3;
+          }
+          .Bouncing2 {
+            animation-delay: 0.3s;
+            background: #df93bd;
+          }
+          .Bouncing3 {
+            animation-delay: 0.6s;
+            background: #ca80b1;
+          }
+        }
+        .OnlineFindLoading {
+          margin-top: 432 / 1600 * 100vh;
+        }
+        .OnlineFindTextBlock {
+          margin-top: 20vh;
+          font-size: 4vw;
+        }
+        .OnlineFindTimeBlock {
+          font-size: 4vw;
+        }
+        .OnlineFindCancelBlock {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 2vh;
+          width: 608 / 2560 * 100vw;
+          height: 160 / 1600 * 100vh;
+          background: #501766;
+          box-shadow: 0vh 0.25vh 0.25vh rgba(0, 0, 0, 0.25);
+          border-radius: 1.5vh;
+          color: white;
+          font-size: 5vw;
+        }
+      }
+    }
+  }
+}

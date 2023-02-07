@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom'
 import { sendAllScore } from '../../../store/OfflineLoginUsers'
 // import axios from 'axios'
 import { apis } from '../../../API/api'
-import KioskNavBlock from './KioskNavBlock'
+import KioskNavBlock from '../KioskNavBlock'
 import ResultChart from './ResultChart'
 import OfflineResultChart from './OfflineResultChart'
+import playerScore from '../../../scss/_variables.scss'
 
 const ShowImage = props => {
   const { x, y, width, height, value } = props
@@ -22,7 +23,7 @@ const ShowImage = props => {
 }
 
 const data = [
-  { name: '갓냥이', pv: 168 },
+  { name: '', pv: 298 },
   //   { name: '김볼링', pv: 99 },
 ]
 
@@ -30,11 +31,26 @@ const KioskOfflineResult = () => {
   const dispatch = useDispatch()
 
   const onSendAllScore = () => dispatch(sendAllScore())
+  const ChangeLength = () => {
+    playerScore = { ...playerScore, playerScoreLength: '20%' }
+  }
 
   return (
     <div className="KioskBackground">
-      <KioskNavBlock />
+      <KioskNavBlock goFrontTo="/KioskLogin" />
       <div className="ResultContentBlock">
+        <div className="EachPlayerBlock">
+          <div className="PlayerProfile"></div>
+          <div className="PlayerScoreChart">
+            <OfflineResultChart data={data} width="100%" height="100%" />
+          </div>
+        </div>
+        <div className="EachPlayerBlock">
+          <div className="PlayerProfile"></div>
+          <div className="PlayerScoreChart">
+            <OfflineResultChart data={data} width="100%" height="100%" />
+          </div>
+        </div>
         <div className="EachPlayerBlock">
           <div className="PlayerProfile"></div>
           <div className="PlayerScoreChart">
