@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserGamesResponseDto {
-	private Long gameId;
+	private String nickname;
 	private Integer points;
 	private List<Games2> games;
 }

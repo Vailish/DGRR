@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,9 @@ import com.ssafy.b102.persistence.dao.UserGameRepository;
 import com.ssafy.b102.persistence.dao.UserRepository;
 import com.ssafy.b102.request.dto.GameRequestDto;
 import com.ssafy.b102.response.dto.Games;
+import com.ssafy.b102.response.dto.Games2;
 import com.ssafy.b102.response.dto.MatchingResponseDto;
+import com.ssafy.b102.response.dto.OtherPlayer;
 import com.ssafy.b102.response.dto.UserGamesResponseDto;
 import com.ssafy.b102.response.dto.WinRate;
 import com.ssafy.b102.response.dto.GameResponseDto;
@@ -32,41 +36,54 @@ public class GameService {
 	
 	private final UserGameRepository userGameRepository;
 
-	public List<UserGamesResponseDto> getUserGames(String nickname) {
+	public UserGamesResponseDto getUserGames(String nickname) {
+		System.out.println("특정 유저의 게임정보 요청들어왔어유~~~~~~");
 		// user닉네임으로 user를 가져와서
 		User user = userRepository.findByNickname(nickname);
 		// user id로 user가 들어간 게임들을 찾고
 		List<UserGame> usergames = userGameRepository.findAllByUserId(user.getId());
-		System.out.println(usergames.toString());
-		// game id를 가져와서
-		System.out.println(usergames.get(0).getGame().getId());
-		System.out.println(usergames.get(0).getGame().getGameType());
 		
-		System.out.println(usergames.get(1).getGame().getId());
+		List<Games2> games = new ArrayList<>(); 
 		
-
-		// [{Game},{Game}]
-		
-		// return 값을 미리 생성하고
-		List<UserGamesResponseDto> userGamesResponseDtos = new ArrayList<>();
-		// for문을 통해서 하나씩 responseDto에 맞춰서 형식을 변경하여 return값에 넣어줍니다.
-		for(Integer i = 0; i < usergames.size(); i++) {
-			for(Integer k = 0; k < usergames.get(i);k++) {
-				
-			}
-			Games game = new Games();
+		for(UserGame usergame : usergames) { // 내게임 기준으로 하나씩 돌리는 거임
+			Games2 game = new Games2();
+			// 내 게임정보를 먼저 저장
+			game.setGameId(usergame.getGame().getId());
+			game.setGameType(usergame.getGame().getGameType());
+			game.setScore(convertToList(usergame.getGameScore()));
+			game.setRank(usergame.getGameRank());
 			
-			UserGamesResponseDto gameInfoRes = new UserGamesResponseDto();
-			usergames.get(0);
+			// 다른 유저들의 정보 저장
+
+			List<OtherPlayer> otherPlayers = new ArrayList();
+			
+			// otherPlayes에 담을 otherPlayer 만들어서 담기
+			List<UserGame> otherPlayerGames = userGameRepository.findAllByGameId(usergame.getGame().getId());
+			for (UserGame otherPlayergame : otherPlayerGames) {
+				// 검색 대상 유저 제외
+				if (otherPlayergame.getUser().getNickname().equals(nickname)) {
+					continue;
+				};
+				OtherPlayer otherPlayer = new OtherPlayer().builder()
+						   								   .nickname(otherPlayergame.getUser().getNickname())
+						   								   .score(convertToList(otherPlayergame.getGameScore()))
+						   								   .rank(otherPlayergame.getGameRank())
+						   								   .build();
+				otherPlayers.add(otherPlayer);
+			};
+			System.out.println(otherPlayers);
+			game.setOtherPlayers(otherPlayers);
+			games.add(game);
+			
 		}
 		
-		// 객체 뜯어서 필요한 정보 뽑기
-//		for(int n = 0; n < gameInfoResponseDtos.size(); n++);
-//			gameInfoResponseDtos.get(n);
-		
-		return userGamesResponseDtos;
+		return new UserGamesResponseDto().builder()
+				.nickname(nickname)
+				.points(user.getPoints())
+				.games(games)
+				.build();
 	}
-	
+		
 	public GameResponseDto createGame(GameRequestDto gameRequestDto) {	
 		Boolean gameType = gameRequestDto.getGameType();
 		LocalDateTime gameDate = LocalDateTime.now();
@@ -275,6 +292,11 @@ public class GameService {
 		return data.toString();
 	}
 	// 핀번호로 유저 정보 요청
+	
+	public List<Integer> convertToList(String data) {
+		return Stream.of(data.split(", ")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+	}
+	
 	public MatchingResponseDto getMatchingProfile(Integer pinNumber) {
 		System.out.println("핀번호로 유저 정보 요청이 들어왔습니다.");
 		User user = userRepository.findByPin(pinNumber);

@@ -46,8 +46,9 @@ public class GameController {
 	
 	@GetMapping("/games/{nickname}")
 	public ResponseEntity<?> getUserGames(@PathVariable String nickname){
-		List<UserGamesResponseDto> userGamesResponseDtos = gameService.getUserGames(nickname);
-		return new ResponseEntity<List<UserGamesResponseDto>>(userGamesResponseDtos, HttpStatus.OK);
+		System.out.println("특정 유저의 게임정보 컨트롤러 진입!");
+		UserGamesResponseDto userGamesResponseDtos = gameService.getUserGames(nickname);
+		return new ResponseEntity<UserGamesResponseDto>(userGamesResponseDtos, HttpStatus.OK);
 	}
 	
 	@PostMapping("/game")
