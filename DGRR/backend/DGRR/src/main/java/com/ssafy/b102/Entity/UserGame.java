@@ -28,7 +28,7 @@ public class UserGame {
 	private Long id;
 	
 	@Column(nullable = false)
-	private String gameScore;  // 일단 진행하고, 후에 바꿔보자
+	private String gameScore;
 	
 	@Column(nullable = false)
 	private Integer gameRank;
