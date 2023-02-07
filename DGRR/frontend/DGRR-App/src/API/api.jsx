@@ -22,7 +22,9 @@ export const apis = {
     return response
   },
   getPlayers: async data => {
-    const response = await api.get('/v1/matching/1', JSON.stringify(data))
+    const pin = String(data)
+    const url = '/v1/matching/' + pin
+    const response = await api.get(url, JSON.stringify(data))
     console.log(response)
     return response
   },

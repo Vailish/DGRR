@@ -39,17 +39,20 @@
       /* Group 302 */
 
       position: relative;
-      width: 2520px / 2560px * 100vw;
+      width: 100vw;
       height: 1344 / 1600 * 100vh;
       //   margin-top: 1vh;
-      margin-left: 20px / 2560px * 100vw;
+      // margin-left: 10 / 2560 * 100vw;
       //   top: 568px;
       background: blue;
       .EllipseBlock {
         height: 30%;
       }
       .GameScoreTable {
-        height: 70%;
+        position: absolute;
+        top: 576 / 1600 * 100vh;
+        left: 10 / 2560 * 100vw;
+        // height: 70%;
       }
     }
   }

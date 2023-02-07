@@ -7,7 +7,7 @@ import { addPlayer } from '../../../store/OfflineLoginUsers'
 // import axios from 'axios'
 import { apis } from '../../../API/api'
 import KioskLoginPlayer from './KioskLoginPlayer'
-import KioskNavBlock from './KioskNavBlock'
+import KioskNavBlock from '../KioskNavBlock'
 
 const KioskLogin = () => {
   let pinNumber = undefined

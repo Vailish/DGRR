@@ -62,6 +62,7 @@ const initialState = {
       gameScore: [0, 10, 5, 5, 3, 5, 1, 2, 5, 2, 2, 8, 5, 4, 3, 9, 9, 1, 10, 9, 1],
     },
   ],
+  gameScoreBoards: {},
 }
 
 // 리듀서
@@ -72,6 +73,8 @@ const OfflineLoginUsers = (state = initialState, action) => {
       if (state.players.length === 4) {
         return state
       }
+      // pin 숫자를 그대로 입력
+      apis.getPlayers()
       // const playerInfo = apis.getPlayers()
       const players = [...state.players.filter(player => player.nickname), action.playerInfo]
       return { players }
