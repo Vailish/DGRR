@@ -17,7 +17,7 @@ const KioskLogin = () => {
   }
   const CustomInput = props => {
     const { InputValue, InputPin, InputClassName } = props
-    return <input value={InputValue} onChange={InputPin} className={InputClassName} />
+    return <input type="number" value={InputValue} onChange={InputPin} className={InputClassName} />
   }
   const onAddPlayer = () => {
     // pinNumber = ''
