@@ -1,0 +1,111 @@
+// .myClass {
+//   ├── 객체의 노출여부와 표현방식
+//   │   ├── display
+//   │   └── list-style
+//   │
+//   ├── 위치와 좌표
+//   │   ├── position
+//   │   ├── float
+//   │   └── clear
+//   │
+//   ├── 크기와 여백
+//   │   ├── width / height
+//   │   └── padding / margin
+//   │
+//   ├── 윤곽과 배경
+//   │   └── border / background
+//   │
+//   ├── 글자와 정렬
+//   │   ├── corlor / font
+//   │   ├── text-decoration
+//   │   ├── text-align / vertical-align
+//   │   └── white-space
+//   │
+//   └── 내용
+//       └── content
+
+@import './mixins';
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+    .OnlineProfileContentBlock {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      //   align-items: center;
+
+      position: relative;
+      width: 100vw;
+      height: (1600 - 260) / 1600 * 100vh;
+      margin-top: 60 / 1600 * 100vh;
+      //   top: 568px;
+      background: blue;
+      .OnlineProfileContentInner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 1280 / 2560 * 100vw;
+        height: 1080 / 1600 * 100vh;
+        background: white;
+        .OnlineProfile {
+          width: 440 / 2560 * 100vw;
+          height: 440 / 2560 * 100vw;
+          background: black;
+          border-radius: 50%;
+        }
+        .OnlineRecordBlock {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          width: 680 / 2560 * 100vw;
+          height: 312 / 1600 * 100vh;
+
+          background: #f8f8fb;
+          .OnlinePlayerName {
+            font-size: 4vw;
+            border-bottom: 0.1vh black solid;
+          }
+          .OnlineTierAndRecord {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5vw;
+            .OnlineTier {
+            }
+            .OnlineRecord {
+            }
+          }
+        }
+      }
+      .StartBackBlock {
+        display: flex;
+        justify-content: space-around;
+        width: 50vw;
+        height: 20vh;
+        background: white;
+        .GameStartBlock {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 608 / 2560 * 100vw;
+          height: 160 / 1600 * 100vh;
+          background: #501766;
+          box-shadow: 0vh 0.25px 0.25vh rgba(0, 0, 0, 0.25);
+          border-radius: 1.5vh;
+          color: white;
+          font-size: 4vw;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

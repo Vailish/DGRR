@@ -1,0 +1,157 @@
+// .myClass {
+//   ├── 객체의 노출여부와 표현방식
+//   │   ├── display
+//   │   └── list-style
+//   │
+//   ├── 위치와 좌표
+//   │   ├── position
+//   │   ├── float
+//   │   └── clear
+//   │
+//   ├── 크기와 여백
+//   │   ├── width / height
+//   │   └── padding / margin
+//   │
+//   ├── 윤곽과 배경
+//   │   └── border / background
+//   │
+//   ├── 글자와 정렬
+//   │   ├── corlor / font
+//   │   ├── text-decoration
+//   │   ├── text-align / vertical-align
+//   │   └── white-space
+//   │
+//   └── 내용
+//       └── content
+
+@import './mixins';
+
+@keyframes bounce_frames {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 10vh, 0);
+  }
+}
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+    .OnlineMatchingContentBlock {
+      display: flex;
+      justify-content: space-around;
+      width: 100vw;
+      //   height: 87.5vh;
+      height: 1064 / 1600 * 100vh;
+      margin-top: 72 / 1600 * 100vh;
+      .LetterV {
+        position: absolute;
+        left: 1056/2560 * 100vw;
+        top: 600 / 1600 * 100vh;
+        width: 10vw;
+        height: 10vh;
+        font-size: 12vw;
+
+        // position: absolute;
+        // width: 304px;
+        // height: 304px;
+        // left: 1056px;
+        // top: 600px;
+      }
+      .LetterS {
+        position: absolute;
+        left: 1208/2560 * 100vw;
+        top: 760 / 1600 * 100vh;
+        width: 10vw;
+        height: 10vh;
+        font-size: 12vw;
+      }
+      .OnlineMatchingPlayerBlock {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 1000 / 2560 * 100vw;
+        height: 1064 / 1600 * 100vh;
+
+        background: #ffffff;
+        box-shadow: 0vh 0.25vh 0.25vh rgba(0, 0, 0, 0.25);
+        border-radius: 1.5vh;
+        .OnlineMatchingProfile {
+          width: 536 / 2560 * 100vw;
+          height: 536 / 2560 * 100vw;
+          background: black;
+          border-radius: 20vw;
+        }
+        .OnlineMatchingPlayerInfoBlock {
+          width: 672 / 2560 * 100vw;
+          height: 336 / 2560 * 100vh;
+          background: #fffbfb;
+          margin-top: 64 / 1600 * 100vh;
+          .OnlineMatchingTierAndName {
+            display: flex;
+            width: 100%;
+            height: 50%;
+            background: gray;
+            font-size: 3vw;
+            .OnlinePlayerTier {
+              width: 40%;
+              height: 100%;
+              background: aqua;
+            }
+            .OnlinePlayerName {
+              width: 60%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+            }
+          }
+          .OnlineMatchingPointAndRecord {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 50%;
+            background: green;
+            font-size: 2vw;
+            .OnlinePlayerPoint {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 50%;
+              height: 100%;
+              background: thistle;
+            }
+            .OnlinePlayerRecord {
+              width: 50%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+    .GameStartBlock {
+      display: flex;
+      justify-content: center;
+
+      .GameStartButton {
+        width: 608 / 2560 * 100vw;
+        height: 160 / 1600 * 100vh;
+
+        background: #501766;
+        border-radius: 1.5vh;
+        color: white;
+      }
+    }
+  }
+}

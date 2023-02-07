@@ -26,10 +26,29 @@
 
     margin-top: 2vh;
     // border: 1px solid black;
-    .Back {
+    .GoBack {
       color: white;
     }
     .BackLine {
+      background: white;
+      width: 5vw;
+      height: 0.1vh;
+      border: 0px;
+    }
+  }
+  .FrontBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5vw;
+
+    margin-top: 2vh;
+    // border: 1px solid black;
+    .GoFront {
+      color: white;
+    }
+    .FrontLine {
       background: white;
       width: 5vw;
       height: 0.1vh;
