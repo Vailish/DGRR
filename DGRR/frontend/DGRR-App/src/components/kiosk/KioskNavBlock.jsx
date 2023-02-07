@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../scss/KioskNavBlock.scss'
+import '../../scss/KioskNavBlock.scss'
 import { Link } from 'react-router-dom'
 
 const KioskNavBlock = props => {
