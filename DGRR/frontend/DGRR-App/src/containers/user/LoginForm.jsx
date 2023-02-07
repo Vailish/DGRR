@@ -14,7 +14,7 @@ const LoginForm = () => {
     console.log(user)
     try {
       const response = await axios.post(
-        'http://192.168.31.142/login',
+        'http://localhost:8080/login',
 
         JSON.stringify(user),
       )
