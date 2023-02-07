@@ -40,6 +40,8 @@ const LoginForm = () => {
       if (response.status === 200) {
         // console.log(response.headers.get('Authorization'))
         alert('로그인 성공')
+        console.log(user)
+
         setError(' ')
         const accessToken = response.headers.get('Authorization')
         localStorage.setItem('access-token', accessToken)

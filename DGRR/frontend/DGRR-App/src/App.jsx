@@ -16,7 +16,6 @@ import MainPage from './pages/Mainpage'
 import Rankingpage from './pages/Rankingpage'
 import OnlineScoreTable from './components/kiosk/online/OnlineScoreTable'
 
-import MainPage from './containers/mainPage/MainPage'
 import FindIdForm from './containers/user/FindIdForm'
 import FindPwForm from './containers/user/FindPwForm'
 import NotFound from './components/notfound/NotFound'
@@ -33,7 +32,6 @@ const App = () => {
       <Route path="/KioskOfflineGame" element={<KioskOfflineGame />} />
       <Route path="/KioskOfflineResult" element={<KioskOfflineResult />} />
       <Route path="/register" element={<RegisterForm />} />
-      <Route path="/main" element={<MainPage />} />
       <Route path=":nickName" element={<MainPage />} />
       <Route path="ranking" element={<Rankingpage />} />
       <Route path="/KioskOnlineLogin" element={<KioskOnlineLogin />} />
