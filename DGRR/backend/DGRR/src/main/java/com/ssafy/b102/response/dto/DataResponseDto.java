@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class DataResponseDto {
-	private Integer lastest_game_total_score;
-	private Integer Last_3_game_average_total_score;
-	private Integer Highest_total_score;
+	private Integer lastestGameTotalScore;
+	private Integer Last3GameAverageTotalScore;
+	private Integer HighestTotalScore;
 }
