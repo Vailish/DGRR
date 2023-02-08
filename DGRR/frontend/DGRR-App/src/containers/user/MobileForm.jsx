@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
-import MobileLogin from '../../components/Mobile/MobileLogin'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import MobileLogin from '../../components/Mobile/MobileLogin'
+import request from '../../API/request'
 const MobileForm = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [error, setError] = useState('')
   const [isId, setisId] = useState(false)
   const [isPw, setisPw] = useState(false)
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { form } = useSelector(({ auth }) => ({
     form: auth.login,
   }))
+
+  //axios 모듈화 테스트 해보기
   const reqLogin = async user => {
-    console.log(user)
-    console.log(isLogin)
     try {
       const response = await axios.post(
         //URI 바꿔야지.......
@@ -28,9 +30,7 @@ const MobileForm = () => {
           },
         },
       )
-      console.log(response)
       if (response.status === 200) {
-        // console.log(response.headers.get('Authorization'))
         alert('로그인 성공')
         setError(' ')
         // const accessToken = response.headers.get('Authorization')
@@ -62,22 +62,21 @@ const MobileForm = () => {
     e.preventDefault()
 
     if (form.username.length === 0 && form.password.length === 0) {
-      setError('아이디와 비밀번호를 입력해주세요')
       setisId(true)
       setisPw(true)
+      setError('아이디와 비밀번호를 입력해주세요')
     } else if (form.username.length === 0 && form.password.length !== 0) {
-      setError('아이디를 입력해주세요')
       setisId(true)
       setisPw(false)
+      setError('아이디를 입력해주세요')
     } else if (form.username.length !== 0 && form.password.length === 0) {
       setisId(false)
-      setError('비밀번호를 입력해주세요')
-      setisId(false)
       setisPw(true)
+      setError('비밀번호를 입력해주세요')
     } else {
-      setError('')
       setisId(false)
       setisPw(false)
+      setError('')
       reqLogin(form)
     }
   }

@@ -1,16 +1,18 @@
+import '../../scss/Register.scss'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { changeField, initialForm } from '../../modules/auth'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { getYear, getMonth, getDate } from 'date-fns'
+import { checkUserName, checkPassword, checkNickname, checkEmail } from '../../regex/regex'
 import PageOne from '../../components/user/Join/PageOne/PageOne'
 import PageTwo from '../../components/user/Join/PageTwo/PageTwo'
 import PageThree from '../../components/user/Join/PageThree/PageThree'
 import MultiStepProgressBar from '../../components/user/Join/MultiStepProgressBar/MultiStepProgressBar'
-import '../../scss/Register.scss'
-import React, { useState, useEffect } from 'react'
-import { changeField, initialForm } from '../../modules/auth'
-import { useSelector, useDispatch } from 'react-redux'
-import { getYear, getMonth, getDate } from 'date-fns'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { checkUserName, checkPassword, checkNickname, checkEmail } from '../../regex/regex'
 const RegisterForm = () => {
+
+  //회원가입 progree에 대한 정규식 표현 처리 
   const [registerOneError, setRegisterOneError] = useState({
     pageone: '',
     username: '',
@@ -61,12 +63,10 @@ const RegisterForm = () => {
 
   //회원가입 비동기 api 통신
   const reqRegister = async user => {
-    console.log(user)
     try {
       const response = await axios.post('http://192.168.31.142:8080/api/v1/signup', JSON.stringify(user), {
         headers: { 'Content-Type': 'application/json' },
       })
-      console.log(response)
 
       if (response.status === 200) {
         {
@@ -78,12 +78,11 @@ const RegisterForm = () => {
       console.log(e)
     }
   }
+
   //아이디 중복체크
   const reqDuplcateCheckUserName = async username => {
-    console.log('중복체크 들어갑니다.' + username)
     try {
       const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/username/${username}`)
-      console.log(response)
       if (response.data === true) {
         setIsRegisterOneError({
           ...setIsRegisterOneError,
@@ -110,10 +109,8 @@ const RegisterForm = () => {
 
   //닉네임 중복체크
   const reqDuplcateCheckNickname = async nickname => {
-    console.log('중복체크 들어갑니다.' + nickname)
     try {
       const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/nickname/${nickname}`)
-      console.log(response.data)
       if (response.data === true) {
         setIsRegisterTwoError({
           ...isRegisterTwoError,
@@ -124,7 +121,6 @@ const RegisterForm = () => {
           nickname: '',
         })
       } else if (response.data === false) {
-        console.log('존재하는 닉네임입니다.')
         setIsRegisterTwoError({
           ...isRegisterTwoError,
           nickname: false,
@@ -141,10 +137,8 @@ const RegisterForm = () => {
 
   //이메일 중복체크
   const reqDuplcateCheckEmail = async email => {
-    console.log('중복체크 들어갑니다.' + email)
     try {
       const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/email/${email}`)
-      console.log(response.data)
       if (response.data === true) {
         setIsRegisterTwoError({
           ...isRegisterTwoError,
@@ -155,7 +149,6 @@ const RegisterForm = () => {
           email: '',
         })
       } else if (response.data === false) {
-        console.log('존재하는 닉네임입니다.')
         setIsRegisterTwoError({
           ...isRegisterTwoError,
           email: false,
@@ -169,10 +162,10 @@ const RegisterForm = () => {
       console.log(e)
     }
   }
+
   const dispatch = useDispatch()
   const onChange = e => {
     const { name, value } = e.target
-    console.log(value)
     dispatch(
       changeField({
         form: 'register',
@@ -198,7 +191,6 @@ const RegisterForm = () => {
           //통과를 했다면 아이디 중복 체크를 해야한다.
           //비동기 통신 처리하기 위한 코드
           reqDuplcateCheckUserName(value)
-          console.log('비동기 처리')
         } else {
           setIsRegisterOneError({
             ...isRegisterOneError,
@@ -211,9 +203,8 @@ const RegisterForm = () => {
         }
       }
     }
-    console.log(isRegisterOneError.username)
+
     if (name === 'password') {
-      console.log('비밀번호 정규식 할차례에요')
       if (value.length === 0) {
         setRegisterOneError({
           ...registerOneError,
@@ -223,7 +214,7 @@ const RegisterForm = () => {
           ...isRegisterOneError,
           password: false,
         })
-        console.log(isRegisterOneError.password)
+       
       } else {
         //비밀번호는 소문자와 숫자 그리고 특수문자 조합으로 간다.
         if (checkPassword(value)) {
@@ -291,7 +282,6 @@ const RegisterForm = () => {
       }
     }
     if (name === 'name') {
-      console.log('하이')
       if (value.length === 0) {
         setRegisterTwoError({
           ...setRegisterTwoError,
@@ -375,6 +365,7 @@ const RegisterForm = () => {
       }
     }
   }
+
   const onChangeDate = date => {
     //날짜 format 맞추기 10월 이하의 달과 10일 이하의 날들을 앞에 0을 붙혀준다.
     date.name = 'birthday'
@@ -423,9 +414,6 @@ const RegisterForm = () => {
       )
     }
 
-    //날짜가 비었음 false
-
-    console.log(date)
   }
   //성별
   const onChangeGender = checkThis => {
@@ -448,7 +436,7 @@ const RegisterForm = () => {
         if (genderBoxes[i].value === 'male') {
           //남자 선택
           if (check) {
-            console.log('선택')
+           
             setIsRegisterThreeError({
               ...isRegisterThreeError,
               gender: true,
@@ -471,7 +459,7 @@ const RegisterForm = () => {
         }
         if (genderBoxes[i].value === 'female') {
           if (check) {
-            console.log('선택')
+            
             setIsRegisterThreeError({
               ...isRegisterThreeError,
               gender: true,
@@ -481,7 +469,7 @@ const RegisterForm = () => {
               gender: '',
             })
           } else {
-            console.log('선택안해')
+            
             setIsRegisterThreeError({
               ...isRegisterThreeError,
               gender: false,
@@ -531,7 +519,6 @@ const RegisterForm = () => {
     e.preventDefault()
     setIsSubTwo(true)
 
-    console.log(isRegisterTwoError.name + ' ' + isRegisterTwoError.nickname + ' ' + isRegisterTwoError.email)
     if (isRegisterTwoError.name && isRegisterTwoError.nickname && isRegisterTwoError.email) {
       setIsRegisterTwoError({
         ...isRegisterTwoError,
@@ -558,11 +545,7 @@ const RegisterForm = () => {
     e.preventDefault()
 
     const { name, birthday, gender } = form
-    console.log(birthday.length === 10)
-    console.log(isRegisterThreeError.gender + ' ' + isRegisterThreeError.date)
-    console.log(birthday + ' ' + gender)
     setIsSubThree(true)
-    console.log(isRegisterThreeError.gender + ' ' + isRegisterThreeError.date)
     if (isRegisterThreeError.gender && birthday.length === 10) {
       setIsRegisterThreeError({
         ...isRegisterThreeError,
@@ -580,7 +563,6 @@ const RegisterForm = () => {
       })
       reqRegister(form)
     } else if (!isRegisterThreeError.gender && birthday.length === 10) {
-      console.log(isRegisterThreeError.gender)
 
       setIsRegisterThreeError({
         ...isRegisterThreeError,

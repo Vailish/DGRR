@@ -5,6 +5,7 @@ import axios from 'axios'
 const MobilePin = () => {
   const [min, setMin] = useState(5)
   const [sec, setSec] = useState(0)
+  
   useEffect(() => {
     const countdown = setInterval(() => {
       if (parseInt(sec) > 0) {
