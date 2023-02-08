@@ -3,7 +3,7 @@ import React from 'react'
 import '../../../scss/KioskOnlineGame.scss'
 import { Link } from 'react-router-dom'
 import OnlineScoreTable from './OnlineScoreTable'
-
+import KioskVideo from './webrtc/KioskVideo'
 const OnlineGamePlayerBlock = () => {
   return (
     <div className="OnlineGamePlayerBlock">
@@ -26,8 +26,9 @@ const KioskOnlineGame = props => {
           <OnlineGamePlayerBlock />
         </div>
         <div className="OnlineGameDisplayBlock">
-          <div className="OnlineGameDisplay"></div>
-          <div className="OnlineGameDisplay"></div>
+          <div className="OnlineGameDisplay">
+            <KioskVideo />
+          </div>
           <div className="OnlineGameHelpCircle">?</div>
         </div>
       </div>
