@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import baseaxios from '../../API/baseaxios'
 import Nav from '../../components/mainpage/Nav'
 import PieChart from '../../components/mainpage/PieChart'
+import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
 import profileimg from '../../img/profile.jpg'
 
@@ -122,7 +123,7 @@ const Mainpage = () => {
       </div>
 
       <div>
-        <div className="MainBox RecordBox">
+        <div className="MainBox RecordsBox">
           <div className="RecordNav">
             <h2 className="BoxTitle">전적관리</h2>
             <div className="NavCategory">
@@ -140,6 +141,7 @@ const Mainpage = () => {
               >친선전</span>
             </div>
           </div>
+          <Record />
         </div>
       </div>
     </div>

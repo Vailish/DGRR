@@ -1,19 +1,53 @@
-import React from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import Nav from '../../components/mainpage/Nav'
 import '../../scss/MianPage.scss'
-
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const Rankingpage = () => {
+  const [rankData, setRankData] = useState([])
+  const navigate = useNavigate()
+  useEffect(() => {
+    axios
+      .get('http://192.168.31.142:8080/api/v1/data/ranking', {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+      })
+      .then(res => setRankData(res.data.rankings))
+      .catch(err => console.log(err))
+  }, [])
+
+  const onMoveNickPage = nickname => {
+    navigate(`/${nickname}`)
+    nickname = ''
+  }
   return (
-    <div className='PageBase'>
-      <Nav/>
-      <div className='MainBox'>
-      mainbox
+    <div className="PageBase">
+      <Nav />
+      <div className="MainBox">mainbox</div>
+      <div className="TotalRankingBox">
+        <table>
+          <th>ranking</th>
+          <th> Player</th>
+          <th>Point</th>
+          <th>Rate</th>
+          <th>Wins</th>
+          <th>Losses</th>
+
+          {rankData.map((info, i) => {
+            return (
+              <tr key={i} onClick={onMoveNickPage}>
+                <td>{info.ranking} </td>
+                <td>{info.nickname}</td>
+                <td>{info.point} </td>
+                <td>{info.totalGameNumber} </td>
+                <td>{info.winGameNumber} </td>
+                <td>{info.lossesGameNumber} </td>
+              </tr>
+            )
+          })}
+        </table>
       </div>
-      <div className='MainBox'>
-        TotalRanking
-      </div>
- 
-  
     </div>
   )
 }

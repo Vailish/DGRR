@@ -274,20 +274,129 @@
     }
   }
 
-  .RecordBox {
+  .RecordsBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 944 / 1920 * 100vw;
     height: 1088 / 1080 * 100vh;
     margin-top: 80 / 1080 * 100vh;
 
+    .RecordBox {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      width: 96%;
+      padding: 8px 8px;
+      border: 0.5px solid #E2E2E2;
+      background: #FFFFFF;
+      box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+
+      .BaseRecordBox {
+        display: flex;
+        // justify-content: space-between;
+        border: solid red;
+
+        .RightInfo {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          border: solid blue;
+          
+          >div {
+            display: flex;
+            align-items: center;
+            border: orange solid;
+            >span {
+              margin-left: 8px;
+              font-size: 16px;
+              font-weight: 600;
+
+            }
+          }
+          .ResultImg {
+            width: 4vmin;
+            height: 4vmin;
+            border-radius: 80%;
+            object-fit: cover;
+          }
+        }
+
+        .DivideLine {
+          margin: 0px 16px;
+          height: 100%;
+          width: 2px;
+          border-radius: 5px;
+          background-color: #d9d9d9;
+        }
+
+        .LeftInfo {
+          width: 560px;
+          font-weight: 700;
+          text-align: left;
+          padding-bottom: 8px;
+          border: solid black;
+        }
+
+        .MyScoreBoard {
+          display: flex;
+          margin-top: 4px;
+          height: 100px;
+          border: solid green;
+          
+          >div {
+            text-align: center;
+            border: solid yellow;
+          }
+
+          .CrownImg {
+            display: block;
+            width: 50px;
+            margin-left: 9px;
+            object-fit: contain;
+          }
+
+          .RoundRankingText {
+            width: 42px;
+            margin : 0px 12px 4px;
+            line-height: 20px;
+          }
+
+          .ScoreTable {
+            height: 95%;
+            width: 320/1020*100vw;
+            .FrameNumber {
+              font-size: 20px;
+            }
+            .ScoreInputBlockLeft {
+              font-size: 20px;
+            }
+            .ScoreInputCenter {
+              font-size: 20px;
+            }
+            .ScoreInputBlockRight {
+              font-size: 20px;
+            }
+          }
+          
+        }
+      }
+    }
+
     .RecordNav {
       display: flex;
+      height: 6%;
+      width: 100%;
+      margin-bottom: 10px;
+      border-bottom: solid 2px #c4c4c4;
 
       .NavCategory {
         padding-top: 28 / 1080 * 100vh;
         padding-left: 16 / 1980 * 100vw;
 
         .Category {
-          padding-left: 16 / 1980 * 100vw;
+          padding-left: 32 / 1980 * 100vw;
           color: #919191;
           font-weight: 600;
           cursor: pointer;
@@ -340,6 +449,20 @@
   }
 
   .TotalRankingBox {
-    
+    table {
+      width: 72vw;
+      border-collapse: collapse;
+      border-spacing: 0;
+      th {
+        background-color: #501766;
+        color: white;
+      }
+      tr {
+        &:hover {
+          background-color: rgba(104, 93, 93, 0.68);
+        }
+      }
+    }
   }
 }
+
