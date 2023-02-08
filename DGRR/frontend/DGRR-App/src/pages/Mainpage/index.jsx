@@ -5,7 +5,6 @@ import Nav from '../../components/mainpage/Nav'
 import PieChart from '../../components/mainpage/PieChart'
 import '../../scss/MianPage.scss'
 import profileimg from '../../img/profile.jpg'
-
 const Mainpage = () => {
   const [userInfo, setUserInfo] = useState([])
   const [pointsInfo, setpointsInfo] = useState({})
@@ -101,7 +100,7 @@ const Mainpage = () => {
         <div className="MainBox UserRankingBox">
           <div className="UserRankingBoxTitle">
             <h2 className="BoxTitle">나의 랭킹</h2>
-            <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
+            <span className="RankingNav" onClick={() => navigate('/ranking')}>
               more▶
             </span>
           </div>
