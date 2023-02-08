@@ -26,62 +26,96 @@
 
 @import './mixins';
 
-@include desktop {
-  .ScoreTableBlock {
-    width: 120 * 2 / 2520 * 100%;
-    height: 100%;
-    // background: black;
-    border-left: 6 / 2560 * 100vw solid black;
-    border-top: 6 / 2560 * 100vw solid black;
-    border-bottom: 6 / 2560 * 100vw solid black;
+.ScoreTableBlock {
+  width: 120 * 2 / 2520 * 100%;
+  height: 100%;
+  // background: black;
+  border-left: 6 / 2560 * 100vw solid black;
+  border-top: 6 / 2560 * 100vw solid black;
+  border-bottom: 6 / 2560 * 100vw solid black;
 
-    // overflow: auto;
-    .UpDownLineBlock {
-      width: 100%;
-      height: 40 / 768 * 100%;
-      background: #5c5a5a;
+  // overflow: auto;
+  .UpDownLineBlock {
+    width: 100%;
+    height: 40 / 768 * 100%;
+    background: #5c5a5a;
+  }
+  .FrameNumber {
+    display: flex;
+    align-items: center;
+
+    height: 160 / 768 * 100%;
+    background: #501766;
+    // border: 3 / 2560 * 100vw solid black;
+    // border-top: 6 / 1600 * 100vh solid black;
+
+    font-family: 'Sansation';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 5vw;
+
+    line-height: 1.6;
+    color: #ffffff;
+  }
+  .ScoreBlock {
+    display: flex;
+    height: 264 / 768 * 100%;
+    // background: red;
+    // border: 1 / 2560 * 100vw solid black;
+    // border-left: 3 / 2560 * 100vw solid black;
+    // border-right: 3 / 2560 * 100vw solid black;
+    .ScoreInputBlockLeft {
+      width: 50%;
+      flex: auto;
+      height: 100%;
+      // border: none;
+      border-bottom: 1 / 2560 * 100vw solid black;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-size: 5vw;
+      text-align: center;
+      background: #f2faff;
     }
-    .FrameNumber {
-      display: flex;
-      align-items: center;
-
-      height: 160 / 768 * 100%;
-      background: #501766;
-      // border: 3 / 2560 * 100vw solid black;
-      // border-top: 6 / 1600 * 100vh solid black;
-
-      font-family: 'Sansation';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 5em;
-      line-height: 1.6;
-      color: #ffffff;
+    .ScoreInputBlockRight {
+      width: 50%;
+      flex: auto;
+      height: 100%;
+      // border: none;
+      border-bottom: 1 / 2560 * 100vw solid black;
+      border-top: none;
+      border-left: 1 / 2560 * 100vw solid black;
+      border-right: none;
+      font-size: 5vw;
+      text-align: center;
+      background: #f2faff;
     }
-    .ScoreBlock {
-      display: flex;
-      height: 264 / 768 * 100%;
-      // background: red;
-      // border: 1 / 2560 * 100vw solid black;
-      // border-left: 3 / 2560 * 100vw solid black;
-      // border-right: 3 / 2560 * 100vw solid black;
-      .ScoreInputBlock {
-        width: 50%;
-        height: 100%;
-        border: 1px solid black;
-        font-size: 5em;
-        text-align: center;
-        background: #f2faff;
-      }
-    }
-    .ScoreSum {
-      height: 264 / 768 * 100%;
-      background: white;
-
-      // background: blue;
+    .ScoreInputBlockFarRight {
+      width: 50%;
+      flex: auto;
+      height: 100%;
+      // border: none;
+      border-bottom: 1 / 2560 * 100vw solid black;
+      border-top: none;
+      border-left: 1 / 2560 * 100vw solid black;
+      border-right: none;
+      font-size: 5vw;
+      text-align: center;
+      background: #f2faff;
     }
   }
-  .Frame10 {
-    width: 120 * 3 / 2520 * 100%;
-    border-right: 6 / 2560 * 100vw solid black;
+  .ScoreSum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 264 / 768 * 100%;
+    font-size: 5vw;
+    background: white;
+
+    // background: blue;
   }
+}
+.Frame10 {
+  width: 120 * 3 / 2520 * 100%;
+  border-right: 6 / 2560 * 100vw solid black;
 }

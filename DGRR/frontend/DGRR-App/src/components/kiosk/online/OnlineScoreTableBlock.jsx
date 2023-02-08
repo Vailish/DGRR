@@ -16,15 +16,15 @@ const OnlineScoreTableBlock = props => {
       <div className="OnlineFrameNumber">{frameNum}</div>
       <div className="OnlineUpDownLineBlock"></div>
       <div className="OnlineScoreBlock">
-        <input className="OnlineScoreInputBlock"></input>
-        <input className="OnlineScoreInputBlock"></input>
-        {frameNum === 10 ? <input className="OnlineScoreInputBlock"></input> : null}
+        <input className="OnlineScoreInputBlockLeft"></input>
+        {frameNum === 10 ? <input className="OnlineScoreInputBlockCenter"></input> : null}
+        <input className="OnlineScoreInputBlockRight"></input>
       </div>
       <div className="OnlineScoreSum"></div>
       <div className="OnlineScoreBlock">
-        <div className="OnlineScoreInputBlock"></div>
-        <div className="OnlineScoreInputBlock"></div>
-        {frameNum === 10 ? <div className="OnlineScoreInputBlock"></div> : null}
+        <div className="OnlineScoreInputBlockLeft"></div>
+        {frameNum === 10 ? <div className="OnlineScoreInputBlockCenter"></div> : null}
+        <div className="OnlineScoreInputBlockRight"></div>
       </div>
       <div className="OnlineScoreSum"></div>
     </div>
