@@ -30,14 +30,8 @@ public class DataController {
 		TotalRankingDto totalRankingDto = dataService.getTotalRanking();
 		return new ResponseEntity<TotalRankingDto>(totalRankingDto, HttpStatus.OK); 
 	}
-	//dummtydata
-	@GetMapping("/data/points/{nickname}")
-	public ResponseEntity<?> dummy(@PathVariable String nickname){
-		DataResponseDto dataResponseDto = new DataResponseDto(100, 150, 200);
-		return new ResponseEntity<DataResponseDto>(dataResponseDto, HttpStatus.OK); 
-	}
 	
-	@GetMapping("/data/dev/points/dev/{nickname}")
+	@GetMapping("/data/points/{nickname}")
 	public ResponseEntity<?> getUserPointsRank(@PathVariable String nickname){
 		DataResponseDto dataResponseDto = dataService.getUserPointsRank(nickname);
 		return new ResponseEntity<DataResponseDto>(dataResponseDto, HttpStatus.OK); 
@@ -55,5 +49,18 @@ public class DataController {
 		
 		return new ResponseEntity<List<RankingResponseDto>>(List.of(rankingResponseDto1, rankingResponseDto2, rankingResponseDto3, rankingResponseDto4, rankingResponseDto5), HttpStatus.OK); 
 	}
+	
+//	//dummydata
+//	@GetMapping("/data/dev/ranking/{nickname}")
+//	public ResponseEntity<?> dummy2(@PathVariable String nickname){
+//		
+//		RankingResponseDto rankingResponseDto1 = new RankingResponseDto("ttest2", 8, 2200);
+//		RankingResponseDto rankingResponseDto2 = new RankingResponseDto("ttest3", 9, 2120);
+//		RankingResponseDto rankingResponseDto3 = new RankingResponseDto("ttest1", 10, 2000);
+//		RankingResponseDto rankingResponseDto4 = new RankingResponseDto("ttest4", 11, 1920);
+//		RankingResponseDto rankingResponseDto5 = new RankingResponseDto("ttest5", 12, 1880);
+//		
+//		return new ResponseEntity<List<RankingResponseDto>>(List.of(rankingResponseDto1, rankingResponseDto2, rankingResponseDto3, rankingResponseDto4, rankingResponseDto5), HttpStatus.OK); 
+//	}
 	
 }

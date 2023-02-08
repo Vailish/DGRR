@@ -12,7 +12,7 @@ public interface UserGameRepository extends JpaRepository<UserGame, String>{
 
 	public List<UserGame> findAllByUserId(long id);
 	public UserGame findByUserIdAndGameId(long userId, long gameId);
-//	
+
 	public List<UserGame> findAllByGameId(long id);
-//	
+	
 }

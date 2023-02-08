@@ -9,4 +9,6 @@ import com.ssafy.b102.Entity.Game;
 
 public interface GameRepository extends JpaRepository<Game, String>{
 	public List<Game> findAllByGameType(Boolean gameType);
+
+	public List<Game> findAllByGameTypeOrderByGameDateDesc(Boolean gameType);
 }
