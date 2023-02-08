@@ -23,14 +23,15 @@ const Record = () => {
         <div className='DivideLine'></div>
         <div className='RightInfo'>
           <div>
-            <img src={require('../../img/profile.jpg')} alt="profileimg" className='ResultImg' /> <span>2위 151점</span>
+            <img src={require('../../img/profile.jpg')} alt="profileimg" className='ResultImg' /> <span>2위</span> <span> 151점</span>
           </div>
           <div>
-            <img src={require('../../img/profile.jpg')} alt="profileimg" className='ResultImg' /> <span>3위 120점</span>
+            <img src={require('../../img/profile.jpg')} alt="profileimg" className='ResultImg' /> <span>3위</span> <span> 120점</span>
           </div>
           <div>
-            <img src={require('../../img/profile.jpg')} alt="profileimg" className='ResultImg' /> <span>4위 110점</span>
+            <img src={require('../../img/profile.jpg')} alt="profileimg" className='ResultImg' /> <span>4위</span> <span> 110점</span>
           </div>
+          <div className='DetailInfo'>▼</div>
         </div>
       </div>
     </div>

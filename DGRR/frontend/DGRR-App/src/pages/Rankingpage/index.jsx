@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import Nav from '../../components/mainpage/Nav'
-import '../../scss/MianPage.scss'
+import '../../scss/RankingPage.scss'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 const Rankingpage = () => {
@@ -24,8 +24,8 @@ const Rankingpage = () => {
   return (
     <div className="PageBase">
       <Nav />
-      <div className="MainBox">mainbox</div>
-      <div className="TotalRankingBox">
+      <div className="ProfileBox">ProfileBox</div>
+      <div className="MainBox TotalRankingBox">
         <table>
           <th>ranking</th>
           <th> Player</th>

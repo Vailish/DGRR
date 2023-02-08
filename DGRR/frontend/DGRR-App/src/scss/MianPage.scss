@@ -278,16 +278,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 944 / 1920 * 100vw;
-    height: 1088 / 1080 * 100vh;
-    margin-top: 80 / 1080 * 100vh;
+    width: 760px;
+    height: 1088px;
+    margin-top: 60px;
 
     .RecordBox {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      position: relative;
       height: auto;
-      width: 96%;
-      padding: 8px 8px;
+      width: 728px;
+      // margin: 8px 8px;
+      padding: 4px 8px;
       border: 0.5px solid #E2E2E2;
       background: #FFFFFF;
       box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
@@ -295,19 +298,19 @@
 
       .BaseRecordBox {
         display: flex;
-        // justify-content: space-between;
-        border: solid red;
+        width: 720px;
 
         .RightInfo {
           display: flex;
           flex-direction: column;
-          justify-content: space-around;
-          border: solid blue;
+          justify-content: center;
+          width: 120px;
           
           >div {
             display: flex;
+            margin:4px 0px;
             align-items: center;
-            border: orange solid;
+            justify-content: space-between;
             >span {
               margin-left: 8px;
               font-size: 16px;
@@ -321,6 +324,14 @@
             border-radius: 80%;
             object-fit: cover;
           }
+
+          .DetailInfo {
+            position: absolute;
+            right: 4px;
+            bottom: 4px;
+            height: 12px;
+            font-size: 14px;
+          }
         }
 
         .DivideLine {
@@ -332,22 +343,21 @@
         }
 
         .LeftInfo {
-          width: 560px;
+          width: auto;
           font-weight: 700;
           text-align: left;
           padding-bottom: 8px;
-          border: solid black;
         }
 
         .MyScoreBoard {
           display: flex;
           margin-top: 4px;
+          margin: 4px 0px 0px;
           height: 100px;
-          border: solid green;
+          width: auto;
           
           >div {
             text-align: center;
-            border: solid yellow;
           }
 
           .CrownImg {
@@ -365,7 +375,7 @@
 
           .ScoreTable {
             height: 95%;
-            width: 320/1020*100vw;
+            width: 494px;
             .FrameNumber {
               font-size: 20px;
             }
@@ -386,7 +396,7 @@
 
     .RecordNav {
       display: flex;
-      height: 6%;
+      height: 48px;
       width: 100%;
       margin-bottom: 10px;
       border-bottom: solid 2px #c4c4c4;
@@ -445,23 +455,6 @@
       background: #FFFFFF;
       box-shadow: 0 0 0 3px rgb(0, 0, 0) inset;
       border-radius: 5px;
-    }
-  }
-
-  .TotalRankingBox {
-    table {
-      width: 72vw;
-      border-collapse: collapse;
-      border-spacing: 0;
-      th {
-        background-color: #501766;
-        color: white;
-      }
-      tr {
-        &:hover {
-          background-color: rgba(104, 93, 93, 0.68);
-        }
-      }
     }
   }
 }
