@@ -37,14 +37,39 @@
     .ResultContentBlock {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       width: 100vw;
-      height: (1600 - 88) / 1600 * 100vh;
+      height: (1600 - 288) / 1600 * 100vh;
       margin-top: 64 / 1600 * 100vh;
 
       .EachPlayerBlock {
+        display: flex;
         width: 100%;
-        height: 50%;
-        background: red;
+        height: 30%;
+        // background: red;
+
+        .PlayerProfile {
+          width: 15%;
+          height: 100%;
+          border-radius: 50%;
+          background: white;
+          margin-left: 5%;
+        }
+
+        .PlayerScoreChart {
+          display: flex;
+          align-items: center;
+          width: 80%;
+          height: 100%;
+          .PlayerScoreBar {
+            $player-score-length: '30%';
+
+            width: $player-score-length;
+            height: 80%;
+            background: blue;
+            font-size: 10em;
+          }
+        }
       }
     }
   }

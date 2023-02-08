@@ -1,0 +1,160 @@
+// .myClass {
+//   ├── 객체의 노출여부와 표현방식
+//   │   ├── display
+//   │   └── list-style
+//   │
+//   ├── 위치와 좌표
+//   │   ├── position
+//   │   ├── float
+//   │   └── clear
+//   │
+//   ├── 크기와 여백
+//   │   ├── width / height
+//   │   └── padding / margin
+//   │
+//   ├── 윤곽과 배경
+//   │   └── border / background
+//   │
+//   ├── 글자와 정렬
+//   │   ├── corlor / font
+//   │   ├── text-decoration
+//   │   ├── text-align / vertical-align
+//   │   └── white-space
+//   │
+//   └── 내용
+//       └── content
+
+@import './mixins';
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+
+    .ContentBlock {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4vh;
+      width: 100vw;
+      height: 66.5vh;
+
+      background: black;
+      .PinQRBlock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        // position: absolute;
+        width: 912px / 2560px * 100vw;
+        height: 1064px / 1600px * 100vh;
+        margin-left: 136px / 2560px * 100vw;
+        // margin-top: 264px / 1600px * 100vh;
+
+        background: #ffffff;
+        box-shadow: 0.25pvh 0.25vh 0.5vh rgba(0, 0, 0, 0.25);
+        border-radius: 1.5vh;
+
+        display: flex;
+        .QRBlock {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          width: 20vw;
+          .QRImage {
+            width: 400px / 2560px * 100vw;
+            height: 400px / 1600px * 100vh;
+            background: black;
+          }
+          .QRTitle {
+            margin-top: 3vh;
+            font-size: 2vw;
+          }
+          .QRText {
+            margin-top: 1vh;
+            font-size: 1vw;
+          }
+        }
+        .OnlinePinInputBlock {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 1vh;
+          .PinInput {
+            width: 20vw;
+            height: 128 / 1600 * 100vh;
+            margin-bottom: 2vw;
+          }
+          .PinOkButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 240 / 2560 * 100vw;
+            height: 128 / 1600 * 100vh;
+            background: #501766;
+            border-radius: 1vw;
+            border: 1px solid black;
+            font-size: 3vw;
+            font-weight: 500;
+            color: #ffffff;
+          }
+        }
+      }
+      .UsersBlock {
+        .PlayersBlock {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 1240px / 2560px * 100vw;
+          height: 1064px / 1600px * 100vh;
+
+          margin-right: 152px / 2560px * 100vw;
+          overflow: auto;
+
+          background: #ffffff;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 24px;
+          .WelcomePlayer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 1024 / 1240 * 100%;
+            height: 808 / 1064 * 100%;
+            background: #f2faff;
+            .WelcomeText {
+              width: 840/1024 * 100%;
+              height: 272 / 808 * 100%;
+              font-size: 3vw;
+            }
+          }
+        }
+      }
+    }
+    .GameStartBlock {
+      display: flex;
+      justify-content: center;
+      margin-top: 2vw;
+      .GameStartButton {
+        /* Rectangle 34 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 608px / 2560px * 100vw;
+        height: 160px / 1600px * 100vh;
+
+        background: #501766;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+
+        font-size: 5vw;
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
+}

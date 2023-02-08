@@ -84,7 +84,7 @@ const OfflineResultChart = props => {
           bottom: 5,
         }}
       >
-        <XAxis type="number" hide={true} tickCount={0} />
+        <XAxis type="number" hide={true} tickCount={0} domain={[0, 300]} />
         <YAxis type="category" dataKey="name" />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip content={<CustomTooltip />} />

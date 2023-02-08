@@ -1,10 +1,7 @@
 import '../../../scss/Login.scss'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-const Login = ({ form, onChange, onSubmit, onKeyUp }) => {
-  const [keyPressed, setKeyPressed] = useState(false)
-
+const Login = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
   return (
     <div className="LoginTheme">
       <div className="Login">
@@ -27,6 +24,7 @@ const Login = ({ form, onChange, onSubmit, onKeyUp }) => {
           <form>
             <div className="LoginInput">
               <input
+                style={isId ? { border: '2px solid red' } : {}}
                 name="username"
                 type="text"
                 form={form.username}
@@ -35,6 +33,7 @@ const Login = ({ form, onChange, onSubmit, onKeyUp }) => {
               />
               <br />
               <input
+                style={isPw ? { border: '2px solid red' } : {}}
                 name="password"
                 type="password"
                 form={form.password}
@@ -42,10 +41,19 @@ const Login = ({ form, onChange, onSubmit, onKeyUp }) => {
                 placeholder="비밀번호를 입력해주세요"
               />
             </div>
+            {isLogin === false ? (
+              <span
+                style={{
+                  color: 'red',
+                }}
+              >
+                {error}
+              </span>
+            ) : (
+              ''
+            )}
             <div className="Button">
-              <button type="button" onClick={onSubmit}>
-                로그인
-              </button>
+              <button onClick={onSubmit}>로그인</button>
             </div>
           </form>
           <div className="JoinAndFind">
