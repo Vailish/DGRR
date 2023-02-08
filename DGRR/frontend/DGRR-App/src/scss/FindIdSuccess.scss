@@ -14,20 +14,20 @@
     background-position: 50%;
     background-size: cover;
     .FindId {
-      max-width: 1920px;
-      min-width: 1280px;
+      display: inline-flex;
       width: 100%;
       height: 100vh;
       margin: auto auto;
-      display: inline-flex;
+      max-width: 1920px;
+      min-width: 1280px;
       .Text {
-        max-width: 640px;
         height: 640px;
+        color: #fff;
+        text-align: center;
+        max-width: 640px;
         margin-left: 4rem;
         margin-right: 24rem;
         margin-top: 4rem;
-        text-align: center;
-        color: #fff;
         .TitleText {
           margin-top: 16%;
           margin-bottom: 64px;
@@ -69,34 +69,34 @@
           }
         }
         .FindIdInput {
+          text-align: center;
           max-width: 640px;
           margin-top: 2rem;
           margin-bottom: 16px;
           margin-left: 24px;
           margin-right: 24px;
-          text-align: center;
           .findUserName {
+            width: 16vw;
+            height: 4vh;
             margin: 4rem 2rem;
-            text-align: center;
             border: 1px solid black;
+            text-align: center;
             box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
             font-family: 'Archivo';
             border-radius: 16px;
-            width: 16vw;
-            height: 4vh;
           }
           input {
             width: 88%;
             height: 48px;
+            background: linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #686868, #686868),
+              linear-gradient(0deg, #686868, #686868), #686868;
+            color: #501766;
             margin-top: 16px;
             margin-bottom: 8px;
             border-radius: 8px;
             font-family: 'Archivo';
             font-size: 16px;
-            color: #501766;
             font-weight: 400px;
-            background: linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #686868, #686868),
-              linear-gradient(0deg, #686868, #686868), #686868;
             &::placeholder {
               color: #501766;
             }
@@ -109,12 +109,12 @@
             width: 88%;
             height: 8vh;
             border: 1px solid black;
+            color: #fff;
             border-radius: 32px;
             box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
             font-family: 'Archivo';
             font-size: 24px;
             font-weight: 400;
-            color: #fff;
             background-color: #501766;
             cursor: pointer;
             &:hover {
