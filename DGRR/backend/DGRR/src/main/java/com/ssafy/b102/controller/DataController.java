@@ -2,15 +2,19 @@ package com.ssafy.b102.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.b102.data.dto.TotalRankingDto;
 import com.ssafy.b102.response.dto.DataResponseDto;
 import com.ssafy.b102.response.dto.RankingResponseDto;
+import com.ssafy.b102.service.DataService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,13 +22,24 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
 public class DataController {
-	
-	//dummydata
+	@Autowired
+	public DataService dataService;
+
+	@GetMapping("/data/ranking")
+	public ResponseEntity<?> getRanking(){
+		TotalRankingDto totalRankingDto = dataService.getTotalRanking();
+		return new ResponseEntity<TotalRankingDto>(totalRankingDto, HttpStatus.OK); 
+	}
+	//dummtydata
 	@GetMapping("/data/points/{nickname}")
 	public ResponseEntity<?> dummy(@PathVariable String nickname){
-		
 		DataResponseDto dataResponseDto = new DataResponseDto(100, 150, 200);
-		
+		return new ResponseEntity<DataResponseDto>(dataResponseDto, HttpStatus.OK); 
+	}
+	
+	@GetMapping("/data/dev/points/dev/{nickname}")
+	public ResponseEntity<?> getUserPointsRank(@PathVariable String nickname){
+		DataResponseDto dataResponseDto = dataService.getUserPointsRank(nickname);
 		return new ResponseEntity<DataResponseDto>(dataResponseDto, HttpStatus.OK); 
 	}
 	

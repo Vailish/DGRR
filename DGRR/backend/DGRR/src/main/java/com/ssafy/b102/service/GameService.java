@@ -293,7 +293,7 @@ public class GameService {
 	}
 	// 핀번호로 유저 정보 요청
 	
-	public List<Integer> convertToList(String data) {
+	private List<Integer> convertToList(String data) {
 		return Stream.of(data.split(", ")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
 	}
 	
