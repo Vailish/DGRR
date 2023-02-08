@@ -11,7 +11,7 @@ class KioskVideo extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: "SessionA",
+      mySessionId: props.randomSession,
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
@@ -31,6 +31,7 @@ class KioskVideo extends Component {
     if (!this.state.session) {
       this.joinSession();
     }
+    console.log("내 세션 ID " + this.state.mySessionId)
     window.addEventListener("beforeunload", this.onbeforeunload);
   }
 

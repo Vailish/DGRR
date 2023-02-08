@@ -30,7 +30,9 @@ const mydata = { name: '김메시', tier: 'master', tierPoint: 3000, record: [10
 
 const KioskOnlineMatching = props => {
   const { goBackTo, goFrontTo } = props
-
+  const onRandomSession = (length = 50) => {
+    return Math.random().toString(16).substr(2, length)
+  }
   return (
     <div className="KioskBackground">
       <KioskNavBlock goBackTo={'/KioskOnlineLogin'} />
@@ -41,7 +43,7 @@ const KioskOnlineMatching = props => {
         <OnlineMatchingPlayer {...mydata} />
       </div>
       <div className="GameStartBlock">
-        <Link to="/KioskOnlineGame" className="GameStartButton">
+        <Link to="/KioskOnlineGame" className="GameStartButton" state={{ random: onRandomSession(50) }}>
           START
         </Link>
       </div>
