@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore'
-import { apis } from '../API/api'
+import { api } from '../API/api'
 
 const ADD_PLAYER = 'KioskOffline/ADD_PLAYER'
 const REMOVE_PLAYER = 'KioskOffline/REMOVE_PLAYER'
@@ -16,7 +17,7 @@ const OFFLINE_GAMEBOARD_CHANGE = 'KioskOffline/OFFLINE_GAMEBOARD_CHANGE'
 //   apis.~~~
 // })
 
-export const addPlayer = playerPin => ({
+export const addPlayer = playerInfo => ({
   type: ADD_PLAYER,
   playerInfo: {
     username: 'testzzang2',
@@ -39,7 +40,7 @@ export const addPlayer = playerPin => ({
       frame10: ['', '', '', ''],
     },
   },
-  playerPin,
+  playerInfo,
 })
 export const removePlayer = player => ({ type: REMOVE_PLAYER, playerInfo: player })
 export const updatePlayer = () => ({ type: UPDATE_PLAYER, playerInfo: {} })
@@ -66,48 +67,48 @@ export const offlineGameBoardChange = (playerNum, myFrame, orderNum, myValue) =>
 
 const initialState = {
   players: [
-    {
-      username: 'testzzang1',
-      nickname: '갓냥이',
-      profile: null,
-      rank: 135,
-      record: [10, 7, 3],
-      average: 163,
-      gameScore: [10, 0, 9, 1, 4, 3, 7, 8, 2, 5, 3, 4, 7, 3, 2, 8, 5, 5, 10, 10, 10],
-      gameBoard: {
-        frame1: ['', '', ''],
-        frame2: ['', '', ''],
-        frame3: ['', '', ''],
-        frame4: ['', '', ''],
-        frame5: ['', '', ''],
-        frame6: ['', '', ''],
-        frame7: ['', '', ''],
-        frame8: ['', '', ''],
-        frame9: ['', '', ''],
-        frame10: ['', '', '', ''],
-      },
-    },
-    {
-      username: 'testzzang2',
-      nickname: '김볼링',
-      profile: null,
-      rank: 216,
-      record: [15, 8, 7],
-      average: 85,
-      gameScore: [0, 10, 5, 5, 3, 5, 1, 2, 5, 2, 2, 8, 5, 4, 3, 9, 9, 1, 10, 9, 1],
-      gameBoard: {
-        frame1: ['', '', ''],
-        frame2: ['', '', ''],
-        frame3: ['', '', ''],
-        frame4: ['', '', ''],
-        frame5: ['', '', ''],
-        frame6: ['', '', ''],
-        frame7: ['', '', ''],
-        frame8: ['', '', ''],
-        frame9: ['', '', ''],
-        frame10: ['', '', '', ''],
-      },
-    },
+    // {
+    //   username: 'testzzang1',
+    //   nickname: '갓냥이',
+    //   profile: null,
+    //   rank: 135,
+    //   record: [{ totalGame: 10, winGame: 7, loseGame: 3 }],
+    //   average: 163,
+    //   gameScore: [10, 0, 9, 1, 4, 3, 7, 8, 2, 5, 3, 4, 7, 3, 2, 8, 5, 5, 10, 10, 10],
+    //   gameBoard: {
+    //     frame1: ['', '', ''],
+    //     frame2: ['', '', ''],
+    //     frame3: ['', '', ''],
+    //     frame4: ['', '', ''],
+    //     frame5: ['', '', ''],
+    //     frame6: ['', '', ''],
+    //     frame7: ['', '', ''],
+    //     frame8: ['', '', ''],
+    //     frame9: ['', '', ''],
+    //     frame10: ['', '', '', ''],
+    //   },
+    // },
+    // {
+    //   username: 'testzzang2',
+    //   nickname: '김볼링',
+    //   profile: null,
+    //   rank: 216,
+    //   record: [{ totalGame: 15, winGame: 8, loseGame: 7 }],
+    //   average: 85,
+    //   gameScore: [0, 10, 5, 5, 3, 5, 1, 2, 5, 2, 2, 8, 5, 4, 3, 9, 9, 1, 10, 9, 1],
+    //   gameBoard: {
+    //     frame1: ['', '', ''],
+    //     frame2: ['', '', ''],
+    //     frame3: ['', '', ''],
+    //     frame4: ['', '', ''],
+    //     frame5: ['', '', ''],
+    //     frame6: ['', '', ''],
+    //     frame7: ['', '', ''],
+    //     frame8: ['', '', ''],
+    //     frame9: ['', '', ''],
+    //     frame10: ['', '', '', ''],
+    //   },
+    // },
   ],
   gamingPlayers: {},
 }
@@ -134,8 +135,13 @@ const OfflineLoginUsers = (state = initialState, action) => {
         return state
       }
       // pin 숫자를 그대로 입력
-      apis.getPlayers()
-      // const playerInfo = apis.getPlayers()
+
+      console.log('LAFDASF', action.playerInfo)
+      // const playerInfo = response.then(res => {
+      //   console.log('!:!:!:!:!!:!:', res.data)
+      //   return res.data
+      // })
+      // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', playerInfo)
       const players = [...state.players.filter(player => player.nickname), action.playerInfo]
       return { ...state, players }
     }
@@ -151,7 +157,7 @@ const OfflineLoginUsers = (state = initialState, action) => {
         }),
       }
       console.log(JSON.stringify(gameData))
-      apis.sendresult(gameData)
+      api.sendresult(gameData)
       return state
     }
     case LOAD_PLAYERS: {
