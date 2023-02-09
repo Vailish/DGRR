@@ -143,39 +143,44 @@ const ScoreTableBlock = props => {
       <div className="FrameNumber">{frameNum}</div>
       <div className="UpDownLineBlock"></div>
       <div className="ScoreBlock">
-  {isInput ?
+        {isInput ? (
           <>
-        <input className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData} value={scoreBoard[0]}></input>
-        <input
-          className="ScoreInputBlockRight"
-          onChange={onChangeSecond}
-          ref={secondData}
-          value={scoreBoard[1]}
-        ></input>
-        {frameNum === 10 ? (
-          <input
-            className="ScoreInputBlockFarRight"
-            onChange={onChangeThird}
-            ref={thirdData}
-            value={scoreBoard[2]}
-          ></input>
-        ) : null} </> : <> <div className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData} value={scoreBoard[0]}></div>
-        <div
-          className="ScoreInputBlockRight"
-          onChange={onChangeSecond}
-          ref={secondData}
-          value={scoreBoard[1]}
-        ></div>
-        {frameNum === 10 ? (
-          <div
-            className="ScoreInputBlockFarRight"
-            onChange={onChangeThird}
-            ref={thirdData}
-            value={scoreBoard[2]}
-          ></div>
-        ) : null}</>
-  }
-
+            <input
+              className="ScoreInputBlockLeft"
+              onChange={onChangeFirst}
+              ref={firstData}
+              value={scoreBoard[0]}
+            ></input>
+            <input
+              className="ScoreInputBlockRight"
+              onChange={onChangeSecond}
+              ref={secondData}
+              value={scoreBoard[1]}
+            ></input>
+            {frameNum === 10 ? (
+              <input
+                className="ScoreInputBlockFarRight"
+                onChange={onChangeThird}
+                ref={thirdData}
+                value={scoreBoard[2]}
+              ></input>
+            ) : null}
+          </>
+        ) : (
+          <>
+            <div className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData}>
+              {scoreBoard[0]}
+            </div>
+            <div className="ScoreInputBlockRight" onChange={onChangeSecond} ref={secondData}>
+              {scoreBoard[1]}
+            </div>
+            {frameNum === 10 ? (
+              <div className="ScoreInputBlockFarRight" onChange={onChangeThird} ref={thirdData}>
+                {scoreBoard[2]}
+              </div>
+            ) : null}
+          </>
+        )}
       </div>
       <div className="ScoreSum">{scoreSum}</div>
     </div>
