@@ -10,7 +10,7 @@ import ScoreTableBlock from './ScoreTableBlock'
 
 const ScoreTable = props => {
   const NumArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  const { playerNum } = props
+  const { playerNum, isInput } = props
   const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum].gameBoardResult)
   const scoreArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum].gameBoard)
   console.log(playerNum)
