@@ -1,0 +1,83 @@
+@import './mixins';
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+    .OnlineProfileContentBlock {
+      display: flex;
+
+      position: relative;
+      width: 100vw;
+      height: (1600 - 260) / 1600 * 100vh;
+      background: blue;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 60 / 1600 * 100vh;
+      .OnlineProfileContentInner {
+        display: flex;
+        width: 1280 / 2560 * 100vw;
+        height: 1080 / 1600 * 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        .OnlineProfile {
+          width: 440 / 2560 * 100vw;
+          height: 440 / 2560 * 100vw;
+          background: black;
+          border-radius: 50%;
+        }
+        .OnlineRecordBlock {
+          display: flex;
+          width: 680 / 2560 * 100vw;
+          height: 312 / 1600 * 100vh;
+
+          background: #f8f8fb;
+          flex-direction: column;
+          justify-content: space-around;
+          .OnlinePlayerName {
+            font-size: 4vw;
+            border-bottom: 0.1vh black solid;
+          }
+          .OnlineTierAndRecord {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5vw;
+            .OnlineTier {
+            }
+            .OnlineRecord {
+            }
+          }
+        }
+      }
+      .StartBackBlock {
+        display: flex;
+        width: 50vw;
+        height: 20vh;
+        background: white;
+        justify-content: space-around;
+        .GameStartBlock {
+          display: flex;
+          width: 608 / 2560 * 100vw;
+          height: 160 / 1600 * 100vh;
+          background: #501766;
+          text-decoration: none;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0vh 0.25px 0.25vh rgba(0, 0, 0, 0.25);
+          border-radius: 1.5vh;
+          color: white;
+          font-size: 4vw;
+        }
+      }
+    }
+  }
+}

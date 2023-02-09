@@ -1,0 +1,113 @@
+.EachPlayer {
+  width: 1016px / 2560px * 100vw;
+  height: 184px / 1600px * 100vh;
+  border: 1px solid #000000;
+
+  background: #ffffff;
+  box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+}
+.PlayerLogin {
+  display: flex;
+  border: 8px solid #3b8cd7;
+  align-items: center;
+  .PlayerProfileBlock {
+    display: flex;
+    width: 20%;
+    height: 100%;
+    background: black;
+    justify-content: center;
+    .PlayerProfile {
+      width: 85%;
+      height: 100%;
+      background: white;
+      border-radius: 50%;
+    }
+  }
+  .PlayerInfoBlock {
+    width: 55%;
+    height: 100%;
+    background: blue;
+    .PlayerNameAndRank {
+      display: flex;
+      width: 100%;
+      height: 50%;
+      background: violet;
+      .PlayerName {
+        display: flex;
+        width: 50%;
+        height: 100%;
+        background: darkorange;
+        justify-content: start;
+        font-size: 2em;
+      }
+
+      .PlayerRank {
+        display: flex;
+        width: 50%;
+        height: 100%;
+        background: red;
+        justify-content: end;
+        font-size: 2em;
+      }
+    }
+    .PlayerRecordBlock {
+      display: flex;
+      width: 100%;
+      height: 50%;
+      background: yellow;
+      .PlayerRecordTitle {
+        display: flex;
+        width: 20%;
+        height: 100%;
+        background: green;
+        justify-content: end;
+        font-size: 1em;
+        align-items: end;
+      }
+
+      .PlayerRecordContent {
+        display: flex;
+        width: 80%;
+        height: 100%;
+        background: purple;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.7em;
+      }
+    }
+  }
+  .PlayerAverageBlock {
+    display: flex;
+    width: 20%;
+    height: 100%;
+    background: teal;
+    align-items: end;
+    .PlayerAverageText {
+      display: flex;
+      width: 30%;
+      height: 80%;
+      background: white;
+      justify-content: center;
+      align-items: center;
+    }
+    .PlayerAverageScore {
+      display: flex;
+      width: 60%;
+      height: 100%;
+      background: olive;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+    }
+  }
+  .PlayerCancelCircle {
+    display: flex;
+    width: 5%;
+    height: 30%;
+    background: gray;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+}

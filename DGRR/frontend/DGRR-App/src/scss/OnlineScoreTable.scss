@@ -1,0 +1,9 @@
+@import './mixins';
+
+@include desktop {
+  .OnlineScoreTable {
+    display: flex;
+    width: 1920 / 2560 * 100vw;
+    height: 320 / 1600 * 100vh;
+  }
+}
