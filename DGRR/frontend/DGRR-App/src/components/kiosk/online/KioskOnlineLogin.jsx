@@ -3,9 +3,9 @@ import '../../../scss/KioskOnlineLogin.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 // import KioskLoginPlayer from './KioskLoginPlayer'
-import { addPlayer } from '../../../store/OfflineLoginUsers'
+import { addPlayer } from '../../../store/OnlineLoginUser'
 // import axios from 'axios'
-import { apis } from '../../../API/api'
+import { api } from '../../../API/api'
 import KioskNavBlock from '../KioskNavBlock'
 
 const KioskOnlineLogin = () => {
@@ -13,24 +13,29 @@ const KioskOnlineLogin = () => {
   const dispatch = useDispatch()
   const inputPinNumber = e => {
     pinNumber = e.target.value
+    console.log(pinNumber)
   }
   const CustomInput = props => {
     const { InputValue, InputPin, InputClassName } = props
-    return <input value={InputValue} onChange={InputPin} className={InputClassName} />
+    return (
+      <input
+        type="number"
+        value={InputValue}
+        onChange={InputPin}
+        className={InputClassName}
+        style={{ fontSize: '2vw' }}
+      />
+    )
   }
-  const onAddPlayer = () => {
+  const onAddPlayer = async () => {
     // pinNumber = ''
-    dispatch(addPlayer(pinNumber))
-    console.log(pinNumber)
+    const pinNum = String(pinNumber)
+    const url = '/v1/matching/' + pinNum
+    const response = await api.get(url)
+    console.log('response : ', response)
+    dispatch(addPlayer(response.data))
   }
   const players = useSelector(state => state.OfflineLoginUsers.players)
-  const always4Blocks = () => {
-    const playersList = [...players]
-    for (let i = playersList.length; i < 4; i++) {
-      playersList.push({})
-    }
-    return playersList
-  }
   return (
     <div className="KioskBackground">
       <KioskNavBlock goBackTo="/KioskSelect" />
