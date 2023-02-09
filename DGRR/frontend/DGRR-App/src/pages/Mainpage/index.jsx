@@ -12,18 +12,18 @@ const Mainpage = () => {
   const [pointsInfo, setpointsInfo] = useState({})
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
-  const [seletedCategory, setSeletedCategory] = useState("totalgame")
+  const [seletedCategory, setSeletedCategory] = useState('totalgame')
   const [games, setGames] = useState([])
   const { nickName } = useParams()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (localStorage.getItem('access-token')) {
-      navigate('/beomi')
-    } else {
-      navigate('/')
-    }
-  }, [localStorage.getItem('access-token')])
+  // useEffect(() => {
+  //   if (localStorage.getItem('access-token')) {
+  //     navigate('/beomi')
+  //   } else {
+  //     navigate('/')
+  //   }
+  // }, [localStorage.getItem('access-token')])
 
   useEffect(() => {
     fetchData()
@@ -46,7 +46,7 @@ const Mainpage = () => {
     setRankingInfo(rankingData)
   }
 
-  const handleClick = (selected) => {
+  const handleClick = selected => {
     if (selected !== seletedCategory) {
       setSeletedCategory(selected)
     }
@@ -133,17 +133,23 @@ const Mainpage = () => {
             <h2 className="BoxTitle">전적관리</h2>
             <div className="NavCategory">
               <span
-                className={`Category ${(seletedCategory === "totalgame" ? "SelectedCategory" : undefined)}`}
-                onClick={() => handleClick("totalgame")}
-              >전체</span>
+                className={`Category ${seletedCategory === 'totalgame' ? 'SelectedCategory' : undefined}`}
+                onClick={() => handleClick('totalgame')}
+              >
+                전체
+              </span>
               <span
-                className={`Category ${(seletedCategory === "rankgame" ? "SelectedCategory" : undefined)}`}
-                onClick={() => handleClick("rankgame")}
-              >랭킹전</span>
+                className={`Category ${seletedCategory === 'rankgame' ? 'SelectedCategory' : undefined}`}
+                onClick={() => handleClick('rankgame')}
+              >
+                랭킹전
+              </span>
               <span
-                className={`Category ${(seletedCategory === "normalgame" ? "SelectedCategory" : undefined)}`}
-                onClick={() => handleClick("normalgame")}
-              >친선전</span>
+                className={`Category ${seletedCategory === 'normalgame' ? 'SelectedCategory' : undefined}`}
+                onClick={() => handleClick('normalgame')}
+              >
+                친선전
+              </span>
             </div>
           </div>
           <Record />
