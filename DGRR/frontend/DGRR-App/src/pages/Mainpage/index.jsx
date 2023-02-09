@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import baseaxios from '../../API/baseaxios'
 import Nav from '../../components/mainpage/Nav'
 import PieChart from '../../components/mainpage/PieChart'
+import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
 import profileimg from '../../img/profile.jpg'
 
@@ -11,13 +12,14 @@ const Mainpage = () => {
   const [pointsInfo, setpointsInfo] = useState({})
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
-  // const [seletedCategory, setseletedCategory] = useState(second)
+  const [seletedCategory, setSeletedCategory] = useState("totalgame")
+  const [games, setGames] = useState([])
   const { nickName } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (localStorage.getItem('access-token')) {
-      navigate('/main')
+      navigate('/beomi')
     } else {
       navigate('/')
     }
@@ -31,13 +33,23 @@ const Mainpage = () => {
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
     const requestRankings = await baseaxios.get(`/api/v1/data/ranking/${nickName}`)
+    const requestGames = await baseaxios.get(`/api/v1/games/${nickName}`)
     const userData = requestUser.data
     const pointsData = requestPoints.data
     const rankingData = requestRankings.data
+    const GamesData = requestGames.data
+    console.log(GamesData)
+    console.log(pointsData)
     setMyRanking(rankingData[2].ranking)
     setUserInfo(userData)
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
+  }
+
+  const handleClick = (selected) => {
+    if (selected !== seletedCategory) {
+      setSeletedCategory(selected)
+    }
   }
 
   return (
@@ -55,21 +67,21 @@ const Mainpage = () => {
                 id="LS"
                 startColor="#FF4C61"
                 endColor="#FFD2D7"
-                score={pointsInfo.lastest_game_total_score}
+                score={pointsInfo.lastestGameTotalScore}
               />
               <PieChart
                 title="3 Games Avg"
                 id="GA"
                 startColor="#FFB800"
                 endColor="#FFF7E1"
-                score={pointsInfo.last_3_game_average_total_score}
+                score={pointsInfo.last3GameAverageTotalScore}
               />
               <PieChart
                 title="High Score"
                 id="HS"
                 startColor="#3CBA94"
                 endColor="#D4F3E9"
-                score={pointsInfo.highest_total_score}
+                score={pointsInfo.highestTotalScore}
               />
             </div>
             <button className="Button">점수 그래프</button>
@@ -116,15 +128,25 @@ const Mainpage = () => {
       </div>
 
       <div>
-        <div className="MainBox RecordBox">
+        <div className="MainBox RecordsBox">
           <div className="RecordNav">
             <h2 className="BoxTitle">전적관리</h2>
             <div className="NavCategory">
-              <span className="Category">전체</span>
-              <span className="Category">랭킹전</span>
-              <span className="Category">친선전</span>
+              <span
+                className={`Category ${(seletedCategory === "totalgame" ? "SelectedCategory" : undefined)}`}
+                onClick={() => handleClick("totalgame")}
+              >전체</span>
+              <span
+                className={`Category ${(seletedCategory === "rankgame" ? "SelectedCategory" : undefined)}`}
+                onClick={() => handleClick("rankgame")}
+              >랭킹전</span>
+              <span
+                className={`Category ${(seletedCategory === "normalgame" ? "SelectedCategory" : undefined)}`}
+                onClick={() => handleClick("normalgame")}
+              >친선전</span>
             </div>
           </div>
+          <Record />
         </div>
       </div>
     </div>

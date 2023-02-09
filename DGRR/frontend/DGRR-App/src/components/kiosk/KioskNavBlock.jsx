@@ -16,12 +16,13 @@ const KioskNavBlock = props => {
           <div className="GoBack">BACK</div>
           <hr className="BackLine" />
         </Link>
-      ) : (
+      ) : null}
+      {goFrontTo ? (
         <Link className="FrontBlock" to={goFrontTo}>
-          <div className="GoFront">MAIN</div>
+          <div className="GoFront">NEXT</div>
           <hr className="FrontLine" />
         </Link>
-      )}
+      ) : null}
     </div>
   )
 }

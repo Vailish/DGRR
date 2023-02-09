@@ -34,11 +34,32 @@ const KioskOfflineResult = () => {
   const ChangeLength = () => {
     playerScore = { ...playerScore, playerScoreLength: '20%' }
   }
+  const resultData = useSelector(state => state.OfflineLoginUsers.gamingPlayers)
+  const playersList = Object.keys(resultData)
+
+  const EachPlayerBlock = props => {
+    const { data } = props
+    return (
+      <div className="EachPlayerBlock">
+        <div className="PlayerProfile"></div>
+        <div className="PlayerScoreChart">
+          <OfflineResultChart data={data} width="100%" height="100%" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="KioskBackground">
       <KioskNavBlock goFrontTo="/KioskLogin" />
       <div className="ResultContentBlock">
+        {playersList.map((player, index) => {
+          const gameBoardResult = resultData[player].gameBoardResult
+          const pv = gameBoardResult[gameBoardResult.length - 1]
+          const data = { name: '', pv }
+          return <EachPlayerBlock data={data} width="100%" height="100%" />
+        })}
+        {/* <EachPlayerBlock/>
         <div className="EachPlayerBlock">
           <div className="PlayerProfile"></div>
           <div className="PlayerScoreChart">
@@ -50,13 +71,7 @@ const KioskOfflineResult = () => {
           <div className="PlayerScoreChart">
             <OfflineResultChart data={data} width="100%" height="100%" />
           </div>
-        </div>
-        <div className="EachPlayerBlock">
-          <div className="PlayerProfile"></div>
-          <div className="PlayerScoreChart">
-            <OfflineResultChart data={data} width="100%" height="100%" />
-          </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

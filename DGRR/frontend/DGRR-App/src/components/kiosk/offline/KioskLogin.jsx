@@ -3,7 +3,7 @@ import '../../../scss/KioskLogin.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 // import KioskLoginPlayer from './KioskLoginPlayer'
-import { addPlayer } from '../../../store/OfflineLoginUsers'
+import { addPlayer, loadPlayers } from '../../../store/OfflineLoginUsers'
 // import axios from 'axios'
 import { apis } from '../../../API/api'
 import KioskLoginPlayer from './KioskLoginPlayer'
@@ -15,9 +15,12 @@ const KioskLogin = () => {
   const inputPinNumber = e => {
     pinNumber = e.target.value
   }
+  const onGameStart = () => {
+    dispatch(loadPlayers())
+  }
   const CustomInput = props => {
     const { InputValue, InputPin, InputClassName } = props
-    return <input value={InputValue} onChange={InputPin} className={InputClassName} />
+    return <input type="number" value={InputValue} onChange={InputPin} className={InputClassName} />
   }
   const onAddPlayer = () => {
     // pinNumber = ''
@@ -71,7 +74,7 @@ const KioskLogin = () => {
         </div>
       </div>
       <div className="GameStartBlock">
-        <Link to="/KioskOfflineGame" className="GameStartButton">
+        <Link to="/KioskOfflineGame" className="GameStartButton" onClick={onGameStart}>
           START
         </Link>
       </div>
