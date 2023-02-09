@@ -4,7 +4,6 @@
   .KioskSelectHelp {
     position: absolute;
     left: 15vw;
-    // background-color: white;
     .KioskSelectHelpInner {
       width: 70vw;
       height: 70vw;
@@ -13,12 +12,12 @@
         display: flex;
         justify-content: right;
         .Close {
-          border-radius: 50%;
-          border: none;
+          display: flex;
           width: 3vw;
           height: 3vw;
+          border: none;
+          border-radius: 50%;
           font-size: 4vw;
-          display: flex;
           justify-content: center;
           align-items: center;
         }
