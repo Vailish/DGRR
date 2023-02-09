@@ -8,7 +8,7 @@ import { addPlayer, offlineGameBoardChange } from '../../../store/OfflineLoginUs
 import { apis } from '../../../API/api'
 
 const ScoreTableBlock = props => {
-  const { frameNum, playerNum, scoreSum, scoreBoard } = props
+  const { frameNum, playerNum, scoreSum, scoreBoard, isInput } = props
   // const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum])
 
   console.log(playerNum)
@@ -143,6 +143,8 @@ const ScoreTableBlock = props => {
       <div className="FrameNumber">{frameNum}</div>
       <div className="UpDownLineBlock"></div>
       <div className="ScoreBlock">
+  {isInput ?
+          <>
         <input className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData} value={scoreBoard[0]}></input>
         <input
           className="ScoreInputBlockRight"
@@ -157,7 +159,23 @@ const ScoreTableBlock = props => {
             ref={thirdData}
             value={scoreBoard[2]}
           ></input>
-        ) : null}
+        ) : null} </> : <> <div className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData} value={scoreBoard[0]}></div>
+        <div
+          className="ScoreInputBlockRight"
+          onChange={onChangeSecond}
+          ref={secondData}
+          value={scoreBoard[1]}
+        ></div>
+        {frameNum === 10 ? (
+          <div
+            className="ScoreInputBlockFarRight"
+            onChange={onChangeThird}
+            ref={thirdData}
+            value={scoreBoard[2]}
+          ></div>
+        ) : null}</>
+  }
+
       </div>
       <div className="ScoreSum">{scoreSum}</div>
     </div>

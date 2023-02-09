@@ -27,6 +27,7 @@ const ScoreTable = props => {
             playerNum={playerNum}
             scoreSum={scoreSumArray[index]}
             scoreBoard={scoreBoard}
+            isInput={isInput}
           />
         )
       })}
