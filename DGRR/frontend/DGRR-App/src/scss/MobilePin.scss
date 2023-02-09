@@ -10,8 +10,9 @@
   .MobilePinTheme {
     width: 100vw;
     height: 100vh;
-    text-align: center;
     background: linear-gradient(#fff, #4b185f);
+    text-align: center;
+    font-family: 'Archivo';
     background-size: cover;
     .MobilePin {
       width: 100%;
@@ -19,8 +20,8 @@
       margin: auto auto;
 
       .MobilePinText {
+        color: #000;
         text-align: center;
-        color: #fff;
         .MobilePinTitleText {
           margin-top: 4%;
           margin-bottom: 64px;
@@ -29,42 +30,59 @@
           font-weight: 400px;
           font-style: normal;
           line-height: 40px;
-          text-shadow: 0px 4px 45px #000;
         }
       }
       .MobilePinForm {
         width: 55%;
         height: 48%;
-        border-radius: 16px;
         margin: auto auto;
+        border-radius: 16px;
         background-color: #fff;
         box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
-        .MobilePinCount {
-          width: 48%;
+        .MobilePinName {
           position: absolute;
-          margin: 4rem 14px;
+          margin: 2rem 6rem;
+        }
+        .MobilePinCount {
+          position: absolute;
+          width: 48%;
+          margin: 8rem 14px;
+          top: 80px;
+          .MobileUserName {
+            border: 0.5px solid black;
+            border-radius: 8px;
+            box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+          }
+          .MobileCountDown {
+            position: absolute;
+            width: 48vw;
+            margin: auto;
+            color: blue;
+            text-align: center;
+            top: 8rem;
+          }
         }
         .MobilePinNumber {
-          width: 48%;
           position: absolute;
-          margin: 8rem 14px;
+          width: 48%;
+          margin: 16rem 14px;
         }
         .MobilePinButton {
+          position: absolute;
           width: 48vw;
           margin: 8px 14px;
-          position: absolute;
-          bottom: 8rem;
           text-align: center;
+          bottom: 8rem;
           button {
             width: 88%;
             height: 4vh;
             border: 1px solid black;
+            color: #fff;
             border-radius: 32px;
             box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
             font-family: 'Archivo';
             font-size: 16px;
             font-weight: 400;
-            color: #fff;
             background-color: #501766;
             cursor: pointer;
             &:hover {

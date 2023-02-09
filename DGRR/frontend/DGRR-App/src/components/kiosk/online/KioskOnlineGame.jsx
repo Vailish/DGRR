@@ -1,9 +1,10 @@
 import KioskNavBlock from '../KioskNavBlock'
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../../../scss/KioskOnlineGame.scss'
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import OnlineScoreTable from './OnlineScoreTable'
-
+import KioskVideo from './webrtc/KioskVideo'
 const OnlineGamePlayerBlock = () => {
   return (
     <div className="OnlineGamePlayerBlock">
@@ -14,8 +15,13 @@ const OnlineGamePlayerBlock = () => {
 }
 
 const KioskOnlineGame = props => {
+  const location = useLocation()
   const { goBackTo, goFrontTo } = props
+  const { random } = location.state
 
+  useEffect(() => {
+    console.log('잘 받아왔어' + random)
+  })
   return (
     <div className="KioskBackground">
       <div className="OnlineGameContentBlock">
@@ -26,8 +32,9 @@ const KioskOnlineGame = props => {
           <OnlineGamePlayerBlock />
         </div>
         <div className="OnlineGameDisplayBlock">
-          <div className="OnlineGameDisplay"></div>
-          <div className="OnlineGameDisplay"></div>
+          <div className="OnlineGameDisplay">
+            <KioskVideo randomSession={random} />
+          </div>
           <div className="OnlineGameHelpCircle">?</div>
         </div>
       </div>
