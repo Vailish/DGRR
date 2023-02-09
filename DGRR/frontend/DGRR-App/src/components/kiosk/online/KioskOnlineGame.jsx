@@ -14,14 +14,13 @@ const OnlineGamePlayerBlock = () => {
   )
 }
 
-const KioskOnlineGame = props => {
-  const location = useLocation()
-  const { goBackTo, goFrontTo } = props
-  const { random } = location.state
+const KioskOnlineGame = () => {
+  // const location = useLocation()
+  // const { random } = location.state
 
-  useEffect(() => {
-    console.log('잘 받아왔어' + random)
-  })
+  // useEffect(() => {
+  //   console.log('잘 받아왔어' + random)
+  // })
   return (
     <div className="KioskBackground">
       <div className="OnlineGameContentBlock">
@@ -32,9 +31,7 @@ const KioskOnlineGame = props => {
           <OnlineGamePlayerBlock />
         </div>
         <div className="OnlineGameDisplayBlock">
-          <div className="OnlineGameDisplay">
-            <KioskVideo randomSession={random} />
-          </div>
+          <div className="OnlineGameDisplay">{/* <KioskVideo randomSession={random} /> */}</div>
           <div className="OnlineGameHelpCircle">?</div>
         </div>
       </div>

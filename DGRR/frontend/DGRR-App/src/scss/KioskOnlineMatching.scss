@@ -28,17 +28,25 @@
         position: absolute;
         width: 10vw;
         height: 10vh;
-        left: 1056/2560 * 100vw;
-        top: 600 / 1600 * 100vh;
-        font-size: 12vw;
+        left: 1100/2560 * 100vw;
+        top: 700 / 1600 * 100vh;
+        font-size: 5vw;
       }
       .LetterS {
         position: absolute;
         width: 10vw;
         height: 10vh;
-        left: 1208/2560 * 100vw;
-        top: 760 / 1600 * 100vh;
-        font-size: 12vw;
+        left: 1200/2560 * 100vw;
+        top: 700 / 1600 * 100vh;
+        font-size: 5vw;
+      }
+      .CountingDownNumber {
+        position: absolute;
+        width: 10vw;
+        height: 10vh;
+        left: 1150/2560 * 100vw;
+        top: 900 / 1600 * 100vh;
+        font-size: 10vw;
       }
       .OnlineMatchingPlayerBlock {
         display: flex;

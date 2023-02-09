@@ -1,7 +1,7 @@
 import KioskNavBlock from '../KioskNavBlock'
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../../../scss/KioskOnlineMatching.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const OnlineMatchingPlayer = props => {
   const { name, tier, tierPoint, record } = props
@@ -28,8 +28,23 @@ const OnlineMatchingPlayer = props => {
 
 const mydata = { name: '김메시', tier: 'master', tierPoint: 3000, record: [10, 7, 3] }
 
-const KioskOnlineMatching = props => {
-  const { goBackTo, goFrontTo } = props
+const KioskOnlineMatching = () => {
+  const CountingDownNumber = props => {
+    const { number } = props
+    return <div className="CountingDownNumber"> {number}</div>
+  }
+  const numberRef = useRef()
+  const navigate = useNavigate()
+  let countDown = 13
+  const numberCounting = setInterval(() => {
+    countDown--
+    if (countDown <= 10) numberRef.current.innerText = countDown
+    if (countDown === 0) {
+      clearInterval(numberCounting)
+      navigate('/KioskOnlineGame')
+    }
+  }, 1000)
+
   const onRandomSession = (length = 50) => {
     return Math.random().toString(16).substr(2, length)
   }
@@ -40,13 +55,11 @@ const KioskOnlineMatching = props => {
         <OnlineMatchingPlayer {...mydata} />
         <div className="LetterV">V</div>
         <div className="LetterS">S</div>
+        <div className="CountingDownNumber" ref={numberRef}></div>
+        {/* {countDown < 10 ? <CountingDownNumber number={countDown} /> : null} */}
         <OnlineMatchingPlayer {...mydata} />
       </div>
-      <div className="GameStartBlock">
-        <Link to="/KioskOnlineGame" className="GameStartButton" state={{ random: onRandomSession(50) }}>
-          START
-        </Link>
-      </div>
+      <div className="GameStartBlock"></div>
     </div>
   )
 }
