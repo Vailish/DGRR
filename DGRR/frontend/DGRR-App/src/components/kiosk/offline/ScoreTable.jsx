@@ -8,13 +8,14 @@ import { addPlayer } from '../../../store/OfflineLoginUsers'
 import { apis } from '../../../API/api'
 import ScoreTableBlock from './ScoreTableBlock'
 
-const ScoreTable = () => {
+const ScoreTable = (props) => {
   const NumArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  const { isInput} = props
 
   return (
     <div className="ScoreTable">
       {NumArray.map((num, index) => (
-        <ScoreTableBlock frameNum={num} key={index} />
+        <ScoreTableBlock frameNum={num} key={index} isInput={isInput} />
       ))}
     </div>
   )

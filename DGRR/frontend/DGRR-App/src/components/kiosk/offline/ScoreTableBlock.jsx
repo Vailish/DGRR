@@ -8,7 +8,7 @@ import { addPlayer } from '../../../store/OfflineLoginUsers'
 import { apis } from '../../../API/api'
 
 const ScoreTableBlock = props => {
-  const { frameNum } = props
+  const { frameNum, isInput } = props
   const firstData = useRef()
   const [frameData, setFrameData] = useState({
     first: null,
@@ -40,9 +40,17 @@ const ScoreTableBlock = props => {
       <div className="FrameNumber">{frameNum}</div>
       <div className="UpDownLineBlock"></div>
       <div className="ScoreBlock">
-        <input className="ScoreInputBlock" onChange={onChangeFirst} ref={firstData}></input>
-        <input className="ScoreInputBlock" onChange={onChangeSecond}></input>
-        {frameNum === 10 ? <input className="ScoreInputBlock"></input> : null}
+        {
+          isInput ?
+          <><input className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData}></input>
+              {frameNum === 10 ? <input className="ScoreInputBlockCenter"></input> : null}
+              <input className="ScoreInputBlockRight" onChange={onChangeSecond}></input>
+          </> :
+          <><div className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData}>1</div>
+              {frameNum === 10 ? <div className="ScoreInputBlockCenter"></div> : null}
+              <div className="ScoreInputBlockRight" onChange={onChangeSecond}></div>
+          </>
+        }
       </div>
       <div className="ScoreSum"></div>
     </div>
