@@ -18,6 +18,7 @@ const ScoreTable = props => {
     <div className="ScoreTable">
       {NumArray.map((num, index) => {
         const scoreBoard = [scoreArray[2 * index], scoreArray[2 * index + 1]]
+        if (index === 9) scoreBoard.push(scoreArray[2 * (index + 1)])
 
         return (
           <ScoreTableBlock

@@ -199,12 +199,15 @@ const OfflineLoginUsers = (state = initialState, action) => {
         } else if (index % 2) {
           if (gameBoard[index - 1] === 'X' || gameBoard[index - 1] === 'x') {
             gameBoardSum[parseInt(index / 2)] = 'X'
+            endpoint = parseInt(index / 2)
             index++
           } else if (gameBoard[index] === '/') {
             console.log('여기로 옴2')
             gameBoardSum[parseInt(index / 2)] = '/'
+            endpoint = parseInt(index / 2)
             continue
           } else if (gameBoard[index] === '') {
+            endpoint = parseInt(index / 2) - 1
             break
           } else {
             // else if (parseInt(index / 2) !== 0)
@@ -241,7 +244,9 @@ const OfflineLoginUsers = (state = initialState, action) => {
               if (score === 'X' || score === 'x') return 10
               else return score
             })
-            if (plusScore[1] === '/') gameBoardSum[index] = 20
+            console.log('plusScore : ', plusScore)
+            if (plusScore.length < 2) continue
+            else if (plusScore[1] === '/') gameBoardSum[index] = 20
             else gameBoardSum[index] = 10 + plusScore[0] + plusScore[1]
           }
         }
