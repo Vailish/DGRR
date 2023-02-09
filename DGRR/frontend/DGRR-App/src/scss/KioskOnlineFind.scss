@@ -1,0 +1,86 @@
+@import './mixins';
+
+@keyframes bounce_frames {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 10vh, 0);
+  }
+}
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+    .OnlineFindContentBlock {
+      display: flex;
+      width: 100vw;
+      height: 87.5vh;
+      justify-content: center;
+      .OnlineFindCenterAlign {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .LoadingBounceBallBlock {
+          display: flex;
+          width: 20vw;
+          height: 10vh;
+          justify-content: space-between;
+          .LoadingBounceBall {
+            width: 5vw;
+            height: 5vw;
+            background: #ff5722;
+            border-radius: 50%;
+
+            animation: bounce_frames 0.5s;
+            animation-direction: alternate;
+            animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+            animation-iteration-count: infinite;
+          }
+          .Bouncing {
+            background: #f4b7d3;
+            animation-delay: 0s;
+          }
+          .Bouncing2 {
+            background: #df93bd;
+            animation-delay: 0.3s;
+          }
+          .Bouncing3 {
+            background: #ca80b1;
+            animation-delay: 0.6s;
+          }
+        }
+        .OnlineFindLoading {
+          margin-top: 432 / 1600 * 100vh;
+        }
+        .OnlineFindTextBlock {
+          margin-top: 20vh;
+          font-size: 4vw;
+        }
+        .OnlineFindTimeBlock {
+          font-size: 4vw;
+        }
+        .OnlineFindCancelBlock {
+          display: flex;
+          width: 608 / 2560 * 100vw;
+          height: 160 / 1600 * 100vh;
+          background: #501766;
+          justify-content: center;
+          align-items: center;
+          margin-top: 2vh;
+          box-shadow: 0vh 0.25vh 0.25vh rgba(0, 0, 0, 0.25);
+          border-radius: 1.5vh;
+          color: white;
+          font-size: 5vw;
+        }
+      }
+    }
+  }
+}

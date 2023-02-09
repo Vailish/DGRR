@@ -1,55 +1,88 @@
-// .myClass {
-//   ├── 객체의 노출여부와 표현방식
-//   │   ├── display
-//   │   └── list-style
-//   │
-//   ├── 위치와 좌표
-//   │   ├── position
-//   │   ├── float
-//   │   └── clear
-//   │
-//   ├── 크기와 여백
-//   │   ├── width / height
-//   │   └── padding / margin
-//   │
-//   ├── 윤곽과 배경
-//   │   └── border / background
-//   │
-//   ├── 글자와 정렬
-//   │   ├── corlor / font
-//   │   ├── text-decoration
-//   │   ├── text-align / vertical-align
-//   │   └── white-space
-//   │
-//   └── 내용
-//       └── content
-
 @import './mixins';
 
-@include desktop {
-  .KioskBackground {
+.KioskBackground {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+
+  background: #f8f8fb;
+  .OfflineGameContentBlock {
+    /* Group 302 */
+
     position: relative;
-
     width: 100vw;
-    height: 100vh;
-    margin: 0px;
+    height: 1344 / 1600 * 100vh;
+    overflow: auto;
+    .EllipseBlock {
+      width: 100%;
+      height: 60%;
+      margin-top: 232/ 1600 * 100vh;
+      .FirstEllipse {
+        display: flex;
+        width: 98%;
+        height: 100%;
+        background: #501766;
+        align-items: center;
+        border-radius: 50%;
+        .SecondEllipse {
+          width: 50%;
+          height: 75%;
+          background: #f8f8fb;
+          border-radius: 50%;
+        }
+      }
+    }
+    .GameScoreTableBlock {
+      position: absolute;
+      top: 376 / 1600 * 100vh;
+      left: 10 / 2560 * 100vw;
+      .PlayerProfileAndTag {
+        display: flex;
+        justify-content: space-between;
+        .PlayerProfileCircleBlock {
+          display: flex;
+          width: 30vw;
+          align-items: center;
 
-    background: #f8f8fb;
-    .OfflineGameContentBlock {
-      /* Group 302 */
-
-      position: relative;
-      width: 2520px / 2560px * 100vw;
-      height: 1344 / 1600 * 100vh;
-      //   margin-top: 1vh;
-      margin-left: 20px / 2560px * 100vw;
-      //   top: 568px;
-      background: blue;
-      .EllipseBlock {
-        height: 30%;
+          .PlayerProfileCircle {
+            width: 5vw;
+            height: 5vw;
+            background: white;
+            border-radius: 10vw;
+            margin-right: 2vw;
+          }
+          .SelectedPlayer {
+            border: 0.2vw solid blue;
+          }
+        }
+        .PlayerNameTagBlock {
+          width: 25vw;
+          .PlayerNameTag {
+            display: flex;
+            width: 99%;
+            height: 10vh;
+            border: 0.15vw solid black;
+            background: #501766;
+            justify-content: center;
+            align-items: center;
+            border-top-left-radius: 2vw;
+            border-top-right-radius: 2vw;
+            .PlayerName {
+              display: flex;
+              width: 90%;
+              height: 80%;
+              background: white;
+              justify-content: center;
+              align-items: center;
+              border-radius: 1vw;
+              font-size: 3vw;
+            }
+          }
+        }
       }
       .GameScoreTable {
-        height: 70%;
       }
     }
   }

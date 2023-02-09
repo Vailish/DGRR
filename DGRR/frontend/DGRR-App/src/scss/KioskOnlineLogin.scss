@@ -1,0 +1,132 @@
+@import './mixins';
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+
+    .ContentBlock {
+      display: flex;
+      width: 100vw;
+      height: 66.5vh;
+
+      background: black;
+      justify-content: space-between;
+      margin-top: 4vh;
+      .PinQRBlock {
+        display: flex;
+
+        display: flex;
+        width: 912px / 2560px * 100vw;
+        height: 1064px / 1600px * 100vh;
+
+        background: #ffffff;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 136px / 2560px * 100vw;
+        box-shadow: 0.25pvh 0.25vh 0.5vh rgba(0, 0, 0, 0.25);
+        border-radius: 1.5vh;
+        .QRBlock {
+          display: flex;
+
+          width: 20vw;
+          flex-direction: column;
+          align-items: center;
+          .QRImage {
+            width: 400px / 2560px * 100vw;
+            height: 400px / 1600px * 100vh;
+            background: black;
+          }
+          .QRTitle {
+            margin-top: 3vh;
+            font-size: 2vw;
+          }
+          .QRText {
+            margin-top: 1vh;
+            font-size: 1vw;
+          }
+        }
+        .OnlinePinInputBlock {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 1vh;
+          .PinInput {
+            width: 20vw;
+            height: 128 / 1600 * 100vh;
+            margin-bottom: 2vw;
+          }
+          .PinOkButton {
+            display: flex;
+            width: 240 / 2560 * 100vw;
+            height: 128 / 1600 * 100vh;
+            border: 1px solid black;
+            background: #501766;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1vw;
+            font-size: 3vw;
+            font-weight: 500;
+            color: #ffffff;
+          }
+        }
+      }
+      .UsersBlock {
+        .PlayersBlock {
+          display: flex;
+          width: 1240px / 2560px * 100vw;
+          height: 1064px / 1600px * 100vh;
+
+          background: #ffffff;
+          justify-content: center;
+          align-items: center;
+
+          margin-right: 152px / 2560px * 100vw;
+          overflow: auto;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 24px;
+          .WelcomePlayer {
+            display: flex;
+            width: 1024 / 1240 * 100%;
+            height: 808 / 1064 * 100%;
+            background: #f2faff;
+            justify-content: center;
+            align-items: center;
+            .WelcomeText {
+              width: 840/1024 * 100%;
+              height: 272 / 808 * 100%;
+              font-size: 3vw;
+            }
+          }
+        }
+      }
+    }
+    .GameStartBlock {
+      display: flex;
+      justify-content: center;
+      margin-top: 2vw;
+      .GameStartButton {
+        /* Rectangle 34 */
+        display: flex;
+        width: 608px / 2560px * 100vw;
+        height: 160px / 1600px * 100vh;
+
+        background: #501766;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+
+        font-size: 5vw;
+        color: white;
+      }
+    }
+  }
+}
