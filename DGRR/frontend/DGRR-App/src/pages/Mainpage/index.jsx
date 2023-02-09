@@ -13,12 +13,13 @@ const Mainpage = () => {
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
   const [seletedCategory, setSeletedCategory] = useState("totalgame")
+  const [games, setGames] = useState([])
   const { nickName } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (localStorage.getItem('access-token')) {
-      navigate('/ttest01')
+      navigate('/beomi')
     } else {
       navigate('/')
     }
@@ -32,9 +33,13 @@ const Mainpage = () => {
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
     const requestRankings = await baseaxios.get(`/api/v1/data/ranking/${nickName}`)
+    const requestGames = await baseaxios.get(`/api/v1/games/${nickName}`)
     const userData = requestUser.data
     const pointsData = requestPoints.data
     const rankingData = requestRankings.data
+    const GamesData = requestGames.data
+    console.log(GamesData)
+    console.log(pointsData)
     setMyRanking(rankingData[2].ranking)
     setUserInfo(userData)
     setpointsInfo(pointsData)
@@ -62,21 +67,21 @@ const Mainpage = () => {
                 id="LS"
                 startColor="#FF4C61"
                 endColor="#FFD2D7"
-                score={pointsInfo.lastest_game_total_score}
+                score={pointsInfo.lastestGameTotalScore}
               />
               <PieChart
                 title="3 Games Avg"
                 id="GA"
                 startColor="#FFB800"
                 endColor="#FFF7E1"
-                score={pointsInfo.last_3_game_average_total_score}
+                score={pointsInfo.last3GameAverageTotalScore}
               />
               <PieChart
                 title="High Score"
                 id="HS"
                 startColor="#3CBA94"
                 endColor="#D4F3E9"
-                score={pointsInfo.highest_total_score}
+                score={pointsInfo.highestTotalScore}
               />
             </div>
             <button className="Button">점수 그래프</button>

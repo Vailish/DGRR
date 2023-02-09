@@ -1,21 +1,40 @@
 .PageBase {
   display: flex;
+  background: linear-gradient(180deg, #501766 50vh, #F8F8FB 50vh);
   flex-wrap: wrap;
   padding-top: 64 / 1080 * 100vh;
   padding-right: 12.5vw;
   padding-left: 12.5vw;
   justify-content: space-between;
-  background: linear-gradient(180deg, #501766 50vh, #F8F8FB 50vh);
-
+  
   .ProfileBox {
-    width: 908px;
+    width: 1152px;
     height: 384px;
-    padding: 24px 112px;
+    padding: 48px 112px;
     box-sizing: border-box;
     border-radius: 10px;
     background-color: white;
     box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
 
+    .UserNickName {
+      text-align: start;
+      margin-top: 0px;
+      margin-bottom: 8 / 1080 * 100vh;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 3vmin;
+      line-height: 22px;
+    }
+
+    .UserText {
+      text-align: start;
+      margin-top: 1px;
+      margin-bottom: 8 / 1080 * 100vh;
+      font-size: 1.5vmin;
+      color: #8a8a8a;
+      font-weight: 500;
+    }
   }
 
   .TotalRankingBox {

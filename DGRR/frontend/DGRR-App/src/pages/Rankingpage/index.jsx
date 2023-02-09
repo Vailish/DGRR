@@ -24,7 +24,10 @@ const Rankingpage = () => {
   return (
     <div className="PageBase">
       <Nav />
-      <div className="ProfileBox">ProfileBox</div>
+      <div className="ProfileBox">
+        <h2 className="UserNickName">유튜브친구들 안녕</h2>
+        <p className="UserText">좋아요 댓글 구독 알람설정까지~!!</p>
+      </div>
       <div className="MainBox TotalRankingBox">
         <table>
           <th>ranking</th>
