@@ -3,8 +3,7 @@ import { OpenVidu } from 'openvidu-browser'
 import axios from 'axios'
 import UserVideoComponent from './UserVideoComponent';
 import './test.css'
-const APPLICATION_SERVER_URL =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
+const APPLICATION_SERVER_URL = "https://i8b102.p.ssafy.io:8443/openvidu/";
 class KioskVideo extends Component {
   constructor(props) {
     super(props);
@@ -312,7 +311,9 @@ class KioskVideo extends Component {
       APPLICATION_SERVER_URL + "api/sessions",
       { customSessionId: sessionId },
       {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+        },
       }
     );
     return response.data; // The sessionId
@@ -323,7 +324,10 @@ class KioskVideo extends Component {
       APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
       {},
       {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU", 'Access-Control-Allow-Origin': "*",
+          'Access-Control-Allow-Methods': "GET,POST"
+        },
       }
     );
     return response.data; // The token
