@@ -1,5 +1,22 @@
 @import './mixins';
 
+@keyframes score_bar {
+  from {
+    // transform: scaleX(0.01);
+    width: 1%;
+  }
+
+  to {
+    // transform: scaleX(1);
+    width: 100%;
+    // width: 2%;
+  }
+}
+
+// animation: bounce_frames 0.5s;
+//             animation-direction: alternate;
+//             animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+//             animation-iteration-count: infinite;
 @include desktop {
   .KioskBackground {
     position: relative;
@@ -12,35 +29,82 @@
       display: flex;
       width: 100vw;
       height: (1600 - 288) / 1600 * 100vh;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
       justify-content: space-between;
       margin-top: 64 / 1600 * 100vh;
 
-      .EachPlayerBlock {
+      .ResultChartBlock {
         display: flex;
-        width: 100%;
-        height: 30%;
-
-        .PlayerProfile {
-          width: 15%;
-          height: 100%;
-          background: white;
-          border-radius: 50%;
-          margin-left: 5%;
-        }
-
-        .PlayerScoreChart {
+        width: 90%;
+        height: 100%;
+        background: black;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        .EachPlayerBlock {
           display: flex;
-          width: 80%;
-          height: 100%;
-          align-items: center;
-          .PlayerScoreBar {
-            $player-score-length: '30%';
+          width: 100%;
+          height: 25%;
+          background: palegreen;
 
-            width: $player-score-length;
-            height: 80%;
-            background: blue;
-            font-size: 10em;
+          .ResultChartProfileBlock {
+            display: flex;
+            width: 15%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            .ResultChartProfile {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 80%;
+              height: 80%;
+              background: white;
+              border-radius: 50%;
+              margin-left: 5%;
+              font-size: 2vw;
+            }
+          }
+
+          .PlayerScoreChartBlock {
+            display: flex;
+            width: 85%;
+            height: 100%;
+            align-items: center;
+            .PlayerScoreChart {
+              width: 100%;
+              height: 80%;
+              .PlayerScoreChartBar {
+                display: flex;
+                width: 1%;
+                height: 100%;
+                background: blue;
+                justify-content: center;
+                align-items: center;
+                font-size: 5vw;
+                border-top-right-radius: 1vw;
+                border-bottom-right-radius: 1vw;
+                color: white;
+
+                animation: score_bar;
+                animation-duration: 0.5s;
+                animation-direction: alternate;
+                // animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+                animation-timing-function: linear;
+              }
+            }
+            .PlayerScoreNumber {
+              display: flex;
+              width: 10%;
+              height: 80%;
+              justify-content: center;
+              align-items: center;
+              font-size: 5vw;
+            }
           }
         }
       }
