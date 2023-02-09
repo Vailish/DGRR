@@ -20,7 +20,14 @@ export const updatePlayer = () => ({ type: UPDATE_PLAYER })
 // 초기 상태
 
 const initialState = {
-  player: {},
+  player: {
+    username: 'testzzang2',
+    nickname: '김볼링',
+    profile: null,
+    rank: 216,
+    record: [{ totalGame: 15, winGame: 8, loseGame: 7 }],
+    average: 85,
+  },
 }
 
 // 리듀서
