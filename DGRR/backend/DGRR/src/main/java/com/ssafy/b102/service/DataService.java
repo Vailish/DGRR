@@ -49,17 +49,19 @@ public class DataService {
 			}
 			else {
 				Integer userGameScore = caculate(convertToList(userGame.getGameScore()));
+				System.out.println(userGameScore);
 				if (lastestGameTotalScore == 0) {
 					lastestGameTotalScore += userGameScore;
 				}
 				if (cnt < 3) {
 					cnt += 1;
 					Last3GameAverageTotalScore += userGameScore;
-				} else if (cnt == 3) {Last3GameAverageTotalScore = userGameScore / 3; cnt += 1;}
+				} else if (cnt == 3) {Last3GameAverageTotalScore = (Last3GameAverageTotalScore + userGameScore) / 3; cnt += 1;}
 				
 				if (HighestTotalScore < userGameScore) {
 					HighestTotalScore = userGameScore;
 				}
+				System.out.println(Last3GameAverageTotalScore);
 			}
 		}
 		if (cnt == 2) {
