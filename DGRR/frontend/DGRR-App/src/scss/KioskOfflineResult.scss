@@ -1,29 +1,3 @@
-// .myClass {
-//   ├── 객체의 노출여부와 표현방식
-//   │   ├── display
-//   │   └── list-style
-//   │
-//   ├── 위치와 좌표
-//   │   ├── position
-//   │   ├── float
-//   │   └── clear
-//   │
-//   ├── 크기와 여백
-//   │   ├── width / height
-//   │   └── padding / margin
-//   │
-//   ├── 윤곽과 배경
-//   │   └── border / background
-//   │
-//   ├── 글자와 정렬
-//   │   ├── corlor / font
-//   │   ├── text-decoration
-//   │   ├── text-align / vertical-align
-//   │   └── white-space
-//   │
-//   └── 내용
-//       └── content
-
 @import './mixins';
 
 @include desktop {
@@ -36,31 +10,30 @@
     background: #f8f8fb;
     .ResultContentBlock {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       width: 100vw;
       height: (1600 - 288) / 1600 * 100vh;
+      flex-direction: column;
+      justify-content: space-between;
       margin-top: 64 / 1600 * 100vh;
 
       .EachPlayerBlock {
         display: flex;
         width: 100%;
         height: 30%;
-        // background: red;
 
         .PlayerProfile {
           width: 15%;
           height: 100%;
-          border-radius: 50%;
           background: white;
+          border-radius: 50%;
           margin-left: 5%;
         }
 
         .PlayerScoreChart {
           display: flex;
-          align-items: center;
           width: 80%;
           height: 100%;
+          align-items: center;
           .PlayerScoreBar {
             $player-score-length: '30%';
 

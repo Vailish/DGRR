@@ -1,40 +1,12 @@
-// .myClass {
-//   ├── 객체의 노출여부와 표현방식
-//   │   ├── display
-//   │   └── list-style
-//   │
-//   ├── 위치와 좌표
-//   │   ├── position
-//   │   ├── float
-//   │   └── clear
-//   │
-//   ├── 크기와 여백
-//   │   ├── width / height
-//   │   └── padding / margin
-//   │
-//   ├── 윤곽과 배경
-//   │   └── border / background
-//   │
-//   ├── 글자와 정렬
-//   │   ├── corlor / font
-//   │   ├── text-decoration
-//   │   ├── text-align / vertical-align
-//   │   └── white-space
-//   │
-//   └── 내용
-//       └── content
-
 @import './mixins';
 
 .ScoreTableBlock {
   width: 120 * 2 / 2520 * 100%;
   height: 100%;
-  // background: black;
   border-left: 6 / 2560 * 100vw solid black;
   border-top: 6 / 2560 * 100vw solid black;
   border-bottom: 6 / 2560 * 100vw solid black;
 
-  // overflow: auto;
   .UpDownLineBlock {
     width: 100%;
     height: 40 / 768 * 100%;
@@ -42,12 +14,10 @@
   }
   .FrameNumber {
     display: flex;
-    align-items: center;
 
     height: 160 / 768 * 100%;
     background: #501766;
-    // border: 3 / 2560 * 100vw solid black;
-    // border-top: 6 / 1600 * 100vh solid black;
+    align-items: center;
 
     font-family: 'Sansation';
     font-style: normal;
@@ -60,55 +30,50 @@
   .ScoreBlock {
     display: flex;
     height: 264 / 768 * 100%;
-    // background: red;
-    // border: 1 / 2560 * 100vw solid black;
-    // border-left: 3 / 2560 * 100vw solid black;
-    // border-right: 3 / 2560 * 100vw solid black;
     .ScoreInputBlockLeft {
       width: 50%;
-      flex: auto;
       height: 100%;
-      // border: none;
-      border-bottom: 1 / 2560 * 100vw solid black;
-      border-top: none;
-      border-left: none;
-      border-right: 1 / 2560 * 100vw solid black;
-      font-size: 5vw;
-      text-align: center;
       background: #f2faff;
-    }
-    .ScoreInputBlockRight {
-      width: 50%;
+      text-align: center;
       flex: auto;
-      height: 100%;
-      // border: none;
       border-bottom: 1 / 2560 * 100vw solid black;
       border-top: none;
       border-left: none;
       border-right: none;
       font-size: 5vw;
-      text-align: center;
-      background: #f2faff;
     }
-    .ScoreInputBlockCenter {
+    .ScoreInputBlockRight {
       width: 50%;
-      flex: auto;
       height: 100%;
-      // border: none;
+      background: #f2faff;
+      text-align: center;
+      flex: auto;
       border-bottom: 1 / 2560 * 100vw solid black;
       border-top: none;
-      border-left: none;
-      border-right: 1 / 2560 * 100vw solid black;
-      font-size: 5em;
-      text-align: center;
+      border-left: 1 / 2560 * 100vw solid black;
+      border-right: none;
+      font-size: 5vw;
+    }
+    .ScoreInputBlockFarRight {
+      width: 50%;
+      height: 100%;
       background: #f2faff;
+      text-align: center;
+      flex: auto;
+      border-bottom: 1 / 2560 * 100vw solid black;
+      border-top: none;
+      border-left: 1 / 2560 * 100vw solid black;
+      border-right: none;
+      font-size: 5vw;
     }
   }
   .ScoreSum {
+    display: flex;
     height: 264 / 768 * 100%;
     background: white;
-
-    // background: blue;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
   }
 }
 .Frame10 {

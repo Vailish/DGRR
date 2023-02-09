@@ -1,29 +1,27 @@
 .EachPlayer {
   width: 1016px / 2560px * 100vw;
   height: 184px / 1600px * 100vh;
-  //   left: 1281px;
-  //   top: 356px;
+  border: 1px solid #000000;
 
   background: #ffffff;
-  border: 1px solid #000000;
   box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.25);
   border-radius: 24px;
 }
 .PlayerLogin {
   display: flex;
-  align-items: center;
   border: 8px solid #3b8cd7;
+  align-items: center;
   .PlayerProfileBlock {
     display: flex;
-    justify-content: center;
     width: 20%;
     height: 100%;
     background: black;
+    justify-content: center;
     .PlayerProfile {
-      height: 100%;
       width: 85%;
-      border-radius: 50%;
+      height: 100%;
       background: white;
+      border-radius: 50%;
     }
   }
   .PlayerInfoBlock {
@@ -37,19 +35,19 @@
       background: violet;
       .PlayerName {
         display: flex;
-        justify-content: start;
         width: 50%;
         height: 100%;
         background: darkorange;
+        justify-content: start;
         font-size: 2em;
       }
 
       .PlayerRank {
         display: flex;
-        justify-content: end;
         width: 50%;
         height: 100%;
         background: red;
+        justify-content: end;
         font-size: 2em;
       }
     }
@@ -60,57 +58,56 @@
       background: yellow;
       .PlayerRecordTitle {
         display: flex;
-        justify-content: end;
         width: 20%;
         height: 100%;
         background: green;
+        justify-content: end;
         font-size: 1em;
-        // text-align: end;
         align-items: end;
       }
 
       .PlayerRecordContent {
         display: flex;
-        justify-content: center;
-        align-items: center;
         width: 80%;
         height: 100%;
         background: purple;
+        justify-content: center;
+        align-items: center;
         font-size: 1.7em;
       }
     }
   }
   .PlayerAverageBlock {
     display: flex;
-    align-items: end;
     width: 20%;
     height: 100%;
     background: teal;
+    align-items: end;
     .PlayerAverageText {
       display: flex;
-      justify-content: center;
-      align-items: center;
       width: 30%;
       height: 80%;
       background: white;
+      justify-content: center;
+      align-items: center;
     }
     .PlayerAverageScore {
       display: flex;
-      justify-content: center;
-      align-items: center;
       width: 60%;
       height: 100%;
-      font-size: 2em;
       background: olive;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
     }
   }
   .PlayerCancelCircle {
     display: flex;
-    justify-content: center;
-    align-items: center;
     width: 5%;
     height: 30%;
     background: gray;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
   }
 }
