@@ -1,51 +1,49 @@
-body {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  .input {
-  }
-}
-.FormTitle {
-  margin-top: 56px;
-  margin-bottom: 16px;
-  h2 {
-    font-size: 32px;
-
+@media screen and (min-width: 1024px) {
+  body {
+    width: 100%;
+    height: 100%;
     text-align: center;
-    text-decoration: underline;
-    font-family: 'Poller One';
-  }
-}
-.PageOneInput {
-  margin-top: 32px;
-  margin-bottom: 20px;
-  .PageOneText {
-    width: 80%;
-    height: 48px;
-    margin: 4px auto;
-    border: 1px solid black;
-    border-radius: 8px;
-    box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
-    &::placeholder {
-      color: #501766;
-      font-size: 16px;
+    .input {
     }
   }
-}
-.NextButton {
-  margin-top: 8px;
-  .Button {
-    width: 80%;
-    height: 48px;
-    border-radius: 24px;
-    border: 1px solid black;
-    background-color: #501766;
-    color: #fff;
-    box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
-    &:hover {
-      cursor: pointer;
+  .FormTitle {
+    margin-top: 48px;
+    margin-bottom: 16px;
+    h2 {
+      text-decoration: underline;
+
+      text-align: center;
+      font-size: 32px;
+      font-family: 'Poller One';
+    }
+  }
+  .PageOneInput {
+    .PageOneText {
+      width: 80%;
+      height: 48px;
+      border: 1px solid black;
+      border-radius: 8px;
+      box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+      &::placeholder {
+        color: #501766;
+        font-size: 16px;
+      }
+    }
+  }
+  .NextButton {
+    .Button1 {
+      width: 80%;
+      height: 48px;
+      border: 1px solid black;
+      color: #fff;
+      border-radius: 24px;
+      background-color: #501766;
+      box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
       &:hover {
-        background-color: #290b34;
+        cursor: pointer;
+        &:hover {
+          background-color: #290b34;
+        }
       }
     }
   }

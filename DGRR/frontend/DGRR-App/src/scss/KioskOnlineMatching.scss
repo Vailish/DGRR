@@ -1,0 +1,124 @@
+@import './mixins';
+
+@keyframes bounce_frames {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 10vh, 0);
+  }
+}
+
+@include desktop {
+  .KioskBackground {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    background: #f8f8fb;
+    .OnlineMatchingContentBlock {
+      display: flex;
+      width: 100vw;
+      height: 1064 / 1600 * 100vh;
+      justify-content: space-around;
+      margin-top: 72 / 1600 * 100vh;
+      .LetterV {
+        position: absolute;
+        width: 10vw;
+        height: 10vh;
+        left: 1056/2560 * 100vw;
+        top: 600 / 1600 * 100vh;
+        font-size: 12vw;
+      }
+      .LetterS {
+        position: absolute;
+        width: 10vw;
+        height: 10vh;
+        left: 1208/2560 * 100vw;
+        top: 760 / 1600 * 100vh;
+        font-size: 12vw;
+      }
+      .OnlineMatchingPlayerBlock {
+        display: flex;
+        width: 1000 / 2560 * 100vw;
+        height: 1064 / 1600 * 100vh;
+
+        background: #ffffff;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0vh 0.25vh 0.25vh rgba(0, 0, 0, 0.25);
+        border-radius: 1.5vh;
+        .OnlineMatchingProfile {
+          width: 536 / 2560 * 100vw;
+          height: 536 / 2560 * 100vw;
+          background: black;
+          border-radius: 20vw;
+        }
+        .OnlineMatchingPlayerInfoBlock {
+          width: 672 / 2560 * 100vw;
+          height: 336 / 2560 * 100vh;
+          background: #fffbfb;
+          margin-top: 64 / 1600 * 100vh;
+          .OnlineMatchingTierAndName {
+            display: flex;
+            width: 100%;
+            height: 50%;
+            background: gray;
+            font-size: 3vw;
+            .OnlinePlayerTier {
+              width: 40%;
+              height: 100%;
+              background: aqua;
+            }
+            .OnlinePlayerName {
+              display: flex;
+              width: 60%;
+              height: 100%;
+              justify-content: center;
+            }
+          }
+          .OnlineMatchingPointAndRecord {
+            display: flex;
+            width: 100%;
+            height: 50%;
+            background: green;
+            align-items: center;
+            justify-content: center;
+            font-size: 2vw;
+            .OnlinePlayerPoint {
+              display: flex;
+              width: 50%;
+              height: 100%;
+              background: thistle;
+              align-items: center;
+              justify-content: center;
+            }
+            .OnlinePlayerRecord {
+              display: flex;
+              width: 50%;
+              height: 100%;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+    .GameStartBlock {
+      display: flex;
+      justify-content: center;
+
+      .GameStartButton {
+        width: 608 / 2560 * 100vw;
+        height: 160 / 1600 * 100vh;
+
+        background: #501766;
+        border-radius: 1.5vh;
+        color: white;
+      }
+    }
+  }
+}
