@@ -1,12 +1,13 @@
 package com.ssafy.b102.Entity;
 
+
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -18,27 +19,21 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_user_game")
+@Table(name = "tb_matching")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserGame {
+public class Matching {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private long id;
 	
 	@Column(nullable = false)
-	private String gameScore;
+	private long userId;
 	
 	@Column(nullable = false)
-	private Integer gameRank;
+	private Integer point;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-	
-	@ManyToOne
-	@JoinColumn(name = "game_id")
-	private Game game;
-	
+	@Column(nullable = false)
+	private LocalDateTime joinTime;
 }
