@@ -10,7 +10,10 @@ import ScoreTable from './ScoreTable'
 import KioskNavBlock from '../KioskNavBlock'
 
 const KioskOfflineGame = () => {
+  const playerNum = 'player1'
   const dispatch = useDispatch()
+  const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum].gameBoardResult)
+  const scoreArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum].gameBoard)
   const gamingPlayers = useSelector(state => state.OfflineLoginUsers.gamingPlayers)
   const gamingPlayersNum = useSelector(state => Object.keys(state.OfflineLoginUsers.gamingPlayers))
   const [playerNow, setPlayerNow] = useState(gamingPlayersNum[0])
@@ -50,7 +53,7 @@ const KioskOfflineGame = () => {
             </div>
           </div>
           <div className="GameScoreTable">
-            <ScoreTable playerNum={playerNow} />
+            <ScoreTable playerNum={playerNow} scoreSumArray={scoreSumArray} scoreArray={scoreArray} isInput={true} />
           </div>
         </div>
       </div>
