@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import KioskNavBlock from '../KioskNavBlock'
 import '../../../scss/KioskOnlineFind.scss'
 import { SyncLoader } from 'react-spinners'
@@ -13,8 +13,8 @@ const KioskOnlineFind = () => {
   let waitingSec = 0
   let waitingMin = 0
   const TimeCountingRef = useRef()
-
-  setInterval(() => {
+  const navigate = useNavigate()
+  const timerCount = setInterval(() => {
     waitingSec++
     console.log(waitingSec)
     console.log(TimeCountingRef.current.innerText)
@@ -28,7 +28,10 @@ const KioskOnlineFind = () => {
         String(waitingMin).padStart(2, '0') + ':' + String(waitingSec).padStart(2, '0')
     }
   }, 1000)
-
+  setTimeout(() => {
+    navigate('/KioskOnlineMatching')
+    clearInterval(timerCount)
+  }, 5000)
   return (
     <div className="KioskBackground">
       <KioskNavBlock goBackTo="/KioskOnlineProfile" />
@@ -50,7 +53,7 @@ const KioskOnlineFind = () => {
             console.log(waitingSec)
             KioskTimeCount(waitingSec)
           }, 1000)} */}
-          <div className="OnlineFindCancelBlock">CANCEL</div>
+          <div className="OnlineFindCancelBlock">취소</div>
         </div>
       </div>
     </div>
