@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import '../../../scss/KioskOfflineResult.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -20,6 +20,17 @@ const KioskOfflineResult = () => {
     const { scoreSumList, playerNum } = props
     const lastScore = scoreSumList[scoreSumList.length - 1]
     const widthRatio = (lastScore / 300) * 95
+    let playerScore = parseInt(lastScore / 10)
+    let ScoreCount = 0
+    const scoreRef = useRef()
+    const playerScoreCountUp = setInterval(() => {
+      ScoreCount++
+      scoreRef.current.innerText = Number(scoreRef.current.innerText) + playerScore
+      if (ScoreCount >= 10) {
+        clearInterval(playerScoreCountUp)
+        scoreRef.current.innerText = lastScore
+      }
+    }, 100)
 
     return (
       <div className="EachPlayerBlock">
@@ -28,7 +39,7 @@ const KioskOfflineResult = () => {
         </div>
         <div className="PlayerScoreChartBlock">
           <div className="PlayerScoreChart" style={{ width: `${widthRatio}%` }}>
-            <div className="PlayerScoreChartBar">{lastScore}</div>
+            <div className="PlayerScoreChartBar" ref={scoreRef}></div>
           </div>
           {/* <div className="PlayerScoreChart" style={{ transform: `scaleX(${widthRatio})` }}></div> */}
           {/* <div className="PlayerScoreNumber">{lastScore}</div> */}

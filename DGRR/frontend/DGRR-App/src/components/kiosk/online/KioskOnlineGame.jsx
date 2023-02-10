@@ -19,24 +19,23 @@ const OnlineGamePlayerBlock = () => {
 
 const KioskOnlineGame = () => {
   const dispatch = useDispatch()
-  const gamingPlayers = useSelector(state => state.OfflineLoginUsers.gamingPlayers)
-  const gamingPlayersNum = useSelector(state => Object.keys(state.OfflineLoginUsers.gamingPlayers))
-  const [playerNow, setPlayerNow] = useState(gamingPlayersNum[0])
-  const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNow].gameBoardResult)
-  const scoreArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNow].gameBoard)
+  // const gamingPlayer = useSelector(state => state.OnlineLoginUser.gamingPlayer)
+  const scoreSumArray = useSelector(state => state.OnlineLoginUser.gamingPlayer.gameBoardResult)
+  const scoreArray = useSelector(state => state.OnlineLoginUser.gamingPlayer.gameBoard)
   // const location = useLocation()
   // const { random } = location.state
 
   // useEffect(() => {
   //   console.log('잘 받아왔어' + random)
   // })
+
   return (
     <div className="KioskBackground">
       <div className="OnlineGameContentBlock">
         <div className="OnlineGamePlayerAndScore">
           <OnlineGamePlayerBlock />
           {/* <div className="OnlineGameScoreBlock"></div> */}
-          <OnlineScoreTable />
+          <OnlineScoreTable scoreSumArray={scoreSumArray} scoreArray={scoreArray} />
           <OnlineGamePlayerBlock />
         </div>
         <div className="OnlineGameDisplayBlock">
