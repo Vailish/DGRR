@@ -300,6 +300,7 @@ public class GameService {
 	public MatchingResponseDto getMatchingProfile(Integer pinNumber) {
 		System.out.println("핀번호로 유저 정보 요청이 들어왔습니다.");
 		User user = userRepository.findByPin(pinNumber);
+		System.out.println(pinNumber + " " + user.getNickname());
 		MatchingResponseDto matchingResponseDto = new MatchingResponseDto();
 		
 		if (user == null) {
