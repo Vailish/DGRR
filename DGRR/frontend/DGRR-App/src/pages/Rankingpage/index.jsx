@@ -25,32 +25,60 @@ const Rankingpage = () => {
     <div className="PageBase">
       <Nav />
       <div className="ProfileBox">
-        <h2 className="UserNickName">유튜브친구들 안녕</h2>
-        <p className="UserText">좋아요 댓글 구독 알람설정까지~!!</p>
+        <div className='ProfileLeftBox'>
+          <div>
+            <h2 className="UserNickName">beomi</h2>
+            <p className="UserText">좋아요 댓글 구독 알람설정까지~!!</p>
+          </div>
+          <img src={require("../../img/profile.jpg")} alt="ProfileImage" className="ProfileImg" />
+        </div>
+        <div className='ProfileRightBox'>
+          <h2 className='RankText'>랭크</h2>
+          <div className='TierBox'>
+            <img src={require('../../img/tierdia.png')} alt="tierImg"  className='TierImg'/>
+            <div className='TierTextBox'>
+              <span className='TierText'>Diamond</span>
+              <div className='TierInfoText'>
+                <span>랭킹 17위</span> <span>랭킹포인트 1231pt</span>
+              </div>
+            </div>
+          </div>
+          <span className='RecordText'>전체 전적</span>
+          <div className='RecordInfoBox'>
+            <span>37 전</span> <span>26 승</span> <span>11 패</span>
+          </div>
+        </div>
       </div>
-      <div className="MainBox TotalRankingBox">
-        <table>
-          <th>ranking</th>
-          <th> Player</th>
-          <th>Point</th>
-          <th>Rate</th>
-          <th>Wins</th>
-          <th>Losses</th>
+      <div className="search-box">
+        <input className="search-input" type="text" placeholder="Search something.." />
+        <button className="search-btn"><i className="fas fa-search"></i></button>
+      </div>
 
-          {rankData.map((info, i) => {
-            return (
-              <tr key={i} onClick={onMoveNickPage}>
-                <td>{info.ranking} </td>
-                <td>{info.nickname}</td>
-                <td>{info.point} </td>
-                <td>{info.totalGameNumber} </td>
-                <td>{info.winGameNumber} </td>
-                <td>{info.lossesGameNumber} </td>
-              </tr>
-            )
-          })}
-        </table>
-      </div>
+      <table className='RankingTable'>
+        <tbody>
+          <tr className='RankHeaderTable'>
+            <th>ranking</th>
+            <th>Player</th>
+            <th>Point</th>
+            <th>Rate</th>
+            <th>Wins</th>
+            <th>Losses</th>
+          </tr>
+
+            {rankData.map((info, i) => {
+              return (
+                <tr className='Tr' key={i} onClick={() => { onMoveNickPage(info.nickname) }}>
+                  <td>{info.ranking} </td>
+                  <td>{info.nickname}</td>
+                  <td>{info.point} </td>
+                  <td>{info.totalGameNumber} </td>
+                  <td>{info.winGameNumber} </td>
+                  <td>{info.lossesGameNumber} </td>
+                </tr>
+              )
+            })}
+        </tbody>
+      </table>
     </div>
   )
 }

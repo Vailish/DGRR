@@ -18,7 +18,6 @@ const Record = () => {
             <div>
               <ScoreTable isInput={false} scoreArray={scoreArray} scoreSumArray={scoreSumArray} />
             </div>
-            <div>{/* <ScoreTable isInput={false} /> */}</div>
           </div>
         </div>
         <div className="DivideLine"></div>
