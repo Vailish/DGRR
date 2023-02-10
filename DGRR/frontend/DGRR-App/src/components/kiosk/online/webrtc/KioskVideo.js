@@ -30,7 +30,6 @@ class KioskVideo extends Component {
     if (!this.state.session) {
       this.joinSession();
     }
-    console.log("내 세션 ID " + this.state.mySessionId)
     window.addEventListener("beforeunload", this.onbeforeunload);
   }
 
@@ -118,10 +117,11 @@ class KioskVideo extends Component {
 
         // Get a token from the OpenVidu deployment
         this.getToken().then((token) => {
+          console.log("Token" + token.token)
           // First param is the token got from the OpenVidu deployment. Second param can be retrieved by every user on event
           // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
           mySession
-            .connect(token, { clientData: this.state.myUserName })
+            .connect(token.token, { clientData: this.state.myUserName })
             .then(async () => {
               // --- 5) Get your own camera stream ---
 
@@ -302,31 +302,77 @@ class KioskVideo extends Component {
    * more about the integration of OpenVidu in your application server.
    */
   async getToken() {
-    const sessionId = await this.createSession(this.state.mySessionId);
-    return await this.createToken(sessionId);
+    console.log(this.state.mySessionId)
+    const testId = this.state.mySessionId
+    const sessionId = await this.createSession(testId);
+    const test = sessionId.sessionId
+    return await this.createToken(test);
   }
 
   async createSession(sessionId) {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
-      { customSessionId: sessionId },
+      APPLICATION_SERVER_URL + `api/sessions`,
+      {
+        "mediaMode": "ROUTED",
+        "recordingMode": "MANUAL",
+        "customSessionId": sessionId,
+        "forcedVideoCodec": "VP8",
+        "allowTranscoding": false,
+        "defaultRecordingProperties": {
+          "name": "MyRecording",
+          "hasAudio": false,
+          "hasVideo": true,
+          "outputMode": "COMPOSED",
+          "recordingLayout": "BEST_FIT",
+          "resolution": "1280x720",
+          "frameRate": 25,
+          "shmSize": 536870912,
+          "mediaNode": {
+            "id": "media_i-0c58bcdd26l11d0sd"
+          }
+        },
+        "mediaNode": {
+          "id": "media_i-0c58bcdd26l11d0sd"
+        }
+      },
       {
         headers: {
-          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU"
         },
       }
     );
+
     return response.data; // The sessionId
   }
 
   async createToken(sessionId) {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
-      {},
+      APPLICATION_SERVER_URL + `api/sessions/${sessionId}/connection`,
+      {
+        "type": "WEBRTC",
+        "data": "My Server Data",
+        "record": true,
+        "role": "PUBLISHER",
+        "kurentoOptions": {
+          "videoMaxRecvBandwidth": 1000,
+          "videoMinRecvBandwidth": 300,
+          "videoMaxSendBandwidth": 1000,
+          "videoMinSendBandwidth": 300,
+          "allowedFilters": ["GStreamerFilter", "ZBarFilter"]
+        },
+        "customIceServers": [
+          {
+            "url": "turn:turn-domain.com:443",
+            "username": "usertest",
+            "credential": "userpass"
+          }
+        ]
+      },
       {
         headers: {
-          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU", 'Access-Control-Allow-Origin': "*",
-          'Access-Control-Allow-Methods': "GET,POST"
+          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
         },
       }
     );
