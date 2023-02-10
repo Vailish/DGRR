@@ -229,13 +229,21 @@ const OfflineLoginUsers = (state = initialState, action) => {
             continue
           } else {
             if (index % 2) {
-              gameBoardSum[parseInt(index / 2)] =
-                (gameBoard[index] === '-' || gameBoard[index] === 'F' ? 0 : Number(gameBoard[index])) +
-                (gameBoard[index - 1] === '-' || gameBoard[index - 1] === 'F' ? 0 : Number(gameBoard[index - 1]))
+              if (gameBoard[index] !== '' && gameBoard[index - 1] !== '') {
+                gameBoardSum[parseInt(index / 2)] =
+                  (gameBoard[index] === '-' || gameBoard[index] === 'F' ? 0 : Number(gameBoard[index])) +
+                  (gameBoard[index - 1] === '-' || gameBoard[index - 1] === 'F' ? 0 : Number(gameBoard[index - 1]))
+              } else {
+                gameBoardSum[parseInt(index / 2)] = ''
+              }
             } else {
-              gameBoardSum[parseInt(index / 2)] =
-                (gameBoard[index] === '-' || gameBoard[index] === 'F' ? 0 : Number(gameBoard[index])) +
-                (gameBoard[index + 1] === '-' || gameBoard[index + 1] === 'F' ? 0 : Number(gameBoard[index + 1]))
+              if (gameBoard[index] !== '' && gameBoard[index + 1] !== '') {
+                gameBoardSum[parseInt(index / 2)] =
+                  (gameBoard[index] === '-' || gameBoard[index] === 'F' ? 0 : Number(gameBoard[index])) +
+                  (gameBoard[index + 1] === '-' || gameBoard[index + 1] === 'F' ? 0 : Number(gameBoard[index + 1]))
+              } else {
+                gameBoardSum[parseInt(index / 2)] = ''
+              }
             }
           }
         }
