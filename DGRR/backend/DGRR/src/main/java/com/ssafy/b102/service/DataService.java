@@ -99,7 +99,7 @@ public class DataService {
 					.build();
 			rankings.add(ranking);
 		}
-		return new TotalRankingDto(rankings);
+		return new TotalRankingDto(rankings.size()/20 + 1 ,rankings);
 	}
 	
 	public TotalRankingDto getTotalRankingPage(Integer pageNumber) {
@@ -132,7 +132,7 @@ public class DataService {
 					.build();
 			rankings.add(ranking);
 		}
-		return new TotalRankingDto(rankings);
+		return new TotalRankingDto(rankings.size()/20 + 1 ,rankings);
 	}
 	
 	

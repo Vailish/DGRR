@@ -193,6 +193,7 @@ public class MatchingService {
 				.username(user.getUsername())
 				.nickname(user.getNickname())
 				.profile(null)
+				.point(user.getPoints())
 				.rank(50)
 				.record(record)
 				.average(average)
