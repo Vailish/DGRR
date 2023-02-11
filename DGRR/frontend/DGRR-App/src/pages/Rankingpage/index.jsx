@@ -1,26 +1,45 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import Nav from '../../components/mainpage/Nav'
 import '../../scss/RankingPage.scss'
-import axios from 'axios'
+import baseaxios from '../../API/baseaxios'
 import { useNavigate } from 'react-router-dom'
+
 const Rankingpage = () => {
+  const [searchValue, setSearchValue] = useState("");
   const [rankData, setRankData] = useState([])
+  const [pageNum, setPageNum] = useState(1)
+  const [totalPageNum, setTotalPageNum] = useState([])
   const navigate = useNavigate()
+
   useEffect(() => {
-    axios
-      .get('http://192.168.31.142:8080/api/v1/data/ranking', {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-      })
-      .then(res => setRankData(res.data.rankings))
-      .catch(err => console.log(err))
+    fetchData()
   }, [])
+
+  const fetchData = async () => {
+    const requestRankings = await baseaxios.get(`/api/v1/data/ranking/page/${pageNum}`)
+    const rankingsData = requestRankings.data.rankings
+    const totalPageNumData = requestRankings.data.pageNumber
+    setRankData(rankingsData)
+    setTotalPageNum([...Array(totalPageNumData).keys()].map(key => key + 1))
+  }
 
   const onMoveNickPage = nickname => {
     navigate(`/${nickname}`)
     nickname = ''
   }
+
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const userSearch = async (e) => {
+    e.preventDefault();
+    const searchRequest = await baseaxios.get(`/api/v1/data/ranking/myranking/${searchValue}`)
+    setSearchValue("")
+    console.log(searchRequest)
+  }
+
+
   return (
     <div className="PageBase">
       <Nav />
@@ -49,10 +68,15 @@ const Rankingpage = () => {
           </div>
         </div>
       </div>
-      <div className="search-box">
-        <input className="search-input" type="text" placeholder="Search something.." />
-        <button className="search-btn"><i className="fas fa-search"></i></button>
-      </div>
+
+      <form className='search-box' onSubmit={userSearch}>
+        <input
+          value={searchValue} className="search-input"
+          type="text" placeholder="플레이어 닉네임"
+          onChange={handleChange} onSubmit={() => {console.log('제출확인')}}
+        />
+        <button type='sumbit' className="search-btn"><i className="fas fa-search"></i></button>
+      </form>
 
       <table className='RankingTable'>
         <tbody>
@@ -79,6 +103,14 @@ const Rankingpage = () => {
             })}
         </tbody>
       </table>
+      
+      <div>
+        {totalPageNum.map((pageNum, index) => {
+          return (
+            <span index={index} key={index}>{ pageNum }</span>
+          )
+        })}
+      </div>
     </div>
   )
 }

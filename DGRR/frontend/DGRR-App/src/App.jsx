@@ -32,8 +32,8 @@ const App = () => {
       <Route path="/KioskOfflineGame" element={<KioskOfflineGame />} />
       <Route path="/KioskOfflineResult" element={<KioskOfflineResult />} />
       <Route path="/register" element={<RegisterForm />} />
-      <Route path=":nickName" element={<MainPage />} />
       <Route path="ranking" element={<Rankingpage />} />
+      <Route path=":nickName" element={<MainPage />} />
       <Route path="/KioskOnlineLogin" element={<KioskOnlineLogin />} />
       <Route path="/KioskOnlineProfile" element={<KioskOnlineProfile />} />
       <Route path="/KioskOnlineFind" element={<KioskOnlineFind />} />

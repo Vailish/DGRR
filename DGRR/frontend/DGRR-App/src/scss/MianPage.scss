@@ -1,28 +1,6 @@
-// .myClass {
-//   ├── 객체의 노출여부와 표현방식
-//   │   ├── display
-//   │   └── list-style
-//   │
-//   ├── 위치와 좌표
-//   │   ├── position
-//   │   ├── float
-//   │   └── clear
-//   │
-//   ├── 크기와 여백
-//   │   ├── width / height
-//   │   └── padding / margin
-//   │
-//   ├── 윤곽과 배경
-//   │   └── border / background
-//   │
-//   ├── 글자와 정렬
-//   │   ├── corlor / font
-//   │   ├── text-decoration
-//   │   ├── text-align / vertical-align
-//   │   └── white-space
-//   │
-//   └── 내용
-//       └── content
+.root {
+  --bar-size: 10%;
+}
 
 .PageBase {
   display: flex;
@@ -33,6 +11,10 @@
   padding-left: 12.5vw;
   justify-content: space-between;
 
+  .FlexBox {
+    display: flex;
+    justify-content: space-between;
+  }
   .Nav {
     display: flex;
     position: fixed;
@@ -252,7 +234,7 @@
 
         .SpanBar {
           position: absolute;
-          width: 70%;
+          width: var(--bar-size);
           height: 100%;
           background: #5383e8;
           text-align: left;
