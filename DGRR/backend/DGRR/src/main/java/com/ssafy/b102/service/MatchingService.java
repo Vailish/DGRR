@@ -1,18 +1,28 @@
 package com.ssafy.b102.service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.b102.Entity.Game;
 import com.ssafy.b102.Entity.Matching;
 import com.ssafy.b102.Entity.User;
+import com.ssafy.b102.Entity.UserGame;
+import com.ssafy.b102.data.dto.WinRateDto;
+import com.ssafy.b102.persistence.dao.GameRepository;
 import com.ssafy.b102.persistence.dao.MatchingRepository;
+import com.ssafy.b102.persistence.dao.UserGameRepository;
 import com.ssafy.b102.persistence.dao.UserRepository;
 import com.ssafy.b102.request.dto.MatchingRequestDto;
 import com.ssafy.b102.response.dto.MatchingJoinResponseDto;
+import com.ssafy.b102.response.dto.MatchingResponseDto;
 import com.ssafy.b102.response.dto.MatchingResultResponseDto;
+import com.ssafy.b102.response.dto.WinRate;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +33,10 @@ public class MatchingService {
 	public final UserRepository userRepository;
 	
 	public final MatchingRepository matchingRepository;
+	
+	public final GameRepository gameRepository;
+	
+	public final UserGameRepository userGameRepository;
 	
 	public MatchingJoinResponseDto joiningMatchingGame(MatchingRequestDto matchingRequestDto) {
 		System.out.println("대기열 참가 요청이 들어왔습니다." + matchingRequestDto.getNickname());
@@ -48,12 +62,13 @@ public class MatchingService {
 			return new MatchingJoinResponseDto("이미 대기열 참가중입니다." + matchingRequestDto.getNickname());
 		}
 	}
-	public MatchingResultResponseDto matchingResult(MatchingRequestDto matchingRequestDto) {
+	public MatchingResponseDto matchingResult(MatchingRequestDto matchingRequestDto) {
 		User user = userRepository.findByNickname(matchingRequestDto.getNickname());
 		Matching matching = matchingRepository.findByUserId(user.getId());
 //		매칭여부 확인
+		System.out.println("매칭결과 요청왔어요");
 		if (matching == null || matching.getIsMatching() == 0) {
-			return new MatchingResultResponseDto("대기열에 없습니다.");
+			return null;
 		}
 		
 		if (matching.getIsMatching() == 2) {
@@ -64,13 +79,15 @@ public class MatchingService {
 				}
 				matching.setIsMatching(0);
 				matchingRepository.save(matching);
-				return new MatchingResultResponseDto(checkMatching.getUser().getNickname());
+				return makeMatchingResponseDto(checkMatching.getUser().getNickname());
+						
+//						(checkMatching.getUser().getNickname());
 			}
 		}
 //		대기열 확인
 		List<Matching> matchings = matchingRepository.findAllByOrderByPoint();
 		if (matchings.size() < 2) {
-			return new MatchingResultResponseDto("대기열 상대가 부족합니다.");
+			return null;
 		} else {
 			// 100점 이내
 			for (Matching mat : matchings) {
@@ -89,7 +106,7 @@ public class MatchingService {
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
-					return new MatchingResultResponseDto(mat.getUser().getNickname());
+					return makeMatchingResponseDto(mat.getUser().getNickname());
 				}
 			}
 			
@@ -109,7 +126,7 @@ public class MatchingService {
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
-					return new MatchingResultResponseDto(mat.getUser().getNickname());
+					return makeMatchingResponseDto(mat.getUser().getNickname());
 				}
 			}
 			
@@ -128,11 +145,11 @@ public class MatchingService {
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
-					return new MatchingResultResponseDto(mat.getUser().getNickname());
+					return makeMatchingResponseDto(mat.getUser().getNickname());
 			}
 			
 		}
-		return new MatchingResultResponseDto("여긴 어떻게 옴??");
+		return null;
 	}
 		
 	public MatchingResultResponseDto cancelMatching(MatchingRequestDto matchingRequestDto) {
@@ -146,7 +163,7 @@ public class MatchingService {
 		} else {
 			matching.setIsMatching(0);
 			matchingRepository.save(matching);
-			return new MatchingResultResponseDto("매칭 취소" + matchingRequestDto.getNickname());
+			return new MatchingResultResponseDto("매칭 취소 " + matchingRequestDto.getNickname());
 		}
 	}
 	
@@ -161,5 +178,24 @@ public class MatchingService {
 				continue;
 			}
 		}
+	}
+	
+	private MatchingResponseDto makeMatchingResponseDto(String nickname) {
+		User user = userRepository.findByNickname(nickname);
+		
+		MatchingResponseDto matchingResponseDto = new MatchingResponseDto();
+		
+		WinRate winrate = new WinRate(10, 7, 3);
+		List<WinRate> record = new ArrayList<>(List.of(winrate));
+		Integer average = 163;
+		
+		return matchingResponseDto.builder()
+				.username(user.getUsername())
+				.nickname(user.getNickname())
+				.profile(null)
+				.rank(50)
+				.record(record)
+				.average(average)
+				.build();
 	}
 }
