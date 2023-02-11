@@ -38,7 +38,7 @@ public class DataController {
 	}
 	
 	//dummydata
-	@GetMapping("/data/ranking/{nickname}")
+	@GetMapping("/data/ranking/user/{nickname}")
 	public ResponseEntity<?> dummy2(@PathVariable String nickname){
 		
 		RankingResponseDto rankingResponseDto1 = new RankingResponseDto("ttest2", 8, 2200);

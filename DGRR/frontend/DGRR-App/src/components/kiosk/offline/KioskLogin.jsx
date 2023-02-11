@@ -14,6 +14,7 @@ const KioskLogin = () => {
   const dispatch = useDispatch()
   const inputPinNumber = e => {
     pinNumber = e.target.value
+    console.log(pinNumber)
   }
   const onGameStart = () => {
     dispatch(loadPlayers())
