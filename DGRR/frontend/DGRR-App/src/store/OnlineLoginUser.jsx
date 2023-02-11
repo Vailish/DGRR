@@ -2,6 +2,7 @@ const ADD_PLAYER = 'KioskOnline/ADD_PLAYER'
 const REMOVE_PLAYER = 'KioskOnline/REMOVE_PLAYER'
 const UPDATE_PLAYER = 'KioskOnline/UPDATE_PLAYER'
 const ONLINE_GAME_BOARD_CHANGE = 'KioskOnline/ONLINE_GAMEBOARD_CHANGE'
+const LOAD_BOTH_PLAYERS = 'KioskOnline/LOAD_BOTH_PLAYERS'
 
 // 액션 생성 함수
 
@@ -13,6 +14,10 @@ export const onlineGameBoardChange = (myFrame, orderNum, myValue) => ({
   myFrame,
   orderNum,
   myValue,
+})
+export const loadBothPlayers = oppositePlayerInfo => ({
+  type: LOAD_BOTH_PLAYERS,
+  oppositePlayerInfo,
 })
 
 // const [modalOpen, setModalOpen] = useState(false);
@@ -36,6 +41,12 @@ const initialState = {
     average: 85,
   },
   gamingPlayer: {
+    playerInfo: {},
+    gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+    gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
+  },
+  oppositePlayer: {
+    playerInfo: {},
     gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
   },
@@ -56,6 +67,20 @@ const OnlineLoginUser = (state = initialState, action) => {
         ...state,
         helpOpen: false,
       }
+    case LOAD_BOTH_PLAYERS: {
+      const gamingPlayer = {
+        playerInfo: { ...state.player },
+        gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+        gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
+      }
+      const playerInfo = action.oppositePlayerInfo
+      const oppositePlayer = {
+        playerInfo,
+        gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+        gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
+      }
+      return { ...state, gamingPlayer, oppositePlayer }
+    }
     case ONLINE_GAME_BOARD_CHANGE: {
       console.log('state : ', state)
       const myFrame = action.myFrame
@@ -67,15 +92,26 @@ const OnlineLoginUser = (state = initialState, action) => {
       gameBoard[2 * (myFrame - 1) + orderNum] = myValue
       const gameBoardSum = [...state.gamingPlayer.gameBoardResult]
       console.log(gameBoard, gameBoardSum)
+      console.log('GAMESUM1 : ', gameBoardSum)
 
       // 첫번째에 X가 있을때 두번째 X를 제거, 혹은 그냥 두번째에 X가 있으면 제거하는 함수
+      // 10을 입력하면 X로 변환, 첫번째 숫자에 따라 두번째 숫자의 크기 제한
       for (let index = 0; index < 18; index++) {
-        if (index % 2 && gameBoard[index] === 'X') gameBoard[index] = ''
-        if (!(index % 2)) {
+        if (index % 2) {
+          if (gameBoard[index] === 10) gameBoard[index] = 'X'
+          if (gameBoard[index] === 'X') gameBoard[index] = ''
+        } else if (!(index % 2)) {
           if (gameBoard[index] === 'X') {
             gameBoard[index + 1] = ''
-          }
-          if (gameBoard[index] === '/') gameBoard[index] = ''
+          } else if (gameBoard[index] === '/') gameBoard[index] = ''
+          else if (
+            gameBoard[index] === 'F' ||
+            gameBoard[index] === '-' ||
+            gameBoard[index + 1] === '-' ||
+            gameBoard[index + 1] === 'F'
+          ) {
+          } else if (gameBoard[index] + gameBoard[index + 1] > 10) gameBoard[index + 1] = ''
+          else if (gameBoard[index] + gameBoard[index + 1] === 10) gameBoard[index + 1] = '/'
         }
       }
       // 마지막 스트라이크 혹은 스페어가 아니면 보너스 투구 불가
@@ -83,29 +119,40 @@ const OnlineLoginUser = (state = initialState, action) => {
       if (!(gameBoard[18] === 'X') && gameBoard[19] === 'X') gameBoard[19] = ''
       if (gameBoard[18] === 'X' && gameBoard[19] === '/') gameBoard[19] = ''
       if (gameBoard[19] === 'X' && gameBoard[20] === '/') gameBoard[20] = ''
+      if (gameBoard[19] === '/' && gameBoard[20] === '/') gameBoard[20] = ''
       console.log('!!!!', gameBoard)
       // for (let index = 18; index < gameBoard.length; index++)
       // {
 
       // }
+
       console.log('GAMESUM1 : ', gameBoardSum)
       // 부분 로컬합 구하기 함수
       for (let index = 0; index < gameBoard.length; index++) {
         console.log('여기로 옴')
+        console.log('GAMESUM1 : ', gameBoardSum, index)
+
         if (18 <= index && index < 21) {
           console.log('여기로 옴1')
-          const lastFrameScore = [gameBoard[18], gameBoard[19], gameBoard[20]]
-          for (let index = 0; index < lastFrameScore.length; index++) {
-            if (lastFrameScore[index] === 'X') {
-              lastFrameScore[index] = 10
-            } else if (lastFrameScore[index] === '/') {
-              lastFrameScore[index] = 10 - lastFrameScore[index - 1]
-            } else if (lastFrameScore[index] === '-' || lastFrameScore[index] === 'F') lastFrameScore[index] = 0
-            else lastFrameScore[index] = Number(lastFrameScore[index])
-          }
-          gameBoardSum[9] = lastFrameScore.reduce((sum, value) => {
-            return sum + value
-          }, 0)
+          if (gameBoard[18] && gameBoard[19]) {
+            const lastFrameScore = [gameBoard[18], gameBoard[19], gameBoard[20]]
+            for (let index = 0; index < lastFrameScore.length; index++) {
+              if (lastFrameScore[index] === 'X') {
+                lastFrameScore[index] = 10
+              } else if (lastFrameScore[index] === '/') {
+                lastFrameScore[index] = 10 - lastFrameScore[index - 1]
+              } else if (lastFrameScore[index] === '-' || lastFrameScore[index] === 'F') lastFrameScore[index] = 0
+              else if (lastFrameScore[index] !== '') lastFrameScore[index] = Number(lastFrameScore[index])
+            }
+            console.log('lastFrame : ', lastFrameScore)
+            gameBoardSum[9] = lastFrameScore.reduce((sum, value) => {
+              if (value !== '') {
+                sum = Number(sum)
+                return sum + value
+              }
+              return sum
+            }, '')
+          } else gameBoardSum[9] = ''
           break
         } else {
           if (gameBoard[index] === 'X') {
@@ -117,7 +164,7 @@ const OnlineLoginUser = (state = initialState, action) => {
             continue
           } else {
             if (index % 2) {
-              if (gameBoard[index] !== '' || gameBoard[index - 1] !== '') {
+              if (gameBoard[index] !== '' && gameBoard[index - 1] !== '') {
                 gameBoardSum[parseInt(index / 2)] =
                   (gameBoard[index] === '-' || gameBoard[index] === 'F' ? 0 : Number(gameBoard[index])) +
                   (gameBoard[index - 1] === '-' || gameBoard[index - 1] === 'F' ? 0 : Number(gameBoard[index - 1]))
@@ -125,10 +172,18 @@ const OnlineLoginUser = (state = initialState, action) => {
                 gameBoardSum[parseInt(index / 2)] = ''
               }
             } else {
-              if (gameBoard[index] !== '' || gameBoard[index + 1] !== '') {
+              if (gameBoard[index] !== '' && gameBoard[index + 1] !== '') {
                 gameBoardSum[parseInt(index / 2)] =
-                  (gameBoard[index] === '-' || gameBoard[index] === 'F' ? 0 : Number(gameBoard[index])) +
-                  (gameBoard[index + 1] === '-' || gameBoard[index + 1] === 'F' ? 0 : Number(gameBoard[index + 1]))
+                  (gameBoard[index] === '-' || gameBoard[index] === 'F'
+                    ? 0
+                    : gameBoard[index] === 'X'
+                    ? 10
+                    : Number(gameBoard[index])) +
+                  (gameBoard[index + 1] === '-' || gameBoard[index + 1] === 'F'
+                    ? 0
+                    : gameBoard[index] === 'X'
+                    ? 10
+                    : Number(gameBoard[index]))
               } else {
                 gameBoardSum[parseInt(index / 2)] = ''
               }
@@ -140,15 +195,20 @@ const OnlineLoginUser = (state = initialState, action) => {
       for (let index = 0; index < gameBoardSum.length; index++) {
         console.log('하하')
         if (gameBoardSum[index] === '') {
+          console.log('GAMESUM1 : ', gameBoardSum, index)
+
           for (let index2 = index + 1; index2 < gameBoardSum.length; index2++) {
             gameBoardSum[index2] = ''
           }
           break
         } else if (gameBoardSum[index] === 'X' || gameBoardSum[index] === '/') {
+          console.log('GAMESUM1 : ', gameBoardSum, index)
+
           if (gameBoardSum[index] === '/') {
             let plusScore = gameBoard[2 * (index + 1)]
-            gameBoardSum[index] =
-              10 + (plusScore === '-' || plusScore === 'F' ? 0 : plusScore === 'X' ? 10 : Number(plusScore))
+            if (plusScore !== '')
+              gameBoardSum[index] =
+                10 + (plusScore === '-' || plusScore === 'F' ? 0 : plusScore === 'X' ? 10 : Number(plusScore))
           } else {
             let plusList = []
             for (let index2 = 2 * (index + 1); index2 < gameBoard.length; index2++) {
@@ -158,12 +218,13 @@ const OnlineLoginUser = (state = initialState, action) => {
                 if (index2 < 18) index2++
               } else if (gameBoard[index2] === '/') {
                 plusList.push(10 - plusList[0])
-              } else plusList.push(Number(gameBoard[index2]))
+              } else if (gameBoard[index2] !== '') plusList.push(Number(gameBoard[index2]))
 
               if (plusList.length > 1) break
             }
-            gameBoardSum[index] = 10 + plusList[0] + plusList[1]
+            if (plusList.length === 2) gameBoardSum[index] = 10 + plusList[0] + plusList[1]
           }
+        } else {
         }
       }
 

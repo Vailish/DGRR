@@ -18,7 +18,7 @@ const ScoreTableBlock = props => {
   const firstData = useRef()
   const secondData = useRef()
   const thirdData = useRef()
-  const isValidValue = /^[fFXx\-0-9\/]{1,1}$/
+  const isValidValue = /^[fFXx\-0-9\/]{1,1}$|^10$/
   const [scoreSumNumber, setScoreSumNumber] = useState(scoreSum)
   const refDataList = [firstData, secondData, thirdData]
   const [frameData, setFrameData] = useState({

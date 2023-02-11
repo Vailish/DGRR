@@ -16,7 +16,7 @@ const OnlineScoreTableBlock = props => {
   const secondData = useRef()
   const thirdData = useRef()
   const refDataList = [firstData, secondData, thirdData]
-  const isValidValue = /^[fFXx\-0-9\/]{1,1}$/
+  const isValidValue = /^[fFXx\-0-9\/]{1,1}$|^10$/
   const myFrame = frameNum
 
   const ScoreTableBlock = frameNum === 10 ? `OnlineScoreTableBlock Frame${frameNum}` : 'OnlineScoreTableBlock'
@@ -124,7 +124,7 @@ const OnlineScoreTableBlock = props => {
           ></input>
         ) : null}
       </div>
-      <div className="OnlineScoreSum"></div>
+      <div className="OnlineScoreSum">{scoreSum}</div>
       <div className="OnlineScoreBlock">
         <div className="OnlineScoreInputBlockLeft"></div>
         <div className="OnlineScoreInputBlockRight"></div>
