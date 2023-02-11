@@ -205,6 +205,13 @@ const OfflineLoginUsers = (state = initialState, action) => {
       if (!(gameBoard[18] === 'X') && gameBoard[19] === 'X') gameBoard[19] = ''
       if (gameBoard[18] === 'X' && gameBoard[19] === '/') gameBoard[19] = ''
       if (gameBoard[19] === 'X' && gameBoard[20] === '/') gameBoard[20] = ''
+      if (gameBoard[18] === '/') gameBoard[18] = ''
+      if (gameBoard[19] === 'X' || gameBoard[19] === '/') if (gameBoard[20] === '/') gameBoard[20] = ''
+      if (gameBoard[18] !== 'X' && gameBoard[18] !== '' && gameBoard[19] !== '') {
+        if (gameBoard[18] === 'F' || gameBoard[18] === '-' || gameBoard[19] === 'F' || gameBoard[19] === '-') {
+        } else if (gameBoard[18] + gameBoard[19] > 10) gameBoard[19] = ''
+        else if (gameBoard[18] + gameBoard[19] === 10) gameBoard[19] = '/'
+      }
       console.log('!!!!', gameBoard)
       // for (let index = 18; index < gameBoard.length; index++)
       // {
