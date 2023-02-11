@@ -59,7 +59,7 @@ public class MatchingService {
 			return new MatchingJoinResponseDto("대기열에 참가하였습니다." + matchingRequestDto.getNickname());
 		} else {
 			System.out.println(matchingRepository.findAll().toString());
-			return new MatchingJoinResponseDto("이미 대기열 참가중입니다." + matchingRequestDto.getNickname());
+			return null;
 		}
 	}
 	public MatchingResponseDto matchingResult(MatchingRequestDto matchingRequestDto) {
@@ -157,9 +157,9 @@ public class MatchingService {
 		Matching matching = matchingRepository.findByUserId(user.getId());
 		if (matching != null) {System.out.println(matching.getId() +"     " + matching.getIsMatching());}
 		if (matching == null) {
-			return new MatchingResultResponseDto("대기열에 없습니다" + matchingRequestDto.getNickname());
+			return null;
 		} else if (matching.getIsMatching() == 0) {
-			return new MatchingResultResponseDto("대기열에 없습니다" + matchingRequestDto.getNickname());
+			return null;
 		} else {
 			matching.setIsMatching(0);
 			matchingRepository.save(matching);
