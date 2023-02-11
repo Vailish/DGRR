@@ -48,20 +48,25 @@ public class DataService {
 				continue;
 			}
 			else {
+				System.out.println("######################################");
+				System.out.println(userGame.getUser().getNickname());
+				System.out.println(userGame.getGameScore());
+				System.out.println("######################################");
 				Integer userGameScore = caculate(convertToList(userGame.getGameScore()));
-				System.out.println(userGameScore);
+				System.out.println("게임점수" + userGameScore);
 				if (lastestGameTotalScore == 0) {
 					lastestGameTotalScore += userGameScore;
 				}
-				if (cnt < 3) {
+				if (cnt < 2) {
 					cnt += 1;
 					Last3GameAverageTotalScore += userGameScore;
-				} else if (cnt == 3) {Last3GameAverageTotalScore = (Last3GameAverageTotalScore + userGameScore) / 3; cnt += 1;}
+				} else if (cnt == 2) {Last3GameAverageTotalScore = (Last3GameAverageTotalScore + userGameScore) / 3; cnt += 1; System.out.println("ㅇㅅㅇ");}
 				
 				if (HighestTotalScore < userGameScore) {
 					HighestTotalScore = userGameScore;
 				}
-				System.out.println(Last3GameAverageTotalScore);
+				System.out.println("최근 3게임 평균값" + Last3GameAverageTotalScore);
+				System.out.println("cnt " + cnt);
 			}
 		}
 		if (cnt == 2) {
@@ -151,7 +156,7 @@ public class DataService {
 	private Integer caculate(List<Integer> score) {
 		Integer result = 0;
 		for (int num = 0; num < score.size(); num++) {
-			result += num;
+			result += score.get(num);
 		}
 		return result;
 	}
