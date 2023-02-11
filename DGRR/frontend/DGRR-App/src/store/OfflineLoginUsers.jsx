@@ -16,7 +16,7 @@ const OFFLINE_GAMEBOARD_CHANGE = 'KioskOffline/OFFLINE_GAMEBOARD_CHANGE'
 //   apis.~~~
 // })
 
-export const addPlayer = playerUsername => ({
+export const addPlayer = playerPin => ({
   type: ADD_PLAYER,
   playerInfo: {
     username: 'testzzang2',
@@ -39,6 +39,7 @@ export const addPlayer = playerUsername => ({
       frame10: ['', '', '', ''],
     },
   },
+  playerPin,
 })
 export const removePlayer = player => ({ type: REMOVE_PLAYER, playerInfo: player })
 export const updatePlayer = () => ({ type: UPDATE_PLAYER, playerInfo: {} })

@@ -8,7 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +23,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@DynamicInsert
 @Entity
 @Getter
 @Setter
@@ -29,11 +37,20 @@ public class Matching {
 	private long id;
 	
 	@Column(nullable = false)
-	private long userId;
+	private LocalDateTime joinTime;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
+	private Integer matchingNumber;
+	
+	@Column(nullable = true)
+	private Integer isMatching;
+	
+	@Column(nullable = true)
 	private Integer point;
 	
-	@Column(nullable = false)
-	private LocalDateTime joinTime;
+//	@JsonIgnore
+	@JoinColumn(name="user_id")
+//	@OneToOne(mappedBy="matching")
+	@OneToOne
+	private User user;
 }
