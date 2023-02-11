@@ -97,6 +97,35 @@ public class DataService {
 		return new TotalRankingDto(rankings);
 	}
 	
+	public TotalRankingDto getTotalRankingPage(Integer pageNumber) {
+		List<User> users = userRepository.findAllByOrderByPointsDesc();
+		List<Ranking> rankings = new ArrayList<>();
+		
+//		온라인 게임 id
+		Integer rankingNumber = pageNumber * 20;
+		if (users == null || users.size() <= rankingNumber) {
+			return null;
+		}
+		 
+//		for (User user : users) {
+		for (Integer n = 0; n < users.size(); n ++) {
+			User user = users.get(n);
+			rankingNumber += 1;
+			Integer totalGameNumber = winrate(user.getNickname()).getTotalGame();
+			Integer winGameNumber = winrate(user.getNickname()).getWinGameNumber();
+			Ranking ranking = new Ranking().builder()
+					.ranking(rankingNumber)
+					.nickname(user.getNickname())
+					.point(user.getPoints())
+					.totalGameNumber(totalGameNumber)
+					.winGameNumber(winGameNumber)
+					.LossesGameNumber(totalGameNumber - winGameNumber)
+					.build();
+			rankings.add(ranking);
+		}
+		return new TotalRankingDto(rankings);
+	}
+	
 	
 	private WinRateDto winrate(String nickname) {
 	List<Game> onlineGames = gameRepository.findAllByGameType(true);

@@ -31,6 +31,12 @@ public class DataController {
 		return new ResponseEntity<TotalRankingDto>(totalRankingDto, HttpStatus.OK); 
 	}
 	
+	@GetMapping("/data/ranking/page/{pageNumber}")
+	public ResponseEntity<?> getRankingPage(@PathVariable Integer pageNumber){
+		TotalRankingDto totalRankingDto = dataService.getTotalRankingPage(pageNumber);
+		return new ResponseEntity<TotalRankingDto>(totalRankingDto, HttpStatus.OK); 
+	}
+	
 	@GetMapping("/data/points/{nickname}")
 	public ResponseEntity<?> getUserPointsRank(@PathVariable String nickname){
 		DataResponseDto dataResponseDto = dataService.getUserPointsRank(nickname);
@@ -38,7 +44,7 @@ public class DataController {
 	}
 	
 	//dummydata
-	@GetMapping("/data/ranking/{nickname}")
+	@GetMapping("/data/ranking/user/{nickname}")
 	public ResponseEntity<?> dummy2(@PathVariable String nickname){
 		
 		RankingResponseDto rankingResponseDto1 = new RankingResponseDto("ttest2", 8, 2200);
