@@ -48,20 +48,25 @@ public class DataService {
 				continue;
 			}
 			else {
+				System.out.println("######################################");
+				System.out.println(userGame.getUser().getNickname());
+				System.out.println(userGame.getGameScore());
+				System.out.println("######################################");
 				Integer userGameScore = caculate(convertToList(userGame.getGameScore()));
-				System.out.println(userGameScore);
+				System.out.println("게임점수" + userGameScore);
 				if (lastestGameTotalScore == 0) {
 					lastestGameTotalScore += userGameScore;
 				}
-				if (cnt < 3) {
+				if (cnt < 2) {
 					cnt += 1;
 					Last3GameAverageTotalScore += userGameScore;
-				} else if (cnt == 3) {Last3GameAverageTotalScore = (Last3GameAverageTotalScore + userGameScore) / 3; cnt += 1;}
+				} else if (cnt == 2) {Last3GameAverageTotalScore = (Last3GameAverageTotalScore + userGameScore) / 3; cnt += 1; System.out.println("ㅇㅅㅇ");}
 				
 				if (HighestTotalScore < userGameScore) {
 					HighestTotalScore = userGameScore;
 				}
-				System.out.println(Last3GameAverageTotalScore);
+				System.out.println("최근 3게임 평균값" + Last3GameAverageTotalScore);
+				System.out.println("cnt " + cnt);
 			}
 		}
 		if (cnt == 2) {
@@ -81,6 +86,39 @@ public class DataService {
 			return null;
 		}
 		for (User user : users) {
+			rankingNumber += 1;
+			Integer totalGameNumber = winrate(user.getNickname()).getTotalGame();
+			Integer winGameNumber = winrate(user.getNickname()).getWinGameNumber();
+			Ranking ranking = new Ranking().builder()
+					.ranking(rankingNumber)
+					.nickname(user.getNickname())
+					.point(user.getPoints())
+					.totalGameNumber(totalGameNumber)
+					.winGameNumber(winGameNumber)
+					.LossesGameNumber(totalGameNumber - winGameNumber)
+					.build();
+			rankings.add(ranking);
+		}
+		return new TotalRankingDto(rankings);
+	}
+	
+	public TotalRankingDto getTotalRankingPage(Integer pageNumber) {
+		List<User> users = userRepository.findAllByOrderByPointsDesc();
+		List<Ranking> rankings = new ArrayList<>();
+		
+//		온라인 게임 id
+		Integer rankingNumber = pageNumber * 20;
+		if (users == null || users.size() <= rankingNumber) {
+			return null;
+		}
+		
+		Integer maxNum = users.size();
+		if (users.size() > rankingNumber) {
+			maxNum = rankingNumber + 20;
+		}
+		
+		for (Integer n = 0; n < maxNum; n ++) {
+			User user = users.get(n);
 			rankingNumber += 1;
 			Integer totalGameNumber = winrate(user.getNickname()).getTotalGame();
 			Integer winGameNumber = winrate(user.getNickname()).getWinGameNumber();
@@ -118,7 +156,7 @@ public class DataService {
 	private Integer caculate(List<Integer> score) {
 		Integer result = 0;
 		for (int num = 0; num < score.size(); num++) {
-			result += num;
+			result += score.get(num);
 		}
 		return result;
 	}
