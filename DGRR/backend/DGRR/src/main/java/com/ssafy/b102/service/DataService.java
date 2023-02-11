@@ -106,9 +106,13 @@ public class DataService {
 		if (users == null || users.size() <= rankingNumber) {
 			return null;
 		}
-		 
-//		for (User user : users) {
-		for (Integer n = 0; n < users.size(); n ++) {
+		
+		Integer maxNum = users.size();
+		if (users.size() > rankingNumber) {
+			maxNum = rankingNumber + 20;
+		}
+		
+		for (Integer n = 0; n < maxNum; n ++) {
 			User user = users.get(n);
 			rankingNumber += 1;
 			Integer totalGameNumber = winrate(user.getNickname()).getTotalGame();
