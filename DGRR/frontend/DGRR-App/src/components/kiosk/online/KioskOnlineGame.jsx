@@ -8,7 +8,7 @@ import OnlineScoreTable from './OnlineScoreTable'
 // import KioskVideo from './webrtc/KioskVideo'
 import { onlineGameBoardChangeOpposite } from '../../../store/OnlineLoginUser'
 import { api } from '../../../API/api'
-
+import KioskVideo from '../online/webrtc/KioskVideo'
 const OnlineGamePlayerBlock = props => {
   const { playerNickname, playerProfile } = props
   return (
@@ -85,8 +85,7 @@ const KioskOnlineGame = () => {
           <OnlineGamePlayerBlock playerProfile={oppositePlayer.profile} playerNickname={oppositePlayer.nickname} />
         </div>
         <div className="OnlineGameDisplayBlock">
-          <div className="OnlineGameDisplay">{/* <KioskVideo randomSession={random} /> */}</div>
-          <div className="OnlineGameDisplay">{/* <KioskVideo randomSession={random} /> */}</div>
+          <KioskVideo className="OnlineGameDisplay" />
           <div className="OnlineGameHelpCircle">?</div>
         </div>
       </div>

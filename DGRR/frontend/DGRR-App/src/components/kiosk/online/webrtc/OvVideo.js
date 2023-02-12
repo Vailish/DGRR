@@ -1,6 +1,6 @@
-import React, { Component, useRef, useEffect } from "react";
-const OpenViduVideoComponent = (streamManager) => {
-  const videoRef = useRef();
+import React, { Component, useRef, useEffect } from 'react'
+const OpenViduVideoComponent = streamManager => {
+  const videoRef = useRef()
   // useEffect(({ streamManager }) => {
   //   if (streamManager && !!videoRef) {
   //     streamManager.streamManager.addVideoElement(videoRef.current);
@@ -9,11 +9,11 @@ const OpenViduVideoComponent = (streamManager) => {
 
   useEffect(() => {
     if (streamManager && !!videoRef) {
-      streamManager.streamManager.addVideoElement(videoRef.current);
+      streamManager.streamManager.addVideoElement(videoRef.current)
     }
-  }, [streamManager]);
+  }, [streamManager])
 
-  return <video autoPlay={true} ref={videoRef} style={{ width: "600px" }} />;
-};
+  return <video autoPlay={true} ref={videoRef} style={{ width: '600px' }} />
+}
 
-export default OpenViduVideoComponent;
+export default OpenViduVideoComponent
