@@ -61,7 +61,9 @@ const KioskLogin = () => {
         </div>
         <div className="UsersBlock">
           <div className="PlayersBlock">
-            <div className="PlayerText">Players</div>
+            <div className="PlayerTextBlock">
+              <div className="PlayerText">플레이어</div>
+            </div>
             <div className="PlayersList">
               {always4Blocks().map((player, index) => {
                 return player.nickname ? (
@@ -70,17 +72,13 @@ const KioskLogin = () => {
                   <KioskLoginPlayer player="" key={`KioskLoginPlayer-${index}`} />
                 )
               })}
-              {/* <div className="Player"></div>
-              <div className="Player"></div>
-              <div className="Player"></div>
-              <KioskLoginPlayer /> */}
             </div>
           </div>
         </div>
       </div>
       <div className="GameStartBlock">
         <Link to="/KioskOfflineGame" className="GameStartButton" onClick={onGameStart}>
-          START
+          시작
         </Link>
       </div>
     </div>

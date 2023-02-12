@@ -21,6 +21,7 @@ const ScoreTableBlock = props => {
   const isValidValue = /^[fFXx\-0-9\/]{1,1}$|^10$/
   const [scoreSumNumber, setScoreSumNumber] = useState(scoreSum)
   const refDataList = [firstData, secondData, thirdData]
+  const isGameFinish = useSelector(state => state.OfflineLoginUsers.isGameFinish)
   const [frameData, setFrameData] = useState({
     first: '',
     second: '',
@@ -148,21 +149,38 @@ const ScoreTableBlock = props => {
           </>
         ) : (
           <>
-            <div className="ScoreInputBlockLeft" onChange={onChangeFirst} ref={firstData}>
+            <div
+              className="ScoreInputBlockLeft"
+              onChange={onChangeFirst}
+              ref={firstData}
+              style={isGameFinish[playerNum] ? { background: 'green' } : null}
+            >
               {scoreBoard[0]}
             </div>
-            <div className="ScoreInputBlockRight" onChange={onChangeSecond} ref={secondData}>
+            <div
+              className="ScoreInputBlockRight"
+              onChange={onChangeSecond}
+              ref={secondData}
+              style={isGameFinish[playerNum] ? { background: 'green' } : null}
+            >
               {scoreBoard[1]}
             </div>
             {frameNum === 10 ? (
-              <div className="ScoreInputBlockFarRight" onChange={onChangeThird} ref={thirdData}>
+              <div
+                className="ScoreInputBlockFarRight"
+                onChange={onChangeThird}
+                ref={thirdData}
+                style={isGameFinish[playerNum] ? { background: 'green' } : null}
+              >
                 {scoreBoard[2]}
               </div>
             ) : null}
           </>
         )}
       </div>
-      <div className="ScoreSum">{scoreSum}</div>
+      <div className="ScoreSum" style={isGameFinish[playerNum] ? { background: 'green' } : null}>
+        {scoreSum}
+      </div>
     </div>
   )
 }

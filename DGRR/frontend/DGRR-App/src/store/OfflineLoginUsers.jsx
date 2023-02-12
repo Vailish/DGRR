@@ -121,6 +121,7 @@ const initialState = {
       gameBoardResult: [4, 4, 4, 4, 4, 4, 4, 4, 4, 200],
     },
   },
+  isGameFinish: { player1: false, player2: false, player3: false, player4: false },
 }
 
 // 리듀서
@@ -312,13 +313,22 @@ const OfflineLoginUsers = (state = initialState, action) => {
       }, 0)
       for (let i = gameBoardResult.length; i < 10; i++) gameBoardResult.push('')
       console.log('GAMERESULT : ', gameBoardResult)
+      if ((gameBoard[18] === 'X' || gameBoard[19] === 'X' || gameBoard[19] === '/') && !gameBoard[20])
+        gameBoardResult[9] = ''
 
       const playerObject = {}
       playerObject[`${playerNum}`] = { ...state.gamingPlayers[playerNum], gameBoard, gameBoardResult }
       console.log('----', playerObject)
       const gamingPlayers = { ...state.gamingPlayers, ...playerObject }
       console.log(gamingPlayers)
-      return { ...state, gamingPlayers }
+      const isFinishObject = {}
+      isFinishObject[`${playerNum}`] = true
+      for (let num of gameBoardResult) {
+        if (!num) isFinishObject[`${playerNum}`] = false
+      }
+      const isGameFinish = { ...state.isGameFinish, ...isFinishObject }
+
+      return { ...state, gamingPlayers, isGameFinish }
     }
     default:
       return state

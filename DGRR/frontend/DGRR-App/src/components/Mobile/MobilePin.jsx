@@ -5,7 +5,7 @@ import axios from 'axios'
 const MobilePin = () => {
   const [min, setMin] = useState(5)
   const [sec, setSec] = useState(0)
-  
+
   useEffect(() => {
     const countdown = setInterval(() => {
       if (parseInt(sec) > 0) {
@@ -31,7 +31,7 @@ const MobilePin = () => {
         username: username,
         password: password,
       }
-      const response = await axios.post('http://192.168.31.142:8080/api/v1/request/pin', JSON.stringify(userInfo), {
+      const response = await axios.post('http://172.30.1.54:8080/api/v1/request/pin', JSON.stringify(userInfo), {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
         },

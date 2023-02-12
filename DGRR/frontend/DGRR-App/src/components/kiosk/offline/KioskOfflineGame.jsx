@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../scss/KioskOfflineGame.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import KioskLoginPlayer from './KioskLoginPlayer'
 import { sendAllScore } from '../../../store/OfflineLoginUsers'
 // import axios from 'axios'
-import { apis } from '../../../API/api'
+import { api } from '../../../API/api'
 import ScoreTable from './ScoreTable'
 import KioskNavBlock from '../KioskNavBlock'
 
@@ -16,10 +16,32 @@ const KioskOfflineGame = () => {
   const [playerNow, setPlayerNow] = useState(gamingPlayersNum[0])
   const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNow].gameBoardResult)
   const scoreArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNow].gameBoard)
+  const isGameFinish = useSelector(state => state.OfflineLoginUsers.isGameFinish)
+  const navigate = useNavigate()
+
   const changePlayer = plyerNum => {
     setPlayerNow(plyerNum)
   }
   const onSendAllScore = () => dispatch(sendAllScore())
+  // const location = useLocation()
+  // const { random } = location.state
+
+  // useEffect(() => {
+  //   console.log('잘 받아왔어' + random)
+  // })
+
+  useEffect(() => {
+    if (
+      isGameFinish.player1 === true &&
+      isGameFinish.player2 === true &&
+      isGameFinish.player3 === true &&
+      isGameFinish.player4 === true
+    )
+      setTimeout(() => {
+        navigate('/KioskOnlineResult')
+      }, 2000)
+  }, [isGameFinish])
+
   const PlayerProfileCircle = props => {
     const { playerNum } = props
     return playerNow === playerNum ? (

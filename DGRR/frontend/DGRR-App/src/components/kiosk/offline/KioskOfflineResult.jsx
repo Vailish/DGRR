@@ -30,7 +30,7 @@ const KioskOfflineResult = () => {
         clearInterval(playerScoreCountUp)
         scoreRef.current.innerText = lastScore
       }
-    }, 100)
+    }, 50)
 
     return (
       <div className="EachPlayerBlock">

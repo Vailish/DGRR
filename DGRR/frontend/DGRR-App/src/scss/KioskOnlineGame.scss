@@ -25,9 +25,25 @@
         width: 100%;
         justify-content: space-between;
         .OnlineGamePlayerBlock {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
           width: 264 / 2560 * 100vw;
           height: 324 / 1600 * 100vh;
           background: yellow;
+          .OnlineGameProfile {
+            width: 7vw;
+            height: 7vw;
+            border-radius: 5vw;
+            background: white;
+          }
+          .OnlineGamePlayerName {
+            width: 8vw;
+            height: 5vh;
+            border-radius: 1vw;
+            background: white;
+          }
         }
       }
     }

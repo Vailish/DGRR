@@ -14,6 +14,7 @@ import KioskOnlineGame from './components/kiosk/online/KioskOnlineGame'
 import MainPage from './pages/Mainpage'
 import Rankingpage from './pages/Rankingpage'
 import OnlineScoreTable from './components/kiosk/online/OnlineScoreTable'
+import KioskOnlineResult from './components/kiosk/online/KioskOnlineResult'
 
 import FindIdForm from './containers/user/FindIdForm'
 import FindPwForm from './containers/user/FindPwForm'
@@ -46,6 +47,7 @@ const App = () => {
       <Route path="/findPwSuccess" element={<PwFindSuccess />} />
       <Route path="/mLogin" element={<MobileForm />} />
       <Route path="/mPin" element={<MobilePin />} />
+      <Route path="/KioskOnlineResult" element={<KioskOnlineResult />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   )

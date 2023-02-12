@@ -2,23 +2,24 @@ import KioskNavBlock from '../KioskNavBlock'
 import React, { useState, useEffect, useRef } from 'react'
 import '../../../scss/KioskOnlineMatching.scss'
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const OnlineMatchingPlayer = props => {
-  const { name, tier, tierPoint, record } = props
+  const { nickname, tier, point, record } = props
   return (
     <div className="OnlineMatchingPlayerBlock">
       <div className="OnlineMatchingProfile"></div>
       <div className="OnlineMatchingPlayerInfoBlock">
         <div className="OnlineMatchingTierAndName">
           <div className="OnlinePlayerTier">{tier}</div>
-          <div className="OnlinePlayerName">{name}</div>
+          <div className="OnlinePlayerName">{nickname}</div>
         </div>
         <div className="OnlineMatchingPointAndRecord">
           <div className="OnlinePlayerPoint">
-            {tier} {tierPoint}
+            {tier} {point}
           </div>
           <div className="OnlinePlayerRecord">
-            {record[0]} 전 {record[1]} 승 {record[2]} 패
+            {record[0].totalGame} 전 {record[0].winGame} 승 {record[0].loseGame} 패
           </div>
         </div>
       </div>
@@ -26,24 +27,21 @@ const OnlineMatchingPlayer = props => {
   )
 }
 
-const mydata = { name: '김메시', tier: 'master', tierPoint: 3000, record: [10, 7, 3] }
-
 const KioskOnlineMatching = () => {
-  const CountingDownNumber = props => {
-    const { number } = props
-    return <div className="CountingDownNumber"> {number}</div>
-  }
-  const numberRef = useRef()
+  const myData = useSelector(state => state.OnlineLoginUser.player)
+  const yourData = useSelector(state => state.OnlineLoginUser.oppositePlayer.playerInfo)
   const navigate = useNavigate()
-  let countDown = 13
-  const numberCounting = setInterval(() => {
-    countDown--
-    if (countDown <= 10) numberRef.current.innerText = countDown
-    if (countDown === 0) {
-      clearInterval(numberCounting)
-      navigate('/KioskOnlineGame')
-    }
-  }, 1000)
+  const [countingNum, setcountingNum] = useState(10)
+  useEffect(() => {
+    const numberCounting = setInterval(() => {
+      setcountingNum(countingNum - 1)
+      if (countingNum === 0) {
+        navigate('/KioskOnlineGame')
+        clearInterval(numberCounting)
+      }
+    }, 1000)
+    return () => clearInterval(numberCounting)
+  }, [countingNum])
 
   const onRandomSession = (length = 50) => {
     return Math.random().toString(16).substr(2, length)
@@ -52,12 +50,12 @@ const KioskOnlineMatching = () => {
     <div className="KioskBackground">
       <KioskNavBlock goBackTo={'/KioskOnlineLogin'} />
       <div className="OnlineMatchingContentBlock">
-        <OnlineMatchingPlayer {...mydata} />
+        <OnlineMatchingPlayer nickname={myData.nickname} point={myData.point} record={myData.record} />
         <div className="LetterV">V</div>
         <div className="LetterS">S</div>
-        <div className="CountingDownNumber" ref={numberRef}></div>
+        <div className="CountingDownNumber">{countingNum}</div>
         {/* {countDown < 10 ? <CountingDownNumber number={countDown} /> : null} */}
-        <OnlineMatchingPlayer {...mydata} />
+        <OnlineMatchingPlayer nickname={yourData.nickname} point={yourData.point} record={yourData.record} />
       </div>
       <div className="GameStartBlock"></div>
     </div>
