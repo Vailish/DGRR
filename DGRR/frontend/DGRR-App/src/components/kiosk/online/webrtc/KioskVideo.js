@@ -3,20 +3,20 @@ import { OpenVidu } from 'openvidu-browser'
 import axios from 'axios'
 import UserVideoComponent from './UserVideoComponent';
 import './test.css'
-const APPLICATION_SERVER_URL =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/";
+const APPLICATION_SERVER_URL = "https://i8b102.p.ssafy.io:8443/openvidu/";
 class KioskVideo extends Component {
   constructor(props) {
     super(props);
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: props.randomSession,
+      mySessionId: this.onRandomSession(),
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
       publisher: undefined,
       subscribers: [],
+      test: {}
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -27,11 +27,14 @@ class KioskVideo extends Component {
     this.onbeforeunload = this.onbeforeunload.bind(this);
   }
 
+  onRandomSession(length = 50) {
+    return Math.random().toString(16).substr(2, length)
+  }
   componentDidMount() {
     if (!this.state.session) {
       this.joinSession();
+
     }
-    console.log("내 세션 ID " + this.state.mySessionId)
     window.addEventListener("beforeunload", this.onbeforeunload);
   }
 
@@ -119,10 +122,11 @@ class KioskVideo extends Component {
 
         // Get a token from the OpenVidu deployment
         this.getToken().then((token) => {
+          console.log("Token" + token.token)
           // First param is the token got from the OpenVidu deployment. Second param can be retrieved by every user on event
           // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
           mySession
-            .connect(token, { clientData: this.state.myUserName })
+            .connect(token.token, { clientData: this.state.myUserName })
             .then(async () => {
               // --- 5) Get your own camera stream ---
 
@@ -191,6 +195,7 @@ class KioskVideo extends Component {
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       mainStreamManager: undefined,
       publisher: undefined,
+      test: undefined
     });
   }
 
@@ -303,27 +308,116 @@ class KioskVideo extends Component {
    * more about the integration of OpenVidu in your application server.
    */
   async getToken() {
-    const sessionId = await this.createSession(this.state.mySessionId);
-    return await this.createToken(sessionId);
-  }
+    console.log(this.state.mySessionId)
+    console.log("test합시다." + this.state.test.sessionId)
 
+    const testRes = await this.getSession();
+    console.log("내 sessionId" + this.state.mySessionId)
+    for (let i = 0; i < testRes.data.content.length; i++) {
+      console.log(testRes.data.content[i].sessionId)
+      if (this.state.mySessionId === testRes.data.content[i].sessionId) {
+        this.setState({
+          test: testRes.data.content[i]
+        })
+        return await this.createToken(this.state.test.sessionId)
+      }
+    }
+    const testSessionId = await this.createSession(this.state.mySessionId)
+    this.setState({
+      test: testSessionId
+    })
+    return await this.createToken(this.state.test.sessionId)
+    // console.log(testSessionId.sessionId)
+
+    // return await this.createToken(this.state.test.sessionId);
+
+    // } else if (typeof (this.state.test.sessionId) !== undefined) {
+    //   return await this.createToken(this.state.mySessionId);
+
+    // }
+    // if (!sessionIdTest) {
+    //   sessionIdTest = await this.createSession(testId);
+    //   const test = sessionIdTest.sessionId
+    //   return await this.createToken(test);
+    // } else {
+
+    // }
+
+  }
+  async getSession() {
+    const response = await axios.get(APPLICATION_SERVER_URL + `api/sessions`,
+      {
+        headers: {
+          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU"
+        },
+      })
+    return response;
+  }
   async createSession(sessionId) {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
-      { customSessionId: sessionId },
+      APPLICATION_SERVER_URL + `api/sessions`,
       {
-        headers: { "Content-Type": "application/json" },
+        "mediaMode": "ROUTED",
+        "recordingMode": "MANUAL",
+        "customSessionId": sessionId,
+        "forcedVideoCodec": "VP8",
+        "allowTranscoding": false,
+        "defaultRecordingProperties": {
+          "name": "MyRecording",
+          "hasAudio": false,
+          "hasVideo": true,
+          "outputMode": "COMPOSED",
+          "recordingLayout": "BEST_FIT",
+          "resolution": "1280x720",
+          "frameRate": 25,
+          "shmSize": 536870912,
+          "mediaNode": {
+            "id": "media_i-0c58bcdd26l11d0sd"
+          }
+        },
+        "mediaNode": {
+          "id": "media_i-0c58bcdd26l11d0sd"
+        }
+      },
+      {
+        headers: {
+          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU"
+        },
       }
     );
+
     return response.data; // The sessionId
   }
 
   async createToken(sessionId) {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
-      {},
+      APPLICATION_SERVER_URL + `api/sessions/${sessionId}/connection`,
       {
-        headers: { "Content-Type": "application/json" },
+        "type": "WEBRTC",
+        "data": "My Server Data",
+        "record": true,
+        "role": "PUBLISHER",
+        "kurentoOptions": {
+          "videoMaxRecvBandwidth": 1000,
+          "videoMinRecvBandwidth": 300,
+          "videoMaxSendBandwidth": 1000,
+          "videoMinSendBandwidth": 300,
+          "allowedFilters": ["GStreamerFilter", "ZBarFilter"]
+        },
+        "customIceServers": [
+          {
+            "url": "turn:turn-domain.com:443",
+            "username": "usertest",
+            "credential": "userpass"
+          }
+        ]
+      },
+      {
+        headers: {
+          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
+        },
       }
     );
     return response.data; // The token
