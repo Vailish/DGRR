@@ -22,7 +22,7 @@ const MobileForm = () => {
     try {
       const response = await axios.post(
         //URI 바꿔야지.......
-        'http://192.168.31.142:8080/login',
+        'http://172.30.1.54:8080/login',
         JSON.stringify(user),
         {
           headers: {

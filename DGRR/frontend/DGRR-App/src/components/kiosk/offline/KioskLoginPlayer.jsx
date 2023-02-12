@@ -27,7 +27,7 @@ const KioskLoginPlayer = props => {
             <div className="PlayerRecordBlock">
               <div className="PlayerRecordTitle">전적</div>
               <div className="PlayerRecordContent">
-                {player.record[0]} 전 {player.record[1]} 승 {player.record[2]} 패
+                {player.record[0].totalGame} 전 {player.record[0].winGame} 승 {player.record[0].loseGame} 패
               </div>
             </div>
           </div>

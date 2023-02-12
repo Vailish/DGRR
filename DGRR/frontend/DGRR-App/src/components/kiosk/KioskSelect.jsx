@@ -35,7 +35,7 @@ const KioskSelect = () => {
         </div>
       </div>
       <div className="ButtonBlock">
-        <Link to="/KioskLogin" className="Competition">
+        <Link to="/KioskOnlineLogin" className="Competition">
           <div className="CompetitionText">경쟁전</div>
         </Link>
         <Link to="/KioskLogin" className="Friendly">

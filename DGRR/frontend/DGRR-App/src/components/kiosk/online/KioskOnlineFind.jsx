@@ -1,37 +1,71 @@
-import React, { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import KioskNavBlock from '../KioskNavBlock'
+import { useSelector } from 'react-redux'
 import '../../../scss/KioskOnlineFind.scss'
 import { SyncLoader } from 'react-spinners'
-
-const KioskTimeCount = props => {
-  const { CountingTimeNow } = props
-  return <div>{CountingTimeNow}</div>
-}
+import { api } from '../../../API/api'
+import { useDispatch } from 'react-redux'
+import { loadBothPlayers } from '../../../store/OnlineLoginUser'
 
 const KioskOnlineFind = () => {
-  let waitingSec = 0
-  let waitingMin = 0
-  const TimeCountingRef = useRef()
+  const [flag, setflag] = useState(false)
+  // useEffect(() => {
+  //   if (flag) {
+  //     // clearInterval(reqMatchingUser)
+  //     clearInterval(timerCount)
+  //   }
+  // }, [flag])
+  const nickname = useSelector(state => state.OnlineLoginUser.player.nickname)
+  // const nickname = '김볼링'
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [timingSecond, settimingSecond] = useState(0)
+  const [timingMinute, settimingMinute] = useState(0)
+  useEffect(() => {
+    const timerCount = setInterval(() => {
+      settimingSecond(timingSecond + 1)
+      if (timingSecond > 59) {
+        settimingMinute(timingMinute + 1)
+        settimingSecond(0)
+      }
+      reqMatching(nickname)
+      if (flag) {
+        clearInterval(timerCount)
+      }
+    }, 1000)
+    return () => clearInterval(timerCount)
+  }, [timingMinute, timingSecond, flag])
+  // setTimeout(() => {
+  //   navigate('/KioskOnlineMatching')
+  //   clearInterval(timerCount)
+  // }, 5000)
 
-  setInterval(() => {
-    waitingSec++
-    console.log(waitingSec)
-    console.log(TimeCountingRef.current.innerText)
-    if (waitingSec < 60) {
-      TimeCountingRef.current.innerText =
-        String(waitingMin).padStart(2, '0') + ':' + String(waitingSec).padStart(2, '0')
+  // const reqMatchingUser = setInterval(() => {
+  //   console.log(nickname)
+
+  // }, 1000)
+
+  const reqMatching = async nickname => {
+    console.log(JSON.stringify({ nickname }))
+    const url = '/v1/game/matching/result'
+    const response = await api.post(url, JSON.stringify({ nickname }))
+    if (response.data) {
+      // clearInterval(reqMatchingUser)
+      // clearInterval(timerCount)
+      setflag(true)
+      console.log(response.data)
+      dispatch(loadBothPlayers(response.data))
+      navigate('/KioskOnlineMatching')
     } else {
-      waitingSec = 0
-      waitingMin++
-      TimeCountingRef.current.innerText =
-        String(waitingMin).padStart(2, '0') + ':' + String(waitingSec).padStart(2, '0')
+      // console.log('test1' + reqMatchingUser)
+      // console.log('test2' + timerCount)
+      //시간이 돌아야돼
     }
-  }, 1000)
-
+  }
   return (
     <div className="KioskBackground">
-      <KioskNavBlock goBackTo="/KioskOnlineProfile" />
+      <KioskNavBlock goBackTo="/KioskOnlineLogin" />
       <div className="OnlineFindContentBlock">
         <div className="OnlineFindCenterAlign">
           {/* <SyncLoader className="OnlineFindLoading" color="#36d7b7" size={80} margin={40} /> */}
@@ -42,15 +76,11 @@ const KioskOnlineFind = () => {
           </div>
 
           <div className="OnlineFindTextBlock">게임 찾는중</div>
-          <div className="OnlineFindTimeBlock" ref={TimeCountingRef}>
-            00:00
+          <div className="OnlineFindTimeBlock">
+            {timingMinute < 10 ? '0' + timingMinute : timingMinute} :{' '}
+            {timingSecond < 10 ? '0' + timingSecond : timingSecond}
           </div>
-          {/* {setInterval(() => {
-            waitingSec++
-            console.log(waitingSec)
-            KioskTimeCount(waitingSec)
-          }, 1000)} */}
-          <div className="OnlineFindCancelBlock">CANCEL</div>
+          <div className="OnlineFindCancelBlock">취소</div>
         </div>
       </div>
     </div>

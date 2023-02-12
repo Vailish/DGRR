@@ -9,26 +9,26 @@
 
   .OnlineUpDownLineBlock {
     width: 100%;
-    height: 40 / 768 * 100%;
+    height: 40 / 768 * 60%;
     background: #5c5a5a;
   }
   .OnlineFrameNumber {
     display: flex;
 
-    height: 160 / 768 * 100%;
+    height: 160 / 768 * 50%;
     background: #501766;
     align-items: center;
 
     font-family: 'Sansation';
     font-style: normal;
     font-weight: 500;
-    font-size: 5vw;
+    font-size: 3vw;
     line-height: 1.6;
     color: #ffffff;
   }
   .OnlineScoreBlock {
     display: flex;
-    height: 264 / 768 * 50%;
+    height: 264 / 768 * 60%;
     .OnlineScoreInputBlockLeft {
       width: 50%;
       height: 100%;
@@ -37,35 +37,38 @@
       border-left: none;
       border-top: none;
       border-bottom: 1 / 2560 * 100vw solid black;
-      border-right: 1 / 2560 * 100vw solid black;
-      font-size: 5vw;
+      font-size: 2.5vw;
     }
     .OnlineScoreInputBlockRight {
       width: 50%;
       height: 100%;
       background: #f2faff;
       text-align: center;
-      border-left: none;
+      border-left: 1 / 2560 * 100vw solid black;
       border-top: none;
       border-bottom: 1 / 2560 * 100vw solid black;
       border-right: none;
-      font-size: 5vw;
+      font-size: 2.5vw;
     }
-    .OnlineScoreInputBlockCenter {
+    .OnlineScoreInputBlockFarRight {
       width: 50%;
       height: 100%;
       background: #f2faff;
       text-align: center;
-      border-left: none;
+      border-left: 1 / 2560 * 100vw solid black;
       border-top: none;
       border-bottom: 1 / 2560 * 100vw solid black;
-      border-right: 1 / 2560 * 100vw solid black;
-      font-size: 5vw;
+      border-right: none;
+      font-size: 2.5vw;
     }
   }
   .OnlineScoreSum {
-    height: 264 / 768 * 50%;
+    display: flex;
+    height: 264 / 768 * 60%;
     background: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5vw;
   }
 }
 .OnlineFrame10 {

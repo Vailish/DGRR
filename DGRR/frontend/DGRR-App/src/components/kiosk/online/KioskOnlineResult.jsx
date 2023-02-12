@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import KioskNavBlock from '../KioskNavBlock'
-import '../../../scss/KioskOnlineProfile.scss'
+import '../../../scss/KioskOnlineResult.scss'
 import { Link } from 'react-router-dom'
 
-const KioskOnlineProfile = props => {
+const KioskOnlineResult = props => {
   const { player } = props
   const { nickname, record, point, profile } = player
   // const player = useSelector(state => state.OnlineLoginUser.player)
@@ -26,4 +26,4 @@ const KioskOnlineProfile = props => {
   )
 }
 
-export default KioskOnlineProfile
+export default KioskOnlineResult

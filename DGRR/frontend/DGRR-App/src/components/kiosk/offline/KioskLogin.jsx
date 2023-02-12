@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../../scss/KioskLogin.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 // import KioskLoginPlayer from './KioskLoginPlayer'
 import { addPlayer, loadPlayers } from '../../../store/OfflineLoginUsers'
 // import axios from 'axios'
-import { apis } from '../../../API/api'
+import { api } from '../../../API/api'
 import KioskLoginPlayer from './KioskLoginPlayer'
 import KioskNavBlock from '../KioskNavBlock'
 
 const KioskLogin = () => {
   let pinNumber = undefined
+  const onAddPlayer = async pin => {
+    const pinNum = String(pin)
+    const url = '/v1/matching/' + pinNum
+    console.log('url : ', url)
+    const response = await api.get(url)
+    console.log('response : ', response)
+    dispatch(addPlayer(response.data))
+  }
   const dispatch = useDispatch()
   const inputPinNumber = e => {
     pinNumber = e.target.value
@@ -23,12 +31,8 @@ const KioskLogin = () => {
     const { InputValue, InputPin, InputClassName } = props
     return <input type="number" value={InputValue} onChange={InputPin} className={InputClassName} />
   }
-  const onAddPlayer = () => {
-    // pinNumber = ''
-    dispatch(addPlayer(pinNumber))
-    console.log(pinNumber)
-  }
   const players = useSelector(state => state.OfflineLoginUsers.players)
+
   const always4Blocks = () => {
     const playersList = [...players]
     for (let i = playersList.length; i < 4; i++) {
@@ -50,14 +54,16 @@ const KioskLogin = () => {
           </div>
           <div className="PinInputBlock">
             <CustomInput InputClassName="PinInput" InputPin={inputPinNumber} InputValue={pinNumber}></CustomInput>
-            <button className="PinPlus" onClick={onAddPlayer}>
+            <button className="PinPlus" onClick={() => onAddPlayer(pinNumber)}>
               +
             </button>
           </div>
         </div>
         <div className="UsersBlock">
           <div className="PlayersBlock">
-            <div className="PlayerText">Players</div>
+            <div className="PlayerTextBlock">
+              <div className="PlayerText">플레이어</div>
+            </div>
             <div className="PlayersList">
               {always4Blocks().map((player, index) => {
                 return player.nickname ? (
@@ -66,17 +72,13 @@ const KioskLogin = () => {
                   <KioskLoginPlayer player="" key={`KioskLoginPlayer-${index}`} />
                 )
               })}
-              {/* <div className="Player"></div>
-              <div className="Player"></div>
-              <div className="Player"></div>
-              <KioskLoginPlayer /> */}
             </div>
           </div>
         </div>
       </div>
       <div className="GameStartBlock">
         <Link to="/KioskOfflineGame" className="GameStartButton" onClick={onGameStart}>
-          START
+          시작
         </Link>
       </div>
     </div>

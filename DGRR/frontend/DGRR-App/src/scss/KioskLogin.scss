@@ -15,7 +15,7 @@
       width: 100vw;
       height: 66.5vh;
 
-      background: black;
+      // background: black;
       justify-content: space-between;
       margin-top: 4vh;
       .PinQRBlock {
@@ -30,7 +30,7 @@
         align-items: center;
         justify-content: center;
         margin-left: 136px / 2560px * 100vw;
-        box-shadow: 0.25pvh 0.25vh 0.5vh rgba(0, 0, 0, 0.25);
+        box-shadow: 0.25vh 0.25vh 0.5vh rgba(0, 0, 0, 0.25);
         border-radius: 1.5vh;
         .QRBlock {
           display: flex;
@@ -58,6 +58,7 @@
           .PinInput {
             width: 15vw;
             margin-right: 2vw;
+            border-radius: 1vw;
           }
           .PinPlus {
             display: flex;
@@ -76,6 +77,9 @@
       }
       .UsersBlock {
         .PlayersBlock {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
           width: 1248px / 2560px * 100vw;
           height: 1064px / 1600px * 100vh;
 
@@ -83,12 +87,18 @@
 
           margin-right: 116px / 2560px * 100vw;
           overflow: auto;
-          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0.25vh 0.25vh 0.5vh rgba(0, 0, 0, 0.25);
+
           border-radius: 24px;
-          .PlayerText {
-            margin-top: 24px / 1600px * 100vh;
-            margin-left: 44px / 2560px * 100vw;
-            font-size: 35px / 1600px * 100vh;
+          .PlayerTextBlock {
+            display: flex;
+            justify-content: start;
+            width: 100 / 2560 * 1000vw;
+            height: 50 / 1600 * 100vh;
+
+            .PlayerText {
+              font-size: 35px / 1600px * 100vh;
+            }
           }
           .PlayersList {
             display: flex;
