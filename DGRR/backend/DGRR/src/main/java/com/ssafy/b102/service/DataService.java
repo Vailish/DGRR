@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.b102.Entity.Game;
 import com.ssafy.b102.Entity.User;
 import com.ssafy.b102.Entity.UserGame;
+import com.ssafy.b102.data.dto.MyRankingDto;
 import com.ssafy.b102.data.dto.Ranking;
 import com.ssafy.b102.data.dto.TotalRankingDto;
 import com.ssafy.b102.data.dto.WinRateDto;
@@ -17,6 +18,8 @@ import com.ssafy.b102.persistence.dao.GameRepository;
 import com.ssafy.b102.persistence.dao.UserGameRepository;
 import com.ssafy.b102.persistence.dao.UserRepository;
 import com.ssafy.b102.response.dto.DataResponseDto;
+import com.ssafy.b102.response.dto.RankingResponseDto;
+import com.ssafy.b102.response.dto.TwentyGameResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -69,7 +72,7 @@ public class DataService {
 				System.out.println("cnt " + cnt);
 			}
 		}
-		if (cnt == 2) {
+		if (cnt == 2) {	
 			lastestGameTotalScore = lastestGameTotalScore/2;
 		}
 		return new DataResponseDto(lastestGameTotalScore, Last3GameAverageTotalScore, HighestTotalScore);
@@ -102,22 +105,62 @@ public class DataService {
 		return new TotalRankingDto(rankings.size()/20 + 1 ,rankings);
 	}
 	
+	public TwentyGameResponseDto getTwentyGame(String nickname) {
+		User user = userRepository.findByNickname(nickname);
+		List<Game> games = gameRepository.findAllByGameTypeOrderByGameDateDesc(true); 
+		Integer gameNumber = 0;
+		Integer winGame = 0;
+		
+		// for문을 통해서 필요한 데이터 뽑아내기
+		for (Game game : games) {
+			// 21번째에서 탈출
+			if (gameNumber > 20) {
+				break;
+			}
+			// game이 user인 것을 확인
+			UserGame thisGame = userGameRepository.findByUserIdAndGameId(user.getId(), game.getId());
+			if (thisGame == null) {
+				continue;
+			}
+			gameNumber += 1;
+			
+			if (thisGame.getGameRank() == 1) {
+				winGame += 1;
+			}
+		}
+		
+		return new TwentyGameResponseDto().builder()
+				.gameNumber(gameNumber)
+				.winGame(winGame)
+				.loseGame(gameNumber - winGame)
+				.build();
+	}
+	
 	public TotalRankingDto getTotalRankingPage(Integer pageNumber) {
 		List<User> users = userRepository.findAllByOrderByPointsDesc();
 		List<Ranking> rankings = new ArrayList<>();
 		
 //		온라인 게임 id
-		Integer rankingNumber = pageNumber * 20;
-		if (users == null || users.size() <= rankingNumber) {
+		Integer rankingNumber = (pageNumber -1) * 20;
+		System.out.println(users.toString());
+		if (users == null) {
+			System.out.println("ㅇㅅㅇ");
 			return null;
 		}
 		
+		System.out.println("ㅇㅁㅇ");
 		Integer maxNum = users.size();
 		if (users.size() > rankingNumber) {
-			maxNum = rankingNumber + 20;
+			maxNum = users.size();
+		} else {
+			maxNum = users.size() - rankingNumber;
 		}
 		
 		for (Integer n = 0; n < maxNum; n ++) {
+			System.out.println("############################");
+			System.out.println("n");
+			System.out.println(maxNum);
+			System.out.println("############################");
 			User user = users.get(n);
 			rankingNumber += 1;
 			Integer totalGameNumber = winrate(user.getNickname()).getTotalGame();
@@ -135,6 +178,63 @@ public class DataService {
 		return new TotalRankingDto(rankings.size()/20 + 1 ,rankings);
 	}
 	
+	public List<RankingResponseDto> userRanking5(String nickname) {
+		Integer headRank = 2;
+		Integer tailRank = 2;
+		
+		Integer myRank = myRank(nickname).getMyRank();
+		if (myRank <= 2);
+			tailRank += 3-myRank;
+		if (myRank == userRepository.findAll().size() -1) {
+			headRank += 1;
+		} else if (myRank == userRepository.findAll().size() -2) {
+			headRank += 2;
+		}
+		
+		List<RankingResponseDto> rankingResponseDtos = new ArrayList<>();
+		List<User> users = userRepository.findAllByOrderByPointsDesc();
+		Integer cnt = 0;
+		Integer headNumber = 0;
+		Integer tailNumber = 0;
+		
+		// 원하는 등수의 유저 뽑기
+		for (User user : users) {
+			cnt += 1;
+			if (tailNumber < tailRank && cnt >= myRank - tailRank) {
+				tailNumber += 1;
+				
+				rankingResponseDtos.add(new RankingResponseDto(user.getNickname(), cnt, user.getPoints()));
+			}
+			
+			if (tailNumber == tailRank) {
+				tailNumber += 1;
+				Integer myPoint = userRepository.findByNickname(nickname).getPoints();
+				rankingResponseDtos.add(new RankingResponseDto(nickname, myRank, myPoint));
+			}
+			
+			if (headNumber != headRank && cnt >= myRank - headRank) {
+				headNumber += 1;
+				
+				rankingResponseDtos.add(new RankingResponseDto(user.getNickname(), cnt, user.getPoints()));
+			}
+			
+				
+		}
+		return rankingResponseDtos;
+	}
+	
+	public  MyRankingDto myRank(String nickname) {
+		List<User> users = userRepository.findAllByOrderByPointsDesc();
+		Integer rank = 0;
+		for (User user : users) {
+			System.out.println(user.getNickname());
+			rank += 1;
+			if (user.getNickname().equals(nickname)) {
+				return new MyRankingDto(rank);
+			}
+		}
+		return null; 
+	}
 	
 	private WinRateDto winrate(String nickname) {
 	List<Game> onlineGames = gameRepository.findAllByGameType(true);

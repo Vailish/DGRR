@@ -33,6 +33,7 @@ public class UserService {
 		userRequestDto.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
 		User user = userRequestDto.toEntity();
 		user.setCreateDate(LocalDateTime.now());
+		user.setPoints(800);
 		this.userRepository.save(user);
 		
 		return UserResponseDto.builder()
@@ -45,6 +46,7 @@ public class UserService {
 				.gender(user.getGender())
 				.points(user.getPoints())
 				.birthday(user.getBirthday())
+				.points(800)
 				.build();
 	}
 	

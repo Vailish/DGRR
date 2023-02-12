@@ -48,9 +48,12 @@ public class Matching {
 	@Column(nullable = true)
 	private Integer point;
 	
+	@Column(nullable = true)
+	private String gameData;
+	
 //	@JsonIgnore
 	@JoinColumn(name="user_id")
-//	@OneToOne(mappedBy="matching")
 	@OneToOne
 	private User user;
+	
 }

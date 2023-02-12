@@ -1,24 +1,21 @@
 package com.ssafy.b102.service;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.b102.Entity.Game;
 import com.ssafy.b102.Entity.Matching;
 import com.ssafy.b102.Entity.User;
-import com.ssafy.b102.Entity.UserGame;
-import com.ssafy.b102.data.dto.WinRateDto;
 import com.ssafy.b102.persistence.dao.GameRepository;
 import com.ssafy.b102.persistence.dao.MatchingRepository;
 import com.ssafy.b102.persistence.dao.UserGameRepository;
 import com.ssafy.b102.persistence.dao.UserRepository;
+import com.ssafy.b102.request.dto.GamingRequestDto;
 import com.ssafy.b102.request.dto.MatchingRequestDto;
+import com.ssafy.b102.response.dto.GamingResponseDto;
 import com.ssafy.b102.response.dto.MatchingJoinResponseDto;
 import com.ssafy.b102.response.dto.MatchingResponseDto;
 import com.ssafy.b102.response.dto.MatchingResultResponseDto;
@@ -78,6 +75,7 @@ public class MatchingService {
 					continue;
 				}
 				matching.setIsMatching(0);
+				matching.setGameData(null);
 				matchingRepository.save(matching);
 				return makeMatchingResponseDto(checkMatching.getUser().getNickname());
 						
@@ -85,7 +83,8 @@ public class MatchingService {
 			}
 		}
 //		대기열 확인
-		List<Matching> matchings = matchingRepository.findAllByOrderByPoint();
+//		List<Matching> matchings = matchingRepository.findAllByOrderByPoint();
+		List<Matching> matchings = matchingRepository.findAllByIsMatchingOrderByPoint(1);
 		if (matchings.size() < 2) {
 			return null;
 		} else {
@@ -102,6 +101,7 @@ public class MatchingService {
 					mat.setMatchingNumber(createMatchingNumber);
 					mat.setIsMatching(2);
 					matching.setMatchingNumber(createMatchingNumber);
+					matching.setGameData(null);
 					matching.setIsMatching(0);
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
@@ -123,6 +123,7 @@ public class MatchingService {
 					mat.setIsMatching(2);
 					matching.setMatchingNumber(createMatchingNumber);
 					matching.setIsMatching(0);
+					matching.setGameData(null);
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
@@ -142,6 +143,7 @@ public class MatchingService {
 					mat.setIsMatching(2);
 					matching.setMatchingNumber(createMatchingNumber);
 					matching.setIsMatching(0);
+					matching.setGameData(null);
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
@@ -198,5 +200,19 @@ public class MatchingService {
 				.record(record)
 				.average(average)
 				.build();
+	}
+	
+	public GamingResponseDto gaming(String myNickname, GamingRequestDto gamingRequestDto) {
+		// gamingRequestDto : 상대방 닉네임과 내정보
+		User user = userRepository.findByNickname(myNickname);
+		User opponent = userRepository.findByNickname(gamingRequestDto.getOpponentNickname());
+		
+		Matching myMatching = matchingRepository.findByUserId(user.getId());
+		Matching opponentMatching = matchingRepository.findByUserId(opponent.getId());
+		
+		myMatching.setGameData(gamingRequestDto.getMyGameData());
+		matchingRepository.save(myMatching);
+		
+		return new GamingResponseDto(opponentMatching.getGameData());
 	}
 }
