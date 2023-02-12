@@ -13,7 +13,7 @@ const OpenViduVideoComponent = streamManager => {
     }
   }, [streamManager])
 
-  return <video autoPlay={true} ref={videoRef} style={{ width: '600px' }} />
+  return <video autoPlay={true} ref={videoRef} style={{ width: '500px' }} />
 }
 
 export default OpenViduVideoComponent

@@ -85,7 +85,7 @@ const KioskOnlineGame = () => {
           <OnlineGamePlayerBlock playerProfile={oppositePlayer.profile} playerNickname={oppositePlayer.nickname} />
         </div>
         <div className="OnlineGameDisplayBlock">
-          <KioskVideo className="OnlineGameDisplay" />
+          <KioskVideo />
           <div className="OnlineGameHelpCircle">?</div>
         </div>
       </div>

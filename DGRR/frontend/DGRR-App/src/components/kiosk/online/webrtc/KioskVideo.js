@@ -11,7 +11,7 @@ class KioskVideo extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: 'Session2',
+      mySessionId: 'Session5',
       myUserName: 'Participant' + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
@@ -253,7 +253,19 @@ class KioskVideo extends Component {
         ) : null} */}
 
         {this.state.session !== undefined ? (
-          <div>
+          <div
+            className="videoRoot"
+            style={{
+              display: 'inline-block',
+              width: '100vw',
+              height: '30vw',
+              float: 'left',
+              justifyContent: 'space-between',
+              flexDirection: 'row-reverse',
+              margin: 'auto 10rem',
+              padding: 'auto 10rem',
+            }}
+          >
             <div>
               {/* <input
                 className="btn btn-large btn-success"
@@ -280,7 +292,6 @@ class KioskVideo extends Component {
               ) : null} */}
               {this.state.subscribers.map((sub, i) => (
                 <div key={sub.id}>
-                  <span>{sub.id}</span>
                   <UserVideoComponent streamManager={sub} />
                 </div>
               ))}
