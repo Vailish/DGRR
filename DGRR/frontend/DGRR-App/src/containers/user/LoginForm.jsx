@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import { useNavigate } from 'react-router-dom'
 import { setCookie, getCookie } from '../../cookies/Cookies'
+import { request } from '../../API/request'
 import Login from '../../components/user/Login/Login'
 import axios from 'axios'
 
@@ -34,7 +35,7 @@ const LoginForm = () => {
   const reqNickname = async identifier => {
     try {
       console.log(identifier)
-      const response = await axios.post(`http://192.168.31.142:8080/api/v1/identifier`, {
+      const response = await request.post(`/api/v1/identifier`, {
         identifier: String(identifier),
       })
       if (response.status === 200) {
@@ -46,12 +47,7 @@ const LoginForm = () => {
   }
   const reqLogin = async user => {
     try {
-      const response = await axios.post('http://192.168.31.142:8080/login', JSON.stringify(user), {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-      })
-
+      const response = await request.post('/login', JSON.stringify(user))
       console.log(response)
 
       if (response.status === 200) {
