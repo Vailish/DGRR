@@ -48,9 +48,18 @@ public class Matching {
 	@Column(nullable = true)
 	private Integer point;
 	
+	@Column(nullable = true)
+	private String gameData;
+	
+	@Column(nullable = true)
+	private Boolean result;
+	
+	@Column(nullable = true)
+	private Long recentGameId;
+	
 //	@JsonIgnore
 	@JoinColumn(name="user_id")
-//	@OneToOne(mappedBy="matching")
 	@OneToOne
 	private User user;
+	
 }

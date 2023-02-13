@@ -15,6 +15,7 @@ public class Games2 {
 	private Long gameId;
 	private Boolean gameType;
 	private List<Integer> score;
+	private List<Integer> sumScore;
 	private Integer rank;
 	private List<OtherPlayer> otherPlayers;
 }
