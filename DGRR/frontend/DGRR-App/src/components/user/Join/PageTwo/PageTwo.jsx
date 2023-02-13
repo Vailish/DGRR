@@ -52,7 +52,12 @@ const PageTwo = ({
           />
           <br />
           <div>
-            <span style={{ color: 'red' }}>{emailError} </span>
+            <span
+              style={emailError === true ? { color: 'black', display: 'flex' } : { color: 'red', display: 'hidden' }}
+            >
+              {emailError}
+              <br />{' '}
+            </span>
             <span style={{ color: 'red' }}>{pageTwoError} </span>
           </div>
         </div>

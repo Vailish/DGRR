@@ -19,9 +19,10 @@ export const onlineGameBoardChange = (myFrame, orderNum, myValue) => ({
   myValue,
 })
 export const onlineGameBoardChangeOpposite = gameData => ({ type: ONLINE_GAME_BOARD_CHANGE_OPPOSITE, gameData })
-export const loadBothPlayers = oppositePlayerInfo => ({
+export const loadBothPlayers = (oppositePlayerInfo, SessionId) => ({
   type: LOAD_BOTH_PLAYERS,
   oppositePlayerInfo,
+  SessionId,
 })
 
 // const [modalOpen, setModalOpen] = useState(false);
@@ -47,6 +48,7 @@ const initialState = {
     gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
   },
+  SessionId: '',
   isGameFinish: [false, false],
 }
 
@@ -77,7 +79,8 @@ const OnlineLoginUser = (state = initialState, action) => {
         gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
         gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
       }
-      return { ...state, gamingPlayer, oppositePlayer }
+      const SessionId = action.SessionId
+      return { ...state, gamingPlayer, oppositePlayer, SessionId }
     }
     case ONLINE_GAME_BOARD_CHANGE: {
       // console.log('state : ', state)
