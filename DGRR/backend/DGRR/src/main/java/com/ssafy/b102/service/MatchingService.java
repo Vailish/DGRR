@@ -76,6 +76,7 @@ public class MatchingService {
 				}
 				matching.setIsMatching(0);
 				matching.setGameData(null);
+				matching.setResult(false);
 				matchingRepository.save(matching);
 				return makeMatchingResponseDto(checkMatching.getUser().getNickname());
 						
@@ -102,6 +103,7 @@ public class MatchingService {
 					mat.setIsMatching(2);
 					matching.setMatchingNumber(createMatchingNumber);
 					matching.setGameData(null);
+					matching.setResult(false);
 					matching.setIsMatching(0);
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
@@ -124,6 +126,7 @@ public class MatchingService {
 					matching.setMatchingNumber(createMatchingNumber);
 					matching.setIsMatching(0);
 					matching.setGameData(null);
+					matching.setResult(false);
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
@@ -144,6 +147,7 @@ public class MatchingService {
 					matching.setMatchingNumber(createMatchingNumber);
 					matching.setIsMatching(0);
 					matching.setGameData(null);
+					matching.setResult(false);
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
@@ -204,6 +208,7 @@ public class MatchingService {
 	
 	public GamingResponseDto gaming(String myNickname, GamingRequestDto gamingRequestDto) {
 		// gamingRequestDto : 상대방 닉네임과 내정보
+		System.out.println("정보 입력 요청이 왔습니다" + myNickname);
 		User user = userRepository.findByNickname(myNickname);
 		User opponent = userRepository.findByNickname(gamingRequestDto.getOpponentNickname());
 		

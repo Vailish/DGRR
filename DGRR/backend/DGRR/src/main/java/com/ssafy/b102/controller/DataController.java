@@ -51,19 +51,6 @@ public class DataController {
 		return new ResponseEntity<TwentyGameResponseDto>(twentyGameResponseDto, HttpStatus.OK); 
 	}
 	
-//	dummydata
-//	@GetMapping("/data/ranking/user/{nickname}")
-//	public ResponseEntity<?> dummy2(@PathVariable String nickname){
-//		
-//		RankingResponseDto rankingResponseDto1 = new RankingResponseDto("ttest2", 8, 2200);
-//		RankingResponseDto rankingResponseDto2 = new RankingResponseDto("ttest3", 9, 2120);
-//		RankingResponseDto rankingResponseDto3 = new RankingResponseDto("ttest1", 10, 2000);
-//		RankingResponseDto rankingResponseDto4 = new RankingResponseDto("ttest4", 11, 1920);
-//		RankingResponseDto rankingResponseDto5 = new RankingResponseDto("ttest5", 12, 1880);
-//		
-//		return new ResponseEntity<List<RankingResponseDto>>(List.of(rankingResponseDto1, rankingResponseDto2, rankingResponseDto3, rankingResponseDto4, rankingResponseDto5), HttpStatus.OK); 
-//	}
-	
 	@GetMapping("/data/ranking/user/{nickname}")
 	public ResponseEntity<?> userRanking5(@PathVariable String nickname){
 		List<RankingResponseDto> rankingResponseDtos = dataService.userRanking5(nickname);

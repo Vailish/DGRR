@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 public class OtherPlayer {
 	private String nickname;
 	private List<Integer> score;
+	private List<Integer> sumScore;
 	private Integer rank;
 }

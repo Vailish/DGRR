@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserGamesResponseDto {
 	private String nickname;
-	private Integer points;
 	private List<Games2> games;
 }

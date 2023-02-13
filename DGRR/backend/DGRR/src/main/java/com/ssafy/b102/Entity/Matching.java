@@ -51,6 +51,12 @@ public class Matching {
 	@Column(nullable = true)
 	private String gameData;
 	
+	@Column(nullable = true)
+	private Boolean result;
+	
+	@Column(nullable = true)
+	private Long recentGameId;
+	
 //	@JsonIgnore
 	@JoinColumn(name="user_id")
 	@OneToOne

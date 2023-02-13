@@ -178,19 +178,36 @@ public class DataService {
 		return new TotalRankingDto(rankings.size()/20 + 1 ,rankings);
 	}
 	
+	// 내순위 포함 5명의 랭킹보기
 	public List<RankingResponseDto> userRanking5(String nickname) {
 		Integer headRank = 2;
 		Integer tailRank = 2;
 		
 		Integer myRank = myRank(nickname).getMyRank();
-		if (myRank <= 2);
-			tailRank += 3-myRank;
+		// 앞 순위 일때
+		if (myRank == 1) {
+			headRank = 0;
+			tailRank = 4;
+		} else if (myRank == 2) {
+			headRank = 1;
+			tailRank = 3;
+		};
+			
+		// 뒷 순위 일때
 		if (myRank == userRepository.findAll().size() -1) {
-			headRank += 1;
-		} else if (myRank == userRepository.findAll().size() -2) {
-			headRank += 2;
+			headRank = 3;
+			tailRank = 1;
+		} else if (myRank == userRepository.findAll().size()) {
+			headRank = 4;
+			tailRank = 0;
 		}
 		
+		System.out.println("#####################");
+		System.out.println("유저수 : " + userRepository.findAll().size());
+		System.out.println("myRank : " + myRank);
+		System.out.println("headRank : " + headRank);
+		System.out.println("tailRank : " + tailRank);
+		System.out.println("#####################");
 		List<RankingResponseDto> rankingResponseDtos = new ArrayList<>();
 		List<User> users = userRepository.findAllByOrderByPointsDesc();
 		Integer cnt = 0;
@@ -200,22 +217,27 @@ public class DataService {
 		// 원하는 등수의 유저 뽑기
 		for (User user : users) {
 			cnt += 1;
-			if (tailNumber < tailRank && cnt >= myRank - tailRank) {
-				tailNumber += 1;
-				
-				rankingResponseDtos.add(new RankingResponseDto(user.getNickname(), cnt, user.getPoints()));
+			// 등수가 cnt  랭크가 1 , headRank 3 headnumber 0
+			System.out.println(user.getNickname() +" "+ cnt);
+			if (headNumber != headRank && cnt < myRank) {
+				if (cnt >= myRank - headRank) {
+					headNumber += 1;
+					System.out.println("head : " + user.getNickname());
+					rankingResponseDtos.add(new RankingResponseDto(user.getNickname(), cnt, user.getPoints()));
+				}
 			}
-			
-			if (tailNumber == tailRank) {
-				tailNumber += 1;
+			// 내 랭크 등록
+			if (cnt == myRank) {
 				Integer myPoint = userRepository.findByNickname(nickname).getPoints();
 				rankingResponseDtos.add(new RankingResponseDto(nickname, myRank, myPoint));
 			}
-			
-			if (headNumber != headRank && cnt >= myRank - headRank) {
-				headNumber += 1;
-				
+			// tailnumber 0 tailrank 2
+			if (tailNumber < tailRank && cnt > myRank) {
+				if (tailNumber < tailRank) {
+				tailNumber += 1;
+				System.out.println("tail : " + user.getNickname());
 				rankingResponseDtos.add(new RankingResponseDto(user.getNickname(), cnt, user.getPoints()));
+				}
 			}
 			
 				

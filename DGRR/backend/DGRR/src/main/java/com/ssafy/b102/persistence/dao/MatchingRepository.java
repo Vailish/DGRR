@@ -12,4 +12,5 @@ public interface MatchingRepository extends JpaRepository<Matching, String>{
 	public List<Matching> findAllByIsMatchingOrderByPoint(Integer isMatching);
 	public List<Matching> findAllByMatchingNumber(Integer matchingNumber);
 	public Matching findByMatchingNumber(Integer matchingNumber);
+	
 }
