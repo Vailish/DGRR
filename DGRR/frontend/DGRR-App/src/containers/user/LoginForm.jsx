@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import { useNavigate } from 'react-router-dom'
-
+import { setCookie, getCookie } from '../../cookies/Cookies'
 import Login from '../../components/user/Login/Login'
 import axios from 'axios'
 
@@ -22,8 +22,8 @@ const LoginForm = () => {
   //이때는 그냥 메인 페이지로 넘어가고 없으면 로그인을 하면된다.
 
   useEffect(() => {
-    if (localStorage.getItem('access-token')) {
-      navigate('/main')
+    if (getCookie('token')) {
+      reqNickname(getCookie('identifier'))
     } else {
       navigate('/')
     }
@@ -31,7 +31,20 @@ const LoginForm = () => {
 
   //로그인 요청 api 서버에 로그인 정보가 있는지 확인 요청을 한다.
   //api는 모듈화하여 테스트를 해봐야한다.
-  const reqLogin = async user => { 
+  const reqNickname = async identifier => {
+    try {
+      console.log(identifier)
+      const response = await axios.post(`http://192.168.31.142:8080/api/v1/identifier`, {
+        identifier: String(identifier),
+      })
+      if (response.status === 200) {
+        navigate(`/${response.data.nickname}`)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const reqLogin = async user => {
     try {
       const response = await axios.post('http://192.168.31.142:8080/login', JSON.stringify(user), {
         headers: {
@@ -47,7 +60,19 @@ const LoginForm = () => {
         setError(' ')
 
         const accessToken = response.headers.get('Authorization')
-        localStorage.setItem('access-token', accessToken)
+        const identifier = response.headers.get('identifier')
+
+        setCookie('identifier', identifier, {
+          path: '/',
+          sameStrict: 'strict',
+        })
+
+        setCookie('token', accessToken, {
+          path: '/',
+          sameStrict: 'strict',
+        })
+        reqNickname(identifier)
+
         navigate('/main')
         dispatch(
           changeField({
