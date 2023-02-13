@@ -1,6 +1,4 @@
-.root {
-  --bar-size: 10%;
-}
+$bar-size: 50%;
 
 .PageBase {
   display: flex;
@@ -232,9 +230,10 @@
         color: #fff;
         padding-right: 1%;
 
-        .SpanBar {
+        #SpanBar {
           position: absolute;
-          width: var(--bar-size);
+          // width: var(--bar-size);
+          width: 50%;
           height: 100%;
           background: #5383e8;
           text-align: left;
@@ -269,8 +268,8 @@
       position: relative;
       width: 728px;
       height: auto;
-      // margin: 8px 8px;
       padding: 4px 8px;
+      margin-bottom: 10px;
       border: 0.5px solid #e2e2e2;
       background: #ffffff;
       flex-direction: column;
@@ -343,8 +342,8 @@
 
           .CrownImg {
             display: block;
-            width: 50px;
-            margin-left: 9px;
+            width: 45px;
+            margin-left: 11px;
             object-fit: contain;
           }
 
@@ -355,6 +354,7 @@
           }
 
           .ScoreTable {
+            margin-top: 4px;
             width: 494px;
             height: 95%;
             .FrameNumber {
@@ -439,5 +439,9 @@
       box-shadow: 0 0 0 3px rgb(0, 0, 0) inset;
       border-radius: 5px;
     }
+  }
+
+  .Hidden {
+    visibility: hidden;
   }
 }

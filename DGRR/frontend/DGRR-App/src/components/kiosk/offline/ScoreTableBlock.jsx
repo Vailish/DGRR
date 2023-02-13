@@ -11,7 +11,6 @@ const ScoreTableBlock = props => {
   const { frameNum, playerNum, scoreSum, scoreBoard, isInput } = props
   // const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum])
 
-  console.log(playerNum)
   let isStrike = false
   const myFrame = frameNum
   const dispatch = useDispatch()

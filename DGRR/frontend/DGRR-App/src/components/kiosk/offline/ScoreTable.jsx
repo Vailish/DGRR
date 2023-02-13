@@ -12,7 +12,6 @@ const ScoreTable = props => {
   const NumArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   const { playerNum, isInput, scoreSumArray, scoreArray } = props
 
-  console.log(playerNum)
   return (
     <div className="ScoreTable">
       {NumArray.map((num, index) => {
