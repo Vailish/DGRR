@@ -11,7 +11,7 @@ class KioskVideo extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: 'Session5',
+      mySessionId: String(props.playerState.SessionId),
       myUserName: 'Participant' + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
@@ -32,13 +32,15 @@ class KioskVideo extends Component {
     return Math.random().toString(16).substr(2, length)
   }
   componentDidMount() {
+
     if (!this.state.session) {
       this.joinSession()
     }
     window.addEventListener('beforeunload', this.onbeforeunload)
   }
   componentDidUpdate() {
-    if (this.props.playerState[0] === true && this.props.playerState[1] === true) {
+    if (this.props.playerState.isGameFinish[0] === true && this.props.playerState.isGameFinish[1] === true) {
+      console.log("끊어버려")
       const Mysession = this.state.session
       if (Mysession) {
         Mysession.disconnect()
@@ -46,14 +48,16 @@ class KioskVideo extends Component {
         this.setState({
           session: undefined,
           subscribers: [],
-          mySessionId: 'SessionA',
+          mySessionId: undefined,
           myUserName: 'Participant' + Math.floor(Math.random() * 100),
           mainStreamManager: undefined,
           publisher: undefined,
           test: undefined,
         })
       }
+      this.props.playerState.SessionId = " ";
     }
+
   }
   // componentWillUnmount() {
   //   window.removeEventListener('beforeunload', this.onbeforeunload)
@@ -204,6 +208,7 @@ class KioskVideo extends Component {
       publisher: undefined,
       test: undefined,
     })
+    this.props.playerState = ""
   }
 
   render() {
@@ -257,13 +262,12 @@ class KioskVideo extends Component {
             className="videoRoot"
             style={{
               display: 'inline-block',
-              width: '100vw',
+              width: '300vw',
               height: '30vw',
               float: 'left',
               justifyContent: 'space-between',
               flexDirection: 'row-reverse',
-              margin: 'auto 10rem',
-              padding: 'auto 10rem',
+
             }}
           >
             <div>
@@ -325,14 +329,15 @@ class KioskVideo extends Component {
     console.log('내 sessionId' + this.state.mySessionId)
     for (let i = 0; i < testRes.data.content.length; i++) {
       console.log(testRes.data.content[i].sessionId)
-      if (this.state.mySessionId === testRes.data.content[i].sessionId) {
+      if (String(this.state.mySessionId) === testRes.data.content[i].sessionId) {
         this.setState({
           test: testRes.data.content[i],
         })
         return await this.createToken(this.state.test.sessionId)
       }
     }
-    const testSessionId = await this.createSession(this.state.mySessionId)
+    console.log("나의 세션 ID " + this.state.mySessionId)
+    const testSessionId = await this.createSession(String(this.state.mySessionId))
     this.setState({
       test: testSessionId,
     })
@@ -377,7 +382,7 @@ class KioskVideo extends Component {
           hasVideo: true,
           outputMode: 'COMPOSED',
           recordingLayout: 'BEST_FIT',
-          resolution: '1280x720',
+          resolution: '1980x1080',
           frameRate: 25,
           shmSize: 536870912,
           mediaNode: {
@@ -437,5 +442,6 @@ class KioskVideo extends Component {
 
 const testStateProps = state => ({
   playerState: state.OnlineLoginUser,
+
 })
 export default connect(testStateProps)(KioskVideo)

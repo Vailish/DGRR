@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { checkPassword } from '../../../regex/regex'
-
+import '../../../scss/FindPwSuccess.scss'
 import axios from 'axios'
 const PwFindSuccess = () => {
   const navigate = useNavigate()
@@ -85,7 +85,13 @@ const PwFindSuccess = () => {
       <div className="FindPw">
         <div className="Text">
           <div className="TitleText">
-            <h1>DG.RR</h1>
+            <h1
+              onClick={() => {
+                navigate('/')
+              }}
+            >
+              DG.RR
+            </h1>
           </div>
           <div className="SubTitleText">
             <p>
@@ -100,7 +106,7 @@ const PwFindSuccess = () => {
             <p>DG.RR</p>
           </div>
 
-          <div className="FindPwInput">
+          <div className="FindPwSuccessInput">
             <form onSubmit={onSubmit}>
               <input style={{ background: '#D3D3D3' }} name="username" value={username} readOnly />
               <input style={{ background: '#D3D3D3' }} name="email" value={email} readOnly />

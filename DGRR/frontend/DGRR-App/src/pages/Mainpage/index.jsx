@@ -6,6 +6,7 @@ import PieChart from '../../components/mainpage/PieChart'
 import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
 import profileimg from '../../img/profile.jpg'
+import { getCookie, removeCookie } from '../../cookies/Cookies'
 
 const Mainpage = () => {
   const [userInfo, setUserInfo] = useState([])
@@ -27,6 +28,10 @@ const Mainpage = () => {
   // }, [localStorage.getItem('access-token')])
 
   useEffect(() => {
+    if (getCookie('token')) {
+    } else {
+      navigate('/')
+    }
     fetchData()
     
     // document.documentElement.style.setProperty('bar-size', winning.winGame / winning.gameNumber * 100)
@@ -103,7 +108,7 @@ const Mainpage = () => {
         </div>
       </div>
 
-      <div className='FlexBox'>
+      <div className="FlexBox">
         <div>
         <div className="MainBox TierBox">
           <h2 className="BoxTitle">랭크</h2>
@@ -141,6 +146,14 @@ const Mainpage = () => {
             )
           })}
             </div>
+            {rankingInfo.map((data, index) => {
+              return (
+                <div index={index} key={index} className={`RankingTextBox ${index === 2 && 'MyRankingTextBox'}`}>
+                  <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
 
         <div className="MainBox RecordsBox">
@@ -168,9 +181,7 @@ const Mainpage = () => {
             </div>
           </div>
           {gamesInfo.map((gameInfo, index) => {
-            return (
-              <Record gameInfo={gameInfo} key={index} />
-            )
+            return <Record gameInfo={gameInfo} key={index} />
           })}
         </div>
       </div>
