@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.ssafy.b102.Entity.Game;
 
-public interface GameRepository extends JpaRepository<Game, String>{
+public interface GameRepository extends JpaRepository<Game, Long>{
+	public Game findByid(Long gameId);
+	
 	public List<Game> findAllByGameType(Boolean gameType);
 
 	public List<Game> findAllByGameTypeOrderByGameDateDesc(Boolean gameType);
+	
 }

@@ -10,11 +10,14 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.b102.Entity.Game;
+import com.ssafy.b102.Entity.Matching;
 import com.ssafy.b102.Entity.User;
 import com.ssafy.b102.Entity.UserGame;
 import com.ssafy.b102.persistence.dao.GameRepository;
+import com.ssafy.b102.persistence.dao.MatchingRepository;
 import com.ssafy.b102.persistence.dao.UserGameRepository;
 import com.ssafy.b102.persistence.dao.UserRepository;
+import com.ssafy.b102.request.dto.GameData;
 import com.ssafy.b102.request.dto.GameRequestDto;
 import com.ssafy.b102.response.dto.Games;
 import com.ssafy.b102.response.dto.Games2;
@@ -35,6 +38,8 @@ public class GameService {
 	private final UserRepository userRepository;
 	
 	private final UserGameRepository userGameRepository;
+	
+	private final MatchingRepository matchingRepository;
 
 	public UserGamesResponseDto getUserGames(String nickname) {
 		System.out.println("특정 유저의 게임정보 요청들어왔어유~~~~~~");
@@ -51,6 +56,7 @@ public class GameService {
 			game.setGameId(usergame.getGame().getId());
 			game.setGameType(usergame.getGame().getGameType());
 			game.setScore(convertToList(usergame.getGameScore()));
+			game.setSumScore(sumScore(convertToList(usergame.getGameScore())));
 			game.setRank(usergame.getGameRank());
 			
 			// 다른 유저들의 정보 저장
@@ -67,6 +73,7 @@ public class GameService {
 				OtherPlayer otherPlayer = new OtherPlayer().builder()
 						   								   .nickname(otherPlayergame.getUser().getNickname())
 						   								   .score(convertToList(otherPlayergame.getGameScore()))
+						   								   .sumScore(sumScore(convertToList(otherPlayergame.getGameScore())))
 						   								   .rank(otherPlayergame.getGameRank())
 						   								   .build();
 				otherPlayers.add(otherPlayer);
@@ -79,12 +86,44 @@ public class GameService {
 		
 		return new UserGamesResponseDto().builder()
 				.nickname(nickname)
-				.points(user.getPoints())
 				.games(games)
 				.build();
 	}
 		
-	public GameResponseDto createGame(GameRequestDto gameRequestDto) {	
+	public GameResponseDto createGame(GameRequestDto gameRequestDto) {
+
+//		// 중복 요청 확인
+//		// 온라인 게임
+//		if (gameRequestDto.getGameType().equals(true)) {
+//
+//			// 다른 유저가 보냈는지 확인
+//			String chkNic = gameRequestDto.getGameData().get(0).getNickname();
+//			Long chkId = userRepository.findByNickname(chkNic).getId();
+//			Matching chkMatching = matchingRepository.findByUserId(chkId); 
+//			if (chkMatching.getResult().equals(true)) {
+//				Long existId = chkMatching.getRecentGameId();
+//				Game game = gameRepository.findByid(existId);
+//				
+//				// nickname gameScore gameRank
+//				Games gamedetail1 = new Games();
+//				Games gamedetail2 = new Games();
+//				return GameResponseDto.builder()
+//						.gameId(game.getId())
+//						.gameType(game.getGameType())
+//						.gameDate(game.getGameDate())
+//						.gameDetail(List.of(gamedetail1, gamedetail2))
+//						.build();
+//			}
+//			
+//			
+//			
+//		}
+						
+				
+				
+				
+			
+		
 		Boolean gameType = gameRequestDto.getGameType();
 		LocalDateTime gameDate = LocalDateTime.now();
 		Game game = new Game();
@@ -113,13 +152,6 @@ public class GameService {
 				User user1 = userRepository.findByNickname(nickname2_1);
 				User user2 = userRepository.findByNickname(nickname2_2);
 				
-				if (user1.getPoints() == null) {
-					user1.setPoints(1000);
-				}
-				if (user2.getPoints() == null) {
-					user2.setPoints(1000);
-				}
-				
 				if(sum1 >= sum2) {
 					userGame1.setGameRank(1);
 					userGame2.setGameRank(2);
@@ -145,6 +177,13 @@ public class GameService {
 				
 				Games gamedetail1 = new Games(nickname2_1, score2_1, userGame1.getGameRank());
 				Games gamedetail2 = new Games(nickname2_2, score2_2, userGame2.getGameRank());
+				
+//				Matching mat2_1 = matchingRepository.findByUserId(userGame1.getId());
+//				Matching mat2_2 = matchingRepository.findByUserId(userGame2.getId());
+//				mat2_1.setRecentGameId(game.getId());
+//				mat2_2.setRecentGameId(game.getId());
+//				matchingRepository.save(mat2_1);
+//				matchingRepository.save(mat2_2);
 				
 				
 				return GameResponseDto.builder()
@@ -204,6 +243,16 @@ public class GameService {
 				Games gamedetail3_1 = new Games(nickname3_1, score3_1, userGame3_1.getGameRank());
 				Games gamedetail3_2 = new Games(nickname3_2, score3_2, userGame3_2.getGameRank());
 				Games gamedetail3_3 = new Games(nickname3_3, score3_3, userGame3_3.getGameRank());
+				
+//				Matching mat3_1 = matchingRepository.findByUserId(userGame3_1.getId());
+//				Matching mat3_2 = matchingRepository.findByUserId(userGame3_2.getId());
+//				Matching mat3_3 = matchingRepository.findByUserId(userGame3_3.getId());
+//				mat3_1.setRecentGameId(game.getId());
+//				mat3_2.setRecentGameId(game.getId());
+//				mat3_3.setRecentGameId(game.getId());
+//				matchingRepository.save(mat3_1);
+//				matchingRepository.save(mat3_2);
+//				matchingRepository.save(mat3_3);
 				
 				return GameResponseDto.builder()
 						.gameId(game.getId())
@@ -271,6 +320,19 @@ public class GameService {
 				Games gamedetail4_3 = new Games(nickname4_3, score4_3, userGame4_3.getGameRank());
 				Games gamedetail4_4 = new Games(nickname4_4, score4_4, userGame4_4.getGameRank());
 				
+//				Matching mat4_1 = matchingRepository.findByUserId(userGame4_1.getId());
+//				Matching mat4_2 = matchingRepository.findByUserId(userGame4_2.getId());
+//				Matching mat4_3 = matchingRepository.findByUserId(userGame4_3.getId());
+//				Matching mat4_4 = matchingRepository.findByUserId(userGame4_4.getId());
+//				mat4_1.setRecentGameId(game.getId());
+//				mat4_2.setRecentGameId(game.getId());
+//				mat4_3.setRecentGameId(game.getId());
+//				mat4_4.setRecentGameId(game.getId());
+//				matchingRepository.save(mat4_1);
+//				matchingRepository.save(mat4_2);
+//				matchingRepository.save(mat4_3);
+//				matchingRepository.save(mat4_4);
+				
 				return GameResponseDto.builder()
 						.gameId(game.getId())
 						.gameType(game.getGameType())
@@ -335,5 +397,23 @@ public class GameService {
 				.record(record)
 				.average(average)
 				.build();
+	}
+	
+	// 점수 계산
+	private List<Integer> sumScore(List<Integer> scores){
+		List<Integer> sumScores = new ArrayList();
+		Integer sumNumber = 0;
+		for (Integer i = 1; i < 20; i = i + 2) {
+			System.out.println("i : " + i);
+			if (i == 10) {
+				sumNumber +=scores.get(i - 1) + scores.get(i) + scores.get(i + 1); 
+				sumScores.add(sumNumber);
+			} else {
+				sumNumber += scores.get(i - 1) + scores.get(i);
+				sumScores.add(sumNumber);
+			}
+		}
+		
+		return sumScores;
 	}
 }

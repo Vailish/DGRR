@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GameRequestDto {
 	
+	private String nickname;
+	
 	private Boolean gameType;
 	
 	private List<GameData> gameData;

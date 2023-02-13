@@ -27,7 +27,7 @@ public class GameController {
 	@Autowired
 	public GameService gameService;
 
-	@GetMapping("/games/{nickname}")
+	@GetMapping("/games/all/{nickname}")
 	public ResponseEntity<?> getUserGames(@PathVariable String nickname){
 		System.out.println("특정 유저의 게임정보 컨트롤러 진입!");
 		UserGamesResponseDto userGamesResponseDtos = gameService.getUserGames(nickname);
