@@ -39,6 +39,7 @@ const Mainpage = () => {
   }, [])
   
   useEffect(() => {
+    console.log("닉네임 확인"+nickName)
     fetchMatchData(0)
   }, [seletedCategory])
   
@@ -108,7 +109,7 @@ const Mainpage = () => {
         </div>
       </div>
 
-      <div className="FlexBox">
+      <div className='FlexBox'>
         <div>
         <div className="MainBox TierBox">
           <h2 className="BoxTitle">랭크</h2>
@@ -146,14 +147,6 @@ const Mainpage = () => {
             )
           })}
             </div>
-            {rankingInfo.map((data, index) => {
-              return (
-                <div index={index} key={index} className={`RankingTextBox ${index === 2 && 'MyRankingTextBox'}`}>
-                  <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
-                </div>
-              )
-            })}
-          </div>
         </div>
 
         <div className="MainBox RecordsBox">
@@ -181,7 +174,9 @@ const Mainpage = () => {
             </div>
           </div>
           {gamesInfo.map((gameInfo, index) => {
-            return <Record gameInfo={gameInfo} key={index} />
+            return (
+              <Record gameInfo={gameInfo} key={index} />
+            )
           })}
         </div>
       </div>

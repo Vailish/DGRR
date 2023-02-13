@@ -19,14 +19,6 @@ const OFFLINE_GAME_BOARD_CHANGE = 'KioskOffline/OFFLINE_GAME_BOARD_CHANGE'
 
 export const addPlayer = playerInfo => ({
   type: ADD_PLAYER,
-  playerInfo: {
-    username: 'testzzang2',
-    nickname: '김볼링',
-    profile: null,
-    rank: 216,
-    record: [15, 8, 7],
-    average: 85,
-  },
   playerInfo,
 })
 export const removePlayer = player => ({ type: REMOVE_PLAYER, playerInfo: player })
@@ -53,75 +45,9 @@ export const offlineGameBoardChange = (playerNum, myFrame, orderNum, myValue) =>
 // 초기 상태
 
 const initialState = {
-  players: [
-    {
-      username: 'testzzang1',
-      nickname: '갓냥이',
-      profile: null,
-      rank: 135,
-      record: [{ totalGame: 10, winGame: 7, loseGame: 3 }],
-      average: 163,
-    },
-    {
-      username: 'testzzang2',
-      nickname: '김볼링',
-      profile: null,
-      rank: 216,
-      record: [{ totalGame: 15, winGame: 8, loseGame: 7 }],
-      average: 85,
-    },
-  ],
-  gamingPlayers: {
-    player1: {
-      playerInfo: {
-        username: 'testzzang1',
-        nickname: '갓냥이',
-        profile: null,
-        rank: 135,
-        record: [{ totalGame: 10, winGame: 7, loseGame: 3 }],
-        average: 163,
-      },
-      gameBoard: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      gameBoardResult: [2, 2, 2, 2, 2, 2, 2, 2, 2, 120],
-    },
-    player2: {
-      playerInfo: {
-        username: 'testzzang2',
-        nickname: '김볼링',
-        profile: null,
-        rank: 216,
-        record: [{ totalGame: 15, winGame: 8, loseGame: 7 }],
-        average: 85,
-      },
-      gameBoard: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-      gameBoardResult: [4, 4, 4, 4, 4, 4, 4, 4, 4, 200],
-    },
-    player3: {
-      playerInfo: {
-        username: 'testzzang2',
-        nickname: '박볼매',
-        profile: null,
-        rank: 216,
-        record: [{ totalGame: 15, winGame: 8, loseGame: 7 }],
-        average: 85,
-      },
-      gameBoard: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-      gameBoardResult: [4, 4, 4, 4, 4, 4, 4, 4, 4, 200],
-    },
-    player4: {
-      playerInfo: {
-        username: 'testzzang2',
-        nickname: '김싸피',
-        profile: null,
-        rank: 216,
-        record: [{ totalGame: 15, winGame: 8, loseGame: 7 }],
-        average: 85,
-      },
-      gameBoard: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-      gameBoardResult: [4, 4, 4, 4, 4, 4, 4, 4, 4, 200],
-    },
-  },
-  isGameFinish: { player1: false, player2: false, player3: false, player4: false },
+  players: [],
+  gamingPlayers: {},
+  isGameFinish: {},
 }
 
 // 리듀서

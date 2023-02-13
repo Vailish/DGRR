@@ -69,7 +69,7 @@ const LoginForm = () => {
         })
         reqNickname(identifier)
 
-        navigate('/main')
+ 
         dispatch(
           changeField({
             form: 'login',
