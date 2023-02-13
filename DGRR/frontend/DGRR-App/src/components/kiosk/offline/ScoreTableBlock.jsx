@@ -1,25 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react'
 import '../../../scss/ScoreTableBlock.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-// import KioskLoginPlayer from './KioskLoginPlayer'
-import { addPlayer, offlineGameBoardChange } from '../../../store/OfflineLoginUsers'
-// import axios from 'axios'
-import { apis } from '../../../API/api'
+import { offlineGameBoardChange } from '../../../store/OfflineLoginUsers'
 
 const ScoreTableBlock = props => {
   const { frameNum, playerNum, scoreSum, scoreBoard, isInput } = props
   // const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum])
 
-  console.log(playerNum)
-  let isStrike = false
   const myFrame = frameNum
   const dispatch = useDispatch()
   const firstData = useRef()
   const secondData = useRef()
   const thirdData = useRef()
   const isValidValue = /^[fFXx\-0-9\/]{1,1}$|^10$/
-  const [scoreSumNumber, setScoreSumNumber] = useState(scoreSum)
   const refDataList = [firstData, secondData, thirdData]
   const isGameFinish = useSelector(state => state.OfflineLoginUsers.isGameFinish)
   const [frameData, setFrameData] = useState({
@@ -29,25 +22,11 @@ const ScoreTableBlock = props => {
     localScore: '',
     globalScore: '',
   })
-  useEffect(() => {
-    if (frameNum === 10) {
-      if (frameData.first !== '' && frameData.second !== '' && frameData.third !== '') {
-        setFrameData(prevData => {
-          const localValue = prevData.first + prevData.second + prevData.third
-        })
-      }
-    }
-    if (frameData.first !== '' && frameData.second !== '') {
-    }
-  }, [frameData])
   const onChangeFirst = () => {
     const orderNum = 0
     let myValue = refDataList[orderNum].current.value
     if (myValue === '0') myValue = '-'
-    console.log('thV : ', myValue)
-    console.log('ISVALID', isValidValue.test(myValue))
     if (isValidValue.test(myValue)) {
-      console.log('???????????????????', myValue)
       if (
         myValue !== 'X' &&
         myValue !== 'x' &&
@@ -60,7 +39,6 @@ const ScoreTableBlock = props => {
       }
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     } else {
-      console.log('gpdgpjdk')
       myValue = ''
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     }
@@ -69,10 +47,7 @@ const ScoreTableBlock = props => {
     const orderNum = 1
     let myValue = refDataList[orderNum].current.value
     if (myValue === '0') myValue = '-'
-    console.log('thV : ', myValue)
-    console.log('ISVALID', isValidValue.test(myValue))
     if (isValidValue.test(myValue)) {
-      console.log('???????????????????', myValue)
       if (
         myValue !== 'X' &&
         myValue !== 'x' &&
@@ -85,7 +60,6 @@ const ScoreTableBlock = props => {
       }
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     } else {
-      console.log('gpdgpjdk')
       myValue = ''
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     }
@@ -94,10 +68,7 @@ const ScoreTableBlock = props => {
     const orderNum = 2
     let myValue = refDataList[orderNum].current.value
     if (myValue === '0') myValue = '-'
-    console.log('thV : ', myValue)
-    console.log('ISVALID', isValidValue.test(myValue))
     if (isValidValue.test(myValue)) {
-      console.log('???????????????????', myValue)
       if (
         myValue !== 'X' &&
         myValue !== 'x' &&
@@ -110,7 +81,6 @@ const ScoreTableBlock = props => {
       }
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     } else {
-      console.log('gpdgpjdk')
       myValue = ''
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     }
