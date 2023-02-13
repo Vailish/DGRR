@@ -13,7 +13,7 @@ const Mainpage = () => {
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
   const [seletedCategory, setSeletedCategory] = useState('totalgame')
-  const [games, setGames] = useState([])
+  const [gamesInfo, setGamesInfo] = useState([])
   const { nickName } = useParams()
   const navigate = useNavigate()
 
@@ -27,23 +27,25 @@ const Mainpage = () => {
 
   useEffect(() => {
     fetchData()
+    document.documentElement.style.setProperty('--bar-size', '30%')
   }, [])
 
   const fetchData = async () => {
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
-    const requestRankings = await baseaxios.get(`/api/v1/data/ranking/${nickName}`)
+    const requestRankings = await baseaxios.get(`/api/v1/data/ranking/user/${nickName}`)
     const requestGames = await baseaxios.get(`/api/v1/games/${nickName}`)
     const userData = requestUser.data
     const pointsData = requestPoints.data
     const rankingData = requestRankings.data
-    const GamesData = requestGames.data
-    console.log(GamesData)
+    const gamesData = requestGames.data.games
+    console.log(gamesData)
     console.log(pointsData)
     setMyRanking(rankingData[2].ranking)
     setUserInfo(userData)
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
+    setGamesInfo(gamesData)
   }
 
   const handleClick = selected => {
@@ -88,7 +90,9 @@ const Mainpage = () => {
           </div>
         </div>
       </div>
-      <div>
+
+      <div className='FlexBox'>
+        <div>
         <div className="MainBox TierBox">
           <h2 className="BoxTitle">RANK</h2>
           <div className="TierInnerBox">
@@ -124,10 +128,11 @@ const Mainpage = () => {
               </div>
             )
           })}
+            </div>
         </div>
-      </div>
+      {/* </div>
 
-      <div>
+      <div> */}
         <div className="MainBox RecordsBox">
           <div className="RecordNav">
             <h2 className="BoxTitle">전적관리</h2>
@@ -152,6 +157,11 @@ const Mainpage = () => {
               </span>
             </div>
           </div>
+          {gamesInfo.map((gameInfo, index) => {
+            return (
+              <Record gameInfo={gameInfo} key={index} />
+            )
+          })}
           <Record />
         </div>
       </div>
