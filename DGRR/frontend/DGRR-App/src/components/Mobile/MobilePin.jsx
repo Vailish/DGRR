@@ -31,7 +31,7 @@ const MobilePin = () => {
         username: username,
         password: password,
       }
-      const response = await axios.post('http://172.30.1.54:8080/api/v1/request/pin', JSON.stringify(userInfo), {
+      const response = await axios.post('http://192.168.31.142:8080/api/v1/request/pin', JSON.stringify(userInfo), {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
         },
