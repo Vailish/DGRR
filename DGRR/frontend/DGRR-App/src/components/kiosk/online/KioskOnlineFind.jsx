@@ -54,8 +54,8 @@ const KioskOnlineFind = () => {
       // clearInterval(reqMatchingUser)
       // clearInterval(timerCount)
       setflag(true)
-      console.log(response.data)
-      dispatch(loadBothPlayers(response.data))
+      console.log('내응답이야' + response.data.randomNumber)
+      dispatch(loadBothPlayers(response.data, response.data.randomNumber))
       navigate('/KioskOnlineMatching')
     } else {
       // console.log('test1' + reqMatchingUser)

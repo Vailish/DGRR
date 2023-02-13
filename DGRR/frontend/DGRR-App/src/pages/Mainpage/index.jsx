@@ -6,6 +6,7 @@ import PieChart from '../../components/mainpage/PieChart'
 import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
 import profileimg from '../../img/profile.jpg'
+import { getCookie, removeCookie } from '../../cookies/Cookies'
 
 const Mainpage = () => {
   const [userInfo, setUserInfo] = useState([])
@@ -26,6 +27,10 @@ const Mainpage = () => {
   // }, [localStorage.getItem('access-token')])
 
   useEffect(() => {
+    if (getCookie('token')) {
+    } else {
+      navigate('/')
+    }
     fetchData()
     document.documentElement.style.setProperty('--bar-size', '30%')
   }, [])
@@ -91,46 +96,46 @@ const Mainpage = () => {
         </div>
       </div>
 
-      <div className='FlexBox'>
+      <div className="FlexBox">
         <div>
-        <div className="MainBox TierBox">
-          <h2 className="BoxTitle">RANK</h2>
-          <div className="TierInnerBox">
-            <img src={require('../../img/tierdia.png')} alt="tier" className="TierImg" />
-            <div>
-              <h2 className="TierText">Diamond</h2>
-              <p className="TierSubText">{myRanking}위</p>
-            </div>
-          </div>
-        </div>
-        <div className="MainBox RateBox">
-          <h2 className="BoxTitle">최근 랭킹전 20Games 승률</h2>
-          <div className="RecordRateBar">
-            <div className="ProgressLine">
-              16패<span className="SpanBar">14승</span>
-            </div>
-            <div className="Info">
-              <span className="ProgressLineText">70%</span>
-            </div>
-          </div>
-        </div>
-        <div className="MainBox UserRankingBox">
-          <div className="UserRankingBoxTitle">
-            <h2 className="BoxTitle">나의 랭킹</h2>
-            <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
-              more▶
-            </span>
-          </div>
-          {rankingInfo.map((data, index) => {
-            return (
-              <div index={index} key={index} className={`RankingTextBox ${index === 2 && 'MyRankingTextBox'}`}>
-                <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
+          <div className="MainBox TierBox">
+            <h2 className="BoxTitle">RANK</h2>
+            <div className="TierInnerBox">
+              <img src={require('../../img/tierdia.png')} alt="tier" className="TierImg" />
+              <div>
+                <h2 className="TierText">Diamond</h2>
+                <p className="TierSubText">{myRanking}위</p>
               </div>
-            )
-          })}
             </div>
+          </div>
+          <div className="MainBox RateBox">
+            <h2 className="BoxTitle">최근 랭킹전 20Games 승률</h2>
+            <div className="RecordRateBar">
+              <div className="ProgressLine">
+                16패<span className="SpanBar">14승</span>
+              </div>
+              <div className="Info">
+                <span className="ProgressLineText">70%</span>
+              </div>
+            </div>
+          </div>
+          <div className="MainBox UserRankingBox">
+            <div className="UserRankingBoxTitle">
+              <h2 className="BoxTitle">나의 랭킹</h2>
+              <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
+                more▶
+              </span>
+            </div>
+            {rankingInfo.map((data, index) => {
+              return (
+                <div index={index} key={index} className={`RankingTextBox ${index === 2 && 'MyRankingTextBox'}`}>
+                  <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
-      {/* </div>
+        {/* </div>
 
       <div> */}
         <div className="MainBox RecordsBox">
@@ -158,9 +163,7 @@ const Mainpage = () => {
             </div>
           </div>
           {gamesInfo.map((gameInfo, index) => {
-            return (
-              <Record gameInfo={gameInfo} key={index} />
-            )
+            return <Record gameInfo={gameInfo} key={index} />
           })}
           <Record />
         </div>

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import { checkEmail } from '../../regex/regex'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { request } from '../../API/request'
 const FindPwForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -18,23 +18,19 @@ const FindPwForm = () => {
       username: username,
       email: email,
     }
-    const response = await axios.post(
-      'http://192.168.31.142:8080/api/v1/request/setpassword',
-      JSON.stringify(findUserinfo),
-      {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
+    try {
+      const response = await request.post('/api/v1/request/setpassword', JSON.stringify(findUserinfo), {})
+      console.log(response)
+      alert('계정을 찾았습니다.')
+      navigate('/findPwSuccess', {
+        state: {
+          username: username,
+          email: email,
         },
-      },
-    )
-    console.log(response)
-
-    navigate('/findPwSuccess', {
-      state: {
-        username: username,
-        email: email,
-      },
-    })
+      })
+    } catch (e) {
+      alert('존재하지 않는 계정입니다.')
+    }
   }
   const onChange = e => {
     const { name, value } = e.target
