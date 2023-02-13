@@ -37,10 +37,17 @@ const KioskOnlineGame = () => {
   // })
   const navigate = useNavigate()
   useEffect(() => {
-    if (isGameFinish[0] === true && isGameFinish[1] === true)
+    if (isGameFinish[0] === true && isGameFinish[1] === true) {
+      let isWin = null
+      if (scoreSumArray[9] >= oppositeSumArray[9]) {
+        isWin = true
+      } else {
+        isWin = false
+      }
       setTimeout(() => {
-        navigate('/KioskOnlineResult')
+        navigate('/KioskOnlineResult', { state: { isWin } })
       }, 2000)
+    }
   }, [isGameFinish])
 
   const scoreExchange = async () => {
