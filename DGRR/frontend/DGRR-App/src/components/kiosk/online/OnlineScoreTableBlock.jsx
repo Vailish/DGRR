@@ -133,14 +133,14 @@ const OnlineScoreTableBlock = props => {
           ref={firstData}
           onChange={onChangeFirst}
           value={scoreBoard[0]}
-          style={isGameFinish[0] ? { background: 'green' } : null}
+          style={isGameFinish[0] ? { background: 'green' } : { background: 'red' }}
         ></input>
         <input
           className="OnlineScoreInputBlockRight"
           ref={secondData}
           onChange={onChangeSecond}
           value={scoreBoard[1]}
-          style={isGameFinish[0] ? { background: 'green' } : null}
+          style={isGameFinish[0] ? { background: 'green' } : { background: 'red' }}
         ></input>
         {frameNum === 10 ? (
           <input
@@ -148,7 +148,7 @@ const OnlineScoreTableBlock = props => {
             ref={thirdData}
             onChange={onChangeThird}
             value={scoreBoard[2]}
-            style={isGameFinish[0] ? { background: 'green' } : null}
+            style={isGameFinish[0] ? { background: 'green' } : { background: 'red' }}
           ></input>
         ) : null}
       </div>
@@ -156,14 +156,23 @@ const OnlineScoreTableBlock = props => {
         {scoreSum}
       </div>
       <div className="OnlineScoreBlock">
-        <div className="OnlineScoreInputBlockLeft" style={isGameFinish[1] ? { background: 'green' } : null}>
+        <div
+          className="OnlineScoreInputBlockLeft"
+          style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
+        >
           {oppositeScoreBoard[0]}
         </div>
-        <div className="OnlineScoreInputBlockRight" style={isGameFinish[1] ? { background: 'green' } : null}>
+        <div
+          className="OnlineScoreInputBlockRight"
+          style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
+        >
           {oppositeScoreBoard[1]}
         </div>
         {frameNum === 10 ? (
-          <div className="OnlineScoreInputBlockFarRight" style={isGameFinish[1] ? { background: 'green' } : null}>
+          <div
+            className="OnlineScoreInputBlockFarRight"
+            style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
+          >
             {oppositeScoreBoard[2]}
           </div>
         ) : null}

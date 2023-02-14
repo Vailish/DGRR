@@ -5,7 +5,13 @@ const ONLINE_GAME_BOARD_CHANGE = 'KioskOnline/ONLINE_GAMEBOARD_CHANGE'
 const ONLINE_GAME_BOARD_CHANGE_OPPOSITE = 'KioskOnline/ONLINE_GAMEBOARD_CHANGE_OPPOSITE'
 const LOAD_BOTH_PLAYERS = 'KioskOnline/LOAD_BOTH_PLAYERS'
 const MATCHING_PLAYER = 'KioskOnline/MATCHING_PLAYER'
-
+const testPlayer = {
+  nickname: 'test!',
+  record: [{ totalGame: 10, winGame: 7, loseGame: 5 }],
+  profile: 'profile!!!!',
+  username: 'TEST!',
+  point: 2000,
+}
 // 액션 생성 함수
 
 export const addPlayer = playerInfo => ({ type: ADD_PLAYER, playerInfo })
@@ -25,26 +31,17 @@ export const loadBothPlayers = (oppositePlayerInfo, SessionId) => ({
   SessionId,
 })
 
-// const [modalOpen, setModalOpen] = useState(false);
-
-//   const openModal = () => {
-//     setModalOpen(true);
-//   };
-//   const closeModal = () => {
-//     setModalOpen(false);
-//   };
-
 // 초기 상태
 
 const initialState = {
-  player: {},
+  player: testPlayer,
   gamingPlayer: {
     playerInfo: {},
     gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
   },
   oppositePlayer: {
-    playerInfo: {},
+    playerInfo: testPlayer,
     gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
   },

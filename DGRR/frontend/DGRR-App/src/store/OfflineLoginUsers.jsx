@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore'
 import { api } from '../API/api'
 
 const ADD_PLAYER = 'KioskOffline/ADD_PLAYER'
@@ -10,6 +8,7 @@ const LOAD_PLAYERS = 'KioskOffline/LOAD_PLAYERS'
 const OFFLINE_GAME_BOARD_CHANGE = 'KioskOffline/OFFLINE_GAME_BOARD_CHANGE'
 
 // 액션 생성 함수
+const testPlayer = { nickname: '아아', rank: 8, record: [{ totalGame: 10, winGame: 9, loseGame: 1 }], average: 200 }
 
 // export const change_user = createAction(CHANGE_USER, user => user);
 
@@ -45,7 +44,7 @@ export const offlineGameBoardChange = (playerNum, myFrame, orderNum, myValue) =>
 // 초기 상태
 
 const initialState = {
-  players: [],
+  players: [testPlayer],
   gamingPlayers: {},
   isGameFinish: {},
 }

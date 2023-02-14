@@ -32,7 +32,7 @@ const KioskLoginPlayer = props => {
             </div>
           </div>
           <div className="PlayerAverageBlock">
-            <div className="PlayerAverageText">avg</div>
+            <div className="PlayerAverageText">AVG</div>
             <div className="PlayerAverageScore">{player.average}</div>
           </div>
           <div className="PlayerCancelCircle" onClick={onRemovePlayer}>
