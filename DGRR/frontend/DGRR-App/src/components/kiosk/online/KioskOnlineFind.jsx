@@ -43,7 +43,7 @@ const KioskOnlineFind = () => {
 
   const reqMatching = async nickname => {
     console.log(JSON.stringify({ nickname }))
-    const url = '/v1/game/matching/result'
+    const url = '/api/v1/game/matching/result'
     const response = await api.post(url, JSON.stringify({ nickname }))
     if (response.data) {
       // clearInterval(reqMatchingUser)

@@ -36,7 +36,7 @@ const KioskOnlineLogin = () => {
   const onAddPlayer = async () => {
     // pinNumber = ''
     const pinNum = String(pinNumber)
-    const url = '/v1/matching/' + pinNum
+    const url = '/api/v1/matching/' + pinNum
     const response = await api.get(url)
     console.log('response : ', response)
     dispatch(addPlayer(response.data))
@@ -45,7 +45,7 @@ const KioskOnlineLogin = () => {
     dispatch(removePlayer())
   }
   const reqJoin = async nickname => {
-    const url = '/v1/game/matching/join'
+    const url = '/api/v1/game/matching/join'
     const response = await api.post(url, JSON.stringify({ nickname }))
     if (response.data) navigate('/KioskOnlineFind')
   }

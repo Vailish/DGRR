@@ -11,7 +11,7 @@ const KioskLogin = () => {
   let pinNumber = undefined
   const onAddPlayer = async pin => {
     const pinNum = String(pin)
-    const url = '/v1/matching/' + pinNum
+    const url = '/api/v1/matching/' + pinNum
     console.log('url : ', url)
     const response = await api.get(url)
     console.log('response : ', response)

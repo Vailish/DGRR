@@ -50,7 +50,7 @@ const KioskOnlineGame = () => {
   }, [isGameFinish])
 
   const scoreExchange = async () => {
-    const url = '/v1/gaming/' + player.nickname
+    const url = '/api/v1/gaming/' + player.nickname
     console.log(scoreArray)
     const scoreString = scoreArray.reduce((sendString, number) => {
       if (number === '') return sendString + ' '
