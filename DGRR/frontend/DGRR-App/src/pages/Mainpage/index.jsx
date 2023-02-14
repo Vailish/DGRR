@@ -59,7 +59,11 @@ const Mainpage = () => {
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
     setWinning(winningData)
+<<<<<<< HEAD
     console.log((winning.winGame / winning.gameNumber) * 100)
+=======
+    console.log(rankingInfo)
+>>>>>>> 84d7e21b598f6be8114a980c5f1a497df7d9b8dc
   }
 
   const fetchMatchData = async () => {
@@ -139,6 +143,10 @@ const Mainpage = () => {
               </div>
               <div className="Info">
                 <span className="ProgressLineText">{(winning.winGame / winning.gameNumber) * 100}%</span>
+                {winning.loseGame}패<span id='SpanBar'>{winning.winGame}승</span>
+              </div>
+              <div className="Info">
+                <span className="ProgressLineText">{parseInt(winning.winGame / winning.gameNumber * 100)}%</span>
               </div>
             </div>
           </div>
@@ -156,6 +164,7 @@ const Mainpage = () => {
                   key={index}
                   className={`RankingTextBox ${index === myRanking - 1 && 'MyRankingTextBox'}`}
                 >
+                <div index={index} key={index} className={`RankingTextBox ${data.nickname === nickName && 'MyRankingTextBox'}`}>
                   <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
                 </div>
               )

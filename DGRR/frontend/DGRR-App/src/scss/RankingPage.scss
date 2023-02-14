@@ -1,7 +1,7 @@
 .PageBase {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #501766 50vh, #F8F8FB 50vh);
+  background: linear-gradient(180deg, #501766 24vw, #F8F8FB 24vw);
   flex-wrap: wrap;
   padding-top: 64 / 1080 * 100vh;
   padding-right: 12.5vw;
@@ -10,9 +10,11 @@
   
   .ProfileBox {
     display: flex;
-    width: 1152px;
-    height: 384px;
-    padding: 48px 112px;
+    justify-content: space-between;
+    align-items: center;
+    width: 75vw;
+    height: 26vw;
+    padding: 48/1920*100vw 134/1920*100vw;
     box-sizing: border-box;
     border-radius: 10px;
     background-color: white;
@@ -20,34 +22,34 @@
     
     .ProfileLeftBox {
       display: flex;
-      width: 300px;
+      width: 300 /1980 * 100vw;
       height: 100%;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
     
       .UserNickName {
         text-align: start;
         margin-top: 0px;
-        margin-bottom: 8 / 1080 * 100vh;
+        margin-bottom: 8 / 1980 * 100vw;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
-        font-size: 24px;
-        line-height: 22px;
+        font-size: 42 / 1980 * 100vw;
+        line-height: 22 / 1980 * 100vw;
       }
 
       .UserText {
         text-align: start;
-        margin-top: 1px;
-        margin-bottom: 8 / 1080 * 100vh;
-        font-size: 1.5vmin;
+        margin-top: 0.6vw;
+        margin-bottom: 16 / 1980 * 100vw;
+        font-size: 0.9vw;
         color: #8a8a8a;
         font-weight: 500;
       }
 
       .ProfileImg {
-        width: 30vmin;
-        height: 30vmin;
+        width: 15vw;
+        height: 15vw;
         border-radius: 80%;
         object-fit: cover;
       }
@@ -55,22 +57,26 @@
 
     .ProfileRightBox{
       display: flex;
-      width: 600px;
+      width: 38vw;
       height: 100%;
-      justify-content: center;
+      padding-bottom: 3vw;
+      justify-content: end;
       flex-direction: column;
 
       .RankText {
         margin: 0;
+        margin-bottom: 0.2vw;
         text-align: start;
-        font-size: 18px;
+        font-size: 1.3vw;
         font-weight: 800;
       }
 
       .RecordText {
         margin: 0;
+        margin-top: 2vw;
+        margin-bottom: 0.2vw;
         text-align: start;
-        font-size: 18px;
+        font-size: 1.3vw;
         font-weight: 800;
       }
 
@@ -81,7 +87,7 @@
 
         >span {
           margin-right: 32px;
-          font-size: 16px;
+          font-size: 1.2vw;
           font-weight: 600;
         }
       }
@@ -94,8 +100,8 @@
         margin: 0px 0px 8px;
 
         .TierImg {
-          width: 140px;
-          height: 90px;
+          width: 9vw;
+          height: 6vw;
           object-fit: contain;
         }
 
@@ -108,12 +114,12 @@
           .TierText {
             margin: 0px 0px 2px;
             text-align: start;
-            font-size: 16px;
+            font-size: 1.2vw;
             font-weight: 700;
           }
 
           .TierInfoText {
-            font-size: 12px;
+            font-size: 0.94vw;
             font-weight: 600;
 
             >span {
@@ -127,8 +133,9 @@
 
   .search-box {
     display: flex;
+    margin: 2.2vw 1.8vw 0.8vw 0vw;
     position: relative;
-    width: 220px;
+    width: 210px;
     align-self: flex-end;
   }
   
@@ -147,14 +154,15 @@
   .search-input:focus {
     border:none;
     outline:none;
-    box-shadow: 0 1px 12px #b8c6db;
-    -moz-box-shadow: 0 1px 12px #b8c6db;
-    -webkit-box-shadow: 0 1px 12px #b8c6db;
+    box-shadow: 0 1px 12px #1d004d;
+    -moz-box-shadow: 0 1px 12px #1d004d;
+    -webkit-box-shadow: 0 1px 12px #1d004d;
   }
   
   .search-btn {
     padding: 6px 9px;
-    border:none;
+    // border:none;
+    border:solid black;
     background-color: transparent;
     font-size: 18px;
     margin-left:-45px;
@@ -176,7 +184,7 @@
   
 
   .RankingTable {
-    width: 1152px;
+    width: 75vw;
     margin: 0px 0px;
     background: white;
     border-collapse: collapse;
