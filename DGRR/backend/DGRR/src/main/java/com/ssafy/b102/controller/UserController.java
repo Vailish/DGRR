@@ -1,8 +1,12 @@
 package com.ssafy.b102.controller;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.b102.request.dto.CheckPasswordInfoDto;
+import com.ssafy.b102.request.dto.IdentifierRequestDto;
 import com.ssafy.b102.request.dto.LoginRequestDto;
 import com.ssafy.b102.request.dto.RequestUsernameDto;
 import com.ssafy.b102.request.dto.SetPasswordDto;
 import com.ssafy.b102.request.dto.UserRequestDto;
+import com.ssafy.b102.response.dto.IdentifierResponseDto;
 import com.ssafy.b102.response.dto.UserResponseDto;
 import com.ssafy.b102.service.UserService;
 
@@ -29,13 +35,6 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	@Autowired
 	public UserService userService;
-	
-	
-//	// 모든 사람이 접근 가능
-//	@GetMapping("home")
-//	public String home() {
-//		return "<h1>home</h1>";
-//	}
 	
 	// Tip : JWT를 사용하면 UserDetailsService를 호출하지 않기 때문에 @AuthenticationPrincipal 사용 불가능.
 	// 왜냐하면 @AuthenticationPrincipal은 UserDetailsService에서 리턴될 때 만들어지기 때문이다.
@@ -50,6 +49,11 @@ public class UserController {
 //		
 //		return "<h1>user</h1>";
 //	}
+	@PostMapping("/identifier")
+	public ResponseEntity<?> identifier(@RequestBody IdentifierRequestDto identifierRequestDto){
+			IdentifierResponseDto identifierResponseDto = userService.identifier(identifierRequestDto);
+			return new ResponseEntity<IdentifierResponseDto>(identifierResponseDto, HttpStatus.OK);
+	}
 	
 	@PostMapping("/signup")
 	public ResponseEntity<?> createUser(@RequestBody UserRequestDto userRequestDto){
@@ -111,6 +115,22 @@ public class UserController {
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 }
 	
+	// 이미지 정보 확인
+	
+	@Value("${file.dir}")
+	private String fileDir;
+	
+	@GetMapping("/{date}/{savedName}")
+    public ResponseEntity<?> showImage(@PathVariable String savedName, @PathVariable String date) throws IOException {
+        Pattern pattern = Pattern.compile("\\.\\.");
+        if (pattern.matcher(date).matches() || pattern.matcher(savedName).matches()) {
+            throw new RuntimeException("상위 디렉토리로 접근은 불가능합니다.");
+        }
+        if (date.equals("default")) {
+            return new ResponseEntity<>(new UrlResource("classpath:/static/" + date + "/" + savedName), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new UrlResource("file:" + fileDir + date + "/" + savedName), HttpStatus.OK);
+    }
 	
 	
 //	@PutMapping("/user/{username}")

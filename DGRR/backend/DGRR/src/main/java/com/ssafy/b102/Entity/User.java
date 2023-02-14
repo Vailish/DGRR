@@ -72,7 +72,8 @@ public class User {
 	@Column(nullable = true)
 	private LocalDateTime pinCreateTime;
 	
-//	private String user_img;
+	@Column(nullable = true)
+	private String stateMessage;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -80,5 +81,8 @@ public class User {
 	
 	@OneToOne
 	private Matching matching;
+	
+	@OneToOne
+	private FileEntity user_img;
 	
 }
