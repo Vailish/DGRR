@@ -9,10 +9,11 @@ import OnlineScoreTable from './OnlineScoreTable'
 import { onlineGameBoardChangeOpposite } from '../../../store/OnlineLoginUser'
 import { api } from '../../../API/api'
 import KioskVideo from '../online/webrtc/KioskVideo'
+
 const OnlineGamePlayerBlock = props => {
-  const { playerNickname, playerProfile } = props
+  const { playerNickname, playerProfile, playerColor } = props
   return (
-    <div className="OnlineGamePlayerBlock">
+    <div className="OnlineGamePlayerBlock" style={playerColor === 2 ? { background: 'blue' } : { background: 'red' }}>
       <div className="OnlineGameProfile">{playerProfile}</div>
       <div className="OnlineGamePlayerName">{playerNickname}</div>
     </div>
@@ -66,34 +67,42 @@ const KioskOnlineGame = () => {
     if (response.data) dispatch(onlineGameBoardChangeOpposite(response.data.opponentGameData))
   }
 
-  useEffect(() => {
-    const scoreUpdate = setInterval(() => {
-      scoreExchange()
-    }, 1000)
-    return () => clearInterval(scoreUpdate)
-  }, [scoreArray])
+  // useEffect(() => {
+  //   const scoreUpdate = setInterval(() => {
+  //     scoreExchange()
+  //   }, 1000)
+  //   return () => clearInterval(scoreUpdate)
+  // }, [scoreArray])
 
-  // const onTest = () => {
-  //   clearInterval(scoreUpdate)
-  // }
+  const [needHelp, setneedHelp] = useState(false)
+  const helpMessage = () => {
+    setneedHelp(!needHelp)
+  }
 
   return (
     <div className="KioskBackground">
+      <KioskNavBlock />
       <div className="OnlineGameContentBlock">
+        {needHelp ? <div className="OnlineHelpMessageModal">온라인 헬프 메시지</div> : null}
         <div className="OnlineGamePlayerAndScore">
-          <OnlineGamePlayerBlock playerProfile={player.profile} playerNickname={player.nickname} />
-          {/* <div className="OnlineGameScoreBlock"></div> */}
+          <OnlineGamePlayerBlock playerProfile={player.profile} playerNickname={player.nickname} playerColor={1} />
           <OnlineScoreTable
             scoreSumArray={scoreSumArray}
             scoreArray={scoreArray}
             oppositeSumArray={oppositeSumArray}
             oppositeScoreArray={oppositeScoreArray}
           />
-          <OnlineGamePlayerBlock playerProfile={oppositePlayer.profile} playerNickname={oppositePlayer.nickname} />
+          <OnlineGamePlayerBlock
+            playerProfile={oppositePlayer.profile}
+            playerNickname={oppositePlayer.nickname}
+            playerColor={2}
+          />
         </div>
         <div className="OnlineGameDisplayBlock">
           <KioskVideo />
-          <div className="OnlineGameHelpCircle">?</div>
+          <div className="OnlineGameHelpCircle" onClick={helpMessage}>
+            ?
+          </div>
         </div>
       </div>
     </div>

@@ -15,11 +15,24 @@
       display: flex;
       width: (2560 - 32 * 2) / 2560 * 100vw;
       height: (1600 - 24 * 2) / 1600 * 100vh;
-      background: blue;
+      // background: blue;
       flex-direction: column;
       align-items: center;
       margin-left: 32 / 2560 * 100vw;
       margin-top: 24 / 1600 * 100vh;
+      .OnlineHelpMessageModal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        width: 90vw;
+        height: 50vw;
+        left: 5vw;
+        top: 5vw;
+        background: white;
+        z-index: 5;
+        font-size: 5vw;
+      }
       .OnlineGamePlayerAndScore {
         display: flex;
         width: 100%;
@@ -51,15 +64,15 @@
       display: flex;
       position: relative;
       width: (2560 - 40 * 2) / 2560 * 100vw;
-      height: 1160 / 1600 * 100vh;
-      background: fuchsia;
+      height: 800 / 1600 * 100vh;
+      // background: fuchsia;
       justify-content: space-between;
       align-items: center;
       margin-top: 64 / 1600 * 100vh;
       .OnlineGameDisplay {
         width: 1224 / 2560 * 100vw;
         height: 1160 / 1600 * 100vh;
-        background: wheat;
+        // background: wheat;
         border-radius: 120 / 2560 * 100vw;
       }
       .OnlineGameHelpCircle {
@@ -84,7 +97,7 @@
         line-height: 109 / 1600 * 100vh;
         align-items: center;
 
-        color: #501766;
+        // color: #501766;
       }
     }
   }
