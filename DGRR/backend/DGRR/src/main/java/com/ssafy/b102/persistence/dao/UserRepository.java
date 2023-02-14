@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 	public User findById(Long id);
 	
 	public List<User> findAllByOrderByPointsDesc();
+	
+	public boolean existsByName(String name);
 }

@@ -90,7 +90,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.withClaim("id", principalDetailis.getUser().getId())
 				.withClaim("username", principalDetailis.getUser().getUsername())
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
-		
+		System.out.println(principalDetailis.getUser().getNickname());
+		response.addHeader("identifier", String.valueOf(principalDetailis.getUser().getId()));
 		response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
 	}
 	
