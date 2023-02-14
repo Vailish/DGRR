@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import '../../scss/FindId.scss'
 import { request } from '../../API/request'
-import { checkUserName, checkEmail } from '../../regex/regex'
+import { checkEmail } from '../../regex/regex'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import IdFind from '../../components/user/Find/IdFind'
 import { useNavigate } from 'react-router-dom'
+
 const FindIdForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -13,9 +14,11 @@ const FindIdForm = () => {
     form: auth.findid,
   }))
 
+  useEffect(() => {
+    dispatch(initialForm('findid'))
+  }, [dispatch])
+
   const reqFindUserName = async (nickname, email) => {
-    console.log(nickname + ' ' + email)
-    const username = '테스트'
     const findIdinfo = {
       nickname: nickname,
       email: email,

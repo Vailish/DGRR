@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PwFind from '../../components/user/Find/PwFind'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
@@ -11,7 +11,9 @@ const FindPwForm = () => {
   const { form } = useSelector(({ auth }) => ({
     form: auth.findpw,
   }))
-
+  useEffect(() => {
+    dispatch(initialForm('findpw'))
+  }, [dispatch])
   const reqFindPassword = async (username, email) => {
     console.log(username + ' ' + email)
     const findUserinfo = {

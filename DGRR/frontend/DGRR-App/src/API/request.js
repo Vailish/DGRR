@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const request = axios.create({
-  baseURL: 'http://192.168.31.142:8080',
+  baseURL: process.env.REACT_APP_SERVER,
   headers: {
     'Content-type': 'application/json; charset=UTF-8',
     accept: 'application/json,',

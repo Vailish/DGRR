@@ -6,6 +6,7 @@ import PieChart from '../../components/mainpage/PieChart'
 import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
 import profileimg from '../../img/profile.jpg'
+import PointCharts from '../../components/mainpage/PointCharts'
 import { getCookie, removeCookie } from '../../cookies/Cookies'
 
 const Mainpage = () => {
@@ -17,6 +18,7 @@ const Mainpage = () => {
   const [gamesInfo, setGamesInfo] = useState([])
   const [winning, setWinning] = useState({})
   const { nickName } = useParams()
+  const [visible, setVisible] = useState(false)
   const navigate = useNavigate()
 
   // useEffect(() => {
@@ -28,21 +30,21 @@ const Mainpage = () => {
   // }, [localStorage.getItem('access-token')])
 
   useEffect(() => {
-    if (getCookie('token')) {
-    } else {
-      navigate('/')
-    }
+    // if (getCookie('token')) {
+    // } else {
+    //   navigate('/')
+    // }
     fetchData()
-    
+
     // document.documentElement.style.setProperty('bar-size', winning.winGame / winning.gameNumber * 100)
-    document.getElementById('SpanBar').style.width = winning.winGame / winning.gameNumber * 100
+    document.getElementById('SpanBar').style.width = (winning.winGame / winning.gameNumber) * 100
   }, [])
-  
+
   useEffect(() => {
-    console.log("닉네임 확인"+nickName)
+    console.log('닉네임 확인' + nickName)
     fetchMatchData(0)
   }, [seletedCategory])
-  
+
   const fetchData = async () => {
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
@@ -57,7 +59,7 @@ const Mainpage = () => {
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
     setWinning(winningData)
-    console.log(winning.winGame / winning.gameNumber * 100)
+    console.log((winning.winGame / winning.gameNumber) * 100)
   }
 
   const fetchMatchData = async () => {
@@ -66,12 +68,17 @@ const Mainpage = () => {
     setGamesInfo(gamesData)
   }
 
-  const handleClick = (selected) => {
+  const handleClick = selected => {
     if (selected !== seletedCategory) {
       setSeletedCategory(selected)
     }
   }
 
+  //그래프 버튼을 누를때마다 상태값이 변한다
+
+  const onVisible = () => {
+    setVisible(!visible)
+  }
   return (
     <div className="PageBase">
       <Nav />
@@ -104,49 +111,56 @@ const Mainpage = () => {
                 score={pointsInfo.highestTotalScore}
               />
             </div>
-            <button className="Button">점수 그래프</button>
+            <button className="Button" onClick={onVisible}>
+              점수 그래프
+            </button>
           </div>
         </div>
+        <div>{visible === true ? <PointCharts /> : null}</div>
       </div>
 
-      <div className='FlexBox'>
+      <div className="FlexBox">
         <div>
-        <div className="MainBox TierBox">
-          <h2 className="BoxTitle">랭크</h2>
-          <div className="TierInnerBox">
-            <img src={require('../../img/tierdia.png')} alt="tier" className="TierImg" />
-            <div>
-              <h2 className="TierText">Diamond</h2>
-              <p className="TierSubText">{myRanking}위</p>
-            </div>
-          </div>
-        </div>
-        <div className="MainBox RateBox">
-          <h2 className="BoxTitle">최근 랭킹전 {winning.gameNumber}게임 승률</h2>
-          <div className="RecordRateBar">
-            <div className="ProgressLine">
-              {winning.loseGame}패<span id='SpanBar'>{winning.winGame}승</span>
-            </div>
-            <div className="Info">
-              <span className="ProgressLineText">{winning.winGame / winning.gameNumber * 100}%</span>
-            </div>
-          </div>
-        </div>
-        <div className="MainBox UserRankingBox">
-          <div className="UserRankingBoxTitle">
-            <h2 className="BoxTitle">나의 랭킹</h2>
-            <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
-              more▶
-            </span>
-          </div>
-          {rankingInfo.map((data, index) => {
-            return (
-              <div index={index} key={index} className={`RankingTextBox ${index === myRanking - 1 && 'MyRankingTextBox'}`}>
-                <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
+          <div className="MainBox TierBox">
+            <h2 className="BoxTitle">랭크</h2>
+            <div className="TierInnerBox">
+              <img src={require('../../img/tierdia.png')} alt="tier" className="TierImg" />
+              <div>
+                <h2 className="TierText">Diamond</h2>
+                <p className="TierSubText">{myRanking}위</p>
               </div>
-            )
-          })}
             </div>
+          </div>
+          <div className="MainBox RateBox">
+            <h2 className="BoxTitle">최근 랭킹전 {winning.gameNumber}게임 승률</h2>
+            <div className="RecordRateBar">
+              <div className="ProgressLine">
+                {winning.loseGame}패<span id="SpanBar">{winning.winGame}승</span>
+              </div>
+              <div className="Info">
+                <span className="ProgressLineText">{(winning.winGame / winning.gameNumber) * 100}%</span>
+              </div>
+            </div>
+          </div>
+          <div className="MainBox UserRankingBox">
+            <div className="UserRankingBoxTitle">
+              <h2 className="BoxTitle">나의 랭킹</h2>
+              <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
+                more▶
+              </span>
+            </div>
+            {rankingInfo.map((data, index) => {
+              return (
+                <div
+                  index={index}
+                  key={index}
+                  className={`RankingTextBox ${index === myRanking - 1 && 'MyRankingTextBox'}`}
+                >
+                  <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
 
         <div className="MainBox RecordsBox">
@@ -174,9 +188,7 @@ const Mainpage = () => {
             </div>
           </div>
           {gamesInfo.map((gameInfo, index) => {
-            return (
-              <Record gameInfo={gameInfo} key={index} />
-            )
+            return <Record gameInfo={gameInfo} key={index} />
           })}
         </div>
       </div>

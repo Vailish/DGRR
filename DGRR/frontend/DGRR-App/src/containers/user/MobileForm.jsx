@@ -20,16 +20,7 @@ const MobileForm = () => {
   //axios 모듈화 테스트 해보기
   const reqLogin = async user => {
     try {
-      const response = await request.post(
-        //URI 바꿔야지.......
-        '/login',
-        JSON.stringify(user),
-        // {
-        //   headers: {
-        //     'Content-Type': 'application/json;charset=UTF-8',
-        //   },
-        // },
-      )
+      const response = await request.post('/login', JSON.stringify(user))
       if (response.status === 200) {
         alert('로그인 성공')
         setError(' ')
@@ -38,8 +29,7 @@ const MobileForm = () => {
           path: '/',
           sameStrict: 'strict',
         })
-        // const accessToken = response.headers.get('Authorization')
-        // localStorage.setItem('access-token', accessToken)
+
         navigate('/mPin', {
           state: {
             username: user.username,

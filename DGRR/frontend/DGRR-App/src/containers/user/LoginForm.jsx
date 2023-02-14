@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { setCookie, getCookie } from '../../cookies/Cookies'
 import { request } from '../../API/request'
 import Login from '../../components/user/Login/Login'
-import axios from 'axios'
 
 const LoginForm = () => {
   const [isLogin, setIsLogin] = useState(false)
@@ -28,7 +27,11 @@ const LoginForm = () => {
     } else {
       navigate('/')
     }
-  }, [localStorage.getItem('access-token')])
+  })
+
+  useEffect(() => {
+    dispatch(initialForm('login'))
+  }, [dispatch])
 
   //로그인 요청 api 서버에 로그인 정보가 있는지 확인 요청을 한다.
   //api는 모듈화하여 테스트를 해봐야한다.
@@ -45,6 +48,7 @@ const LoginForm = () => {
       console.log(e)
     }
   }
+
   const reqLogin = async user => {
     try {
       const response = await request.post('/login', JSON.stringify(user))
@@ -69,7 +73,6 @@ const LoginForm = () => {
         })
         reqNickname(identifier)
 
- 
         dispatch(
           changeField({
             form: 'login',
@@ -123,10 +126,6 @@ const LoginForm = () => {
       reqLogin(form)
     }
   }
-
-  useEffect(() => {
-    dispatch(initialForm('login'))
-  }, [dispatch])
 
   return (
     <Login

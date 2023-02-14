@@ -1,5 +1,5 @@
 import '../../../scss/Login.scss'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 const Login = ({ form, onChange, onSubmit, isLogin, error, isId, isPw }) => {
   return (
