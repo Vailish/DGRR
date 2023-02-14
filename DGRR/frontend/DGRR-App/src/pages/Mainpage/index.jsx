@@ -57,7 +57,7 @@ const Mainpage = () => {
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
     setWinning(winningData)
-    console.log(winning.winGame / winning.gameNumber * 100)
+    console.log(rankingInfo)
   }
 
   const fetchMatchData = async () => {
@@ -111,42 +111,42 @@ const Mainpage = () => {
 
       <div className='FlexBox'>
         <div>
-        <div className="MainBox TierBox">
-          <h2 className="BoxTitle">랭크</h2>
-          <div className="TierInnerBox">
-            <img src={require('../../img/tierdia.png')} alt="tier" className="TierImg" />
-            <div>
-              <h2 className="TierText">Diamond</h2>
-              <p className="TierSubText">{myRanking}위</p>
-            </div>
-          </div>
-        </div>
-        <div className="MainBox RateBox">
-          <h2 className="BoxTitle">최근 랭킹전 {winning.gameNumber}게임 승률</h2>
-          <div className="RecordRateBar">
-            <div className="ProgressLine">
-              {winning.loseGame}패<span id='SpanBar'>{winning.winGame}승</span>
-            </div>
-            <div className="Info">
-              <span className="ProgressLineText">{winning.winGame / winning.gameNumber * 100}%</span>
-            </div>
-          </div>
-        </div>
-        <div className="MainBox UserRankingBox">
-          <div className="UserRankingBoxTitle">
-            <h2 className="BoxTitle">나의 랭킹</h2>
-            <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
-              more▶
-            </span>
-          </div>
-          {rankingInfo.map((data, index) => {
-            return (
-              <div index={index} key={index} className={`RankingTextBox ${index === myRanking - 1 && 'MyRankingTextBox'}`}>
-                <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
+          <div className="MainBox TierBox">
+            <h2 className="BoxTitle">랭크</h2>
+            <div className="TierInnerBox">
+              <img src={require('../../img/tierdia.png')} alt="tier" className="TierImg" />
+              <div>
+                <h2 className="TierText">Diamond</h2>
+                <p className="TierSubText">{myRanking}위</p>
               </div>
-            )
-          })}
             </div>
+          </div>
+          <div className="MainBox RateBox">
+            <h2 className="BoxTitle">최근 랭킹전 {winning.gameNumber}게임 승률</h2>
+            <div className="RecordRateBar">
+              <div className="ProgressLine">
+                {winning.loseGame}패<span id='SpanBar'>{winning.winGame}승</span>
+              </div>
+              <div className="Info">
+                <span className="ProgressLineText">{parseInt(winning.winGame / winning.gameNumber * 100)}%</span>
+              </div>
+            </div>
+          </div>
+          <div className="MainBox UserRankingBox">
+            <div className="UserRankingBoxTitle">
+              <h2 className="BoxTitle">나의 랭킹</h2>
+              <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
+                more▶
+              </span>
+            </div>
+            {rankingInfo.map((data, index) => {
+              return (
+                <div index={index} key={index} className={`RankingTextBox ${data.nickname === nickName && 'MyRankingTextBox'}`}>
+                  <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
 
         <div className="MainBox RecordsBox">
