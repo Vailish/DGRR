@@ -27,7 +27,7 @@ const LoginForm = () => {
     } else {
       navigate('/')
     }
-  })
+  }, [getCookie('token')])
 
   useEffect(() => {
     dispatch(initialForm('login'))

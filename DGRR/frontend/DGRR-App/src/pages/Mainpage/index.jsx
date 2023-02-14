@@ -138,11 +138,7 @@ const Mainpage = () => {
                 {winning.loseGame}패<span id="SpanBar">{winning.winGame}승</span>
               </div>
               <div className="Info">
-                <span className="ProgressLineText">{(winning.winGame / winning.gameNumber) * 100}%</span>
-                {winning.loseGame}패<span id='SpanBar'>{winning.winGame}승</span>
-              </div>
-              <div className="Info">
-                <span className="ProgressLineText">{parseInt(winning.winGame / winning.gameNumber * 100)}%</span>
+                <span className="ProgressLineText">{parseInt(winning.winGame / winning.gameNumber) * 100}%</span>
               </div>
             </div>
           </div>
@@ -155,14 +151,8 @@ const Mainpage = () => {
             </div>
             {rankingInfo.map((data, index) => {
               return (
-                <div
-                  index={index}
-                  key={index}
-                  className={`RankingTextBox ${index === myRanking - 1 && 'MyRankingTextBox'}`}
-                >
-                  <div index={index} key={index} className={`RankingTextBox ${data.nickname === nickName && 'MyRankingTextBox'}`}>
-                    <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
-                  </div>
+                <div index={index} key={index} className={`RankingTextBox ${data.nickname === nickName && 'MyRankingTextBox'}`}>
+                  <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
                 </div>
               )
             })}
