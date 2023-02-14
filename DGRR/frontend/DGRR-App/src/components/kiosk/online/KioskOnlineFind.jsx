@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import KioskNavBlock from '../KioskNavBlock'
 import { useSelector } from 'react-redux'
 import '../../../scss/KioskOnlineFind.scss'
-import { SyncLoader } from 'react-spinners'
 import { api } from '../../../API/api'
 import { useDispatch } from 'react-redux'
-import { loadBothPlayers } from '../../../store/OnlineLoginUser'
+import { loadBothPlayers } from '../../../modules/OnlineLoginUser'
 
 const KioskOnlineFind = () => {
   const [flag, setflag] = useState(false)

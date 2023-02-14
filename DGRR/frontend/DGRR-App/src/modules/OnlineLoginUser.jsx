@@ -34,14 +34,14 @@ export const loadBothPlayers = (oppositePlayerInfo, SessionId) => ({
 // 초기 상태
 
 const initialState = {
-  player: testPlayer,
+  player: {},
   gamingPlayer: {
     playerInfo: {},
     gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
   },
   oppositePlayer: {
-    playerInfo: testPlayer,
+    playerInfo: {},
     gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
   },
@@ -53,17 +53,20 @@ const initialState = {
 
 const OnlineLoginUser = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_PLAYER:
+    case ADD_PLAYER: {
       const player = action.playerInfo
       return {
         ...state,
         player,
       }
-    case REMOVE_PLAYER:
+    }
+    case REMOVE_PLAYER: {
+      const player = action.playerInfo
       return {
         ...state,
-        helpOpen: false,
+        player,
       }
+    }
     case LOAD_BOTH_PLAYERS: {
       const gamingPlayer = {
         playerInfo: { ...state.player },

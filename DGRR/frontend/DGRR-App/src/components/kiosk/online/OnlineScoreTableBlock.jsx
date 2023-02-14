@@ -1,13 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import '../../../scss/OnlineScoreTableBlock.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-// import KioskLoginPlayer from './KioskLoginPlayer'
-import { addPlayer } from '../../../store/OfflineLoginUsers'
-// import axios from 'axios'
-import { api } from '../../../API/api'
-import { onlineGameBoardChange } from '../../../store/OnlineLoginUser'
-
+import { onlineGameBoardChange } from '../../../modules/OnlineLoginUser'
+import useSound from 'use-sound'
+import testStrike from '../../../sound/matchingResult.wav'
 const OnlineScoreTableBlock = props => {
   const { frameNum, scoreBoard, scoreSum, oppositeScoreBoard, oppositeScoreSum } = props
 
@@ -19,38 +15,15 @@ const OnlineScoreTableBlock = props => {
   const isValidValue = /^[fFXx\-0-9\/]{1,1}$|^10$/
   const myFrame = frameNum
   const isGameFinish = useSelector(state => state.OnlineLoginUser.isGameFinish)
-
-  // const player = useSelector(state => state.OnlineLoginUser.player)
-  // const oppositePlayer = useSelector(state => state.OnlineLoginUser.oppositePlayer.playerInfo)
-  // const myScoreBoard = useSelector(state => state.OnlineLoginUser.gamingPlayer.gameBoard)
+  const [test] = useSound(testStrike)
 
   const ScoreTableBlock = frameNum === 10 ? `OnlineScoreTableBlock Frame${frameNum}` : 'OnlineScoreTableBlock'
-
-  // const scoreExchange = async myValue => {
-  //   const url = '/v1/gaming/' + player.nickname
-  //   myScoreBoard.push(myValue)
-  //   console.log('myScoreBoard : ', myScoreBoard)
-  //   const scoreString = myScoreBoard.reduce((sendString, number) => {
-  //     if (number === '') return sendString + ' '
-  //     return sendString + number
-  //   }, '')
-  //   console.log('scorestring : ', scoreString)
-  //   const response = await api.post(
-  //     url,
-  //     JSON.stringify({ opponentNickname: oppositePlayer.nickname, myGameData: scoreString }),
-  //   )
-  //   console.log('JSON : ', JSON.stringify({ opponentNickname: oppositePlayer.nickname, myGameData: scoreString }))
-  //   if (response.data) dispatch(onlineGameBoardChangeOpposite(response.data.opponentGameData))
-  // }
 
   const onChangeFirst = () => {
     const orderNum = 0
     let myValue = refDataList[orderNum].current.value
     if (myValue === '0') myValue = '-'
-    // console.log('thV : ', myValue)
-    // console.log('ISVALID', isValidValue.test(myValue))
     if (isValidValue.test(myValue)) {
-      // console.log('???????????????????', myValue)
       if (
         myValue !== 'X' &&
         myValue !== 'x' &&
@@ -63,20 +36,15 @@ const OnlineScoreTableBlock = props => {
       }
       dispatch(onlineGameBoardChange(myFrame, orderNum, myValue))
     } else {
-      // console.log('gpdgpjdk')
       myValue = ''
       dispatch(onlineGameBoardChange(myFrame, orderNum, myValue))
     }
-    // scoreExchange(myValue)
   }
   const onChangeSecond = () => {
     const orderNum = 1
     let myValue = refDataList[orderNum].current.value
     if (myValue === '0') myValue = '-'
-    // console.log('thV : ', myValue)
-    // console.log('ISVALID', isValidValue.test(myValue))
     if (isValidValue.test(myValue)) {
-      // console.log('???????????????????', myValue)
       if (
         myValue !== 'X' &&
         myValue !== 'x' &&
@@ -87,22 +55,20 @@ const OnlineScoreTableBlock = props => {
       ) {
         myValue = Number(myValue)
       }
+      if (myValue === 'x' || myValue === 'X') {
+        test()
+      }
       dispatch(onlineGameBoardChange(myFrame, orderNum, myValue))
     } else {
-      // console.log('gpdgpjdk')
       myValue = ''
       dispatch(onlineGameBoardChange(myFrame, orderNum, myValue))
     }
-    // scoreExchange(myValue)
   }
   const onChangeThird = () => {
     const orderNum = 2
     let myValue = refDataList[orderNum].current.value
     if (myValue === '0') myValue = '-'
-    // console.log('thV : ', myValue)
-    // console.log('ISVALID', isValidValue.test(myValue))
     if (isValidValue.test(myValue)) {
-      // console.log('???????????????????', myValue)
       if (
         myValue !== 'X' &&
         myValue !== 'x' &&
@@ -115,12 +81,12 @@ const OnlineScoreTableBlock = props => {
       }
       dispatch(onlineGameBoardChange(myFrame, orderNum, myValue))
     } else {
-      // console.log('gpdgpjdk')
       myValue = ''
       dispatch(onlineGameBoardChange(myFrame, orderNum, myValue))
     }
-    // scoreExchange(myValue)
   }
+
+  useEffect(() => {}, [oppositeScoreBoard[0], oppositeScoreBoard[1], oppositeScoreBoard[2]])
 
   return (
     <div className={ScoreTableBlock}>
@@ -156,25 +122,25 @@ const OnlineScoreTableBlock = props => {
         {scoreSum}
       </div>
       <div className="OnlineScoreBlock">
-        <div
+        <input
           className="OnlineScoreInputBlockLeft"
           style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
-        >
-          {oppositeScoreBoard[0]}
-        </div>
-        <div
+          value={oppositeScoreBoard[0]}
+          readOnly={true}
+        ></input>
+        <input
           className="OnlineScoreInputBlockRight"
           style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
-        >
-          {oppositeScoreBoard[1]}
-        </div>
+          value={oppositeScoreBoard[1]}
+          readOnly={true}
+        ></input>
         {frameNum === 10 ? (
-          <div
+          <input
             className="OnlineScoreInputBlockFarRight"
             style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
-          >
-            {oppositeScoreBoard[2]}
-          </div>
+            value={oppositeScoreBoard[2]}
+            readOnly={true}
+          ></input>
         ) : null}
       </div>
       <div className="OnlineScoreSum" style={isGameFinish[1] ? { background: 'green' } : null}>

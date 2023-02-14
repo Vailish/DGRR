@@ -1,10 +1,9 @@
 import axios from 'axios'
 
 export const request = axios.create({
-  baseURL: "http://3.38.97.157:8080",
+  baseURL: 'https://i8b102.p.ssafy.io/',
   headers: {
     'Content-type': 'application/json; charset=UTF-8',
     accept: 'application/json,',
   },
 })
-
