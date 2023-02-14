@@ -3,7 +3,7 @@ import Nav from '../../components/mainpage/Nav'
 import '../../scss/RankingPage.scss'
 import baseaxios from '../../API/baseaxios'
 import { useNavigate } from 'react-router-dom'
-
+<script src="https://kit.fontawesome.com/d97b87339f.js" crossorigin="anonymous"></script>
 const Rankingpage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [rankData, setRankData] = useState([])
