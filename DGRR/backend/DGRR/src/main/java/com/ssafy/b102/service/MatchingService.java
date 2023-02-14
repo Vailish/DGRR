@@ -203,6 +203,7 @@ public class MatchingService {
 				.rank(50)
 				.record(record)
 				.average(average)
+				.randomNumber(matchingRepository.findByUserId(user.getId()).getMatchingNumber())
 				.build();
 	}
 	
