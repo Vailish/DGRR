@@ -10,18 +10,13 @@ import { loadBothPlayers } from '../../../store/OnlineLoginUser'
 
 const KioskOnlineFind = () => {
   const [flag, setflag] = useState(false)
-  // useEffect(() => {
-  //   if (flag) {
-  //     // clearInterval(reqMatchingUser)
-  //     clearInterval(timerCount)
-  //   }
-  // }, [flag])
   const nickname = useSelector(state => state.OnlineLoginUser.player.nickname)
-  // const nickname = '김볼링'
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [isMatched, setisMatched] = useState(false)
   const [timingSecond, settimingSecond] = useState(0)
   const [timingMinute, settimingMinute] = useState(0)
+
   useEffect(() => {
     const timerCount = setInterval(() => {
       settimingSecond(timingSecond + 1)
@@ -36,15 +31,16 @@ const KioskOnlineFind = () => {
     }, 1000)
     return () => clearInterval(timerCount)
   }, [timingMinute, timingSecond, flag])
-  // setTimeout(() => {
-  //   navigate('/KioskOnlineMatching')
-  //   clearInterval(timerCount)
-  // }, 5000)
 
-  // const reqMatchingUser = setInterval(() => {
-  //   console.log(nickname)
+  const forTest = () => {
+    setisMatched(!isMatched)
+  }
 
-  // }, 1000)
+  const goMatching = () => {
+    setTimeout(() => {
+      navigate('/KioskOnlineMatching')
+    }, 2000)
+  }
 
   const reqMatching = async nickname => {
     console.log(JSON.stringify({ nickname }))
@@ -54,6 +50,9 @@ const KioskOnlineFind = () => {
       // clearInterval(reqMatchingUser)
       // clearInterval(timerCount)
       setflag(true)
+      setisMatched(true)
+      forTest()
+      goMatching()
       console.log('내응답이야' + response.data.randomNumber)
       dispatch(loadBothPlayers(response.data, response.data.randomNumber))
       navigate('/KioskOnlineMatching')
@@ -63,12 +62,12 @@ const KioskOnlineFind = () => {
       //시간이 돌아야돼
     }
   }
+
   return (
-    <div className="KioskBackground">
+    <div className="KioskBackground" onClick={forTest}>
       <KioskNavBlock goBackTo="/KioskOnlineLogin" />
       <div className="OnlineFindContentBlock">
         <div className="OnlineFindCenterAlign">
-          {/* <SyncLoader className="OnlineFindLoading" color="#36d7b7" size={80} margin={40} /> */}
           <div className="LoadingBounceBallBlock">
             <div className="LoadingBounceBall Bouncing"></div>
             <div className="LoadingBounceBall Bouncing2"></div>
@@ -76,6 +75,11 @@ const KioskOnlineFind = () => {
           </div>
 
           <div className="OnlineFindTextBlock">게임 찾는중</div>
+          {isMatched ? (
+            <div className="MatchedModal" onClick={goMatching}>
+              게임 매칭됨
+            </div>
+          ) : null}
           <div className="OnlineFindTimeBlock">
             {timingMinute < 10 ? '0' + timingMinute : timingMinute} :{' '}
             {timingSecond < 10 ? '0' + timingSecond : timingSecond}

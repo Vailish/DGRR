@@ -32,7 +32,6 @@ class KioskVideo extends Component {
     return Math.random().toString(16).substr(2, length)
   }
   componentDidMount() {
-
     if (!this.state.session) {
       this.joinSession()
     }
@@ -40,7 +39,7 @@ class KioskVideo extends Component {
   }
   componentDidUpdate() {
     if (this.props.playerState.isGameFinish[0] === true && this.props.playerState.isGameFinish[1] === true) {
-      console.log("끊어버려")
+      console.log('끊어버려')
       const Mysession = this.state.session
       if (Mysession) {
         Mysession.disconnect()
@@ -55,9 +54,8 @@ class KioskVideo extends Component {
           test: undefined,
         })
       }
-      this.props.playerState.SessionId = " ";
+      this.props.playerState.SessionId = ' '
     }
-
   }
   // componentWillUnmount() {
   //   window.removeEventListener('beforeunload', this.onbeforeunload)
@@ -208,7 +206,7 @@ class KioskVideo extends Component {
       publisher: undefined,
       test: undefined,
     })
-    this.props.playerState = ""
+    this.props.playerState = ''
   }
 
   render() {
@@ -262,12 +260,11 @@ class KioskVideo extends Component {
             className="videoRoot"
             style={{
               display: 'inline-block',
-              width: '300vw',
+              width: '30vw',
               height: '30vw',
               float: 'left',
               justifyContent: 'space-between',
               flexDirection: 'row-reverse',
-
             }}
           >
             <div>
@@ -282,7 +279,7 @@ class KioskVideo extends Component {
 
             {this.state.mainStreamManager !== undefined ? (
               <div id="main-video">
-                <UserVideoComponent streamManager={this.state.mainStreamManager} />
+                <UserVideoComponent streamManager={this.state.mainStreamManager} style={{ width: '50vw' }} />
               </div>
             ) : null}
             <div>
@@ -336,7 +333,7 @@ class KioskVideo extends Component {
         return await this.createToken(this.state.test.sessionId)
       }
     }
-    console.log("나의 세션 ID " + this.state.mySessionId)
+    console.log('나의 세션 ID ' + this.state.mySessionId)
     const testSessionId = await this.createSession(String(this.state.mySessionId))
     this.setState({
       test: testSessionId,
@@ -442,6 +439,5 @@ class KioskVideo extends Component {
 
 const testStateProps = state => ({
   playerState: state.OnlineLoginUser,
-
 })
 export default connect(testStateProps)(KioskVideo)

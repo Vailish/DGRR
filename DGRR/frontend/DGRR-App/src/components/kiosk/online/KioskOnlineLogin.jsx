@@ -73,7 +73,11 @@ const KioskOnlineLogin = () => {
         </div>
       </div>
       <div className="GameStartBlock">
-        <Link to="/KioskOnlineFind" className="GameStartButton" onClick={() => reqJoin(nickname)}>
+        <Link
+          to={nickname === 'test!' ? '/KioskOnlineMatching' : '/KioskOnlineFind'}
+          className="GameStartButton"
+          onClick={() => reqJoin(nickname)}
+        >
           시작
         </Link>
       </div>

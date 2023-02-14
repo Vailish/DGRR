@@ -5,6 +5,7 @@ video {
   bottom: 0;
   align-items: center;
   margin: auto 3.2rem;
+  width: 10vw;
 }
 p {
   margin: 0;
