@@ -6,6 +6,7 @@ import '../../../scss/KioskOnlineFind.scss'
 import { api } from '../../../API/api'
 import { useDispatch } from 'react-redux'
 import { loadBothPlayers } from '../../../modules/OnlineLoginUser'
+import { Link } from 'react-router-dom'
 
 const KioskOnlineFind = () => {
   const [flag, setflag] = useState(false)
@@ -83,7 +84,9 @@ const KioskOnlineFind = () => {
             {timingMinute < 10 ? '0' + timingMinute : timingMinute} :{' '}
             {timingSecond < 10 ? '0' + timingSecond : timingSecond}
           </div>
-          <div className="OnlineFindCancelBlock">취소</div>
+          <Link className="OnlineFindCancelBlock" to="/KioskOnlineLogin">
+            취소
+          </Link>
         </div>
       </div>
     </div>
