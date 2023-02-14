@@ -7,6 +7,7 @@ const IdFindSuccess = () => {
   const { username } = location.state
   useEffect(() => {
     if (username) {
+      console.log(username)
     } else {
       navigate('/findId')
     }

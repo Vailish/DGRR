@@ -1,22 +1,31 @@
 package com.ssafy.b102.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.transaction.Transactional;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.b102.Entity.FileEntity;
 import com.ssafy.b102.Entity.User;
+import com.ssafy.b102.persistence.dao.FileRepository;
 import com.ssafy.b102.persistence.dao.UserRepository;
 import com.ssafy.b102.request.dto.CheckPasswordInfoDto;
+import com.ssafy.b102.request.dto.IdentifierRequestDto;
 import com.ssafy.b102.request.dto.LoginRequestDto;
 import com.ssafy.b102.request.dto.RequestUsernameDto;
 import com.ssafy.b102.request.dto.SetPasswordDto;
 import com.ssafy.b102.request.dto.UserRequestDto;
+import com.ssafy.b102.request.dto.UserUpdateRequestDTO;
+import com.ssafy.b102.response.dto.IdentifierResponseDto;
+import com.ssafy.b102.response.dto.ProfileImgResponseDto;
 import com.ssafy.b102.response.dto.UserResponseDto;
+import com.ssafy.b102.util.FilesHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,15 +34,26 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
+	
+	private final FileRepository fileRepository;
 
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	public IdentifierResponseDto identifier(IdentifierRequestDto identifierRequestDto) {
+		return new IdentifierResponseDto(userRepository.findById(identifierRequestDto.getIdentifier()).getNickname());
+	}	
+	
 	public UserResponseDto signUp(UserRequestDto userRequestDto) {
 		System.out.println("회원가입 실행.");
 		userRequestDto.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
 		User user = userRequestDto.toEntity();
 		user.setCreateDate(LocalDateTime.now());
+		user.setPoints(800);
 		this.userRepository.save(user);
+		
+		FileEntity fileEntity = new FileEntity();
+		fileEntity.setUser(user);
+		fileRepository.save(fileEntity);
 		
 		return UserResponseDto.builder()
 				.username(user.getUsername())
@@ -45,6 +65,7 @@ public class UserService {
 				.gender(user.getGender())
 				.points(user.getPoints())
 				.birthday(user.getBirthday())
+				.points(800)
 				.build();
 	}
 	
@@ -182,6 +203,24 @@ public class UserService {
 			}
 			
 		} else {return "비밀번호가 다릅니다";}
+	}
+	
+	@Transactional
+	public ProfileImgResponseDto updateUser(UserUpdateRequestDTO userUpdateRequestDTO) {
+		User user = userRepository.findByNickname(userUpdateRequestDTO.getNickname());
+		if (user == null) {
+			new RuntimeException("없는 유저, 유저 확인 바람");
+		}
+		if (userUpdateRequestDTO.getProfileImage() != null) {
+			try {
+                FileEntity profileImage = FilesHandler.saveFile(userUpdateRequestDTO.getProfileImage());
+                user.setProfileImage(profileImage);
+            } catch (IOException e) {
+                throw new RuntimeException("프로필 사진 등록 중에 문제가 발생했습니다.");
+            }
+		}
+		user = userRepository.saveAndFlush(user);
+        return ProfileImgResponseDto.toDto(user);
 	}
 	
 	public Integer pin() {

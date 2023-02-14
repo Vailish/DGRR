@@ -1,19 +1,14 @@
 package com.ssafy.b102.response.dto;
 
-import java.util.List;
+import com.ssafy.b102.Entity.User;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OtherPlayer {
+public class IdentifierResponseDto {
 	private String nickname;
-	private List<Integer> score;
-	private List<Integer> sumScore;
-	private Integer rank;
 }

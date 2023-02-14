@@ -9,5 +9,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TotalRankingDto {
+	private Integer pageNumber;
 	private List<Ranking> rankings;
 }

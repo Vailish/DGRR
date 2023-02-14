@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.b102.data.dto.MyRankingDto;
 import com.ssafy.b102.data.dto.TotalRankingDto;
 import com.ssafy.b102.response.dto.DataResponseDto;
 import com.ssafy.b102.response.dto.RankingResponseDto;
+import com.ssafy.b102.response.dto.TwentyGameResponseDto;
 import com.ssafy.b102.service.DataService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,36 +33,34 @@ public class DataController {
 		return new ResponseEntity<TotalRankingDto>(totalRankingDto, HttpStatus.OK); 
 	}
 	
+	@GetMapping("/data/ranking/page/{pageNumber}")
+	public ResponseEntity<?> getRankingPage(@PathVariable Integer pageNumber){
+		TotalRankingDto totalRankingDto = dataService.getTotalRankingPage(pageNumber);
+		return new ResponseEntity<TotalRankingDto>(totalRankingDto, HttpStatus.OK); 
+	}
+	
 	@GetMapping("/data/points/{nickname}")
 	public ResponseEntity<?> getUserPointsRank(@PathVariable String nickname){
 		DataResponseDto dataResponseDto = dataService.getUserPointsRank(nickname);
 		return new ResponseEntity<DataResponseDto>(dataResponseDto, HttpStatus.OK); 
 	}
 	
-	//dummydata
-	@GetMapping("/data/ranking/{nickname}")
-	public ResponseEntity<?> dummy2(@PathVariable String nickname){
-		
-		RankingResponseDto rankingResponseDto1 = new RankingResponseDto("ttest2", 8, 2200);
-		RankingResponseDto rankingResponseDto2 = new RankingResponseDto("ttest3", 9, 2120);
-		RankingResponseDto rankingResponseDto3 = new RankingResponseDto("ttest1", 10, 2000);
-		RankingResponseDto rankingResponseDto4 = new RankingResponseDto("ttest4", 11, 1920);
-		RankingResponseDto rankingResponseDto5 = new RankingResponseDto("ttest5", 12, 1880);
-		
-		return new ResponseEntity<List<RankingResponseDto>>(List.of(rankingResponseDto1, rankingResponseDto2, rankingResponseDto3, rankingResponseDto4, rankingResponseDto5), HttpStatus.OK); 
+	@GetMapping("/data/twentygame/{nickname}")
+	public ResponseEntity<?> getTwentyGame(@PathVariable String nickname){
+		TwentyGameResponseDto twentyGameResponseDto = dataService.getTwentyGame(nickname);
+		return new ResponseEntity<TwentyGameResponseDto>(twentyGameResponseDto, HttpStatus.OK); 
 	}
 	
-//	//dummydata
-//	@GetMapping("/data/dev/ranking/{nickname}")
-//	public ResponseEntity<?> dummy2(@PathVariable String nickname){
-//		
-//		RankingResponseDto rankingResponseDto1 = new RankingResponseDto("ttest2", 8, 2200);
-//		RankingResponseDto rankingResponseDto2 = new RankingResponseDto("ttest3", 9, 2120);
-//		RankingResponseDto rankingResponseDto3 = new RankingResponseDto("ttest1", 10, 2000);
-//		RankingResponseDto rankingResponseDto4 = new RankingResponseDto("ttest4", 11, 1920);
-//		RankingResponseDto rankingResponseDto5 = new RankingResponseDto("ttest5", 12, 1880);
-//		
-//		return new ResponseEntity<List<RankingResponseDto>>(List.of(rankingResponseDto1, rankingResponseDto2, rankingResponseDto3, rankingResponseDto4, rankingResponseDto5), HttpStatus.OK); 
-//	}
+	@GetMapping("/data/ranking/user/{nickname}")
+	public ResponseEntity<?> userRanking5(@PathVariable String nickname){
+		List<RankingResponseDto> rankingResponseDtos = dataService.userRanking5(nickname);
+		return new ResponseEntity<>(rankingResponseDtos, HttpStatus.OK); 
+	}
+	
+	@GetMapping("/data/ranking/myranking/{nickname}")
+	public ResponseEntity<?> myRanking(@PathVariable String nickname){
+		MyRankingDto myRankingDto = dataService.myRank(nickname);
+		return new ResponseEntity<MyRankingDto>(myRankingDto, HttpStatus.OK); 
+	}
 	
 }
