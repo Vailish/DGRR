@@ -1,81 +1,107 @@
 import React, { Component } from 'react'
 import { OpenVidu } from 'openvidu-browser'
 import axios from 'axios'
-import UserVideoComponent from './UserVideoComponent';
+import UserVideoComponent from './UserVideoComponent'
 import './test.css'
-const APPLICATION_SERVER_URL = "https://i8b102.p.ssafy.io:8443/openvidu/";
+import { connect} from 'react-redux'
+const APPLICATION_SERVER_URL = 'https://i8b102.p.ssafy.io:8443/openvidu/'
 class KioskVideo extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: props.randomSession,
-      myUserName: "Participant" + Math.floor(Math.random() * 100),
+      mySessionId: String(props.playerState.SessionId),
+      myUserName: 'Participant' + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
       publisher: undefined,
       subscribers: [],
-    };
-
-    this.joinSession = this.joinSession.bind(this);
-    this.leaveSession = this.leaveSession.bind(this);
-    this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
-    this.handleChangeUserName = this.handleChangeUserName.bind(this);
-    this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
-    this.onbeforeunload = this.onbeforeunload.bind(this);
-  }
-
-  componentDidMount() {
-    if (!this.state.session) {
-      this.joinSession();
+      test: {},
     }
-    window.addEventListener("beforeunload", this.onbeforeunload);
+
+    this.joinSession = this.joinSession.bind(this)
+    this.leaveSession = this.leaveSession.bind(this)
+    this.handleChangeSessionId = this.handleChangeSessionId.bind(this)
+    this.handleChangeUserName = this.handleChangeUserName.bind(this)
+    this.handleMainVideoStream = this.handleMainVideoStream.bind(this)
+    // this.onbeforeunload = this.onbeforeunload.bind(this)
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.onbeforeunload);
+  onRandomSession(length = 50) {
+    return Math.random().toString(16).substr(2, length)
   }
+  componentDidMount() {
 
-  onbeforeunload(event) {
-    this.leaveSession();
+    if (!this.state.session) {
+      this.joinSession()
+    }
+    window.addEventListener('beforeunload', this.onbeforeunload)
   }
+  componentDidUpdate() {
+    if (this.props.playerState.isGameFinish[0] === true && this.props.playerState.isGameFinish[1] === true) {
+      console.log("끊어버려")
+      const Mysession = this.state.session
+      if (Mysession) {
+        Mysession.disconnect()
+        this.OV = null
+        this.setState({
+          session: undefined,
+          subscribers: [],
+          mySessionId: undefined,
+          myUserName: 'Participant' + Math.floor(Math.random() * 100),
+          mainStreamManager: undefined,
+          publisher: undefined,
+          test: undefined,
+        })
+      }
+      this.props.playerState.SessionId = " ";
+    }
+
+  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('beforeunload', this.onbeforeunload)
+  // }
+
+  // onbeforeunload(event) {
+  //   this.leaveSession()
+  // }
 
   handleChangeSessionId(e) {
     this.setState({
       mySessionId: e.target.value,
-    });
+    })
   }
 
   handleChangeUserName(e) {
     this.setState({
       myUserName: e.target.value,
-    });
+    })
   }
 
   handleMainVideoStream(stream) {
     if (this.state.mainStreamManager !== stream) {
       this.setState({
         mainStreamManager: stream,
-      });
+      })
     }
   }
 
   deleteSubscriber(streamManager) {
-    let subscribers = this.state.subscribers;
-    let index = subscribers.indexOf(streamManager, 0);
+    let subscribers = this.state.subscribers
+    let index = subscribers.indexOf(streamManager, 0)
     if (index > -1) {
-      subscribers.splice(index, 1);
+      subscribers.splice(index, 1)
       this.setState({
         subscribers: subscribers,
-      });
+      })
     }
   }
 
   joinSession() {
     // --- 1) Get an OpenVidu object ---
 
-    this.OV = new OpenVidu();
+    this.OV = new OpenVidu()
 
     // --- 2) Init a session ---
 
@@ -84,40 +110,40 @@ class KioskVideo extends Component {
         session: this.OV.initSession(),
       },
       () => {
-        var mySession = this.state.session;
+        var mySession = this.state.session
 
         // --- 3) Specify the actions when events take place in the session ---
 
         // On every new Stream received...
-        mySession.on("streamCreated", (event) => {
+        mySession.on('streamCreated', event => {
           // Subscribe to the Stream to receive it. Second parameter is undefined
           // so OpenVidu doesn't create an HTML video by its own
-          var subscriber = mySession.subscribe(event.stream, undefined);
-          var subscribers = this.state.subscribers;
-          subscribers.push(subscriber);
+          var subscriber = mySession.subscribe(event.stream, undefined)
+          var subscribers = this.state.subscribers
+          subscribers.push(subscriber)
 
           // Update the state with the new subscribers
           this.setState({
             subscribers: subscribers,
-          });
-        });
+          })
+        })
 
         // On every Stream destroyed...
-        mySession.on("streamDestroyed", (event) => {
+        mySession.on('streamDestroyed', event => {
           // Remove the stream from 'subscribers' array
-          this.deleteSubscriber(event.stream.streamManager);
-        });
+          this.deleteSubscriber(event.stream.streamManager)
+        })
 
         // On every asynchronous exception...
-        mySession.on("exception", (exception) => {
-          console.warn(exception);
-        });
+        mySession.on('exception', exception => {
+          console.warn(exception)
+        })
 
         // --- 4) Connect to the session with a valid user token ---
 
         // Get a token from the OpenVidu deployment
-        this.getToken().then((token) => {
-          console.log("Token" + token.token)
+        this.getToken().then(token => {
+          console.log('Token' + token.token)
           // First param is the token got from the OpenVidu deployment. Second param can be retrieved by every user on event
           // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
           mySession
@@ -132,70 +158,62 @@ class KioskVideo extends Component {
                 videoSource: undefined, // The source of video. If undefined default webcam
                 piublshAudio: false, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: "1920x1080", // The resolution of your video
+                resolution: '1920x1080', // The resolution of your video
                 frameRate: 50, // The frame rate of your video
-                insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+                insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
-              });
+              })
 
               // --- 6) Publish your stream ---
 
-              mySession.publish(publisher);
+              mySession.publish(publisher)
 
               // Obtain the current video device in use
-              var devices = await this.OV.getDevices();
-              var videoDevices = devices.filter((device) => device.kind === "videoinput");
-              var currentVideoDeviceId = publisher.stream
-                .getMediaStream()
-                .getVideoTracks()[0]
-                .getSettings().deviceId;
-              var currentVideoDevice = videoDevices.find(
-                (device) => device.deviceId === currentVideoDeviceId
-              );
+              var devices = await this.OV.getDevices()
+              var videoDevices = devices.filter(device => device.kind === 'videoinput')
+              var currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId
+              var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId)
 
               // Set the main video in the page to display our webcam and store our Publisher
               this.setState({
                 currentVideoDevice: currentVideoDevice,
                 mainStreamManager: publisher,
                 publisher: publisher,
-              });
+              })
             })
-            .catch((error) => {
-              console.log(
-                "There was an error connecting to the session:",
-                error.code,
-                error.message
-              );
-            });
-        });
-      }
-    );
+            .catch(error => {
+              console.log('There was an error connecting to the session:', error.code, error.message)
+            })
+        })
+      },
+    )
   }
-
   leaveSession() {
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
 
-    const mySession = this.state.session;
+    const mySession = this.state.session
 
     if (mySession) {
-      mySession.disconnect();
+      mySession.disconnect()
     }
 
     // Empty all properties...
-    this.OV = null;
+    this.OV = null
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: "SessionA",
-      myUserName: "Participant" + Math.floor(Math.random() * 100),
+      mySessionId: 'SessionA',
+      myUserName: 'Participant' + Math.floor(Math.random() * 100),
       mainStreamManager: undefined,
       publisher: undefined,
-    });
+      test: undefined,
+    })
+    this.props.playerState = ""
   }
 
   render() {
-    const mySessionId = this.state.mySessionId;
-    const myUserName = this.state.myUserName;
+    const mySessionId = this.state.mySessionId
+    const myUserName = this.state.myUserName
 
     return (
       <div>
@@ -240,16 +258,19 @@ class KioskVideo extends Component {
         ) : null} */}
 
         {this.state.session !== undefined ? (
-          <div>
+          <div
+            className="videoRoot"
+            style={{
+              display: 'inline-block',
+              width: '300vw',
+              height: '30vw',
+              float: 'left',
+              justifyContent: 'space-between',
+              flexDirection: 'row-reverse',
+
+            }}
+          >
             <div>
-
-              <input
-
-                type="button"
-                id="buttonLeaveSession"
-                onClick={this.leaveSession}
-                value="Leave session"
-              />
               {/* <input
                 className="btn btn-large btn-success"
                 type="button"
@@ -275,7 +296,6 @@ class KioskVideo extends Component {
               ) : null} */}
               {this.state.subscribers.map((sub, i) => (
                 <div key={sub.id}>
-                  <span>{sub.id}</span>
                   <UserVideoComponent streamManager={sub} />
                 </div>
               ))}
@@ -283,7 +303,7 @@ class KioskVideo extends Component {
           </div>
         ) : null}
       </div>
-    );
+    )
   }
 
   /**
@@ -303,81 +323,125 @@ class KioskVideo extends Component {
    */
   async getToken() {
     console.log(this.state.mySessionId)
-    const testId = this.state.mySessionId
-    const sessionId = await this.createSession(testId);
-    const test = sessionId.sessionId
-    return await this.createToken(test);
-  }
+    console.log('test합시다.' + this.state.test.sessionId)
 
+    const testRes = await this.getSession()
+    console.log('내 sessionId' + this.state.mySessionId)
+    for (let i = 0; i < testRes.data.content.length; i++) {
+      console.log(testRes.data.content[i].sessionId)
+      if (String(this.state.mySessionId) === testRes.data.content[i].sessionId) {
+        this.setState({
+          test: testRes.data.content[i],
+        })
+        return await this.createToken(this.state.test.sessionId)
+      }
+    }
+    console.log("나의 세션 ID " + this.state.mySessionId)
+    const testSessionId = await this.createSession(String(this.state.mySessionId))
+    this.setState({
+      test: testSessionId,
+    })
+    return await this.createToken(this.state.test.sessionId)
+    // console.log(testSessionId.sessionId)
+
+    // return await this.createToken(this.state.test.sessionId);
+
+    // } else if (typeof (this.state.test.sessionId) !== undefined) {
+    //   return await this.createToken(this.state.mySessionId);
+
+    // }
+    // if (!sessionIdTest) {
+    //   sessionIdTest = await this.createSession(testId);
+    //   const test = sessionIdTest.sessionId
+    //   return await this.createToken(test);
+    // } else {
+
+    // }
+  }
+  async getSession() {
+    const response = await axios.get(APPLICATION_SERVER_URL + `api/sessions`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU',
+      },
+    })
+    return response
+  }
   async createSession(sessionId) {
     const response = await axios.post(
       APPLICATION_SERVER_URL + `api/sessions`,
       {
-        "mediaMode": "ROUTED",
-        "recordingMode": "MANUAL",
-        "customSessionId": sessionId,
-        "forcedVideoCodec": "VP8",
-        "allowTranscoding": false,
-        "defaultRecordingProperties": {
-          "name": "MyRecording",
-          "hasAudio": false,
-          "hasVideo": true,
-          "outputMode": "COMPOSED",
-          "recordingLayout": "BEST_FIT",
-          "resolution": "1280x720",
-          "frameRate": 25,
-          "shmSize": 536870912,
-          "mediaNode": {
-            "id": "media_i-0c58bcdd26l11d0sd"
-          }
+        mediaMode: 'ROUTED',
+        recordingMode: 'MANUAL',
+        customSessionId: sessionId,
+        forcedVideoCodec: 'VP8',
+        allowTranscoding: false,
+        defaultRecordingProperties: {
+          name: 'MyRecording',
+          hasAudio: false,
+          hasVideo: true,
+          outputMode: 'COMPOSED',
+          recordingLayout: 'BEST_FIT',
+          resolution: '1980x1080',
+          frameRate: 25,
+          shmSize: 536870912,
+          mediaNode: {
+            id: 'media_i-0c58bcdd26l11d0sd',
+          },
         },
-        "mediaNode": {
-          "id": "media_i-0c58bcdd26l11d0sd"
-        }
+        mediaNode: {
+          id: 'media_i-0c58bcdd26l11d0sd',
+        },
       },
       {
         headers: {
-          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU"
+          'Content-Type': 'application/json',
+          Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU',
         },
-      }
-    );
+      },
+    )
 
-    return response.data; // The sessionId
+    return response.data // The sessionId
   }
 
   async createToken(sessionId) {
     const response = await axios.post(
       APPLICATION_SERVER_URL + `api/sessions/${sessionId}/connection`,
       {
-        "type": "WEBRTC",
-        "data": "My Server Data",
-        "record": true,
-        "role": "PUBLISHER",
-        "kurentoOptions": {
-          "videoMaxRecvBandwidth": 1000,
-          "videoMinRecvBandwidth": 300,
-          "videoMaxSendBandwidth": 1000,
-          "videoMinSendBandwidth": 300,
-          "allowedFilters": ["GStreamerFilter", "ZBarFilter"]
+        type: 'WEBRTC',
+        data: 'My Server Data',
+        record: true,
+        role: 'PUBLISHER',
+        kurentoOptions: {
+          videoMaxRecvBandwidth: 1000,
+          videoMinRecvBandwidth: 300,
+          videoMaxSendBandwidth: 1000,
+          videoMinSendBandwidth: 300,
+          allowedFilters: ['GStreamerFilter', 'ZBarFilter'],
         },
-        "customIceServers": [
+        customIceServers: [
           {
-            "url": "turn:turn-domain.com:443",
-            "username": "usertest",
-            "credential": "userpass"
-          }
-        ]
+            url: 'turn:turn-domain.com:443',
+            username: 'usertest',
+            credential: 'userpass',
+          },
+        ],
       },
       {
         headers: {
-          "Content-Type": "application/json", "Authorization": "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true
+          'Content-Type': 'application/json',
+          Authorization: 'Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
         },
-      }
-    );
-    return response.data; // The token
+      },
+    )
+    return response.data // The token
   }
 }
 
-export default KioskVideo
+const testStateProps = state => ({
+  playerState: state.OnlineLoginUser,
+
+})
+export default connect(testStateProps)(KioskVideo)

@@ -1,35 +1,51 @@
 import React from 'react'
 import '../../../scss/KioskOnlineLogin.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import KioskLoginPlayer from './KioskLoginPlayer'
-import { addPlayer } from '../../../store/OfflineLoginUsers'
+import { addPlayer } from '../../../store/OnlineLoginUser'
 // import axios from 'axios'
-import { apis } from '../../../API/api'
+import { api } from '../../../API/api'
 import KioskNavBlock from '../KioskNavBlock'
+import KioskOnlineProfile from './KioskOnlineProfile'
 
 const KioskOnlineLogin = () => {
   let pinNumber = undefined
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const player = useSelector(state => state.OnlineLoginUser.player)
+  const nickname = player.nickname
+  // const nickname = '김볼링'
+  console.log(nickname)
+  console.log(player)
   const inputPinNumber = e => {
     pinNumber = e.target.value
+    console.log(pinNumber)
   }
   const CustomInput = props => {
     const { InputValue, InputPin, InputClassName } = props
-    return <input value={InputValue} onChange={InputPin} className={InputClassName} />
+    return (
+      <input
+        type="number"
+        value={InputValue}
+        onChange={InputPin}
+        className={InputClassName}
+        style={{ fontSize: '2vw' }}
+      />
+    )
   }
-  const onAddPlayer = () => {
+  const onAddPlayer = async () => {
     // pinNumber = ''
-    dispatch(addPlayer(pinNumber))
-    console.log(pinNumber)
+    const pinNum = String(pinNumber)
+    const url = '/v1/matching/' + pinNum
+    const response = await api.get(url)
+    console.log('response : ', response)
+    dispatch(addPlayer(response.data))
   }
-  const players = useSelector(state => state.OfflineLoginUsers.players)
-  const always4Blocks = () => {
-    const playersList = [...players]
-    for (let i = playersList.length; i < 4; i++) {
-      playersList.push({})
-    }
-    return playersList
+  const reqJoin = async nickname => {
+    const url = '/v1/game/matching/join'
+    const response = await api.post(url, JSON.stringify({ nickname }))
+    if (response.data) navigate('/KioskOnlineFind')
   }
   return (
     <div className="KioskBackground">
@@ -52,15 +68,17 @@ const KioskOnlineLogin = () => {
         </div>
         <div className="UsersBlock">
           <div className="PlayersBlock">
-            <div className="WelcomePlayer">
-              <div className="WelcomeText">떼구르르에 오신 것을 환영합니다. 볼링 실력을 뽐내보세요</div>
-            </div>
+            <div className="WelcomePlayer">{nickname ? <KioskOnlineProfile player={player} /> : null}</div>
           </div>
         </div>
       </div>
       <div className="GameStartBlock">
-        <Link to="/KioskOnlineProfile" className="GameStartButton">
-          START
+        <Link
+          to={nickname === 'test!' ? '/KioskOnlineMatching' : '/KioskOnlineFind'}
+          className="GameStartButton"
+          onClick={() => reqJoin(nickname)}
+        >
+          시작
         </Link>
       </div>
     </div>

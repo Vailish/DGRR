@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { checkPassword } from '../../../regex/regex'
-
-import axios from 'axios'
+import { request } from '../../../API/request'
+import '../../../scss/FindPwSuccess.scss'
 const PwFindSuccess = () => {
   const navigate = useNavigate()
   const location = useLocation()
@@ -38,15 +38,8 @@ const PwFindSuccess = () => {
       password: password,
       passwordConfirm: passwordConfirm,
     }
-    const response = await axios.put(
-      'http://192.168.31.142:8080/api/v1/request/setpassword',
-      JSON.stringify(updateUserInfo),
-      {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-      },
-    )
+
+    const response = await request.put('/api/v1/request/setpassword', JSON.stringify(updateUserInfo))
     if (response.data === true) {
       alert('비밀번호 수정완료하였습니다.')
       navigate('/')
@@ -85,7 +78,13 @@ const PwFindSuccess = () => {
       <div className="FindPw">
         <div className="Text">
           <div className="TitleText">
-            <h1>DG.RR</h1>
+            <h1
+              onClick={() => {
+                navigate('/')
+              }}
+            >
+              DG.RR
+            </h1>
           </div>
           <div className="SubTitleText">
             <p>
@@ -100,7 +99,7 @@ const PwFindSuccess = () => {
             <p>DG.RR</p>
           </div>
 
-          <div className="FindPwInput">
+          <div className="FindPwSuccessInput">
             <form onSubmit={onSubmit}>
               <input style={{ background: '#D3D3D3' }} name="username" value={username} readOnly />
               <input style={{ background: '#D3D3D3' }} name="email" value={email} readOnly />
