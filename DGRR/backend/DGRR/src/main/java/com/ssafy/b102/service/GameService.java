@@ -3,6 +3,8 @@ package com.ssafy.b102.service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,7 +43,7 @@ public class GameService {
 	
 	private final MatchingRepository matchingRepository;
 
-	public UserGamesResponseDto getUserGames(String nickname) {
+	public UserGamesResponseDto getUserGames(String nickname, Integer gameType) {
 		System.out.println("특정 유저의 게임정보 요청들어왔어유~~~~~~");
 		// user닉네임으로 user를 가져와서
 		User user = userRepository.findByNickname(nickname);
@@ -51,10 +53,20 @@ public class GameService {
 		List<Games2> games = new ArrayList<>(); 
 		
 		for(UserGame usergame : usergames) { // 내게임 기준으로 하나씩 돌리는 거임
+			// 0 이 전체, 1이 온라인 2가 오프라인 / true 온라인게임 false 오프라인게임
+			if (usergame.getGame().getGameType() == true && gameType == 2) {
+				continue;
+			}
+			
+			if (usergame.getGame().getGameType() == false && gameType == 1) {
+				continue;
+			}	
+			
 			Games2 game = new Games2();
 			// 내 게임정보를 먼저 저장
 			game.setGameId(usergame.getGame().getId());
 			game.setGameType(usergame.getGame().getGameType());
+			game.setGameDate(usergame.getGame().getGameDate());
 			game.setScore(convertToList(usergame.getGameScore()));
 			game.setSumScore(sumScore(convertToList(usergame.getGameScore())));
 			game.setRank(usergame.getGameRank());
@@ -118,11 +130,6 @@ public class GameService {
 //			
 //			
 //		}
-						
-				
-				
-				
-			
 		
 		Boolean gameType = gameRequestDto.getGameType();
 		LocalDateTime gameDate = LocalDateTime.now();
@@ -134,7 +141,6 @@ public class GameService {
 			case 2:
 				String nickname2_1 = gameRequestDto.getGameData().get(0).getNickname();
 				List<Integer> score2_1 = gameRequestDto.getGameData().get(0).getScore();
-				System.out.println();
 				
 				
 				String nickname2_2 = gameRequestDto.getGameData().get(1).getNickname();
@@ -289,6 +295,7 @@ public class GameService {
 				int sum4_4 = score4_4.stream().mapToInt(Integer::intValue).sum();
 				
 				List<Integer> order4 = new ArrayList<>(List.of(sum4_1,sum4_2, sum4_3, sum4_4));
+				order4.sort(Comparator.reverseOrder()); 
 				System.out.println(order4.toString());
 				for (int i = 0; i < order4.size(); i++) {
 					if (order4.get(i) == sum4_1) {
@@ -301,6 +308,12 @@ public class GameService {
 						userGame4_4.setGameRank(i+1);
 					}
 				}
+				System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+				System.out.println(userGame4_1.getGameRank());
+				System.out.println(userGame4_2.getGameRank());
+				System.out.println(userGame4_3.getGameRank());
+				System.out.println(userGame4_4.getGameRank());
+				System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 				
 				userGame4_1.setUser(userRepository.findByNickname(nickname4_1));
 				userGame4_2.setUser(userRepository.findByNickname(nickname4_2));
