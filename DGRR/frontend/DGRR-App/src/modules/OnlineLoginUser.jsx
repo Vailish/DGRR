@@ -53,17 +53,20 @@ const initialState = {
 
 const OnlineLoginUser = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_PLAYER:
+    case ADD_PLAYER: {
       const player = action.playerInfo
       return {
         ...state,
         player,
       }
-    case REMOVE_PLAYER:
+    }
+    case REMOVE_PLAYER: {
+      const player = action.playerInfo
       return {
         ...state,
-        helpOpen: false,
+        player,
       }
+    }
     case LOAD_BOTH_PLAYERS: {
       const gamingPlayer = {
         playerInfo: { ...state.player },

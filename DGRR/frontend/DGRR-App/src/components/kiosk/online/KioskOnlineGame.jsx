@@ -2,11 +2,9 @@ import KioskNavBlock from '../KioskNavBlock'
 import React, { useEffect, useState } from 'react'
 import '../../../scss/KioskOnlineGame.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 import OnlineScoreTable from './OnlineScoreTable'
-// import KioskVideo from './webrtc/KioskVideo'
-import { onlineGameBoardChangeOpposite } from '../../../store/OnlineLoginUser'
+import { onlineGameBoardChangeOpposite } from '../../../modules/OnlineLoginUser'
 import { api } from '../../../API/api'
 import KioskVideo from '../online/webrtc/KioskVideo'
 
@@ -67,12 +65,12 @@ const KioskOnlineGame = () => {
     if (response.data) dispatch(onlineGameBoardChangeOpposite(response.data.opponentGameData))
   }
 
-  // useEffect(() => {
-  //   const scoreUpdate = setInterval(() => {
-  //     scoreExchange()
-  //   }, 1000)
-  //   return () => clearInterval(scoreUpdate)
-  // }, [scoreArray])
+  useEffect(() => {
+    const scoreUpdate = setInterval(() => {
+      scoreExchange()
+    }, 1000)
+    return () => clearInterval(scoreUpdate)
+  }, [scoreArray])
 
   const [needHelp, setneedHelp] = useState(false)
   const helpMessage = () => {

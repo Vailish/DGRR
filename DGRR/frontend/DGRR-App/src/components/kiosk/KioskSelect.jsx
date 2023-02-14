@@ -1,31 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../scss/KioskSelect.scss'
-import { useDispatch } from 'react-redux'
-import KioskSelectHelp from './KioskSelectHelp'
 import { Link } from 'react-router-dom'
-import { openHelp, closeHelp } from '../../store/KioskSelect'
 
 const KioskSelect = () => {
-  const dispatch = useDispatch()
+  const [needHelp, setneedHelp] = useState(false)
 
-  const onOpenHelp = () => dispatch(openHelp())
-  const onCloseHelp = () => dispatch(closeHelp())
+  const onChangeHelp = () => {
+    setneedHelp(!needHelp)
+  }
 
-  // const [modalOpen, setModalOpen] = useState(false);
-
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
+  const KioskSelectHelpMessage = () => {
+    return (
+      <div className="KioskSelectHelp">
+        <section className="KioskSelectHelpInner">
+          <header className="Header">
+            <button className="Close" onClick={onChangeHelp}>
+              &times;
+            </button>
+          </header>
+          <div className="Start">시작하기</div>
+          <div className="FirstHere">처음 오셨나요?</div>
+          <p className="InnerText">경쟁전 : 온라인으로 만난 상대와 1:1 대결을 벌입니다!</p>
+          <p className="InnerText">친선전 : 오프라인으로 친구들과 함께 점수를 겨룹니다</p>
+        </section>
+      </div>
+    )
+  }
 
   return (
     <div className="KioskBackground">
-      <KioskSelectHelp closeHelp={onCloseHelp} />
+      {needHelp ? <KioskSelectHelpMessage /> : null}
       <div className="TitleBlock">
         <div className="HelpCircleBlock">
-          <div className="HelpCircle" onClick={onOpenHelp}>
+          <div className="HelpCircle" onClick={onChangeHelp}>
             ?
           </div>
         </div>

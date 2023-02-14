@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import auth from './auth'
-import KioskSelect from '../store/KioskSelect'
-import OfflineLoginUsers from '../store/OfflineLoginUsers'
-import OnlineLoginUser from '../store/OnlineLoginUser'
+import KioskSelect from './KioskSelect'
+import OfflineLoginUsers from './OfflineLoginUsers'
+import OnlineLoginUser from './OnlineLoginUser'
 
 const rootReducer = combineReducers({
   auth,

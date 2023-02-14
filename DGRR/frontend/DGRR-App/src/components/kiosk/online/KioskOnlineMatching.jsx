@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import matching from '../../../sound/matching.mp3'
 import useSound from 'use-sound'
-
+import countSound from '../../../sound/countDown.mp3'
 const OnlineMatchingPlayer = props => {
   const { nickname, tier, point, record, orderNum } = props
 
@@ -33,8 +33,12 @@ const OnlineMatchingPlayer = props => {
 const CountingDown = () => {
   const navigate = useNavigate()
   const [countingNum, setcountingNum] = useState(13)
+  const [countPlay] = useSound(countSound)
   useEffect(() => {
     const numberCounting = setInterval(() => {
+      if (countingNum === 11) {
+        countPlay()
+      }
       setcountingNum(countingNum - 1)
       if (countingNum === 0) {
         navigate('/KioskOnlineGame')

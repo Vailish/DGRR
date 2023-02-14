@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../../scss/KioskLoginPlayer.scss'
-import { removePlayer } from '../../../store/OfflineLoginUsers'
+import { removePlayer } from '../../../modules/OfflineLoginUsers'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'

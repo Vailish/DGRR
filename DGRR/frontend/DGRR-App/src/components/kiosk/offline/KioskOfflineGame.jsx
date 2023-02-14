@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import '../../../scss/KioskOfflineGame.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-// import KioskLoginPlayer from './KioskLoginPlayer'
-import { sendAllScore } from '../../../store/OfflineLoginUsers'
-// import axios from 'axios'
-import { api } from '../../../API/api'
+import { useNavigate } from 'react-router-dom'
+import { sendAllScore } from '../../../modules/OfflineLoginUsers'
 import ScoreTable from './ScoreTable'
 import KioskNavBlock from '../KioskNavBlock'
 

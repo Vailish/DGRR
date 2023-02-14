@@ -39,18 +39,20 @@
           flex-direction: column;
           align-items: center;
           .QRImage {
-            width: 400px / 2560px * 100vw;
-            height: 400px / 1600px * 100vh;
+            width: 300px / 2560px * 100vw;
+            height: 300px / 2560px * 100vw;
             // background: black;
             background-image: url('../img/mLogin.png');
             background-size: cover;
             background-size: 95%;
           }
           .QRTitle {
+            width: 30vw;
             margin-top: 3vh;
             font-size: 2vw;
           }
           .QRText {
+            width: 25vw;
             margin-top: 1vh;
             font-size: 1vw;
           }
@@ -96,6 +98,19 @@
           box-shadow: 0.25vh 0.25vh 0.5vh rgba(0, 0, 0, 0.25);
 
           border-radius: 24px;
+          .KioskOnlineLogout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 87vw;
+            top: 23vh;
+            width: 2vw;
+            height: 2vw;
+            border-radius: 2vw;
+            background: gray;
+            z-index: 5;
+          }
           .WelcomePlayer {
             display: flex;
             width: 90%;
@@ -103,6 +118,8 @@
             background: #f2faff;
             justify-content: center;
             align-items: center;
+            font-size: 3vw;
+            color: darkblue;
             .WelcomeText {
               width: 840/1024 * 100%;
               height: 272 / 808 * 100%;

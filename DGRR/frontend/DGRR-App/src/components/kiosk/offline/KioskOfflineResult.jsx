@@ -1,17 +1,29 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import '../../../scss/KioskOfflineResult.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-// import KioskLoginPlayer from './KioskLoginPlayer'
-import { sendAllScore } from '../../../store/OfflineLoginUsers'
-// import axios from 'axios'
-import { apis } from '../../../API/api'
+import { sendAllScore } from '../../../modules/OfflineLoginUsers'
 import KioskNavBlock from '../KioskNavBlock'
-import ResultChart from './ResultChart'
-import OfflineResultChart from './OfflineResultChart'
-import playerScore from '../../../scss/_variables.scss'
+import { useNavigate } from 'react-router-dom'
 
 const KioskOfflineResult = () => {
+  const dispatch = useDispatch()
+  const onSendAllScore = () => dispatch(sendAllScore())
+  const navigate = useNavigate()
+  const isGameFinish = useSelector(state => state.OfflineLoginUsers.isGameFinish)
+
+  useEffect(() => {
+    let goResult = true
+    for (let isFinish of Object.values(isGameFinish)) {
+      if (isFinish === false) {
+        goResult = false
+        break
+      }
+    }
+    if (goResult === true) {
+      onSendAllScore()
+      navigate('/KioskOfflineResult')
+    }
+  })
   const playerList = useSelector(state => Object.keys(state.OfflineLoginUsers.gamingPlayers))
   console.log(playerList)
   const gamingPlayers = useSelector(state => state.OfflineLoginUsers.gamingPlayers)
@@ -63,7 +75,6 @@ const KioskOfflineResult = () => {
 
   // const dispatch = useDispatch()
 
-  // const onSendAllScore = () => dispatch(sendAllScore())
   // const ChangeLength = () => {
   //   playerScore = { ...playerScore, playerScoreLength: '20%' }
   // }

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const api = axios.create({
   // 이 부분 수정
-  baseURL: 'http://3.38.97.157:8080/api/',
+  baseURL: 'https://i8b102.p.ssafy.io/api/',
   headers: {
     'Content-type': 'application/json; charset=UTF-8',
     accept: 'application/json,',
