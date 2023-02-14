@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import '../../scss/FindId.scss'
-import axios from 'axios'
-import { checkUserName, checkEmail } from '../../regex/regex'
+import { request } from '../../API/request'
+import { checkEmail } from '../../regex/regex'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import IdFind from '../../components/user/Find/IdFind'
 import { useNavigate } from 'react-router-dom'
+
 const FindIdForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -13,26 +14,20 @@ const FindIdForm = () => {
     form: auth.findid,
   }))
 
+  useEffect(() => {
+    dispatch(initialForm('findid'))
+  }, [dispatch])
+
   const reqFindUserName = async (nickname, email) => {
-    console.log(nickname + ' ' + email)
-    const username = '테스트'
     const findIdinfo = {
       nickname: nickname,
       email: email,
     }
     try {
-      const response = await axios.post(
-        'http://192.168.31.142:8080/api/v1/request/username',
-        JSON.stringify(findIdinfo),
-        {
-          headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-          },
-        },
-      )
+      const response = await request.post('/api/v1/request/username', JSON.stringify(findIdinfo))
       console.log(response)
       if (response.status === 200) {
-        alert('아이디를 찾았어요!!')
+        alert('결과확인해주세요')
         navigate('/findIdSuccess', {
           state: {
             username: response.data,
@@ -52,11 +47,10 @@ const FindIdForm = () => {
             value: '',
           }),
         )
-      } else {
-        alert('존재하지 않는 아이디입니다.')
       }
     } catch (e) {
       console.log(e)
+      alert('존재하지 않는 아이디입니다.')
     }
   }
   const onChange = e => {

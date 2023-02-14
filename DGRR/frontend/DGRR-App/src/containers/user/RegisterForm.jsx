@@ -1,6 +1,6 @@
 import '../../scss/Register.scss'
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import { request } from '../../API/request'
 import { changeField, initialForm } from '../../modules/auth'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -11,8 +11,7 @@ import PageTwo from '../../components/user/Join/PageTwo/PageTwo'
 import PageThree from '../../components/user/Join/PageThree/PageThree'
 import MultiStepProgressBar from '../../components/user/Join/MultiStepProgressBar/MultiStepProgressBar'
 const RegisterForm = () => {
-
-  //회원가입 progree에 대한 정규식 표현 처리 
+  //회원가입 progree에 대한 정규식 표현 처리
   const [registerOneError, setRegisterOneError] = useState({
     pageone: '',
     username: '',
@@ -64,14 +63,12 @@ const RegisterForm = () => {
   //회원가입 비동기 api 통신
   const reqRegister = async user => {
     try {
-      const response = await axios.post('http://192.168.31.142:8080/api/v1/signup', JSON.stringify(user), {
+      const response = await request.post('/api/v1/signup', JSON.stringify(user), {
         headers: { 'Content-Type': 'application/json' },
       })
 
       if (response.status === 200) {
-        {
-          alert('회원가입성공')
-        }
+        alert('회원가입성공')
         navigate('/')
       }
     } catch (e) {
@@ -82,7 +79,7 @@ const RegisterForm = () => {
   //아이디 중복체크
   const reqDuplcateCheckUserName = async username => {
     try {
-      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/username/${username}`)
+      const response = await request.get(`/api/v1/check/username/${username}`)
       if (response.data === true) {
         setIsRegisterOneError({
           ...setIsRegisterOneError,
@@ -110,7 +107,7 @@ const RegisterForm = () => {
   //닉네임 중복체크
   const reqDuplcateCheckNickname = async nickname => {
     try {
-      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/nickname/${nickname}`)
+      const response = await request.get(`/api/v1/check/nickname/${nickname}`)
       if (response.data === true) {
         setIsRegisterTwoError({
           ...isRegisterTwoError,
@@ -138,7 +135,7 @@ const RegisterForm = () => {
   //이메일 중복체크
   const reqDuplcateCheckEmail = async email => {
     try {
-      const response = await axios.get(`http://192.168.31.142:8080/api/v1/check/email/${email}`)
+      const response = await request.get(`/api/v1/check/email/${email}`)
       if (response.data === true) {
         setIsRegisterTwoError({
           ...isRegisterTwoError,
@@ -214,7 +211,6 @@ const RegisterForm = () => {
           ...isRegisterOneError,
           password: false,
         })
-       
       } else {
         //비밀번호는 소문자와 숫자 그리고 특수문자 조합으로 간다.
         if (checkPassword(value)) {
@@ -413,7 +409,6 @@ const RegisterForm = () => {
         }),
       )
     }
-
   }
   //성별
   const onChangeGender = checkThis => {
@@ -436,7 +431,6 @@ const RegisterForm = () => {
         if (genderBoxes[i].value === 'male') {
           //남자 선택
           if (check) {
-           
             setIsRegisterThreeError({
               ...isRegisterThreeError,
               gender: true,
@@ -459,7 +453,6 @@ const RegisterForm = () => {
         }
         if (genderBoxes[i].value === 'female') {
           if (check) {
-            
             setIsRegisterThreeError({
               ...isRegisterThreeError,
               gender: true,
@@ -469,7 +462,6 @@ const RegisterForm = () => {
               gender: '',
             })
           } else {
-            
             setIsRegisterThreeError({
               ...isRegisterThreeError,
               gender: false,
@@ -563,7 +555,6 @@ const RegisterForm = () => {
       })
       reqRegister(form)
     } else if (!isRegisterThreeError.gender && birthday.length === 10) {
-
       setIsRegisterThreeError({
         ...isRegisterThreeError,
         gender: false,

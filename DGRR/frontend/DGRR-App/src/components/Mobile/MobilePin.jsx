@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react'
 import '../../scss/MobilePin.scss'
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { getCookie, removeCookie } from '../../cookies/Cookies'
 const MobilePin = () => {
   const [min, setMin] = useState(5)
   const [sec, setSec] = useState(0)
-  
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { username, password } = location.state
+
+  useEffect(() => {
+    if (getCookie('token')) {
+    } else {
+      navigate('/mLogin')
+    }
+  })
   useEffect(() => {
     const countdown = setInterval(() => {
       if (parseInt(sec) > 0) {
@@ -44,10 +54,9 @@ const MobilePin = () => {
       console.log('에러가 났어요')
     }
   }
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { username, password } = location.state
+
   const onPinCheck = () => {
+    removeCookie('token')
     navigate('/mLogin')
   }
 

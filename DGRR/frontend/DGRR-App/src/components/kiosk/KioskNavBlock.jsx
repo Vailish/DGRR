@@ -13,13 +13,13 @@ const KioskNavBlock = props => {
       <div className="spaceBlock"></div>
       {goBackTo ? (
         <Link className="BackBlock" to={goBackTo}>
-          <div className="GoBack">BACK</div>
+          <div className="GoBack">뒤로</div>
           <hr className="BackLine" />
         </Link>
       ) : null}
       {goFrontTo ? (
         <Link className="FrontBlock" to={goFrontTo}>
-          <div className="GoFront">NEXT</div>
+          <div className="GoFront">다음</div>
           <hr className="FrontLine" />
         </Link>
       ) : null}

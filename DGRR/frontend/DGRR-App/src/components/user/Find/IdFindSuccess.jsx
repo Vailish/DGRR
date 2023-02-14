@@ -34,7 +34,7 @@ const IdFindSuccess = () => {
 
           <div className="FindIdInput">
             <div className="findUserName">
-              <span>{username} </span>
+              <span>{username}</span>
             </div>
             <div className="Button">
               <button
