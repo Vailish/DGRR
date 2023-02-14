@@ -38,7 +38,6 @@ const KioskSelect = () => {
         </div>
         <div className="TitleTextBlock">
           <div className="TitleText">DG.RR</div>
-          {/* <hr className='Pin'/> */}
         </div>
       </div>
       <div className="ButtonBlock">
