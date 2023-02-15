@@ -1,33 +1,25 @@
-import KioskNavBlock from '../KioskNavBlock'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import KioskNavBlock from '../KioskNavBlock'
 import '../../../scss/KioskOnlineProfile.scss'
 import { Link } from 'react-router-dom'
 
 const KioskOnlineProfile = props => {
-  const { goBackTo, goFrontTo } = props
-
+  const { player } = props
+  const { nickname, record, point, profile } = player
+  // const player = useSelector(state => state.OnlineLoginUser.player)
   return (
-    <div className="KioskBackground">
-      <KioskNavBlock goBackTo={'/KioskOnlineLogin'} />
-      <div className="OnlineProfileContentBlock">
-        <div className="OnlineProfileContentInner">
-          <div className="OnlineProfile"></div>
-          <div className="OnlineRecordBlock">
-            <div className="OnlinePlayerName">메시</div>
-            <div className="OnlineTierAndRecord">
-              <div className="OnlineTier">골드(1800)</div>
-              <div className="OnlineRecord">10전 7승 3패</div>
+    <div className="OnlineProfileContentBlock">
+      <div className="OnlineProfileContentInner">
+        <div className="OnlineProfile"> {profile}</div>
+        <div className="OnlineRecordBlock">
+          <div className="OnlinePlayerName">{nickname}</div>
+          <div className="OnlineTierAndRecord">
+            <div className="OnlineTier">{point}</div>
+            <div className="OnlineRecord">
+              {record[0].totalGame} 전 {record[0].winGame} 승 {record[0].loseGame} 패
             </div>
           </div>
-        </div>
-
-        <div className="StartBackBlock">
-          <Link to="/KioskOnlineFind" className="GameStartBlock">
-            START
-          </Link>
-          <Link to="/KioskOnlineLogin" className="GameStartBlock">
-            BACK
-          </Link>
         </div>
       </div>
     </div>

@@ -1,12 +1,34 @@
 @import './mixins';
 
-@keyframes bounce_frames {
-  from {
-    transform: translate3d(0, 0, 0);
+@keyframes player_onstage {
+  0% {
+    transform: scale(2, 2);
   }
+  100% {
+  }
+}
 
-  to {
-    transform: translate3d(0, 10vh, 0);
+@keyframes player_onstage2-1 {
+  0% {
+    transform: translate(50vw);
+  }
+  100% {
+  }
+}
+
+@keyframes player_onstage2-2 {
+  0% {
+    transform: translate(-50vw);
+  }
+  100% {
+  }
+}
+
+@keyframes count_down {
+  0% {
+    transform: scale(3, 3);
+  }
+  100% {
   }
 }
 
@@ -28,17 +50,30 @@
         position: absolute;
         width: 10vw;
         height: 10vh;
-        left: 1056/2560 * 100vw;
-        top: 600 / 1600 * 100vh;
-        font-size: 12vw;
+        left: 1100/2560 * 100vw;
+        top: 700 / 1600 * 100vh;
+        font-size: 5vw;
       }
       .LetterS {
         position: absolute;
         width: 10vw;
         height: 10vh;
-        left: 1208/2560 * 100vw;
-        top: 760 / 1600 * 100vh;
-        font-size: 12vw;
+        left: 1200/2560 * 100vw;
+        top: 700 / 1600 * 100vh;
+        font-size: 5vw;
+      }
+      .CountingDownNumber {
+        position: absolute;
+        width: 10vw;
+        height: 10vh;
+        left: 1150/2560 * 100vw;
+        top: 900 / 1600 * 100vh;
+        font-size: 10vw;
+
+        animation-name: count_down;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-duration: 1s;
       }
       .OnlineMatchingPlayerBlock {
         display: flex;
@@ -51,6 +86,10 @@
         align-items: center;
         box-shadow: 0vh 0.25vh 0.25vh rgba(0, 0, 0, 0.25);
         border-radius: 1.5vh;
+        animation-name: player_onstage2-1;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: 1;
         .OnlineMatchingProfile {
           width: 536 / 2560 * 100vw;
           height: 536 / 2560 * 100vw;

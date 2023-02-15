@@ -48,6 +48,7 @@ const ShowImage = () => {
 
 const OfflineResultChart = props => {
   const { data, width, height } = props
+  console.log('data : ', data)
 
   const renderCustomizedLabel = props => {
     const { x, y, width, height, value } = props

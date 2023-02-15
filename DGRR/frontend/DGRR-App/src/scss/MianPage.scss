@@ -1,28 +1,4 @@
-// .myClass {
-//   ├── 객체의 노출여부와 표현방식
-//   │   ├── display
-//   │   └── list-style
-//   │
-//   ├── 위치와 좌표
-//   │   ├── position
-//   │   ├── float
-//   │   └── clear
-//   │
-//   ├── 크기와 여백
-//   │   ├── width / height
-//   │   └── padding / margin
-//   │
-//   ├── 윤곽과 배경
-//   │   └── border / background
-//   │
-//   ├── 글자와 정렬
-//   │   ├── corlor / font
-//   │   ├── text-decoration
-//   │   ├── text-align / vertical-align
-//   │   └── white-space
-//   │
-//   └── 내용
-//       └── content
+$bar-size: 50%;
 
 .PageBase {
   display: flex;
@@ -33,6 +9,10 @@
   padding-left: 12.5vw;
   justify-content: space-between;
 
+  .FlexBox {
+    display: flex;
+    justify-content: space-between;
+  }
   .Nav {
     display: flex;
     position: fixed;
@@ -250,9 +230,10 @@
         color: #fff;
         padding-right: 1%;
 
-        .SpanBar {
+        #SpanBar {
           position: absolute;
-          width: 70%;
+          // width: var(--bar-size);
+          width: 50%;
           height: 100%;
           background: #5383e8;
           text-align: left;
@@ -287,8 +268,8 @@
       position: relative;
       width: 728px;
       height: auto;
-      // margin: 8px 8px;
       padding: 4px 8px;
+      margin-bottom: 10px;
       border: 0.5px solid #e2e2e2;
       background: #ffffff;
       flex-direction: column;
@@ -361,8 +342,8 @@
 
           .CrownImg {
             display: block;
-            width: 50px;
-            margin-left: 9px;
+            width: 45px;
+            margin-left: 11px;
             object-fit: contain;
           }
 
@@ -373,6 +354,7 @@
           }
 
           .ScoreTable {
+            margin-top: 4px;
             width: 494px;
             height: 95%;
             .FrameNumber {
@@ -457,5 +439,9 @@
       box-shadow: 0 0 0 3px rgb(0, 0, 0) inset;
       border-radius: 5px;
     }
+  }
+
+  .Hidden {
+    visibility: hidden;
   }
 }

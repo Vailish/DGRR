@@ -53,7 +53,7 @@
       }
       .FindPwForm {
         width: 24%;
-        height: 64%;
+        height: 28vw;
         border-radius: 16px;
         margin-top: 7.6rem;
         margin-bottom: 4rem;
@@ -82,10 +82,11 @@
           margin-right: 24px;
           input {
             width: 88%;
-            height: 32px;
+            height: 48px;
             background: linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #686868, #686868),
               linear-gradient(0deg, #686868, #686868), #686868;
             color: #501766;
+            margin-top: 16px;
             margin-bottom: 8px;
             border-radius: 8px;
             font-family: 'Archivo';

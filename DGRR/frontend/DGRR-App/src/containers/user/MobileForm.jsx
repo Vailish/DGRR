@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeField, initialForm } from '../../modules/auth'
 import { useNavigate } from 'react-router-dom'
 import MobileLogin from '../../components/Mobile/MobileLogin'
-import request from '../../API/request'
+import { request } from '../../API/request'
+import { setCookie } from '../../cookies/Cookies'
 const MobileForm = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [error, setError] = useState('')
@@ -20,21 +20,16 @@ const MobileForm = () => {
   //axios 모듈화 테스트 해보기
   const reqLogin = async user => {
     try {
-      const response = await axios.post(
-        //URI 바꿔야지.......
-        'http://192.168.31.142:8080/login',
-        JSON.stringify(user),
-        {
-          headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-          },
-        },
-      )
+      const response = await request.post('/login', JSON.stringify(user))
       if (response.status === 200) {
         alert('로그인 성공')
         setError(' ')
-        // const accessToken = response.headers.get('Authorization')
-        // localStorage.setItem('access-token', accessToken)
+        const accessToken = response.headers.get('Authorization')
+        setCookie('token', accessToken, {
+          path: '/',
+          sameStrict: 'strict',
+        })
+
         navigate('/mPin', {
           state: {
             username: user.username,

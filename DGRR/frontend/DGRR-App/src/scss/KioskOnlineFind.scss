@@ -64,6 +64,19 @@
           margin-top: 20vh;
           font-size: 4vw;
         }
+        .MatchedModal {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          left: 20vw;
+          top: 20vw;
+          width: 60vw;
+          height: 30vw;
+          background: white;
+          font-size: 10vw;
+          animation-name: bounce_frames;
+        }
         .OnlineFindTimeBlock {
           font-size: 4vw;
         }

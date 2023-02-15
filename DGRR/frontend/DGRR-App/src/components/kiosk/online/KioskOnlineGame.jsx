@@ -1,41 +1,108 @@
 import KioskNavBlock from '../KioskNavBlock'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../scss/KioskOnlineGame.scss'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import OnlineScoreTable from './OnlineScoreTable'
-import KioskVideo from './webrtc/KioskVideo'
-const OnlineGamePlayerBlock = () => {
+// import KioskVideo from './webrtc/KioskVideo'
+import { onlineGameBoardChangeOpposite } from '../../../store/OnlineLoginUser'
+import { api } from '../../../API/api'
+import KioskVideo from '../online/webrtc/KioskVideo'
+
+const OnlineGamePlayerBlock = props => {
+  const { playerNickname, playerProfile, playerColor } = props
   return (
-    <div className="OnlineGamePlayerBlock">
-      <div className="OnlineGameProfile"></div>
-      <div className="OnlineGamePlayerName"></div>
+    <div className="OnlineGamePlayerBlock" style={playerColor === 2 ? { background: 'blue' } : { background: 'red' }}>
+      <div className="OnlineGameProfile">{playerProfile}</div>
+      <div className="OnlineGamePlayerName">{playerNickname}</div>
     </div>
   )
 }
 
-const KioskOnlineGame = props => {
-  const location = useLocation()
-  const { goBackTo, goFrontTo } = props
-  const { random } = location.state
+const KioskOnlineGame = () => {
+  const dispatch = useDispatch()
+  const player = useSelector(state => state.OnlineLoginUser.player)
+  const oppositePlayer = useSelector(state => state.OnlineLoginUser.oppositePlayer.playerInfo)
+  // const gamingPlayer = useSelector(state => state.OnlineLoginUser.gamingPlayer)
+  const scoreSumArray = useSelector(state => state.OnlineLoginUser.gamingPlayer.gameBoardResult)
+  const scoreArray = useSelector(state => state.OnlineLoginUser.gamingPlayer.gameBoard)
+  const oppositeSumArray = useSelector(state => state.OnlineLoginUser.oppositePlayer.gameBoardResult)
+  const oppositeScoreArray = useSelector(state => state.OnlineLoginUser.oppositePlayer.gameBoard)
+  const isGameFinish = useSelector(state => state.OnlineLoginUser.isGameFinish)
+  // const location = useLocation()
+  // const { random } = location.state
 
+  // useEffect(() => {
+  //   console.log('잘 받아왔어' + random)
+  // })
+  const navigate = useNavigate()
   useEffect(() => {
-    console.log('잘 받아왔어' + random)
-  })
+    if (isGameFinish[0] === true && isGameFinish[1] === true) {
+      let isWin = null
+      if (scoreSumArray[9] >= oppositeSumArray[9]) {
+        isWin = true
+      } else {
+        isWin = false
+      }
+      setTimeout(() => {
+        navigate('/KioskOnlineResult', { state: { isWin } })
+      }, 2000)
+    }
+  }, [isGameFinish])
+
+  const scoreExchange = async () => {
+    const url = '/v1/gaming/' + player.nickname
+    console.log(scoreArray)
+    const scoreString = scoreArray.reduce((sendString, number) => {
+      if (number === '') return sendString + ' '
+      return sendString + number
+    }, '')
+    console.log(scoreString)
+    const response = await api.post(
+      url,
+      JSON.stringify({ opponentNickname: oppositePlayer.nickname, myGameData: scoreString }),
+    )
+    console.log(JSON.stringify({ opponentNickname: oppositePlayer.nickname, myGameData: scoreString }))
+    if (response.data) dispatch(onlineGameBoardChangeOpposite(response.data.opponentGameData))
+  }
+
+  // useEffect(() => {
+  //   const scoreUpdate = setInterval(() => {
+  //     scoreExchange()
+  //   }, 1000)
+  //   return () => clearInterval(scoreUpdate)
+  // }, [scoreArray])
+
+  const [needHelp, setneedHelp] = useState(false)
+  const helpMessage = () => {
+    setneedHelp(!needHelp)
+  }
+
   return (
     <div className="KioskBackground">
+      <KioskNavBlock />
       <div className="OnlineGameContentBlock">
+        {needHelp ? <div className="OnlineHelpMessageModal">온라인 헬프 메시지</div> : null}
         <div className="OnlineGamePlayerAndScore">
-          <OnlineGamePlayerBlock />
-          {/* <div className="OnlineGameScoreBlock"></div> */}
-          <OnlineScoreTable />
-          <OnlineGamePlayerBlock />
+          <OnlineGamePlayerBlock playerProfile={player.profile} playerNickname={player.nickname} playerColor={1} />
+          <OnlineScoreTable
+            scoreSumArray={scoreSumArray}
+            scoreArray={scoreArray}
+            oppositeSumArray={oppositeSumArray}
+            oppositeScoreArray={oppositeScoreArray}
+          />
+          <OnlineGamePlayerBlock
+            playerProfile={oppositePlayer.profile}
+            playerNickname={oppositePlayer.nickname}
+            playerColor={2}
+          />
         </div>
         <div className="OnlineGameDisplayBlock">
-          <div className="OnlineGameDisplay">
-            <KioskVideo randomSession={random} />
+          <KioskVideo />
+          <div className="OnlineGameHelpCircle" onClick={helpMessage}>
+            ?
           </div>
-          <div className="OnlineGameHelpCircle">?</div>
         </div>
       </div>
     </div>
