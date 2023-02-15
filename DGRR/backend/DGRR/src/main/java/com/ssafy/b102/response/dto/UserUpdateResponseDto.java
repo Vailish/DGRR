@@ -19,7 +19,7 @@ public class UserUpdateResponseDto {
     public static UserUpdateResponseDto toDto(User user) {
         return UserUpdateResponseDto.builder()
                 .nickname(user.getNickname())
-                .stateMessage(user.getStateMessage())
+                .stateMessage(null)
                 .profileImage(getImage(user))
                 .build();
     }

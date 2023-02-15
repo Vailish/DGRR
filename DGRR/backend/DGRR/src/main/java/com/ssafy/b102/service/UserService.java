@@ -241,6 +241,8 @@ public class UserService {
 	public String userImg(String nickname) {
 		User user = userRepository.findByNickname(nickname);
 		switch(user.getStateMessage()) {
+		case 0:
+			return "https://media.istockphoto.com/id/1349239413/photo/shot-of-coffee-beans-and-a-cup-of-black-coffee-on-a-wooden-table.jpg?b=1&s=170667a&w=0&k=20&c=0bVq4jWM5d6r4Klp0si4um7QjZIQkMjYLtuDU7oWUps=";
 		case 1:
 			return "https://i.pinimg.com/736x/0f/75/1a/0f751a58eee57a23da8ca81f7dea561e.jpg";
 		case 2:
