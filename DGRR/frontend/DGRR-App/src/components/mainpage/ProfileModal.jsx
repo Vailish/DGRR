@@ -1,53 +1,55 @@
 import React, { useState, useEffect } from 'react'
 import baseaxios from '../../API/baseaxios'
-import "../../scss/ProfileModal.scss"
+import '../../scss/ProfileModal.scss'
 
 const ProfileModal = ({ setModalOpen }) => {
-
-  const [files, setFiles] = useState("");
-
+  const [files, setFiles] = useState('')
   useEffect(() => {
-    preview();
-  
-    return () => preview();
+    preview()
+
+    return () => preview()
   }, [files])
 
   const preview = () => {
-    if (!files) return false;
+    if (!files) return false
 
-    const imgEl = document.querySelector('.img__box');
-    const reader = new FileReader();
+    const imgEl = document.querySelector('.img__box')
+    const reader = new FileReader()
 
-    reader.onload = () => (
-      
-      imgEl.style.backgroundImage = `url(${reader.result})`
-    )
-    console.log("asdad", reader)
-   
-    reader.readAsDataURL(files[0]);
+    reader.onload = () => (imgEl.style.backgroundImage = `url(${reader.result})`)
+    console.log('asdad', reader)
+
+    reader.readAsDataURL(files[0])
   }
-  
 
-  const onLoadFile = (e) => {
-    const file = e.target.files;
-    console.log("asdasd", file);
-    setFiles(file);
+  const reqImage = async data => {
+    try {
+      console.log(data.get('profileImage'))
+      const response = await baseaxios.put('/api/v1/userimg/', data, {
+        headers: {
+          'Content-Type' : 'multipart/form-data'
+        }
+      })
+      console.log('응답', response)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const onLoadFile = e => {
+    const file = e.target.files
+    console.log('asdasd', file)
+    setFiles(file)
   }
 
   const handleClick = e => {
-    e.preventDefault();
-    const formdata = new FormData();
-    formdata.append('uploadImage', files[0])
-    // baseaxios.post(
-    //   `/api/v1/user/${nickName}`,
-    //   {
-    //     Headers: {
-    //       'content-type': 'multipart/form-data',
-    //     },
-    //   },
-    //   formdata
-    // );
- 
+    e.preventDefault()
+
+    const data = new FormData()
+    data.append('nickname', '갓냥이')
+    data.append('stateMessage', '11111')
+    data.append('profileImage', files[0])
+    reqImage(data)
+    console.log(data)
   }
 
   return (
@@ -60,16 +62,16 @@ const ProfileModal = ({ setModalOpen }) => {
 
           <div>
             <strong>업로드된 이미지</strong>
-            <div className='img__box'></div>
+            <div className="img__box"></div>
             <img src="" alt="" />
           </div>
 
-          <form>
-            <input type="file" id="image" accept='img/*' onChange={onLoadFile} />
-            <label htmlFor="image">파일 선택하기</label>
-            <button onClick={handleClick}>전송하기</button>
+          <form onSubmit={handleClick}>
+            <input name="nickname" value="갓냥이" />
+            <input name="stateMessage" value="전송" />
+            <input type="file" name="profileImage" onChange={onLoadFile} />
+            <button type="submit">전송</button>
           </form>
-
         </div>
       </div>
     </div>
