@@ -19,47 +19,50 @@ const Mainpage = () => {
   const [winning, setWinning] = useState({})
   const { nickName } = useParams()
   const [visible, setVisible] = useState(false)
+  const [tier, setTier] = useState("Bronze")
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('access-token')) {
-  //     navigate('/beomi')
-  //   } else {
-  //     navigate('/')
-  //   }
-  // }, [localStorage.getItem('access-token')])
-
   useEffect(() => {
-    // if (getCookie('token')) {
-    // } else {
-    //   navigate('/')
-    // }
+    if (getCookie('token')) {
+    } else {
+      navigate('/')
+    }
     fetchData()
+    
 
-    // document.documentElement.style.setProperty('bar-size', winning.winGame / winning.gameNumber * 100)
-    document.getElementById('SpanBar').style.width = (winning.winGame / winning.gameNumber) * 100
   }, [])
 
   useEffect(() => {
-    console.log('닉네임 확인' + nickName)
-    fetchMatchData(0)
-  }, [seletedCategory])
+    fetchMatchData()
+    if (userInfo.points < 1000) {
+      setTier('Bronze')
+    } else if (1000 <= userInfo.points < 1100) {
+      setTier('Silver')
+    } else if (1100 <= userInfo.points < 1200) {
+      setTier('Gold')
+    } else if (1200 <= userInfo.points < 1300) {
+      setTier('Platinum')
+    } else {
+      setTier('Diamond')
+    }
+  }, [userInfo])
 
   const fetchData = async () => {
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
     const requestRankings = await baseaxios.get(`/api/v1/data/ranking/user/${nickName}`)
+    // const requestUserimg = await baseaxios.get(`/api/v1/userimg/${nickName}`)
     const requestWinning = await baseaxios.get(`/api/v1/data/twentygame/${nickName}`)
     const userData = requestUser.data
     const pointsData = requestPoints.data
     const rankingData = requestRankings.data
     const winningData = requestWinning.data
+    // const userimgData = requestUserimg.data
     setMyRanking(rankingData.filter(data => data.nickname === nickName)[0].ranking)
     setUserInfo(userData)
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
     setWinning(winningData)
-    console.log(rankingInfo)
   }
 
   const fetchMatchData = async () => {
@@ -73,6 +76,13 @@ const Mainpage = () => {
       setSeletedCategory(selected)
     }
   }
+
+  const inputWinning = () => {
+    const winningBar = document.querySelector('.SpanBar');
+    winningBar.style.width = isNaN(parseInt(winning.winGame / winning.gameNumber * 100)) ? '50%' : `${parseInt(winning.winGame / winning.gameNumber * 100)}%`
+  }
+
+
 
   //그래프 버튼을 누를때마다 상태값이 변한다
 
@@ -114,9 +124,9 @@ const Mainpage = () => {
             <button className="Button" onClick={onVisible}>
               점수 그래프
             </button>
+            <div>{visible === true ? <PointCharts nickname={nickName} /> : null}</div>
           </div>
         </div>
-        <div>{visible === true ? <PointCharts /> : null}</div>
       </div>
 
       <div className="FlexBox">
@@ -124,21 +134,21 @@ const Mainpage = () => {
           <div className="MainBox TierBox">
             <h2 className="BoxTitle">랭크</h2>
             <div className="TierInnerBox">
-              <img src={require('../../img/tierdia.png')} alt="tier" className="TierImg" />
+              <img src={require(`../../img/${tier}.png`)} alt="tier" className="TierImg" />
               <div>
-                <h2 className="TierText">Diamond</h2>
+                <h2 className="TierText">{tier}</h2>
                 <p className="TierSubText">{myRanking}위</p>
               </div>
             </div>
           </div>
           <div className="MainBox RateBox">
-            <h2 className="BoxTitle">최근 랭킹전 {winning.gameNumber}게임 승률</h2>
+            <h2 className="BoxTitle">최근 랭킹전 {winning.gameNumber === 0 ? null : winning.gameNumber}게임 승률</h2>
             <div className="RecordRateBar">
               <div className="ProgressLine">
                 {winning.loseGame}패<span id="SpanBar">{winning.winGame}승</span>
               </div>
               <div className="Info">
-                <span className="ProgressLineText">{parseInt(winning.winGame / winning.gameNumber) * 100}%</span>
+                <div className="ProgressLineText">{isNaN(parseInt(winning.winGame / winning.gameNumber * 100)) ? '전적없음' : `${parseInt(winning.winGame / winning.gameNumber * 100)}%`}</div>
               </div>
             </div>
           </div>

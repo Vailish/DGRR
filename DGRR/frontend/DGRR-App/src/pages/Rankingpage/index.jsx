@@ -66,7 +66,7 @@ const Rankingpage = () => {
         <div className="ProfileRightBox">
           <h2 className="RankText">랭크</h2>
           <div className="TierBox">
-            <img src={require('../../img/tierdia.png')} alt="tierImg" className="TierImg" />
+            <img src={require('../../img/Diamond.png')} alt="tierImg" className="TierImg" />
             <div className="TierTextBox">
               <span className="TierText">Diamond</span>
               <div className="TierInfoText">

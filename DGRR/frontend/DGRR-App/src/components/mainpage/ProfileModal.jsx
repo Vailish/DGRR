@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import baseaxios from '../../API/baseaxios'
+import axios from 'axios'
+import fileReq from '../../API/fileReq'
 import "../../scss/ProfileModal.scss"
 
 const ProfileModal = ({ setModalOpen }) => {
 
   const [files, setFiles] = useState("");
-
+  const fileInput = useRef();
   useEffect(() => {
     preview();
   
@@ -27,27 +29,40 @@ const ProfileModal = ({ setModalOpen }) => {
     reader.readAsDataURL(files[0]);
   }
   
-
+  const reqImage = async () => {
+    try {
+      const formdata = new FormData();
+  
+      formdata.append('profileImage', files[0])
+      formdata.append('nickname', '갓냥이')
+      formdata.append('stateMessage', "123123")
+      console.log(formdata.get('nickname'))
+      const response = await fileReq.put('/api/v1/userimg/', 
+        {
+          data: {
+            'nickname':  formdata.get('nickname'),
+            'stateMessage': formdata.get('stateMessage'),
+            'profileImage' : formdata.get('profileImage')
+         }
+       })
+      console.log("응답", response)
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const onLoadFile = (e) => {
     const file = e.target.files;
     console.log("asdasd", file);
     setFiles(file);
+  
   }
+
 
   const handleClick = e => {
     e.preventDefault();
-    const formdata = new FormData();
-    formdata.append('uploadImage', files[0])
-    // baseaxios.post(
-    //   `/api/v1/user/${nickName}`,
-    //   {
-    //     Headers: {
-    //       'content-type': 'multipart/form-data',
-    //     },
-    //   },
-    //   formdata
-    // );
- 
+  
+    const f1 = new FormData(document.getElementById("123"));
+    axios.put("http://192.168.31.142:8080/api/v1/userimg/", f1).then(() => alert(1));
   }
 
   return (
@@ -64,10 +79,17 @@ const ProfileModal = ({ setModalOpen }) => {
             <img src="" alt="" />
           </div>
 
-          <form>
-            <input type="file" id="image" accept='img/*' onChange={onLoadFile} />
+          {/* <form onSubmit={handleClick}>
+            <input type="file" name="profileImage" accept='img/*' onChange={onLoadFile} />
             <label htmlFor="image">파일 선택하기</label>
-            <button onClick={handleClick}>전송하기</button>
+            <button type="submit">전송하기</button>
+          </form> */}
+
+          <form id="123"  ref={fileInput} name="form" method="put" enctype="multipart/form-data" onSubmit={handleClick}>
+            <input name="nickname" value="갓냥이"/>
+            <input name="stateMessage" value="전송"/>
+            <input type="file" name="profileImage" onChange={onLoadFile} />
+            <button id="456" type='submit'>asdf</button>
           </form>
 
         </div>
