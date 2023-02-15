@@ -34,6 +34,7 @@ const ScoreTableBlock = props => {
         myValue !== 'f' &&
         myValue !== 'F'
       ) {
+        myValue = Number(myValue)
       }
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     } else {
