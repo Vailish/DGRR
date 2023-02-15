@@ -23,8 +23,10 @@ import com.ssafy.b102.request.dto.LoginRequestDto;
 import com.ssafy.b102.request.dto.RequestUsernameDto;
 import com.ssafy.b102.request.dto.SetPasswordDto;
 import com.ssafy.b102.request.dto.UserRequestDto;
+import com.ssafy.b102.request.dto.UserUpdateRequestDTO;
 import com.ssafy.b102.response.dto.IdentifierResponseDto;
 import com.ssafy.b102.response.dto.UserResponseDto;
+import com.ssafy.b102.response.dto.UserUpdateResponseDto;
 import com.ssafy.b102.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,19 +38,6 @@ public class UserController {
 	@Autowired
 	public UserService userService;
 	
-	// Tip : JWT를 사용하면 UserDetailsService를 호출하지 않기 때문에 @AuthenticationPrincipal 사용 불가능.
-	// 왜냐하면 @AuthenticationPrincipal은 UserDetailsService에서 리턴될 때 만들어지기 때문이다.
-	
-	// 유저 혹은 매니저 혹은 어드민이 접근 가능
-//	@GetMapping("user")
-//	public String user(Authentication authentication) {
-//		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-//		System.out.println("principal : "+principal.getUser().getId());
-//		System.out.println("principal : "+principal.getUser().getUsername());
-//		System.out.println("principal : "+principal.getUser().getPassword());
-//		
-//		return "<h1>user</h1>";
-//	}
 	@PostMapping("/identifier")
 	public ResponseEntity<?> identifier(@RequestBody IdentifierRequestDto identifierRequestDto){
 			IdentifierResponseDto identifierResponseDto = userService.identifier(identifierRequestDto);
@@ -120,34 +109,29 @@ public class UserController {
 	@Value("${file.dir}")
 	private String fileDir;
 	
-	@GetMapping("/{date}/{savedName}")
-    public ResponseEntity<?> showImage(@PathVariable String savedName, @PathVariable String date) throws IOException {
-        Pattern pattern = Pattern.compile("\\.\\.");
-        if (pattern.matcher(date).matches() || pattern.matcher(savedName).matches()) {
-            throw new RuntimeException("상위 디렉토리로 접근은 불가능합니다.");
-        }
-        if (date.equals("default")) {
-            return new ResponseEntity<>(new UrlResource("classpath:/static/" + date + "/" + savedName), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(new UrlResource("file:" + fileDir + date + "/" + savedName), HttpStatus.OK);
-    }
+//	@GetMapping("/{date}/{savedName}")
+//    public ResponseEntity<?> showImage(@PathVariable String savedName, @PathVariable String date) throws IOException {
+//        Pattern pattern = Pattern.compile("\\.\\.");
+//        if (pattern.matcher(date).matches() || pattern.matcher(savedName).matches()) {
+//            throw new RuntimeException("상위 디렉토리로 접근은 불가능합니다.");
+//        }
+//        if (date.equals("default")) {
+//            return new ResponseEntity<>(new UrlResource("classpath:/static/" + date + "/" + savedName), HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(new UrlResource("file:" + fileDir + date + "/" + savedName), HttpStatus.OK);
+//    }
 	
+//	@PutMapping("/userimg/")
+//	public ResponseEntity<?> updateUser(UserUpdateRequestDTO userUpdateRequestDTO) {
+//		System.out.println(userUpdateRequestDTO);
+//		UserUpdateResponseDto userUpdateResponseDto = userService.updateUser(userUpdateRequestDTO);
+//		return new ResponseEntity<UserUpdateResponseDto>(userUpdateResponseDto, HttpStatus.OK);
+//	}
 	
-//	@PutMapping("/user/{username}")
-//	public ResponseEntity<?> updateUser(@PathVariable String username){
-//		UserResponseDto userResponseDto = userService.getUser(username);
-//		return new ResponseEntity<UserResponseDto>(userResponseDto, HttpStatus.OK);
-//	}
-//	@PostMapping("/login")
-//	public ResponseEntity<?> logIn(@RequestBody LoginRequestDto loginRequestDto){
-//		LoginRequestDto user = userService.logIn(loginRequestDto);
-//		// 토큰? 뱉어주기, 일단은 비밀번호 일치 여부만 확인
-//		return new ResponseEntity<User>(user, HttpStatus.OK);
-//	}
-
-	//public ResponseEntity<ResDto> signIn(UserDto userDto) {
-	//
-	//ResDto rs = re
-	//return ResponseEntity.status(HttpStatus.OK).body();
+	@GetMapping("/request/userimg/{nickname}")
+	public ResponseEntity<?> userImg(@PathVariable String nickname) {
+		String url = userService.userImg(nickname);
+		return new ResponseEntity<String>(url, HttpStatus.OK);
+	}
 	
 }

@@ -18,6 +18,7 @@ import com.ssafy.b102.persistence.dao.GameRepository;
 import com.ssafy.b102.persistence.dao.UserGameRepository;
 import com.ssafy.b102.persistence.dao.UserRepository;
 import com.ssafy.b102.response.dto.DataResponseDto;
+import com.ssafy.b102.response.dto.GraphData;
 import com.ssafy.b102.response.dto.RankingResponseDto;
 import com.ssafy.b102.response.dto.TwentyGameResponseDto;
 
@@ -32,6 +33,29 @@ public class DataService {
 	public final UserRepository userRepository;
 	
 	public final UserGameRepository userGameRepository;
+	
+	public List<GraphData> getGraphData(String nickname) {
+		List<GraphData> graphDatas = new ArrayList<>();
+		//
+		User user = userRepository.findByNickname(nickname);
+		List<UserGame> usergames = userGameRepository.findAllByUserIdOrderById(user.getId());
+		
+		Integer cnt = 0;
+		for (UserGame usergame : usergames) {
+			cnt += 1;
+			if (cnt > 5) {
+				break;
+			}
+			
+			GraphData graphData = new GraphData();	
+			graphData.setTotalScore(caculate(convertToList(usergame.getGameScore())));
+			graphData.setGameDate(usergame.getGame().getGameDate());
+			
+			graphDatas.add(graphData);
+		}
+		
+		return graphDatas;
+	}
 	
 //	해당유저와 주변 랭킹 정보 조회
 	public DataResponseDto getUserPointsRank(String nickname) {
@@ -51,12 +75,7 @@ public class DataService {
 				continue;
 			}
 			else {
-				System.out.println("######################################");
-				System.out.println(userGame.getUser().getNickname());
-				System.out.println(userGame.getGameScore());
-				System.out.println("######################################");
 				Integer userGameScore = caculate(convertToList(userGame.getGameScore()));
-				System.out.println("게임점수" + userGameScore);
 				if (lastestGameTotalScore == 0) {
 					lastestGameTotalScore += userGameScore;
 				}
@@ -68,8 +87,6 @@ public class DataService {
 				if (HighestTotalScore < userGameScore) {
 					HighestTotalScore = userGameScore;
 				}
-				System.out.println("최근 3게임 평균값" + Last3GameAverageTotalScore);
-				System.out.println("cnt " + cnt);
 			}
 		}
 		if (cnt == 2) {	
@@ -141,32 +158,22 @@ public class DataService {
 		List<Ranking> rankings = new ArrayList<>();
 		
 //		온라인 게임 id
-		Integer rankingNumber = (pageNumber -1) * 20;
-		System.out.println(users.toString());
 		if (users == null) {
-			System.out.println("ㅇㅅㅇ");
 			return null;
 		}
 		
-		System.out.println("ㅇㅁㅇ");
-		Integer maxNum = users.size();
-		if (users.size() > rankingNumber) {
-			maxNum = users.size();
-		} else {
-			maxNum = users.size() - rankingNumber;
-		}
+		Integer startNumber = (pageNumber-1) * 20;
+		Integer endNumber = pageNumber * 20;
 		
-		for (Integer n = 0; n < maxNum; n ++) {
-			System.out.println("############################");
-			System.out.println("n");
-			System.out.println(maxNum);
-			System.out.println("############################");
-			User user = users.get(n);
-			rankingNumber += 1;
+		for(int number = startNumber; number < endNumber; number++) {
+			
+			if (number == users.size()) {break;}
+			
+			User user = users.get(number);
 			Integer totalGameNumber = winrate(user.getNickname()).getTotalGame();
 			Integer winGameNumber = winrate(user.getNickname()).getWinGameNumber();
 			Ranking ranking = new Ranking().builder()
-					.ranking(rankingNumber)
+					.ranking(number + 1)
 					.nickname(user.getNickname())
 					.point(user.getPoints())
 					.totalGameNumber(totalGameNumber)
@@ -174,8 +181,13 @@ public class DataService {
 					.LossesGameNumber(totalGameNumber - winGameNumber)
 					.build();
 			rankings.add(ranking);
+			
 		}
 		return new TotalRankingDto(rankings.size()/20 + 1 ,rankings);
+		
+		
+		
+		
 	}
 	
 	// 내순위 포함 5명의 랭킹보기
@@ -202,12 +214,6 @@ public class DataService {
 			tailRank = 0;
 		}
 		
-		System.out.println("#####################");
-		System.out.println("유저수 : " + userRepository.findAll().size());
-		System.out.println("myRank : " + myRank);
-		System.out.println("headRank : " + headRank);
-		System.out.println("tailRank : " + tailRank);
-		System.out.println("#####################");
 		List<RankingResponseDto> rankingResponseDtos = new ArrayList<>();
 		List<User> users = userRepository.findAllByOrderByPointsDesc();
 		Integer cnt = 0;
@@ -218,11 +224,9 @@ public class DataService {
 		for (User user : users) {
 			cnt += 1;
 			// 등수가 cnt  랭크가 1 , headRank 3 headnumber 0
-			System.out.println(user.getNickname() +" "+ cnt);
 			if (headNumber != headRank && cnt < myRank) {
 				if (cnt >= myRank - headRank) {
 					headNumber += 1;
-					System.out.println("head : " + user.getNickname());
 					rankingResponseDtos.add(new RankingResponseDto(user.getNickname(), cnt, user.getPoints()));
 				}
 			}
@@ -231,11 +235,10 @@ public class DataService {
 				Integer myPoint = userRepository.findByNickname(nickname).getPoints();
 				rankingResponseDtos.add(new RankingResponseDto(nickname, myRank, myPoint));
 			}
-			// tailnumber 0 tailrank 2
+
 			if (tailNumber < tailRank && cnt > myRank) {
 				if (tailNumber < tailRank) {
 				tailNumber += 1;
-				System.out.println("tail : " + user.getNickname());
 				rankingResponseDtos.add(new RankingResponseDto(user.getNickname(), cnt, user.getPoints()));
 				}
 			}
@@ -249,7 +252,6 @@ public class DataService {
 		List<User> users = userRepository.findAllByOrderByPointsDesc();
 		Integer rank = 0;
 		for (User user : users) {
-			System.out.println(user.getNickname());
 			rank += 1;
 			if (user.getNickname().equals(nickname)) {
 				return new MyRankingDto(rank);

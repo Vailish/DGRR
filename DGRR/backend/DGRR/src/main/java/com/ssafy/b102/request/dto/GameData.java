@@ -13,5 +13,4 @@ import lombok.NoArgsConstructor;
 public class GameData {
 	private String nickname;
 	private List<Integer> score;
-//	private String score;
 }

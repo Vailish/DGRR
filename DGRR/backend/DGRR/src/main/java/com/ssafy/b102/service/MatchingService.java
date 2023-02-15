@@ -36,7 +36,6 @@ public class MatchingService {
 	public final UserGameRepository userGameRepository;
 	
 	public MatchingJoinResponseDto joiningMatchingGame(MatchingRequestDto matchingRequestDto) {
-		System.out.println("대기열 참가 요청이 들어왔습니다." + matchingRequestDto.getNickname());
 		User user = userRepository.findByNickname(matchingRequestDto.getNickname());
 		if (matchingRepository.findByUserId(user.getId()) == null) {
 			Matching matching = new Matching();
@@ -55,7 +54,6 @@ public class MatchingService {
 			matchingRepository.save(user.getMatching());
 			return new MatchingJoinResponseDto("대기열에 참가하였습니다." + matchingRequestDto.getNickname());
 		} else {
-			System.out.println(matchingRepository.findAll().toString());
 			return null;
 		}
 	}
@@ -63,7 +61,6 @@ public class MatchingService {
 		User user = userRepository.findByNickname(matchingRequestDto.getNickname());
 		Matching matching = matchingRepository.findByUserId(user.getId());
 //		매칭여부 확인
-		System.out.println("매칭결과 요청왔어요");
 		if (matching == null || matching.getIsMatching() == 0) {
 			return null;
 		}
@@ -80,11 +77,9 @@ public class MatchingService {
 				matchingRepository.save(matching);
 				return makeMatchingResponseDto(checkMatching.getUser().getNickname());
 						
-//						(checkMatching.getUser().getNickname());
 			}
 		}
 //		대기열 확인
-//		List<Matching> matchings = matchingRepository.findAllByOrderByPoint();
 		List<Matching> matchings = matchingRepository.findAllByIsMatchingOrderByPoint(1);
 		if (matchings.size() < 2) {
 			return null;
@@ -97,7 +92,6 @@ public class MatchingService {
 				}
 				
 				if (user.getPoints() - 100 < opponentPoint && opponentPoint <= user.getPoints() + 100) {
-					System.out.println("최고의 매칭");
 					Integer createMatchingNumber = createMatchingNumber();
 					mat.setMatchingNumber(createMatchingNumber);
 					mat.setIsMatching(2);
@@ -119,7 +113,6 @@ public class MatchingService {
 				}
 				
 				if (user.getPoints() - 500 < opponentPoint && opponentPoint <= user.getPoints() + 500) {
-					System.out.println("차선의 매칭");
 					Integer createMatchingNumber = createMatchingNumber();
 					mat.setMatchingNumber(createMatchingNumber);
 					mat.setIsMatching(2);
@@ -140,7 +133,6 @@ public class MatchingService {
 					continue;
 				}
 				
-					System.out.println("아쉬운 매칭");
 					Integer createMatchingNumber = createMatchingNumber();
 					mat.setMatchingNumber(createMatchingNumber);
 					mat.setIsMatching(2);
@@ -161,7 +153,6 @@ public class MatchingService {
 	public MatchingResultResponseDto cancelMatching(MatchingRequestDto matchingRequestDto) {
 		User user = userRepository.findByNickname(matchingRequestDto.getNickname());
 		Matching matching = matchingRepository.findByUserId(user.getId());
-		if (matching != null) {System.out.println(matching.getId() +"     " + matching.getIsMatching());}
 		if (matching == null) {
 			return null;
 		} else if (matching.getIsMatching() == 0) {
@@ -209,7 +200,6 @@ public class MatchingService {
 	
 	public GamingResponseDto gaming(String myNickname, GamingRequestDto gamingRequestDto) {
 		// gamingRequestDto : 상대방 닉네임과 내정보
-		System.out.println("정보 입력 요청이 왔습니다" + myNickname);
 		User user = userRepository.findByNickname(myNickname);
 		User opponent = userRepository.findByNickname(gamingRequestDto.getOpponentNickname());
 		

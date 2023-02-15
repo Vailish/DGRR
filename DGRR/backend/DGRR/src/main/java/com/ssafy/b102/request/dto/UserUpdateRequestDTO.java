@@ -7,5 +7,6 @@ import lombok.Data;
 @Data
 public class UserUpdateRequestDTO {
 	private String nickname;
+	private String stateMessage;
 	private MultipartFile profileImage;
 }

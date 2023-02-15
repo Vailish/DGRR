@@ -26,7 +26,6 @@ public class FileResponseDTO {
                 .build();
     }
 
-    // 아무 이미지도 없으면 기본이미지를 돌려줌 기본이미지는 resource에있는 static에 정의해줄거임
     private static FileResponseDTO getDefaultDTO() {
         return FileResponseDTO.builder()
                 .originalName("profile_image.jpg")

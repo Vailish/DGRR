@@ -2,9 +2,11 @@ package com.ssafy.b102.service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import javax.transaction.Transactional;
 
@@ -22,9 +24,10 @@ import com.ssafy.b102.request.dto.RequestUsernameDto;
 import com.ssafy.b102.request.dto.SetPasswordDto;
 import com.ssafy.b102.request.dto.UserRequestDto;
 import com.ssafy.b102.request.dto.UserUpdateRequestDTO;
+import com.ssafy.b102.response.dto.FileResponseDTO;
 import com.ssafy.b102.response.dto.IdentifierResponseDto;
-import com.ssafy.b102.response.dto.ProfileImgResponseDto;
 import com.ssafy.b102.response.dto.UserResponseDto;
+import com.ssafy.b102.response.dto.UserUpdateResponseDto;
 import com.ssafy.b102.util.FilesHandler;
 
 import lombok.RequiredArgsConstructor;
@@ -38,17 +41,21 @@ public class UserService {
 	private final FileRepository fileRepository;
 
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
+	
+	private final FilesHandler filesHandler;
+	
 	public IdentifierResponseDto identifier(IdentifierRequestDto identifierRequestDto) {
 		return new IdentifierResponseDto(userRepository.findById(identifierRequestDto.getIdentifier()).getNickname());
 	}	
 	
 	public UserResponseDto signUp(UserRequestDto userRequestDto) {
-		System.out.println("회원가입 실행.");
 		userRequestDto.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
 		User user = userRequestDto.toEntity();
 		user.setCreateDate(LocalDateTime.now());
 		user.setPoints(800);
+		int number = new Random().nextInt(6);
+		
+		user.setStateMessage(number);
 		this.userRepository.save(user);
 		
 		FileEntity fileEntity = new FileEntity();
@@ -57,7 +64,6 @@ public class UserService {
 		
 		return UserResponseDto.builder()
 				.username(user.getUsername())
-//				.age(user.getAge())
 				.email(user.getEmail())
 				.name(user.getName())
 				.nickname(user.getNickname())
@@ -70,11 +76,9 @@ public class UserService {
 	}
 	
 	public UserResponseDto getUser(String nickname) {
-		System.out.println("특정유저 조회 실행.");
 		User user = userRepository.findByNickname(nickname);
 		return UserResponseDto.builder()
 				.username(user.getUsername())
-//				.age(user.getAge())
 				.email(user.getEmail())
 				.name(user.getName())
 				.nickname(user.getNickname())
@@ -86,12 +90,10 @@ public class UserService {
 	};
 	
 	public List<UserResponseDto> getAllUser() {
-		System.out.println("모든 유저 정보 조회 실행.");
 		List<UserResponseDto> userList = new ArrayList<>();
 		userRepository.findAll().forEach(user ->
 		 userList.add(UserResponseDto.builder()
 				.username(user.getUsername())
-//				.age(user.getAge())
 				.email(user.getEmail())
 				.createDate(user.getCreateDate())
 				.gender(user.getGender())
@@ -105,7 +107,6 @@ public class UserService {
 	};
 	
 	public String checkUsername(String username) {
-		System.out.println("username 중복 확인.");
 		User user =  userRepository.findByUsername(username);
 		if (user == null) {
 			return "true";
@@ -117,7 +118,6 @@ public class UserService {
 	
 	public String checkNickname(String nickname) {
 		User user =  userRepository.findByNickname(nickname);
-		System.out.println("nickname중복 확인.");
 		if (user == null) {
 			return "true";
 		}
@@ -128,7 +128,6 @@ public class UserService {
 	
 	public String checkEmail(String email) {
 		User user =  userRepository.findByEmail(email);
-		System.out.println("email 중복 확인.");
 		if (user == null) {
 			return "true";
 		}
@@ -139,7 +138,6 @@ public class UserService {
 	
 	public String requestUsername(RequestUsernameDto requestUsernameDto) {
 		User user = userRepository.findByNickname(requestUsernameDto.getNickname());
-		System.out.println("username찾기 실행.");
 		if (user == null) {
 			return requestUsernameDto.getNickname() + " 은 존재하지 않는 nickname 입니다.";
 		};
@@ -168,7 +166,6 @@ public class UserService {
 		User user = userRepository.findByUsername(username);
 		if (user.getEmail().equals(setPasswordDto.getEmail())) {
 			if (setPasswordDto.getPassword().equals(setPasswordDto.getPasswordConfirm())) {
-				System.out.println("비밀번호 변경 실행.");
 				user.setPassword(bCryptPasswordEncoder.encode(setPasswordDto.getPassword()));
 				this.userRepository.save(user);
 				return true;
@@ -194,7 +191,6 @@ public class UserService {
 			// 없는 핀번호 생성
 			while (true) {
 				Integer pinNum = pin();
-				System.out.println("핀 번호 재생성");
 				if (userRepository.findByPin(pinNum) == null);
 					user.setPin(pinNum);
 					user.setPinCreateTime(LocalDateTime.now());
@@ -206,26 +202,64 @@ public class UserService {
 	}
 	
 	@Transactional
-	public ProfileImgResponseDto updateUser(UserUpdateRequestDTO userUpdateRequestDTO) {
+	public UserUpdateResponseDto updateUser(UserUpdateRequestDTO userUpdateRequestDTO) {
+		
 		User user = userRepository.findByNickname(userUpdateRequestDTO.getNickname());
 		if (user == null) {
 			new RuntimeException("없는 유저, 유저 확인 바람");
 		}
 		if (userUpdateRequestDTO.getProfileImage() != null) {
 			try {
-                FileEntity profileImage = FilesHandler.saveFile(userUpdateRequestDTO.getProfileImage());
-                user.setProfileImage(profileImage);
+                FileEntity profileImage = filesHandler.saveFile(userUpdateRequestDTO.getProfileImage(), user);
+                user.setUser_img(profileImage);
             } catch (IOException e) {
                 throw new RuntimeException("프로필 사진 등록 중에 문제가 발생했습니다.");
             }
 		}
-		user = userRepository.saveAndFlush(user);
-        return ProfileImgResponseDto.toDto(user);
+		user = userRepository.save(user);
+        return UserUpdateResponseDto.builder()
+        		.nickname(user.getNickname())
+        		.stateMessage(null)
+        		.profileImage(FileResponseDTO.toDTO(user.getUser_img())) //FileResponseDto
+        		.build();
 	}
+	
+//	public String userImg(String nickname) {
+//		User user = userRepository.findByNickname(nickname);
+//		if (user.getUser_img() == null) {
+//			return "http://192.168.31.142:8080/default/profile_image.jpg";
+////			return "https://i8b102.p.ssafy.io:8080/app/static/default/profile_image.jpg";
+//			
+//		}
+//		LocalDateTime time = user.getUser_img().getCreatedAt();
+//		String date = time.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+//		
+//		return "http://192.168.31.142:8080/api/v1/" + date + "/" + user.getUser_img().getSavedName();
+////		return "https://i8b102.p.ssafy.io:8080/api/v1/" + date + "/" + user.getUser_img().getSavedName();
+//	}
+	
+	public String userImg(String nickname) {
+		User user = userRepository.findByNickname(nickname);
+		switch(user.getStateMessage()) {
+		case 1:
+			return "https://i.pinimg.com/736x/0f/75/1a/0f751a58eee57a23da8ca81f7dea561e.jpg";
+		case 2:
+			return "https://i.pinimg.com/736x/34/da/45/34da45b12e7c5ad7e0704f2020ba5e0a.jpg";
+		case 3:
+			return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtzaOrp_oZ3buPO0KQk1WF5qVwrVrj_T1Ckg&usqp=CAU";
+		case 4:
+			return "https://media.istockphoto.com/id/478348860/photo/chocolate-cake-with-chocolate-fudge-drizzled-icing-and-chocolate-curls.jpg?b=1&s=612x612&w=0&k=20&c=fW3zC1L7YFp7ZqowxaeKyxcOd9bo9bhzX-0tBthYIcg=";
+		case 5:
+			return "https://cdn.pixabay.com/photo/2014/06/30/11/40/cupcakes-380178__340.jpg";
+		}
+		return null;
+		}
 	
 	public Integer pin() {
 		Random random = new Random();
 		Integer pin = random.nextInt(899999) + 100000;
 		return pin;
 	}
+	
+
 }

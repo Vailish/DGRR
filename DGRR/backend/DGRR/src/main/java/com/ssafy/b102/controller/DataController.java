@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.b102.data.dto.MyRankingDto;
 import com.ssafy.b102.data.dto.TotalRankingDto;
 import com.ssafy.b102.response.dto.DataResponseDto;
+import com.ssafy.b102.response.dto.GraphData;
 import com.ssafy.b102.response.dto.RankingResponseDto;
 import com.ssafy.b102.response.dto.TwentyGameResponseDto;
 import com.ssafy.b102.service.DataService;
@@ -27,6 +27,13 @@ public class DataController {
 	@Autowired
 	public DataService dataService;
 
+	
+	@GetMapping("/data/graphdata/{nickname}")
+	public ResponseEntity<?> getGraphData(@PathVariable String nickname){
+		List<GraphData> graphDatas = dataService.getGraphData(nickname);
+		return new ResponseEntity<List<GraphData>>(graphDatas, HttpStatus.OK); 
+	}
+	
 	@GetMapping("/data/ranking")
 	public ResponseEntity<?> getRanking(){
 		TotalRankingDto totalRankingDto = dataService.getTotalRanking();

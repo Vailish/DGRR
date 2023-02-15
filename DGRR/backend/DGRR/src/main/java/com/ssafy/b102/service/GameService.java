@@ -44,7 +44,6 @@ public class GameService {
 	private final MatchingRepository matchingRepository;
 
 	public UserGamesResponseDto getUserGames(String nickname, Integer gameType) {
-		System.out.println("특정 유저의 게임정보 요청들어왔어유~~~~~~");
 		// user닉네임으로 user를 가져와서
 		User user = userRepository.findByNickname(nickname);
 		// user id로 user가 들어간 게임들을 찾고
@@ -90,7 +89,6 @@ public class GameService {
 						   								   .build();
 				otherPlayers.add(otherPlayer);
 			};
-			System.out.println(otherPlayers);
 			game.setOtherPlayers(otherPlayers);
 			games.add(game);
 			
@@ -104,33 +102,6 @@ public class GameService {
 		
 	public GameResponseDto createGame(GameRequestDto gameRequestDto) {
 
-//		// 중복 요청 확인
-//		// 온라인 게임
-//		if (gameRequestDto.getGameType().equals(true)) {
-//
-//			// 다른 유저가 보냈는지 확인
-//			String chkNic = gameRequestDto.getGameData().get(0).getNickname();
-//			Long chkId = userRepository.findByNickname(chkNic).getId();
-//			Matching chkMatching = matchingRepository.findByUserId(chkId); 
-//			if (chkMatching.getResult().equals(true)) {
-//				Long existId = chkMatching.getRecentGameId();
-//				Game game = gameRepository.findByid(existId);
-//				
-//				// nickname gameScore gameRank
-//				Games gamedetail1 = new Games();
-//				Games gamedetail2 = new Games();
-//				return GameResponseDto.builder()
-//						.gameId(game.getId())
-//						.gameType(game.getGameType())
-//						.gameDate(game.getGameDate())
-//						.gameDetail(List.of(gamedetail1, gamedetail2))
-//						.build();
-//			}
-//			
-//			
-//			
-//		}
-		
 		Boolean gameType = gameRequestDto.getGameType();
 		LocalDateTime gameDate = LocalDateTime.now();
 		Game game = new Game();
@@ -184,13 +155,6 @@ public class GameService {
 				Games gamedetail1 = new Games(nickname2_1, score2_1, userGame1.getGameRank());
 				Games gamedetail2 = new Games(nickname2_2, score2_2, userGame2.getGameRank());
 				
-//				Matching mat2_1 = matchingRepository.findByUserId(userGame1.getId());
-//				Matching mat2_2 = matchingRepository.findByUserId(userGame2.getId());
-//				mat2_1.setRecentGameId(game.getId());
-//				mat2_2.setRecentGameId(game.getId());
-//				matchingRepository.save(mat2_1);
-//				matchingRepository.save(mat2_2);
-				
 				
 				return GameResponseDto.builder()
 						.gameId(game.getId())
@@ -222,7 +186,6 @@ public class GameService {
 				int sum3_3 = score3_3.stream().mapToInt(Integer::intValue).sum();
 				
 				List<Integer> order = new ArrayList<>(List.of(sum3_1,sum3_2,sum3_3));
-				System.out.println(order.toString());
 				for (int i = 0; i < order.size(); i++) {
 					if (order.get(i) == sum3_1) {
 						userGame3_1.setGameRank(i+1);
@@ -249,16 +212,6 @@ public class GameService {
 				Games gamedetail3_1 = new Games(nickname3_1, score3_1, userGame3_1.getGameRank());
 				Games gamedetail3_2 = new Games(nickname3_2, score3_2, userGame3_2.getGameRank());
 				Games gamedetail3_3 = new Games(nickname3_3, score3_3, userGame3_3.getGameRank());
-				
-//				Matching mat3_1 = matchingRepository.findByUserId(userGame3_1.getId());
-//				Matching mat3_2 = matchingRepository.findByUserId(userGame3_2.getId());
-//				Matching mat3_3 = matchingRepository.findByUserId(userGame3_3.getId());
-//				mat3_1.setRecentGameId(game.getId());
-//				mat3_2.setRecentGameId(game.getId());
-//				mat3_3.setRecentGameId(game.getId());
-//				matchingRepository.save(mat3_1);
-//				matchingRepository.save(mat3_2);
-//				matchingRepository.save(mat3_3);
 				
 				return GameResponseDto.builder()
 						.gameId(game.getId())
@@ -296,7 +249,6 @@ public class GameService {
 				
 				List<Integer> order4 = new ArrayList<>(List.of(sum4_1,sum4_2, sum4_3, sum4_4));
 				order4.sort(Comparator.reverseOrder()); 
-				System.out.println(order4.toString());
 				for (int i = 0; i < order4.size(); i++) {
 					if (order4.get(i) == sum4_1) {
 						userGame4_1.setGameRank(i+1);
@@ -308,12 +260,6 @@ public class GameService {
 						userGame4_4.setGameRank(i+1);
 					}
 				}
-				System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-				System.out.println(userGame4_1.getGameRank());
-				System.out.println(userGame4_2.getGameRank());
-				System.out.println(userGame4_3.getGameRank());
-				System.out.println(userGame4_4.getGameRank());
-				System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 				
 				userGame4_1.setUser(userRepository.findByNickname(nickname4_1));
 				userGame4_2.setUser(userRepository.findByNickname(nickname4_2));
@@ -333,18 +279,6 @@ public class GameService {
 				Games gamedetail4_3 = new Games(nickname4_3, score4_3, userGame4_3.getGameRank());
 				Games gamedetail4_4 = new Games(nickname4_4, score4_4, userGame4_4.getGameRank());
 				
-//				Matching mat4_1 = matchingRepository.findByUserId(userGame4_1.getId());
-//				Matching mat4_2 = matchingRepository.findByUserId(userGame4_2.getId());
-//				Matching mat4_3 = matchingRepository.findByUserId(userGame4_3.getId());
-//				Matching mat4_4 = matchingRepository.findByUserId(userGame4_4.getId());
-//				mat4_1.setRecentGameId(game.getId());
-//				mat4_2.setRecentGameId(game.getId());
-//				mat4_3.setRecentGameId(game.getId());
-//				mat4_4.setRecentGameId(game.getId());
-//				matchingRepository.save(mat4_1);
-//				matchingRepository.save(mat4_2);
-//				matchingRepository.save(mat4_3);
-//				matchingRepository.save(mat4_4);
 				
 				return GameResponseDto.builder()
 						.gameId(game.getId())
@@ -373,7 +307,6 @@ public class GameService {
 	}
 	
 	public MatchingResponseDto getMatchingProfile(Integer pinNumber) {
-		System.out.println("핀번호로 유저 정보 요청이 들어왔습니다.");
 		User user = userRepository.findByPin(pinNumber);
 		System.out.println(pinNumber + " " + user.getNickname());
 		MatchingResponseDto matchingResponseDto = new MatchingResponseDto();
@@ -417,7 +350,6 @@ public class GameService {
 		List<Integer> sumScores = new ArrayList();
 		Integer sumNumber = 0;
 		for (Integer i = 1; i < 20; i = i + 2) {
-			System.out.println("i : " + i);
 			if (i == 10) {
 				sumNumber +=scores.get(i - 1) + scores.get(i) + scores.get(i + 1); 
 				sumScores.add(sumNumber);

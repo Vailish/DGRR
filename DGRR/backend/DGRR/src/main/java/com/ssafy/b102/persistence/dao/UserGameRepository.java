@@ -11,6 +11,9 @@ import com.ssafy.b102.Entity.UserGame;
 public interface UserGameRepository extends JpaRepository<UserGame, String>{
 
 	public List<UserGame> findAllByUserId(long id);
+	
+	public List<UserGame> findAllByUserIdOrderById(long UserId);
+	
 	public UserGame findByUserIdAndGameId(long userId, long gameId);
 
 	public List<UserGame> findAllByGameId(long id);

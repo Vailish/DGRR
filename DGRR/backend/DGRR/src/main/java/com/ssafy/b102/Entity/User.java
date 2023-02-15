@@ -73,7 +73,7 @@ public class User {
 	private LocalDateTime pinCreateTime;
 	
 	@Column(nullable = true)
-	private String stateMessage;
+	private Integer stateMessage;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

@@ -1,21 +1,25 @@
 package com.ssafy.b102.response.dto;
 
+
 import com.ssafy.b102.Entity.User;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
 
 @Data
-@Setter
+@Setter(AccessLevel.NONE)
 @Builder
-public class ProfileImgResponseDto {
+public class UserUpdateResponseDto {
     private String nickname;
+    private String stateMessage;
     private FileResponseDTO profileImage;
 
-    public static ProfileImgResponseDto toDto(User user) {
-        return ProfileImgResponseDto.builder()
-                .nickname(user.getName())
+    public static UserUpdateResponseDto toDto(User user) {
+        return UserUpdateResponseDto.builder()
+                .nickname(user.getNickname())
+                .stateMessage(user.getStateMessage())
                 .profileImage(getImage(user))
                 .build();
     }
