@@ -5,6 +5,8 @@ const ONLINE_GAME_BOARD_CHANGE = 'KioskOnline/ONLINE_GAMEBOARD_CHANGE'
 const ONLINE_GAME_BOARD_CHANGE_OPPOSITE = 'KioskOnline/ONLINE_GAMEBOARD_CHANGE_OPPOSITE'
 const LOAD_BOTH_PLAYERS = 'KioskOnline/LOAD_BOTH_PLAYERS'
 const MATCHING_PLAYER = 'KioskOnline/MATCHING_PLAYER'
+const ONLINE_SEND_ALL_DATA = 'KioskOnline/ONLINE_SEND_ALL_DATA'
+
 const testPlayer = {
   nickname: 'test!',
   record: [{ totalGame: 10, winGame: 7, loseGame: 5 }],
@@ -29,6 +31,10 @@ export const loadBothPlayers = (oppositePlayerInfo, SessionId) => ({
   type: LOAD_BOTH_PLAYERS,
   oppositePlayerInfo,
   SessionId,
+})
+export const onlineSendAllData = gameData => ({
+  type: ONLINE_SEND_ALL_DATA,
+  gameData,
 })
 
 // 초기 상태
@@ -55,6 +61,21 @@ const OnlineLoginUser = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PLAYER: {
       const player = action.playerInfo
+      if (player.point) {
+        if (player.point <= 800) {
+          player['tier'] = '브론즈'
+        } else if (player.point > 800 && player.point <= 1200) {
+          player['tier'] = '실버'
+        } else if (player.point > 1200 && player.point <= 1600) {
+          player['tier'] = '골드'
+        } else if (player.point > 1600 && player.point <= 2000) {
+          player['tier'] = '플래티넘'
+        } else if (player.point > 2000) {
+          player['tier'] = '다이아'
+        }
+      } else {
+        player['tier'] = '브론즈'
+      }
       return {
         ...state,
         player,
@@ -74,6 +95,21 @@ const OnlineLoginUser = (state = initialState, action) => {
         gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
       }
       const playerInfo = action.oppositePlayerInfo
+      if (playerInfo.point) {
+        if (playerInfo.point <= 800) {
+          playerInfo['tier'] = '브론즈'
+        } else if (playerInfo.point > 800 && playerInfo.point <= 1200) {
+          playerInfo['tier'] = '실버'
+        } else if (playerInfo.point > 1200 && playerInfo.point <= 1600) {
+          playerInfo['tier'] = '골드'
+        } else if (playerInfo.point > 1600 && playerInfo.point <= 2000) {
+          playerInfo['tier'] = '플래티넘'
+        } else if (playerInfo.point > 2000) {
+          playerInfo['tier'] = '다이아'
+        }
+      } else {
+        playerInfo['tier'] = '브론즈'
+      }
       const oppositePlayer = {
         playerInfo,
         gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],

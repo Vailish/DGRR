@@ -10,6 +10,15 @@
   }
 }
 
+@keyframes loading_online_game {
+  from {
+    transform: scaleY(0.1);
+  }
+  to {
+    transform: scaleY(2);
+  }
+}
+
 @include desktop {
   .KioskBackground {
     position: relative;
@@ -18,6 +27,50 @@
     margin: 0px;
 
     background: #f8f8fb;
+
+    .MatchedWindow {
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      position: absolute;
+      left: 20vw;
+      top: 25vw;
+      width: 60vw;
+      height: 30vw;
+      background: white;
+      z-index: 5;
+      border-radius: 5vw;
+      .MatchedTitle {
+        font-size: 5vw;
+      }
+      .MatchedAppear {
+        width: 80%;
+        height: 30%;
+        left: 10vw;
+        animation-name: loading_online_game;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        // animation-delay: 1s;
+        z-index: 10;
+        .MatchedLoadingText {
+          font-size: 2vw;
+        }
+        .MatchedLoading {
+          width: 100%;
+          height: 20%;
+          border-radius: 5vw;
+          background: gray;
+          .MatchedLoadingBar {
+            width: 100%;
+            height: 100%;
+            border-radius: 5vw;
+            background: green;
+          }
+        }
+      }
+    }
     .OnlineFindContentBlock {
       display: flex;
       width: 100vw;
@@ -64,19 +117,7 @@
           margin-top: 20vh;
           font-size: 4vw;
         }
-        .MatchedModal {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: absolute;
-          left: 20vw;
-          top: 20vw;
-          width: 60vw;
-          height: 30vw;
-          background: white;
-          font-size: 10vw;
-          animation-name: bounce_frames;
-        }
+
         .OnlineFindTimeBlock {
           font-size: 4vw;
         }

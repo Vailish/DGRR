@@ -10,7 +10,7 @@
 
     background: #f8f8fb;
 
-    .ContentBlock {
+    .OnlineContentBlock {
       display: flex;
       width: 100vw;
       height: 66.5vh;
@@ -18,7 +18,7 @@
       // background: black;
       justify-content: space-between;
       margin-top: 4vh;
-      .PinQRBlock {
+      .OnlinePinQRBlock {
         display: flex;
 
         width: 912px / 2560px * 100vw;
@@ -32,26 +32,22 @@
         box-shadow: 0.25vh 0.25vh 0.5vh rgba(0, 0, 0, 0.25);
 
         border-radius: 1.5vh;
-        .QRBlock {
+        .OnlineQRBlock {
           display: flex;
 
           width: 20vw;
           flex-direction: column;
           align-items: center;
-          .QRImage {
-            width: 300px / 2560px * 100vw;
-            height: 300px / 2560px * 100vw;
-            // background: black;
-            background-image: url('../img/mLogin.png');
-            background-size: cover;
-            background-size: 95%;
+          .OnlineQRImage {
+            width: 400px / 2560px * 100vw;
+            height: 400px / 2560px * 100vw;
           }
-          .QRTitle {
+          .OnlineQRTitle {
             width: 30vw;
             margin-top: 3vh;
             font-size: 2vw;
           }
-          .QRText {
+          .OnlineQRText {
             width: 25vw;
             margin-top: 1vh;
             font-size: 1vw;
@@ -61,14 +57,14 @@
           display: flex;
           flex-direction: column;
           align-items: center;
-          margin-top: 1vh;
-          .PinInput {
+          margin-top: 3vh;
+          .OnlinePinInput {
             width: 20vw;
             height: 128 / 1600 * 100vh;
             margin-bottom: 2vw;
             border-radius: 1vw;
           }
-          .PinOkButton {
+          .OnlinePinOkButton {
             display: flex;
             width: 240 / 2560 * 100vw;
             height: 128 / 1600 * 100vh;
@@ -77,14 +73,14 @@
             justify-content: center;
             align-items: center;
             border-radius: 1vw;
-            font-size: 3vw;
+            font-size: 2vw;
             font-weight: 500;
             color: #ffffff;
           }
         }
       }
-      .UsersBlock {
-        .PlayersBlock {
+      .OnlineUsersBlock {
+        .OnlinePlayersBlock {
           display: flex;
           width: 1240px / 2560px * 100vw;
           height: 1064px / 1600px * 100vh;
@@ -111,7 +107,7 @@
             background: gray;
             z-index: 5;
           }
-          .WelcomePlayer {
+          .OnlineWelcomePlayer {
             display: flex;
             width: 90%;
             height: 90%;
@@ -120,20 +116,15 @@
             align-items: center;
             font-size: 3vw;
             color: darkblue;
-            .WelcomeText {
-              width: 840/1024 * 100%;
-              height: 272 / 808 * 100%;
-              font-size: 3vw;
-            }
           }
         }
       }
     }
-    .GameStartBlock {
+    .OnlineGameStartBlock {
       display: flex;
       justify-content: center;
       margin-top: 2vw;
-      .GameStartButton {
+      .OnlineGameStartButton {
         /* Rectangle 34 */
         display: flex;
         width: 608px / 2560px * 100vw;
