@@ -5,8 +5,9 @@ import baseaxios from '../../API/baseaxios'
 import ProfileModal from '../mainpage/ProfileModal'
 import '../../scss/MianPage.scss'
 
-const Nav = () => {
+const Nav = ({ username }) => {
   const navigate = useNavigate()
+  const [userName, setUserName] = useState("")
   const [userNick, setUserNick] = useState("")
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -16,7 +17,8 @@ const Nav = () => {
 
   const logout = () => {
     removeCookie('token')
-    removeCookie('idetifier')
+    removeCookie('identifier')
+    navigate('/')
   }
 
   const toMain = () => {
@@ -28,6 +30,7 @@ const Nav = () => {
     const requestNickname = await baseaxios.post('api/v1/identifier', { 'identifier': userNum })
     const nickData = requestNickname.data
     setUserNick(nickData.nickname)
+    setUserName(username)
   }
 
   useEffect(() => {
@@ -36,11 +39,11 @@ const Nav = () => {
 
   return (
     <nav className='Nav'>
-      <p className='NavLogo' onClick={() => toMain()}>DG.RR</p>
+      <p className='NavLogo' onClick={() => toMain(userNick)}>DG.RR</p>
       <div className='NavAvatar'>
-        <p onClick={() => handleClick()}>user102</p>
+        <p onClick={() => handleClick()}>{userName}</p>
         <p>|</p>
-        <p onClick={() => logout()}>Logout</p>
+        <p onClick={() => logout()}>로그아웃</p>
       </div>
       {modalOpen && (
         <ProfileModal setModalOpen={setModalOpen} />

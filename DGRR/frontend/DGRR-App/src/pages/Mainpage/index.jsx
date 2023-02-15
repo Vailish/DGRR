@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import baseaxios from '../../API/baseaxios'
 import Nav from '../../components/mainpage/Nav'
 import PieChart from '../../components/mainpage/PieChart'
 import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
-import profileimg from '../../img/profile.jpg'
 import PointCharts from '../../components/mainpage/PointCharts'
-import { getCookie, removeCookie } from '../../cookies/Cookies'
+import { getCookie, removeCookie, setCookie } from '../../cookies/Cookies'
 
 const Mainpage = () => {
   const [userInfo, setUserInfo] = useState([])
+  const [userImgUrl, setUserImgUrl] = useState([])
   const [pointsInfo, setpointsInfo] = useState({})
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
@@ -20,6 +20,7 @@ const Mainpage = () => {
   const { nickName } = useParams()
   const [visible, setVisible] = useState(false)
   const [tier, setTier] = useState("Bronze")
+  const winningBar = useRef();
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -28,12 +29,9 @@ const Mainpage = () => {
       navigate('/')
     }
     fetchData()
-    
-
   }, [])
 
   useEffect(() => {
-    fetchMatchData()
     if (userInfo.points < 1000) {
       setTier('Bronze')
     } else if (1000 <= userInfo.points < 1100) {
@@ -47,22 +45,33 @@ const Mainpage = () => {
     }
   }, [userInfo])
 
+  useEffect(() => {
+    fetchMatchData()
+  }, [seletedCategory])
+  
+
+  useEffect(() => {
+    inputWinning()
+  }, [winning])
+  
+
   const fetchData = async () => {
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
     const requestRankings = await baseaxios.get(`/api/v1/data/ranking/user/${nickName}`)
-    // const requestUserimg = await baseaxios.get(`/api/v1/userimg/${nickName}`)
+    const requestUserimg = await baseaxios.get(`/api/v1/request/userimg/${nickName}`)
     const requestWinning = await baseaxios.get(`/api/v1/data/twentygame/${nickName}`)
     const userData = requestUser.data
     const pointsData = requestPoints.data
     const rankingData = requestRankings.data
     const winningData = requestWinning.data
-    // const userimgData = requestUserimg.data
+    const userimgData = requestUserimg.data
     setMyRanking(rankingData.filter(data => data.nickname === nickName)[0].ranking)
     setUserInfo(userData)
     setpointsInfo(pointsData)
     setRankingInfo(rankingData)
     setWinning(winningData)
+    setUserImgUrl(userimgData)
   }
 
   const fetchMatchData = async () => {
@@ -78,25 +87,21 @@ const Mainpage = () => {
   }
 
   const inputWinning = () => {
-    const winningBar = document.querySelector('.SpanBar');
-    winningBar.style.width = isNaN(parseInt(winning.winGame / winning.gameNumber * 100)) ? '50%' : `${parseInt(winning.winGame / winning.gameNumber * 100)}%`
+    winningBar.current.style.width = isNaN(parseInt(winning.winGame / winning.gameNumber * 100)) ? '50%' : `${parseInt(winning.winGame / winning.gameNumber * 100)}%`
   }
-
-
-
-  //그래프 버튼을 누를때마다 상태값이 변한다
 
   const onVisible = () => {
     setVisible(!visible)
   }
+
   return (
     <div className="PageBase">
-      <Nav />
+      <Nav username={userInfo.username} />
       <div className="MainBox">
         <h2 className="UserNickName">{userInfo.nickname}</h2>
-        <p className="UserText">좋아요 댓글 구독 알람설정까지~!!</p>
+        
         <div className="MainInnerBox">
-          <img src={profileimg} alt="ProfileImage" className="ProfileImg" />
+          <img src={userImgUrl} alt="ProfileImage" className="ProfileImg" />
           <div className="AvgBox">
             <div className="PieCharts">
               <PieChart
@@ -145,7 +150,7 @@ const Mainpage = () => {
             <h2 className="BoxTitle">최근 랭킹전 {winning.gameNumber === 0 ? null : winning.gameNumber}게임 승률</h2>
             <div className="RecordRateBar">
               <div className="ProgressLine">
-                {winning.loseGame}패<span id="SpanBar">{winning.winGame}승</span>
+                {winning.loseGame}패<span id="SpanBar" ref={winningBar}>{winning.winGame}승</span>
               </div>
               <div className="Info">
                 <div className="ProgressLineText">{isNaN(parseInt(winning.winGame / winning.gameNumber * 100)) ? '전적없음' : `${parseInt(winning.winGame / winning.gameNumber * 100)}%`}</div>
@@ -155,7 +160,7 @@ const Mainpage = () => {
           <div className="MainBox UserRankingBox">
             <div className="UserRankingBoxTitle">
               <h2 className="BoxTitle">나의 랭킹</h2>
-              <span className="RankingNav" onClick={() => (window.location.href = '/ranking')}>
+              <span className="RankingNav" onClick={() => navigate('/ranking', {state : {nickname : userInfo.nickname}})}>
                 more▶
               </span>
             </div>

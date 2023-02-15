@@ -2,42 +2,100 @@ import React, { useRef, useState, useEffect, useCallback } from 'react'
 import Nav from '../../components/mainpage/Nav'
 import '../../scss/RankingPage.scss'
 import baseaxios from '../../API/baseaxios'
-import { useNavigate } from 'react-router-dom'
-;<script src="https://kit.fontawesome.com/d97b87339f.js" crossorigin="anonymous"></script>
+import { useNavigate, useLocation } from 'react-router-dom'
+import { FaSearch } from "react-icons/fa";
+import { getCookie, removeCookie } from '../../cookies/Cookies'
+
 const Rankingpage = () => {
+  const [userNick, setUserNick] = useState("")
+  const [userInfo, setUserInfo] = useState({})
+  const [userImgUrl, setUserImgUrl] = useState([])
+  const [rankingInfo, setRankingInfo] = useState([])
+  const [myRanking, setMyRanking] = useState('')
+  const [winning, setWinning] = useState({})
   const [searchValue, setSearchValue] = useState('')
   const [rankData, setRankData] = useState([])
   const [pageNum, setPageNum] = useState(1)
+  const [tier, setTier] = useState("Bronze")
   const [totalPageNum, setTotalPageNum] = useState([])
   const navigate = useNavigate()
-
+  const nick = useLocation();
+ 
   useEffect(() => {
-    fetchData()
+    if (getCookie('token')) {
+      setUserNick(nick.state.nickname)
+    } else {
+      navigate('/')
+    }
   }, [])
 
-  const fetchData = async () => {
-    const requestRankings = await baseaxios.get(`/api/v1/data/ranking/page/${pageNum}`)
-    const rankingsData = requestRankings.data.rankings
-    const totalPageNumData = requestRankings.data.pageNumber
+  useEffect(() => {
+    if (userNick) {
+      fetchData(userNick)
+    }
+  }, [userNick])
+  
+  useEffect(() => {
+    if (userInfo.points < 1000) {
+      setTier('Bronze')
+    } else if (1000 <= userInfo.points < 1100) {
+      setTier('Silver')
+    } else if (1100 <= userInfo.points < 1200) {
+      setTier('Gold')
+    } else if (1200 <= userInfo.points < 1300) {
+      setTier('Platinum')
+    } else {
+      setTier('Diamond')
+    }
+  }, [userInfo])
+
+  const fetchData = async (nickname) => {
+    const requestRankingsPage = await baseaxios.get(`/api/v1/data/ranking/page/${1}`)
+    const rankingsData = requestRankingsPage.data.rankings
+    const totalPageNumData = requestRankingsPage.data.pageNumber
     setRankData(rankingsData)
     setTotalPageNum([...Array(totalPageNumData).keys()].map(key => key + 1))
+
+    try {
+      const requestUser = await baseaxios.get(`/api/v1/user/${nickname}`)
+      const userData = requestUser.data
+      setUserInfo(userData)
+    } catch (e) {
+      console.log(e)
+    }
+
+    try {
+      const requestRankings = await baseaxios.get(`/api/v1/data/ranking/user/${nickname}`)
+      const rankingData = requestRankings.data
+      setMyRanking(rankingData.filter(data => data.nickname === userNick)[0].ranking)
+      setRankingInfo(rankingData)
+    } catch (error) {
+      console.log(error)
+    }
+   
+    try {
+      const requestUserimg = await baseaxios.get(`/api/v1/request/userimg/${nickname}`)
+      const userimgData = requestUserimg.data
+      setUserImgUrl(userimgData)
+    } catch (error) {
+      console.log(error)
+    }
+
+    try {
+      const requestWinning = await baseaxios.get(`/api/v1/data/twentygame/${nickname}`)
+      const winningData = requestWinning.data
+      setWinning(winningData)
+    } catch (error) {
+      console.log(error)
+    }
   }
+
 
   const onMoveNickPage = nickname => {
     navigate(`/${nickname}`)
     nickname = ''
   }
 
-  const handleChange = e => {
-    setSearchValue(e.target.value)
-  }
-
-  const userSearch = async e => {
-    e.preventDefault()
-    const searchRequest = await baseaxios.get(`/api/v1/data/ranking/myranking/${searchValue}`)
-    setSearchValue('')
-    console.log(searchRequest)
-  }
 
   const reqPageNation = async page => {
     try {
@@ -52,50 +110,36 @@ const Rankingpage = () => {
   const pageMove = page => {
     reqPageNation(page)
   }
+
   return (
     <div className="PageBase">
-      <Nav />
+      <Nav username={userInfo.username}/>
       <div className="ProfileBox">
         <div className="ProfileLeftBox">
           <div>
-            <h2 className="UserNickName">beomi</h2>
+            <h2 className="UserNickName">{userInfo.nickname}</h2>
             <p className="UserText">좋아요 댓글 구독 알람설정까지~!!</p>
           </div>
-          <img src={require('../../img/profile.jpg')} alt="ProfileImage" className="ProfileImg" />
+          <img src={userImgUrl} alt="ProfileImage" className="ProfileImg" />
         </div>
         <div className="ProfileRightBox">
           <h2 className="RankText">랭크</h2>
           <div className="TierBox">
-            <img src={require('../../img/Diamond.png')} alt="tierImg" className="TierImg" />
+            <img src={require(`../../img/${tier}.png`)} alt="tierImg" className="TierImg" />
             <div className="TierTextBox">
-              <span className="TierText">Diamond</span>
+              <span className="TierText">{tier}</span>
               <div className="TierInfoText">
-                <span>랭킹 17위</span> <span>랭킹포인트 1231pt</span>
+                <span>랭킹 {myRanking}위</span> <span>랭킹포인트 {userInfo.points}pt</span>
               </div>
             </div>
           </div>
-          <span className="RecordText">전체 전적</span>
+          <span className="RecordText">최근 랭킹 {winning.gameNumber === 0 ? null : winning.gameNumber} 게임 전적</span>
           <div className="RecordInfoBox">
-            <span>37 전</span> <span>26 승</span> <span>11 패</span>
+            <span>{winning.gameNumber} 전</span> <span>{winning.winGame} 승</span> <span>{winning.loseGame} 패</span>
           </div>
         </div>
       </div>
 
-      <form className="search-box" onSubmit={userSearch}>
-        <input
-          value={searchValue}
-          className="search-input"
-          type="text"
-          placeholder="플레이어 닉네임"
-          onChange={handleChange}
-          onSubmit={() => {
-            console.log('제출확인')
-          }}
-        />
-        <button type="sumbit" className="search-btn">
-          <i className="fas fa-search"></i>
-        </button>
-      </form>
 
       <table className="RankingTable">
         <tbody>
@@ -129,7 +173,7 @@ const Rankingpage = () => {
         </tbody>
       </table>
 
-      <div>
+      <div className='pageNation'>
         {totalPageNum.map((pageNum, index) => {
           return (
             <span index={index} key={index}>

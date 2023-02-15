@@ -8,6 +8,11 @@
   padding-left: 12.5vw;
   justify-content: space-between;
   
+  .pageNation {
+    margin-top: 2vw;
+    margin-bottom: 5vw;
+  }
+
   .ProfileBox {
     display: flex;
     justify-content: space-between;
@@ -15,6 +20,7 @@
     width: 75vw;
     height: 26vw;
     padding: 48/1920*100vw 134/1920*100vw;
+    margin-bottom: 7vw;
     box-sizing: border-box;
     border-radius: 10px;
     background-color: white;
@@ -161,8 +167,7 @@
   
   .search-btn {
     padding: 6px 9px;
-    // border:none;
-    border:solid black;
+    border:none;
     background-color: transparent;
     font-size: 18px;
     margin-left:-45px;

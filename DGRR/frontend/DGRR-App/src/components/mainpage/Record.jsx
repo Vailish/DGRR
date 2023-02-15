@@ -28,7 +28,7 @@ const Record = ({ gameInfo }) => {
               </div>
               )
           })}
-          <div className="DetailInfo">▼</div>
+          
         </div>
       </div>
     </div>
