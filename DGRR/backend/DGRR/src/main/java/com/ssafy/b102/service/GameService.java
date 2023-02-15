@@ -15,6 +15,8 @@ import com.ssafy.b102.Entity.Game;
 import com.ssafy.b102.Entity.Matching;
 import com.ssafy.b102.Entity.User;
 import com.ssafy.b102.Entity.UserGame;
+import com.ssafy.b102.data.dto.MyRankingDto;
+import com.ssafy.b102.data.dto.WinRateDto;
 import com.ssafy.b102.persistence.dao.GameRepository;
 import com.ssafy.b102.persistence.dao.MatchingRepository;
 import com.ssafy.b102.persistence.dao.UserGameRepository;
@@ -27,6 +29,7 @@ import com.ssafy.b102.response.dto.MatchingResponseDto;
 import com.ssafy.b102.response.dto.OtherPlayer;
 import com.ssafy.b102.response.dto.UserGamesResponseDto;
 import com.ssafy.b102.response.dto.WinRate;
+import com.ssafy.b102.response.dto.DataResponseDto;
 import com.ssafy.b102.response.dto.GameResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -308,7 +311,6 @@ public class GameService {
 	
 	public MatchingResponseDto getMatchingProfile(Integer pinNumber) {
 		User user = userRepository.findByPin(pinNumber);
-		System.out.println(pinNumber + " " + user.getNickname());
 		MatchingResponseDto matchingResponseDto = new MatchingResponseDto();
 		
 		if (user == null) {
@@ -330,16 +332,16 @@ public class GameService {
 			return matchingResponseDto;
 		}
 		
-		
-		WinRate winrate = new WinRate(10, 7, 3);
+		WinRateDto win = winrate(user.getNickname());
+		WinRate winrate = new WinRate(win.getTotalGame(), win.getWinGameNumber(), win.getTotalGame() - win.getWinGameNumber());
 		List<WinRate> record = new ArrayList<>(List.of(winrate));
-		Integer average = 163;
+		Integer average = getUserPointsRank(user.getNickname()).getLast3GameAverageTotalScore();
 		
 		return matchingResponseDto.builder()
 				.username(user.getUsername())
 				.nickname(user.getNickname())
 				.profile(null)
-				.rank(50)
+				.rank(myRank(user.getNickname()).getMyRank())
 				.record(record)
 				.average(average)
 				.build();
@@ -360,5 +362,87 @@ public class GameService {
 		}
 		
 		return sumScores;
+	}
+	
+	private WinRateDto winrate(String nickname) {
+	List<Game> onlineGames = gameRepository.findAllByGameType(true);
+	User user = userRepository.findByNickname(nickname);
+	Integer totalGameNumbers = 0;
+	Integer WinGameNumbers = 0;
+	for (Game onlineGame : onlineGames) {
+		UserGame usergame = userGameRepository.findByUserIdAndGameId(user.getId(), onlineGame.getId());
+		if (usergame != null) {
+			totalGameNumbers += 1;
+			if(usergame.getGameRank() == 1) {
+				WinGameNumbers += 1;
+			}
+		}
+	}
+	return new WinRateDto(totalGameNumbers, WinGameNumbers);
+	};
+	
+	private  MyRankingDto myRank(String nickname) {
+		List<User> users = userRepository.findAllByOrderByPointsDesc();
+		Integer rank = 0;
+		for (User user : users) {
+			rank += 1;
+			if (user.getNickname().equals(nickname)) {
+				return new MyRankingDto(rank);
+			}
+		}
+		return null; 
+	}
+	
+	private DataResponseDto getUserPointsRank(String nickname) {
+//		전체 데이터를 가져온다
+		User user = userRepository.findByNickname(nickname);
+		List<Game> games = gameRepository.findAllByGameTypeOrderByGameDateDesc(true);
+		
+		Integer lastestGameTotalScore = 0;
+		Integer Last3GameAverageTotalScore = 0;
+		Integer cnt = 0;
+		Integer HighestTotalScore = 0;
+		
+		
+		for (Game game : games) {
+			UserGame userGame = userGameRepository.findByUserIdAndGameId(user.getId(), game.getId());
+			if (userGame == null) {
+				continue;
+			}
+			else {
+				Integer userGameScore = caculate(convertToList(userGame.getGameScore()));
+				if (lastestGameTotalScore == 0) {
+					lastestGameTotalScore += userGameScore;
+				}
+				if (cnt < 2) {
+					cnt += 1;
+					Last3GameAverageTotalScore += userGameScore;
+				} else if (cnt == 2) {Last3GameAverageTotalScore = (Last3GameAverageTotalScore + userGameScore) / 3; cnt += 1; System.out.println("ㅇㅅㅇ");}
+				
+				if (HighestTotalScore < userGameScore) {
+					HighestTotalScore = userGameScore;
+				}
+			}
+		}
+		if (cnt == 2) {	
+			lastestGameTotalScore = lastestGameTotalScore/2;
+		}
+		return new DataResponseDto(lastestGameTotalScore, Last3GameAverageTotalScore, HighestTotalScore);
+	}
+	
+	private Integer caculate(List<Integer> score) {
+		Integer result = 0;
+		for (int num = 0; num < score.size(); num++) {
+			result += score.get(num);
+		}
+		return result;
+	}
+	
+	private Integer caculateDev(List<Integer> score) {
+		Integer result = 0;
+		for (int num = 0; num < score.size(); num++) {
+			result += score.get(num);
+		}
+		return result;
 	}
 }
