@@ -1,37 +1,48 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../../../scss/KioskLogin.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-// import KioskLoginPlayer from './KioskLoginPlayer'
-import { addPlayer, loadPlayers } from '../../../store/OfflineLoginUsers'
-// import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { addPlayer, loadPlayers } from '../../../modules/OfflineLoginUsers'
 import { api } from '../../../API/api'
 import KioskLoginPlayer from './KioskLoginPlayer'
 import KioskNavBlock from '../KioskNavBlock'
+import QRImage from '../../../img/mLogin.png'
 
 const KioskLogin = () => {
   let pinNumber = undefined
-  const onAddPlayer = async pin => {
-    const pinNum = String(pin)
-    const url = '/v1/matching/' + pinNum
-    console.log('url : ', url)
-    const response = await api.get(url)
-    console.log('response : ', response)
-    dispatch(addPlayer(response.data))
-  }
   const dispatch = useDispatch()
+  const players = useSelector(state => state.OfflineLoginUsers.players)
+  const navigate = useNavigate()
+
+  const onAddPlayer = async pin => {
+    if (players.length < 4) {
+      const pinNum = String(pin)
+      const url = '/api/v1/matching/' + pinNum
+      console.log('url : ', url)
+      const response = await api.get(url)
+      console.log('response : ', response)
+      const addingPlayer = { ...response.data }
+      const imgUrl = '/api/v1/request/userimg/' + addingPlayer.nickname
+      const requestImg = await api.get(imgUrl)
+      console.log('requestIMG : ', requestImg.data)
+      const profile = requestImg.data
+      dispatch(addPlayer({ ...addingPlayer, profile }))
+    }
+  }
   const inputPinNumber = e => {
     pinNumber = e.target.value
     console.log(pinNumber)
   }
   const onGameStart = () => {
-    dispatch(loadPlayers())
+    if (players.length > 0) {
+      dispatch(loadPlayers())
+      navigate('/KioskOfflineGame')
+    }
   }
   const CustomInput = props => {
     const { InputValue, InputPin, InputClassName } = props
     return <input type="number" value={InputValue} onChange={InputPin} className={InputClassName} />
   }
-  const players = useSelector(state => state.OfflineLoginUsers.players)
 
   const always4Blocks = () => {
     const playersList = [...players]
@@ -46,7 +57,7 @@ const KioskLogin = () => {
       <div className="ContentBlock">
         <div className="PinQRBlock">
           <div className="QRBlock">
-            <div className="QRImage"></div>
+            <img className="QRImage" src={QRImage}></img>
             <div className="QRTitle">QR코드로 PIN번호 받기</div>
             <div className="QRText">
               QR스캔을 통해 웹사이트에 접속하여 로그인 후 화면에 출력되는 개인 PIN번호를 입력해주세요
@@ -77,9 +88,9 @@ const KioskLogin = () => {
         </div>
       </div>
       <div className="GameStartBlock">
-        <Link to="/KioskOfflineGame" className="GameStartButton" onClick={onGameStart}>
+        <div to="/KioskOfflineGame" className="GameStartButton" onClick={onGameStart}>
           시작
-        </Link>
+        </div>
       </div>
     </div>
   )

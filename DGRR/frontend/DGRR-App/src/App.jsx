@@ -45,8 +45,10 @@ const App = () => {
       <Route path="/findIdSuccess" element={<IdFindSuccess />} />
       <Route path="/findPw" element={<FindPwForm />} />
       <Route path="/findPwSuccess" element={<PwFindSuccess />} />
+
       <Route path="/mLogin" element={<MobileForm />} />
       <Route path="/mPin" element={<MobilePin />} />
+
       <Route path="/KioskOnlineResult" element={<KioskOnlineResult />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>

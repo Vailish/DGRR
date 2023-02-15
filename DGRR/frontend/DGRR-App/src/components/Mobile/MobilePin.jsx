@@ -3,6 +3,7 @@ import '../../scss/MobilePin.scss'
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { getCookie, removeCookie } from '../../cookies/Cookies'
+import { request } from '../../API/request'
 const MobilePin = () => {
   const [min, setMin] = useState(5)
   const [sec, setSec] = useState(0)
@@ -41,7 +42,7 @@ const MobilePin = () => {
         username: username,
         password: password,
       }
-      const response = await axios.post('http://192.168.31.142:8080/api/v1/request/pin', JSON.stringify(userInfo), {
+      const response = await request.post('/api/v1/request/pin', JSON.stringify(userInfo), {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
         },

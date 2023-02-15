@@ -1,9 +1,7 @@
 import React from 'react'
 import '../../../scss/KioskLoginPlayer.scss'
-import { removePlayer } from '../../../store/OfflineLoginUsers'
-import { useSelector } from 'react-redux'
+import { removePlayer } from '../../../modules/OfflineLoginUsers'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 const KioskLoginPlayer = props => {
   const { player } = props
@@ -17,7 +15,7 @@ const KioskLoginPlayer = props => {
       {player !== '' ? (
         <>
           <div className="PlayerProfileBlock">
-            <div className="PlayerProfile"></div>
+            <img className="PlayerProfile" src={player.profile}></img>
           </div>
           <div className="PlayerInfoBlock">
             <div className="PlayerNameAndRank">

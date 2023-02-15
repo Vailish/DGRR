@@ -1,10 +1,17 @@
 import KioskNavBlock from '../KioskNavBlock'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../scss/KioskOnlineMatching.scss'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import matching from '../../../sound/matching.mp3'
 import useSound from 'use-sound'
+import countSound from '../../../sound/countDown.mp3'
+import Bronze from '../../../img/Bronze.png'
+import Silver from '../../../img/Silver.png'
+import Gold from '../../../img/Gold.png'
+import Platinum from '../../../img/Platinum.png'
+import Diamond from '../../../img/Diamond.png'
+const src = { 브론즈: Bronze, 실버: Silver, 골드: Gold, 플래티넘: Platinum, 다이아: Diamond }
 
 const OnlineMatchingPlayer = props => {
   const { nickname, tier, point, record, orderNum } = props
@@ -14,7 +21,7 @@ const OnlineMatchingPlayer = props => {
       <div className="OnlineMatchingProfile"></div>
       <div className="OnlineMatchingPlayerInfoBlock">
         <div className="OnlineMatchingTierAndName">
-          <div className="OnlinePlayerTier">{tier}</div>
+          <img className="OnlinePlayerTier" src={src[`${tier}`]} alt={tier}></img>
           <div className="OnlinePlayerName">{nickname}</div>
         </div>
         <div className="OnlineMatchingPointAndRecord">
@@ -33,8 +40,12 @@ const OnlineMatchingPlayer = props => {
 const CountingDown = () => {
   const navigate = useNavigate()
   const [countingNum, setcountingNum] = useState(13)
+  const [countPlay] = useSound(countSound)
   useEffect(() => {
     const numberCounting = setInterval(() => {
+      if (countingNum === 11) {
+        countPlay()
+      }
       setcountingNum(countingNum - 1)
       if (countingNum === 0) {
         navigate('/KioskOnlineGame')
@@ -78,7 +89,6 @@ const KioskOnlineMatching = () => {
         <div className="LetterV">V</div>
         <div className="LetterS">S</div>
         <CountingDown />
-        {/* {countDown < 10 ? <CountingDownNumber number={countDown} /> : null} */}
         <OnlineMatchingPlayer
           nickname={yourData.nickname}
           point={yourData.point}
