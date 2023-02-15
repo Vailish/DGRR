@@ -8,13 +8,6 @@ const LOAD_PLAYERS = 'KioskOffline/LOAD_PLAYERS'
 const OFFLINE_GAME_BOARD_CHANGE = 'KioskOffline/OFFLINE_GAME_BOARD_CHANGE'
 
 // 액션 생성 함수
-const testPlayer = { nickname: '아아', rank: 8, record: [{ totalGame: 10, winGame: 9, loseGame: 1 }], average: 200 }
-
-// export const change_user = createAction(CHANGE_USER, user => user);
-
-// export const addPlayer2 = () => ({
-//   apis.~~~
-// })
 
 export const addPlayer = playerInfo => ({
   type: ADD_PLAYER,
@@ -32,19 +25,10 @@ export const offlineGameBoardChange = (playerNum, myFrame, orderNum, myValue) =>
   myValue,
 })
 
-// const [modalOpen, setModalOpen] = useState(false);
-
-//   const openModal = () => {
-//     setModalOpen(true);
-//   };
-//   const closeModal = () => {
-//     setModalOpen(false);
-//   };
-
 // 초기 상태
 
 const initialState = {
-  players: [testPlayer],
+  players: [],
   gamingPlayers: {},
   isGameFinish: {},
 }
@@ -57,14 +41,7 @@ const OfflineLoginUsers = (state = initialState, action) => {
       if (state.players.length === 4) {
         return state
       }
-      // pin 숫자를 그대로 입력
 
-      console.log('LAFDASF', action.playerInfo)
-      // const playerInfo = response.then(res => {
-      //   console.log('!:!:!:!:!!:!:', res.data)
-      //   return res.data
-      // })
-      // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', playerInfo)
       const players = [...state.players.filter(player => player.nickname), action.playerInfo]
       return { ...state, players }
     }
@@ -73,35 +50,44 @@ const OfflineLoginUsers = (state = initialState, action) => {
       return { ...state, players }
     }
     case SEND_ALL_SCORE: {
-      const gameData = {
-        gameType: false,
-        gameData: state.players.map(player => {
-          if (player !== null) return { nickname: player.username, score: player.gameScore }
-        }),
-      }
-      console.log(JSON.stringify(gameData))
-      api.sendresult(gameData)
+      const nickname = state.players[0]
+      const gameType = false
+      const gameData = Object.values(state.gamingPlayers).map(player => {
+        const score = []
+        for (let num of player.gameBoard) {
+          if (num === 'X') {
+            score.push(10)
+          } else if (num === '/') {
+            score.push(10 - score[score.length - 1])
+          } else if (num === 'F' || num === '-' || num === '') {
+            score.push(0)
+          } else {
+            score.push(num)
+          }
+        }
+        return { nickname: player.playerInfo.nickname, score }
+      })
+      const myRequset = { nickname, gameType, gameData }
+      api.post('/api/v1/game', JSON.stringify(myRequset))
       return state
     }
     case LOAD_PLAYERS: {
       const gamingPlayers = {}
+      const isGameFinish = {}
       for (let playerIndex = 0; playerIndex < state.players.length; playerIndex++) {
         const gameBoard = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
         const gameBoardResult = ['', '', '', '', '', '', '', '', '', '']
         const playerInfo = state.players[playerIndex]
         gamingPlayers[`player${playerIndex + 1}`] = { playerInfo, gameBoard, gameBoardResult }
+        isGameFinish[`player${playerIndex + 1}`] = false
       }
-      console.log(gamingPlayers)
-      return { ...state, gamingPlayers }
+      return { ...state, gamingPlayers, isGameFinish }
     }
     case OFFLINE_GAME_BOARD_CHANGE: {
-      console.log('state : ', state)
       const playerNum = action.playerNum
       const myFrame = action.myFrame
-      console.log(myFrame)
       const orderNum = action.orderNum
       const myValue = action.myValue === 'x' ? 'X' : action.myValue === 'f' ? 'F' : action.myValue
-      console.log('frame1 : ', state.gamingPlayers[playerNum].gameBoard)
       const gameBoard = [...state.gamingPlayers[playerNum].gameBoard]
       gameBoard[2 * (myFrame - 1) + orderNum] = myValue
       const gameBoardSum = [...state.gamingPlayers[playerNum].gameBoardResult]
@@ -138,7 +124,6 @@ const OfflineLoginUsers = (state = initialState, action) => {
         } else if (gameBoard[18] + gameBoard[19] > 10) gameBoard[19] = ''
         else if (gameBoard[18] + gameBoard[19] === 10) gameBoard[19] = '/'
       }
-      console.log('!!!!', gameBoard)
       // for (let index = 18; index < gameBoard.length; index++)
       // {
 
@@ -146,9 +131,7 @@ const OfflineLoginUsers = (state = initialState, action) => {
 
       // 부분 로컬합 구하기 함수
       for (let index = 0; index < gameBoard.length; index++) {
-        console.log('여기로 옴')
         if (18 <= index && index < 21) {
-          console.log('여기로 옴1')
           if (gameBoard[18] && gameBoard[19]) {
             const lastFrameScore = [gameBoard[18], gameBoard[19], gameBoard[20]]
             for (let index = 0; index < lastFrameScore.length; index++) {
@@ -173,7 +156,6 @@ const OfflineLoginUsers = (state = initialState, action) => {
             gameBoardSum[parseInt(index / 2)] = 'X'
             index++
           } else if (gameBoard[index] === '/') {
-            console.log('여기로 옴2')
             gameBoardSum[parseInt(index / 2)] = '/'
             continue
           } else {
@@ -229,7 +211,6 @@ const OfflineLoginUsers = (state = initialState, action) => {
       }
 
       const gameBoardResult = []
-      console.log('GAMESUM : ', gameBoardSum)
       gameBoardSum.reduce((sum, value) => {
         if (value !== '' && value !== '/' && value !== 'X' && value !== 'x') {
           gameBoardResult.push(sum + value)
@@ -237,15 +218,12 @@ const OfflineLoginUsers = (state = initialState, action) => {
         return sum + value
       }, 0)
       for (let i = gameBoardResult.length; i < 10; i++) gameBoardResult.push('')
-      console.log('GAMERESULT : ', gameBoardResult)
       if ((gameBoard[18] === 'X' || gameBoard[19] === 'X' || gameBoard[19] === '/') && !gameBoard[20])
         gameBoardResult[9] = ''
 
       const playerObject = {}
       playerObject[`${playerNum}`] = { ...state.gamingPlayers[playerNum], gameBoard, gameBoardResult }
-      console.log('----', playerObject)
       const gamingPlayers = { ...state.gamingPlayers, ...playerObject }
-      console.log(gamingPlayers)
       const isFinishObject = {}
       isFinishObject[`${playerNum}`] = true
       for (let num of gameBoardResult) {

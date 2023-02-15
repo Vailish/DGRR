@@ -20,10 +20,11 @@
       align-items: center;
       margin-left: 32 / 2560 * 100vw;
       margin-top: 24 / 1600 * 100vh;
-      .OnlineHelpMessageModal {
+      .OnlineHelpMessageWindow {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
+        flex-direction: column;
         position: absolute;
         width: 90vw;
         height: 50vw;
@@ -31,7 +32,45 @@
         top: 5vw;
         background: white;
         z-index: 5;
-        font-size: 5vw;
+        .OnlineHelpMessageCircle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 4vw;
+          height: 4vw;
+          margin-right: 3vw;
+          margin-top: 3vw;
+          align-self: flex-end;
+          background: gray;
+          border-radius: 5vw;
+          font-size: 3vw;
+          color: black;
+        }
+        .OnlineHelpCircleBlock {
+          width: 5vw;
+          height: 5vw;
+          border-radius: 5vw;
+          background: white;
+          border: 0.5vw solid black;
+          font-size: 4vw;
+        }
+        .OnlineHelpMessageTitle {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 80%;
+          height: 10%;
+          color: black;
+          font-size: 5vw;
+        }
+        .OnlineHelpMessageText {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 80%;
+          height: 50%;
+          font-size: 3vw;
+        }
       }
       .OnlineGamePlayerAndScore {
         display: flex;
@@ -44,8 +83,12 @@
           align-items: center;
           width: 264 / 2560 * 100vw;
           height: 324 / 1600 * 100vh;
-          background: yellow;
+          background: ghostwhite;
+          border-radius: 3vw;
           .OnlineGameProfile {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 7vw;
             height: 7vw;
             border-radius: 5vw;

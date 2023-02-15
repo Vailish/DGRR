@@ -1,12 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import KioskNavBlock from '../KioskNavBlock'
 import { useSelector } from 'react-redux'
 import '../../../scss/KioskOnlineFind.scss'
-import { SyncLoader } from 'react-spinners'
 import { api } from '../../../API/api'
 import { useDispatch } from 'react-redux'
-import { loadBothPlayers } from '../../../store/OnlineLoginUser'
+import { loadBothPlayers } from '../../../modules/OnlineLoginUser'
+import { Link } from 'react-router-dom'
+
+const MatchedWindow = React.memo(() => {
+  const navigate = useNavigate()
+  const [barLength, setbarLength] = useState(0)
+  setTimeout(
+    useEffect(() => {
+      const loadingBar = setInterval(() => {
+        setbarLength(barLength + 2)
+      }, 100)
+      if (barLength >= 100) {
+        clearInterval(loadingBar)
+        navigate('/KioskOnlineGame')
+      }
+      return () => {
+        clearInterval(loadingBar)
+      }
+    }),
+    1000,
+  )
+  return (
+    <div className="MatchedWindow">
+      <div className="MatchedTitle">매칭 상대를 찾았습니다!</div>
+      <div className="MatchedAppear">
+        <div className="MatchedLoadingText"> LOADING... </div>
+        <div className="MatchedLoading">
+          <div className="MatchedLoadingBar" style={{ width: `${barLength}%` }}></div>
+        </div>
+      </div>
+    </div>
+  )
+})
 
 const KioskOnlineFind = () => {
   const [flag, setflag] = useState(false)
@@ -32,8 +63,9 @@ const KioskOnlineFind = () => {
     return () => clearInterval(timerCount)
   }, [timingMinute, timingSecond, flag])
 
-  const forTest = () => {
+  const whenMatched = () => {
     setisMatched(!isMatched)
+    goMatching()
   }
 
   const goMatching = () => {
@@ -44,28 +76,27 @@ const KioskOnlineFind = () => {
 
   const reqMatching = async nickname => {
     console.log(JSON.stringify({ nickname }))
-    const url = '/v1/game/matching/result'
+    const url = '/api/v1/game/matching/result'
     const response = await api.post(url, JSON.stringify({ nickname }))
     if (response.data) {
-      // clearInterval(reqMatchingUser)
-      // clearInterval(timerCount)
+      const oppositePlayer = response.data
+      const randomNumber = response.data.randomNumber
+      const imgUrl = '/api/v1/request/userimg/' + oppositePlayer.nickname
+      const requestImg = await api.get(imgUrl)
+      oppositePlayer.profile = requestImg.data
       setflag(true)
       setisMatched(true)
-      forTest()
-      goMatching()
+      whenMatched()
       console.log('내응답이야' + response.data.randomNumber)
-      dispatch(loadBothPlayers(response.data, response.data.randomNumber))
+      dispatch(loadBothPlayers(oppositePlayer, randomNumber))
       navigate('/KioskOnlineMatching')
-    } else {
-      // console.log('test1' + reqMatchingUser)
-      // console.log('test2' + timerCount)
-      //시간이 돌아야돼
     }
   }
 
   return (
-    <div className="KioskBackground" onClick={forTest}>
+    <div className="KioskBackground" onClick={whenMatched}>
       <KioskNavBlock goBackTo="/KioskOnlineLogin" />
+      {isMatched ? <MatchedWindow /> : null}
       <div className="OnlineFindContentBlock">
         <div className="OnlineFindCenterAlign">
           <div className="LoadingBounceBallBlock">
@@ -75,16 +106,13 @@ const KioskOnlineFind = () => {
           </div>
 
           <div className="OnlineFindTextBlock">게임 찾는중</div>
-          {isMatched ? (
-            <div className="MatchedModal" onClick={goMatching}>
-              게임 매칭됨
-            </div>
-          ) : null}
           <div className="OnlineFindTimeBlock">
             {timingMinute < 10 ? '0' + timingMinute : timingMinute} :{' '}
             {timingSecond < 10 ? '0' + timingSecond : timingSecond}
           </div>
-          <div className="OnlineFindCancelBlock">취소</div>
+          <Link className="OnlineFindCancelBlock" to="/KioskOnlineLogin">
+            취소
+          </Link>
         </div>
       </div>
     </div>

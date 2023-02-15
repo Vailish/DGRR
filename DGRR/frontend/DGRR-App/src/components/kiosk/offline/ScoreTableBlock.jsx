@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import '../../../scss/ScoreTableBlock.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { offlineGameBoardChange } from '../../../store/OfflineLoginUsers'
+import { offlineGameBoardChange } from '../../../modules/OfflineLoginUsers'
 
 const ScoreTableBlock = props => {
   const { frameNum, playerNum, scoreSum, scoreBoard, isInput } = props
-  // const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNum])
 
   const myFrame = frameNum
   const dispatch = useDispatch()
@@ -35,7 +34,6 @@ const ScoreTableBlock = props => {
         myValue !== 'f' &&
         myValue !== 'F'
       ) {
-        myValue = Number(myValue)
       }
       dispatch(offlineGameBoardChange(playerNum, myFrame, orderNum, myValue))
     } else {
@@ -155,4 +153,4 @@ const ScoreTableBlock = props => {
   )
 }
 
-export default ScoreTableBlock
+export default React.memo(ScoreTableBlock)

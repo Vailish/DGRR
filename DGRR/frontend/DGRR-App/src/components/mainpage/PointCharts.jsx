@@ -1,59 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
+import { request } from '../../API/request'
 
-const data = [
-  {
-    name: 'Page A',
-    uv: 3000,
-
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 7000,
-
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-
-    amt: 2181,
-  },
-]
-const PointCharts = () => {
+const PointCharts = ({ nickname }) => {
+  const [pointGraph, setPointGraph] = useState([])
+  const reqUserScore = async nickname => {
+    try {
+      const response = await request.get(`/api/v1/data/graphdata/${nickname}`)
+      var newGameDate = response.data
+      console.log(newGameDate)
+      for (let i = 0; i < newGameDate.length; i++) {
+        newGameDate[i].gameDate = newGameDate[i].gameDate.substr(0, 10)
+      }
+      setPointGraph(newGameDate)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  useEffect(() => {
+    console.log(nickname)
+    reqUserScore(nickname)
+  }, [])
   return (
     <div>
       <LineChart
-        width={500}
-        height={300}
-        data={data}
+        width={600}
+        height={200}
+        data={pointGraph}
         margin={{
-          top: 5,
+          top: 10,
           right: 30,
-          left: 20,
-          bottom: 5,
+          left: 0,
+          bottom: 0,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="gameDate" />
         <YAxis />
         <Tooltip />
         <Legend />
 
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="totalScore" stroke="#82ca9d" />
       </LineChart>
     </div>
   )
