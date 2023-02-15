@@ -99,14 +99,14 @@ const OnlineScoreTableBlock = props => {
           ref={firstData}
           onChange={onChangeFirst}
           value={scoreBoard[0]}
-          style={isGameFinish[0] ? { background: 'green' } : { background: 'red' }}
+          style={isGameFinish[0] ? { background: 'green' } : { background: '#ea6b6b' }}
         ></input>
         <input
           className="OnlineScoreInputBlockRight"
           ref={secondData}
           onChange={onChangeSecond}
           value={scoreBoard[1]}
-          style={isGameFinish[0] ? { background: 'green' } : { background: 'red' }}
+          style={isGameFinish[0] ? { background: 'green' } : { background: '#ea6b6b' }}
         ></input>
         {frameNum === 10 ? (
           <input
@@ -114,7 +114,7 @@ const OnlineScoreTableBlock = props => {
             ref={thirdData}
             onChange={onChangeThird}
             value={scoreBoard[2]}
-            style={isGameFinish[0] ? { background: 'green' } : { background: 'red' }}
+            style={isGameFinish[0] ? { background: 'green' } : { background: '#ea6b6b' }}
           ></input>
         ) : null}
       </div>
@@ -124,20 +124,20 @@ const OnlineScoreTableBlock = props => {
       <div className="OnlineScoreBlock">
         <input
           className="OnlineScoreInputBlockLeft"
-          style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
+          style={isGameFinish[1] ? { background: 'green' } : { background: '#7292df' }}
           value={oppositeScoreBoard[0]}
           readOnly={true}
         ></input>
         <input
           className="OnlineScoreInputBlockRight"
-          style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
+          style={isGameFinish[1] ? { background: 'green' } : { background: '#7292df' }}
           value={oppositeScoreBoard[1]}
           readOnly={true}
         ></input>
         {frameNum === 10 ? (
           <input
             className="OnlineScoreInputBlockFarRight"
-            style={isGameFinish[1] ? { background: 'green' } : { background: 'blue' }}
+            style={isGameFinish[1] ? { background: 'green' } : { background: '#7292df' }}
             value={oppositeScoreBoard[2]}
             readOnly={true}
           ></input>

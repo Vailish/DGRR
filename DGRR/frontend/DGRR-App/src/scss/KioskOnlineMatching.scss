@@ -74,6 +74,7 @@
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
         animation-duration: 1s;
+        z-index: 5;
       }
       .OnlineMatchingPlayerBlock {
         display: flex;
@@ -105,12 +106,12 @@
             display: flex;
             width: 100%;
             height: 50%;
-            background: gray;
+            // background: gray;
             font-size: 3vw;
             .OnlinePlayerTier {
               width: 40%;
               height: 100%;
-              background: aqua;
+              // background: aqua;
             }
             .OnlinePlayerName {
               display: flex;
@@ -123,7 +124,7 @@
             display: flex;
             width: 100%;
             height: 50%;
-            background: green;
+            // background: green;
             align-items: center;
             justify-content: center;
             font-size: 2vw;
@@ -131,7 +132,7 @@
               display: flex;
               width: 50%;
               height: 100%;
-              background: thistle;
+              // background: thistle;
               align-items: center;
               justify-content: center;
             }
