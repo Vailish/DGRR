@@ -12,6 +12,7 @@ import com.ssafy.b102.Entity.User;
 import com.ssafy.b102.Entity.UserGame;
 import com.ssafy.b102.data.dto.MyRankingDto;
 import com.ssafy.b102.data.dto.Ranking;
+import com.ssafy.b102.data.dto.SumScoreDto;
 import com.ssafy.b102.data.dto.TotalRankingDto;
 import com.ssafy.b102.data.dto.WinRateDto;
 import com.ssafy.b102.persistence.dao.GameRepository;
@@ -48,7 +49,7 @@ public class DataService {
 			}
 			
 			GraphData graphData = new GraphData();	
-			graphData.setTotalScore(caculate(convertToList(usergame.getGameScore())));
+			graphData.setTotalScore(caculate(convertToList(usergame.getGameScore())).getTotalNum());
 			graphData.setGameDate(usergame.getGame().getGameDate());
 			
 			graphDatas.add(graphData);
@@ -75,7 +76,7 @@ public class DataService {
 				continue;
 			}
 			else {
-				Integer userGameScore = caculate(convertToList(userGame.getGameScore()));
+				Integer userGameScore = caculate(convertToList(userGame.getGameScore())).getTotalNum();
 				if (lastestGameTotalScore == 0) {
 					lastestGameTotalScore += userGameScore;
 				}
@@ -277,13 +278,39 @@ public class DataService {
 	return new WinRateDto(totalGameNumbers, WinGameNumbers);
 	};
 	
-	private Integer caculate(List<Integer> score) {
-		Integer result = 0;
-		for (int num = 0; num < score.size(); num++) {
-			result += score.get(num);
+	private SumScoreDto caculate(List<Integer> score) {
+		Integer totalScore = 0;
+		List<Integer> scoreBoard = score;
+		List<Integer> sumDetail = new ArrayList<>();
+		for (int frameNumber = 1; frameNumber <= 10; frameNumber += 1) {
+			Integer front = 2 * (frameNumber - 1);
+			Integer back = 2 * (frameNumber - 1) + 1;
+			
+			// 10 10 10
+			if (frameNumber == 10) {
+				totalScore += scoreBoard.get(front) + scoreBoard.get(front+1) + scoreBoard.get(front+2);
+			} else {
+			
+			// frameNmuber프레임의 점수
+			
+			// 스트라이크일 때 5
+			if (scoreBoard.get(front) == 10) {
+				// 더블 일 때 10 0 10 0
+				if (scoreBoard.get(front+2) == 10) {
+					// 터키 일 때 10 0 10 0 10 0
+					if(scoreBoard.get(front+4) == 10) {totalScore += 30;} 
+					else {totalScore += scoreBoard.get(front + 4) + 20;}}
+				// 10 0 5 5
+				else {totalScore += scoreBoard.get(front+2) + scoreBoard.get(front+3) +10;}}
+			// 스페어일 떄 5 5 
+			else if (scoreBoard.get(front) + scoreBoard.get(back) == 10) {totalScore += 10 + scoreBoard.get(front+2);}
+			else {totalScore += scoreBoard.get(front) + scoreBoard.get(back);}
+			}
+			sumDetail.add(totalScore);
 		}
-		return result;
-	}
+		
+		return new SumScoreDto(sumDetail, totalScore);
+		}
 	
 	private List<Integer> convertToList(String data) {
 		return Stream.of(data.split(", ")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());

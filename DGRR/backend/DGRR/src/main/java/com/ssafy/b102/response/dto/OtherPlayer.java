@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OtherPlayer {
 	private String nickname;
+	private String profileImg;
 	private List<Integer> score;
 	private List<Integer> sumScore;
 	private Integer rank;

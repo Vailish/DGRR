@@ -139,13 +139,13 @@ public class UserService {
 	public String requestUsername(RequestUsernameDto requestUsernameDto) {
 		User user = userRepository.findByNickname(requestUsernameDto.getNickname());
 		if (user == null) {
-			return requestUsernameDto.getNickname() + " 은 존재하지 않는 nickname 입니다.";
+			return null;
 		};
 		
 		if (user.getEmail().equals(requestUsernameDto.getEmail())) {
 			return user.getUsername().toString();
 		} else {
-			return requestUsernameDto.getNickname() + "\n" + requestUsernameDto.getEmail() + "\n" + "아이디와 이메일이 다릅니다 확인해주세요";
+			return null;
 		}
 	}
 	
