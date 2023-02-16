@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import '../../../scss/KioskOfflineResult.scss'
 import { useSelector } from 'react-redux'
 import KioskNavBlock from '../KioskNavBlock'
@@ -11,19 +11,25 @@ const EachPlayerBlock = props => {
   const widthRatio = (lastScore / 300) * 95
   const [ScoreCount, setScoreCount] = useState(0)
   const PlusNum = lastScore / 100
-  useEffect(() => {
-    const playerScoreCountUp = setInterval(() => {
-      setScoreCount(ScoreCount + PlusNum)
-    }, 10)
+  console.log(scoreSumList[scoreSumList.length - 1])
+  useEffect(
+    () => {
+      const playerScoreCountUp = setInterval(() => {
+        console.log(PlusNum, lastScore)
+        setScoreCount(ScoreCount + PlusNum)
+      }, 10)
 
-    if (ScoreCount + PlusNum > lastScore) {
-      clearInterval(playerScoreCountUp)
-    }
+      if (ScoreCount + PlusNum > lastScore) {
+        clearInterval(playerScoreCountUp)
+      }
 
-    return () => {
-      clearInterval(playerScoreCountUp)
-    }
-  })
+      return () => {
+        clearInterval(playerScoreCountUp)
+      }
+    },
+    [],
+    [],
+  )
 
   return (
     <div className="EachPlayerBlock">
@@ -40,21 +46,22 @@ const KioskOfflineResult = () => {
   const playerList = useSelector(state => Object.keys(state.OfflineLoginUsers.gamingPlayers))
   console.log(playerList)
   const gamingPlayers = useSelector(state => state.OfflineLoginUsers.gamingPlayers)
-  const bestPlayerIndex = Object.values(gamingPlayers).reduce((best, cur, index) => {
-    console.log('reduce Player : ', best, cur, index)
-    return cur.gameBoardResult[9] > best.gameBoardResult[9] ? index : best
-  }, gamingPlayers.player1)
+  const bestPlayer = Object.keys(gamingPlayers).reduce((best, cur) => {
+    console.log('reduce Player : ', best, cur)
+    console.log('reduce Player : ', gamingPlayers[cur], gamingPlayers[best])
+    return gamingPlayers[cur].gameBoardResult[9] > gamingPlayers[best].gameBoardResult[9] ? cur : best
+  }, 'player1')
 
   return (
     <div className="KioskBackground">
-      <KioskNavBlock goBackTo={'/KioskOfflineGame'} goFrontTo={'/KioskLogin'} />
+      <KioskNavBlock goFrontTo={'/KioskLogin'} />
       <div className="ResultContentBlock">
         <div className="WinnerPlayerBlock">
-          {playerList.map(player => {
+          {playerList.map((player, index) => {
             return (
-              <div className="WinnerPlayerStarBlock">
-                {player === `player${bestPlayerIndex + 1}` ? (
-                  <img className="WinnerPlayerStar" src={Crown}></img>
+              <div className="WinnerPlayerStarBlock" key={`player${index + 1}`}>
+                {player === `player${bestPlayer + 1}` ? (
+                  <img className="WinnerPlayerStar" src={Crown} alt="Crown"></img>
                 ) : null}
               </div>
             )
@@ -62,13 +69,26 @@ const KioskOfflineResult = () => {
         </div>
         <div className="ResultChartBlock">
           <div className="ResultChartProfileBlock">
-            {playerList.map(player => {
-              return <img className="ResultChartProfile" src={gamingPlayers[player].playerInfo.profile}></img>
+            {playerList.map((player, index) => {
+              return (
+                <img
+                  className="ResultChartProfile"
+                  src={gamingPlayers[player].playerInfo.profile}
+                  alt="playerProfile"
+                  key={`playerProfile-${index + 1}`}
+                ></img>
+              )
             })}
           </div>
           <div className="ResultChartGraphBlock">
-            {playerList.map(player => {
-              return <EachPlayerBlock scoreSumList={gamingPlayers[player].gameBoardResult} playerNum={player} />
+            {playerList.map((player, index) => {
+              return (
+                <EachPlayerBlock
+                  key={`player${index + 1}`}
+                  scoreSumList={gamingPlayers[player].gameBoardResult}
+                  playerNum={player}
+                />
+              )
             })}
           </div>
         </div>

@@ -3,7 +3,7 @@ import { OpenVidu } from 'openvidu-browser'
 import axios from 'axios'
 import UserVideoComponent from './UserVideoComponent'
 import './test.css'
-import { connect} from 'react-redux'
+import { connect } from 'react-redux'
 const APPLICATION_SERVER_URL = 'https://i8b102.p.ssafy.io:8443/openvidu/'
 class KioskVideo extends Component {
   constructor(props) {
@@ -32,7 +32,6 @@ class KioskVideo extends Component {
     return Math.random().toString(16).substr(2, length)
   }
   componentDidMount() {
-
     if (!this.state.session) {
       this.joinSession()
     }
@@ -40,7 +39,7 @@ class KioskVideo extends Component {
   }
   componentDidUpdate() {
     if (this.props.playerState.isGameFinish[0] === true && this.props.playerState.isGameFinish[1] === true) {
-      console.log("끊어버려")
+      console.log('끊어버려')
       const Mysession = this.state.session
       if (Mysession) {
         Mysession.disconnect()
@@ -55,9 +54,8 @@ class KioskVideo extends Component {
           test: undefined,
         })
       }
-      this.props.playerState.SessionId = " ";
+      this.props.playerState.SessionId = ' '
     }
-
   }
   // componentWillUnmount() {
   //   window.removeEventListener('beforeunload', this.onbeforeunload)
@@ -156,7 +154,7 @@ class KioskVideo extends Component {
               let publisher = await this.OV.initPublisherAsync(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                piublshAudio: false, // Whether you want to start publishing with your audio unmuted or not
+                publishAudio: false, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
                 resolution: '1920x1080', // The resolution of your video
                 frameRate: 50, // The frame rate of your video
@@ -208,7 +206,7 @@ class KioskVideo extends Component {
       publisher: undefined,
       test: undefined,
     })
-    this.props.playerState = ""
+    this.props.playerState = ''
   }
 
   render() {
@@ -267,7 +265,6 @@ class KioskVideo extends Component {
               float: 'left',
               justifyContent: 'space-between',
               flexDirection: 'row-reverse',
-
             }}
           >
             <div>
@@ -336,7 +333,7 @@ class KioskVideo extends Component {
         return await this.createToken(this.state.test.sessionId)
       }
     }
-    console.log("나의 세션 ID " + this.state.mySessionId)
+    console.log('나의 세션 ID ' + this.state.mySessionId)
     const testSessionId = await this.createSession(String(this.state.mySessionId))
     this.setState({
       test: testSessionId,
@@ -442,6 +439,5 @@ class KioskVideo extends Component {
 
 const testStateProps = state => ({
   playerState: state.OnlineLoginUser,
-
 })
 export default connect(testStateProps)(KioskVideo)

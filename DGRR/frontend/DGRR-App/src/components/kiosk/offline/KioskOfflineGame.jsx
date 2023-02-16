@@ -1,21 +1,53 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import '../../../scss/KioskOfflineGame.scss'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { sendAllScore } from '../../../modules/OfflineLoginUsers'
 import ScoreTable from './ScoreTable'
 import KioskNavBlock from '../KioskNavBlock'
+import { api } from '../../../API/api'
 
 const KioskOfflineGame = () => {
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const gamingPlayers = useSelector(state => state.OfflineLoginUsers.gamingPlayers)
   const gamingPlayersNum = useSelector(state => Object.keys(state.OfflineLoginUsers.gamingPlayers))
   const [playerNow, setPlayerNow] = useState(gamingPlayersNum[0])
   const scoreSumArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNow].gameBoardResult)
   const scoreArray = useSelector(state => state.OfflineLoginUsers.gamingPlayers[playerNow].gameBoard)
   const isGameFinish = useSelector(state => state.OfflineLoginUsers.isGameFinish)
-  const navigate = useNavigate()
-  const onSendAllScore = () => dispatch(sendAllScore())
+
+  const makeAllScore = () => {
+    const nickname = gamingPlayers.player1.playerInfo.nickname
+    const gameType = false
+    const gameData = Object.values(gamingPlayers).map(player => {
+      const score = []
+      for (let num of player.gameBoard) {
+        if (num === 'X') {
+          score.push(10)
+        } else if (num === '/') {
+          score.push(10 - score[score.length - 1])
+        } else if (num === 'F' || num === '-' || num === '') {
+          score.push(0)
+        } else {
+          score.push(num)
+        }
+      }
+      return { nickname: player.playerInfo.nickname, score }
+    })
+    const myRequset = { nickname, gameType, gameData }
+    sendAllScore(myRequset)
+  }
+
+  const sendAllScore = async myRequset => {
+    const url = '/api/v1/game'
+    const response = await api.post(url, JSON.stringify(myRequset))
+    console.log(JSON.stringify(myRequset))
+    if (response.data) {
+      alert('송신 성공 : ', response.data)
+      navigate('/KioskOfflineResult')
+    } else {
+      console.log('송신 실패 : ', response)
+    }
+  }
 
   const changePlayer = plyerNum => {
     setPlayerNow(plyerNum)
@@ -49,8 +81,7 @@ const KioskOfflineGame = () => {
           <div
             className="GoNextButton"
             onClick={() => {
-              onSendAllScore()
-              navigate('/KioskOfflineResult')
+              makeAllScore()
             }}
           >
             확인

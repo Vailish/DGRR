@@ -5,9 +5,6 @@ const baseaxios = axios.create({
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
   },
-  // headers: {
-  //   'Authorization': 'Bearer ' + token,
-  // },
 })
 
 export default baseaxios

@@ -39,13 +39,15 @@ const PwFindSuccess = () => {
       passwordConfirm: passwordConfirm,
     }
 
-    const response = await request.put('/api/v1/request/setpassword', JSON.stringify(updateUserInfo))
+    try {
+      const response = await request.put('/api/v1/request/setpassword', JSON.stringify(updateUserInfo))
     if (response.data === true) {
       alert('비밀번호 수정완료하였습니다.')
       navigate('/')
     } else {
-      alert('아이디를 찾지 못했습니다.')
-      navigate('/')
+      console.log(response)
+      alert('비밀번호 수정실패하였습니다.')
+     
     }
     setNewUser({
       ...newUser,
@@ -54,6 +56,11 @@ const PwFindSuccess = () => {
       password: '',
       passwordConfirm: '',
     })
+    } catch (e) {
+      alert('비밀번호 수정실패하였습니다.')
+      console.log(e)
+    }
+    
   }
   const onSubmit = e => {
     e.preventDefault()

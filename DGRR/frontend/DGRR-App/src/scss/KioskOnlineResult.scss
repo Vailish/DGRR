@@ -114,20 +114,24 @@
               border-radius: 1vw;
 
               .OnlinePlayerName {
-                font-size: 4vw;
+                font-size: 2.5vw;
                 border-bottom: 0.1vh black solid;
               }
               .OnlineTierAndRecord {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
-                font-size: 2.5vw;
+                font-size: 2.4vw;
                 .OnlineTier {
                   display: flex;
                   justify-content: center;
                   align-items: center;
                   width: 30%;
                   height: 100%;
+                  .OnlineTierImg {
+                    width: 5vw;
+                    height: 5vw;
+                  }
                 }
                 .OnlineRecord {
                   display: flex;
@@ -139,8 +143,8 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    width: 5vw;
-                    height: 5vw;
+                    width: 4vw;
+                    height: 4vw;
                     .UpDownArrowIn {
                       font-size: 3vw;
                     }
@@ -149,7 +153,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    height: 5vw;
+                    height: 4vw;
                   }
                 }
               }

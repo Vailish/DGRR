@@ -14,14 +14,17 @@ import Diamond from '../../../img/Diamond.png'
 const src = { 브론즈: Bronze, 실버: Silver, 골드: Gold, 플래티넘: Platinum, 다이아: Diamond }
 
 const OnlineMatchingPlayer = props => {
-  const { nickname, tier, point, record, orderNum } = props
+  const { player, orderNum } = props
+  const { nickname, tier, record, point, profile } = player
 
   return (
     <div className="OnlineMatchingPlayerBlock" style={orderNum === 1 ? { animationName: 'player_onstage2-2' } : null}>
-      <div className="OnlineMatchingProfile"></div>
+      <img className="OnlineMatchingProfile" src={profile}></img>
       <div className="OnlineMatchingPlayerInfoBlock">
         <div className="OnlineMatchingTierAndName">
-          <img className="OnlinePlayerTier" src={src[`${tier}`]} alt={tier}></img>
+          <div className="OnlinePlayerTier">
+            <img className="OnlinePlayerTierImg" src={src[`${tier}`]} alt={tier} />
+          </div>
           <div className="OnlinePlayerName">{nickname}</div>
         </div>
         <div className="OnlineMatchingPointAndRecord">
@@ -85,16 +88,11 @@ const KioskOnlineMatching = () => {
     <div className="KioskBackground">
       <KioskNavBlock goBackTo={'/KioskOnlineLogin'} />
       <div className="OnlineMatchingContentBlock">
-        <OnlineMatchingPlayer nickname={myData.nickname} point={myData.point} record={myData.record} orderNum={1} />
+        <OnlineMatchingPlayer player={myData} orderNum={1} />
         <div className="LetterV">V</div>
         <div className="LetterS">S</div>
         <CountingDown />
-        <OnlineMatchingPlayer
-          nickname={yourData.nickname}
-          point={yourData.point}
-          record={yourData.record}
-          orderNum={2}
-        />
+        <OnlineMatchingPlayer player={yourData} orderNum={2} />
       </div>
       <div className="GameStartBlock"></div>
     </div>
