@@ -1,18 +1,17 @@
-        # 제목 없음
 
 ## [백엔드 빌드 방법]
 
-![Untitled](/img/1.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/1)
 
 STS에서 하단에 ‘Gradle Tasks’를 클릭하여 ‘build’를 누릅니다.
 
 (만약 이전에 빌드한 내역이 있다면 build파일 삭제를 위해 clean을 먼저 누릅니다.)
 
-![Untitled](%E1%84%8C%E1%85%A6%E1%84%86%E1%85%A9%E1%86%A8%20%E1%84%8B%E1%85%A5%E1%86%B9%E1%84%8B%E1%85%B3%E1%86%B7%206c291b8ff7cc4463bf1b749987af72a3/Untitled%201.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/1)
 
 빌드가 성공적으로 완료되면 위와 같이 빌드가 성공합니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dd4cd09f-823c-408f-87df-866b303b3e62/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/2)
 
 프로젝트의 root에 “Dockerfile”을 생성해 아래와 같이 작성합니다.
 
@@ -30,7 +29,7 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 
 터미널 창에서 프로젝트 경로의 /DGRR/backend/DGRR로 이동합니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b71db3c3-76ce-40d5-84d7-efe754068447/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/3)
 
 ```jsx
 docker build -t yuhyeongeun/dgrr:spring-deplpoy .
@@ -44,9 +43,9 @@ docker hub에 빌드한 이미지를 업로드 하기위해 아래의 그림처�
 docker push yuhyeongeun/dgrr:spring-deploy
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e95847b2-707e-4449-9e9e-23b714aaffff/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/4)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e8f2f7cc-e333-4500-b50a-d72354b26a34/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/5)
 
 docker hub에서 위와 같이 확인할 수 있다.
 
@@ -85,15 +84,15 @@ server {
 }
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/87cf773d-3a31-45d9-9747-d1579772c149/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/6)
 
 vscode에서 “npm run build”를 입력합니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/be99530d-9227-4e2e-8ae9-9c3c366f89de/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/7)
 
 성공적으로 빌드가 되면 위와 같은 문구가 출력됩니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6c349b5a-2f2d-4bb0-bddc-a8fce3600b4c/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/8)
 
 이제 터미널에서 위의 경로로 이동하고 아래의 명령어를 실행하여 docker image를 빌드합니다.
 
@@ -101,7 +100,7 @@ vscode에서 “npm run build”를 입력합니다.
 docker build -t yuhyeongeun/dgrr:front-deploy
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/32fc43b9-7285-4600-9980-ff6aaca21ad5/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/9)
 
 docker hub에 빌드한 이미지를 업로드 하기위해 아래의 그림처럼 입력합니다
 
@@ -111,7 +110,7 @@ docker push yuhyeongeun/dgrr:front-deploy
 
 docker hub에 잘 올라간것을 확인할 수 있다. 
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/631bc378-ecc8-4bbd-9889-105adc608de7/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/10)
 
 ## [EC2에 Docker Image 베포]
 
@@ -158,7 +157,7 @@ server {
 
 ### [Back , Front Docker Run]
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/695450e2-c0b9-456c-be03-2a3414cc460d/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/11)
 
 위에서 업로드했던 프론트엔드 image를 ec2 도커 환경에 pull합니다.
 
@@ -166,7 +165,7 @@ server {
 sudo docker pull yuhyeongeun/dgrr:front-deploy
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f8dbcbda-7151-452c-bd45-7b32316941fb/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/12)
 
 위에서 업로드했던 프론트엔드 image를 ec2 도커 환경에 pull합니다.
 
@@ -180,16 +179,16 @@ sudo docker pull yuhyeongeun/dgrr:spring-deploy
 sudo dockerk images
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/08941ade-60c7-4e4b-a0b8-b7e2320dbf76/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/13)
 
 docker image를 실행하기 위해 아래와 같이 입력합니다.
 
 -p 옵션으로 바인딩할 port를 작성하고 —name 옵션으로 이름을 작성합니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ed42e46c-2a4d-4e7e-9e6b-e66af8af6d47/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/15)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9f075997-eb4c-4697-85e4-1b20151b51df/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/16)
 
 성공적으로 run이 진행됨을 알 수 있습니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/664e4350-d2cb-4e9e-932a-e0a95cec18e7/Untitled.png)
+![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/17)
