@@ -109,25 +109,6 @@ public class UserController {
 	@Value("${file.dir}")
 	private String fileDir;
 	
-//	@GetMapping("/{date}/{savedName}")
-//    public ResponseEntity<?> showImage(@PathVariable String savedName, @PathVariable String date) throws IOException {
-//        Pattern pattern = Pattern.compile("\\.\\.");
-//        if (pattern.matcher(date).matches() || pattern.matcher(savedName).matches()) {
-//            throw new RuntimeException("상위 디렉토리로 접근은 불가능합니다.");
-//        }
-//        if (date.equals("default")) {
-//            return new ResponseEntity<>(new UrlResource("classpath:/static/" + date + "/" + savedName), HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(new UrlResource("file:" + fileDir + date + "/" + savedName), HttpStatus.OK);
-//    }
-	
-//	@PutMapping("/userimg/")
-//	public ResponseEntity<?> updateUser(UserUpdateRequestDTO userUpdateRequestDTO) {
-//		System.out.println(userUpdateRequestDTO);
-//		UserUpdateResponseDto userUpdateResponseDto = userService.updateUser(userUpdateRequestDTO);
-//		return new ResponseEntity<UserUpdateResponseDto>(userUpdateResponseDto, HttpStatus.OK);
-//	}
-	
 	@GetMapping("/request/userimg/{nickname}")
 	public ResponseEntity<?> userImg(@PathVariable String nickname) {
 		String url = userService.userImg(nickname);

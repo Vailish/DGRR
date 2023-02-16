@@ -1,6 +1,7 @@
 package com.ssafy.b102.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -132,7 +133,7 @@ public class DataService {
 		// for문을 통해서 필요한 데이터 뽑아내기
 		for (Game game : games) {
 			// 21번째에서 탈출
-			if (gameNumber > 20) {
+			if (gameNumber > 19) {
 				break;
 			}
 			// game이 user인 것을 확인

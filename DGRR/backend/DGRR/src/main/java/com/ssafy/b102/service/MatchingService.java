@@ -61,9 +61,6 @@ public class MatchingService {
 		User user = userRepository.findByNickname(matchingRequestDto.getNickname());
 		Matching matching = matchingRepository.findByUserId(user.getId());
 //		매칭여부 확인
-		if (matching.getIsMatching() == 3) {
-			return null;
-		}
 		
 		if (matching == null || matching.getIsMatching() == 0) {
 			return null;
@@ -75,7 +72,7 @@ public class MatchingService {
 				if (checkMatching.getUser().getId() == user.getId()) {
 					continue;
 				}
-				matching.setIsMatching(3);
+				matching.setIsMatching(0);
 				matching.setGameData(null);
 				matching.setResult(false);
 				matchingRepository.save(matching);
@@ -102,7 +99,7 @@ public class MatchingService {
 					matching.setMatchingNumber(createMatchingNumber);
 					matching.setGameData(null);
 					matching.setResult(false);
-					matching.setIsMatching(3);
+					matching.setIsMatching(0);
 					matchingRepository.save(mat);
 					matchingRepository.save(matching);
 					
