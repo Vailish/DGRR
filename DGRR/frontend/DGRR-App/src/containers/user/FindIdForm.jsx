@@ -26,8 +26,8 @@ const FindIdForm = () => {
     try {
       const response = await request.post('/api/v1/request/username', JSON.stringify(findIdinfo))
       console.log(response)
-      if (response.status === 200) {
-        alert('결과확인해주세요')
+      if (response.data) {
+        alert('아이디를 찾았습니다.')
         navigate('/findIdSuccess', {
           state: {
             username: response.data,
@@ -47,6 +47,8 @@ const FindIdForm = () => {
             value: '',
           }),
         )
+      } else {
+        alert("존재하지않는 아이디 입니다.")
       }
     } catch (e) {
       console.log(e)

@@ -25,9 +25,10 @@ const Rankingpage = () => {
     if (getCookie('token')) {
       setUserNick(nick.state.nickname)
     } else {
+      alert('로그인 후 이용해 주세요.')
       navigate('/')
     }
-  }, [])
+  }, [getCookie('token')])
 
   useEffect(() => {
     if (userNick) {
@@ -49,7 +50,7 @@ const Rankingpage = () => {
     }
   }, [userInfo])
 
-  const fetchData = async (nickname) => {
+  const fetchData = useCallback(async (nickname) => {
     const requestRankingsPage = await baseaxios.get(`/api/v1/data/ranking/page/${1}`)
     const rankingsData = requestRankingsPage.data.rankings
     const totalPageNumData = requestRankingsPage.data.pageNumber
@@ -88,14 +89,12 @@ const Rankingpage = () => {
     } catch (error) {
       console.log(error)
     }
-  }
-
+  })
 
   const onMoveNickPage = nickname => {
     navigate(`/${nickname}`)
     nickname = ''
   }
-
 
   const reqPageNation = async page => {
     try {
@@ -107,6 +106,7 @@ const Rankingpage = () => {
       console.log(e)
     }
   }
+
   const pageMove = page => {
     reqPageNation(page)
   }
@@ -144,12 +144,12 @@ const Rankingpage = () => {
       <table className="RankingTable">
         <tbody>
           <tr className="RankHeaderTable">
-            <th>ranking</th>
-            <th>Player</th>
-            <th>Point</th>
-            <th>Rate</th>
-            <th>Wins</th>
-            <th>Losses</th>
+            <th>랭킹</th>
+            <th>플레이어</th>
+            <th>포인트</th>
+            <th>전</th>
+            <th>승</th>
+            <th>패</th>
           </tr>
 
           {rankData.map((info, i) => {
@@ -188,4 +188,4 @@ const Rankingpage = () => {
   )
 }
 
-export default Rankingpage
+export default React.memo(Rankingpage)
