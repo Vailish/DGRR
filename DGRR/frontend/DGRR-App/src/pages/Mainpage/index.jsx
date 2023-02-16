@@ -30,6 +30,7 @@ const Mainpage = () => {
       navigate('/')
     }
     fetchData()
+    fetchMatchData()
   }, [])
 
   useEffect(() => {
@@ -52,6 +53,7 @@ const Mainpage = () => {
 
   useEffect(() => {
     fetchData()
+    fetchMatchData()
   }, [nickName])
   
   useEffect(() => {

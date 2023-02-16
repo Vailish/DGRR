@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import baseaxios from '../../API/baseaxios'
 import ScoreTable from '../kiosk/offline/ScoreTable'
 
 const Record = ({ gameInfo }) => {
+  const [userImgUrl, setUserImgUrl] = useState()
+  const [test, setTest] = useState({})
+
+  useEffect(() => {
+    
+  },)
+  const fetchImg = async (userNickname) => {
+    try {
+      const requestUserimg = await baseaxios.get(`/api/v1/request/userimg/${userNickname}`)
+      const userimgData = requestUserimg.data
+    
+      return userimgData
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
   return (
     <div className="RecordBox">
       <div className="BaseRecordBox">
@@ -23,7 +42,7 @@ const Record = ({ gameInfo }) => {
           {(gameInfo.otherPlayers).map((data, index) => {
             return (
               <div index={index} key={index}>
-                <img src={require('../../img/profile.jpg')} alt="profileimg" className="ResultImg" /> <span>{data.rank}위</span>{' '}
+                <img src={fetchImg(data.nickname)} alt="profileimg" className="ResultImg" /> <span>{data.rank}위</span>{' '}
                 <span> {data.sumScore[data.sumScore.length - 1]}점</span>
               </div>
               )

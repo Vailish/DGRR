@@ -12,7 +12,8 @@ const Nav = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleClick = () => {
-    setModalOpen(true);
+    fetchUserNick()
+    navigate(`/${userNick}`)
   };
 
   const logout = () => {
@@ -24,31 +25,38 @@ const Nav = () => {
 
   const toMain = () => {
     fetchUserNick()
-    console.log(getCookie('identifier'))
     navigate(`/${userNick}`)
   }
 
   const fetchUserNick = async () => {
-    const userNum = getCookie('identifier')
-    const requestNickname = await baseaxios.post('api/v1/identifier', { 'identifier': userNum })
-    const nickData = requestNickname.data
-    setUserNick(nickData.nickname)
+    try {
+      const userNum = getCookie('identifier')
+      const requestNickname = await baseaxios.post('api/v1/identifier', { 'identifier': userNum })
+      const nickData = requestNickname.data
+      setUserNick(nickData.nickname)
+      
+    } catch (error) {
+      console.log('fetchUserNick', error)
+    }
   }
 
   const fetchUserName = async () => {
-    const requestUser = await baseaxios.get(`/api/v1/user/${userNick}`)
-    const userData = requestUser.data
-    setUserName(userData.username)
+    try {
+      const requestUser = await baseaxios.get(`/api/v1/user/${userNick}`)
+      const userData = requestUser.data
+      setUserName(userData.username)
+      
+    } catch (error) {
+      console.log('fetchUserName', error)
+    }
   }
 
   useEffect(() => {
     fetchUserNick()
-    fetchUserName()
   }, [])
 
   useEffect(() => {
     if (userNick) {
-      console.log("userNcik", userNick)
       fetchUserName()
     }
   }, [userNick])
