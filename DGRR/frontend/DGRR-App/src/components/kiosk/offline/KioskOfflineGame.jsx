@@ -42,10 +42,7 @@ const KioskOfflineGame = () => {
     const response = await api.post(url, JSON.stringify(myRequset))
     console.log(JSON.stringify(myRequset))
     if (response.data) {
-      alert('송신 성공 : ', response.data)
       navigate('/KioskOfflineResult')
-    } else {
-      console.log('송신 실패 : ', response)
     }
   }
 

@@ -58,7 +58,6 @@ const KioskOnlineGame = () => {
     const url = '/api/v1/game'
     const response = await api.post(url, JSON.stringify(myRequset))
     if (response.data) {
-      alert('데이터 송신 성공', response.data)
       navigate('/KioskOnlineResult', { state: { isWin } })
     }
   }

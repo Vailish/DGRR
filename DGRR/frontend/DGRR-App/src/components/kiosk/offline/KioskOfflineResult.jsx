@@ -6,30 +6,26 @@ import { useState } from 'react'
 import Crown from '../../../img/Crown.png'
 
 const EachPlayerBlock = props => {
-  const { scoreSumList, playerNum } = props
+  const [ScoreCount, setScoreCount] = useState(0)
+  const { scoreSumList } = props
   const lastScore = scoreSumList[scoreSumList.length - 1]
   const widthRatio = (lastScore / 300) * 95
-  const [ScoreCount, setScoreCount] = useState(0)
   const PlusNum = lastScore / 100
-  console.log(scoreSumList[scoreSumList.length - 1])
-  useEffect(
-    () => {
-      const playerScoreCountUp = setInterval(() => {
-        console.log(PlusNum, lastScore)
-        setScoreCount(ScoreCount + PlusNum)
-      }, 10)
+  // console.log(scoreSumList[scoreSumList.length - 1])
+  useEffect(() => {
+    const playerScoreCountUp = setInterval(() => {
+      console.log(PlusNum, lastScore)
+      setScoreCount(ScoreCount + PlusNum)
+    }, 10)
 
-      if (ScoreCount + PlusNum > lastScore) {
-        clearInterval(playerScoreCountUp)
-      }
+    if (ScoreCount + PlusNum > lastScore) {
+      clearInterval(playerScoreCountUp)
+    }
 
-      return () => {
-        clearInterval(playerScoreCountUp)
-      }
-    },
-    [],
-    [],
-  )
+    return () => {
+      clearInterval(playerScoreCountUp)
+    }
+  }, [ScoreCount])
 
   return (
     <div className="EachPlayerBlock">
