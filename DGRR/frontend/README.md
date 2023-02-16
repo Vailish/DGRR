@@ -33,6 +33,7 @@
 
 - React : 16.12.0
 - Redux : 8.0.5
+-
 - SCSS
 
 ### 백엔드
@@ -84,7 +85,7 @@ https://docs.google.com/spreadsheets/d/1fleu_UsQB1oBSR718Zg1wQuL53ImlN3P1EY-rRA9
   - 카운트 다운이 끝난 뒤 두 사람만 들어갈 수 있게 세션을 만들고 두 사용자는 그 방에 들어가게되면서 각자의 화면이 나오게 된다.
   - 두 사용자가 점수를 다 입력을 하게되면 승패 결과를 알려준다.
 - 로직 구현
-  - 나중에 그려서 올릴거임
+  - <img src="./DGRR-App/img/MatchingLogic.jpg">
 
 #### 친선전(오프라인 게임)
 
@@ -114,9 +115,71 @@ https://docs.google.com/spreadsheets/d/1fleu_UsQB1oBSR718Zg1wQuL53ImlN3P1EY-rRA9
 ## 기능구현
 
 <hr/>
+<br/>
 
-### 로그인
+### PC 환경
+
+<hr/>
+<br/>
+
+#### 로그인
 
 <img src="./DGRR-App/img/Login.gif">
 
-### 메인페이지
+#### 회원가입
+
+<img src="./DGRR-App/img/Register.gif">
+
+#### 아이디찾기
+
+<img src="./DGRR-App/img/findId.gif">
+
+#### 비밀번호 찾기
+
+<img src="./DGRR-App/img/findPw.gif">
+
+#### 메인페이지(전적관리)
+
+#### 메인페이지(랭킹페이지)
+
+#### 메인페이지(상대전적확인)
+
+<br/>
+
+### 모바일 환경
+
+<hr/>
+<br/>
+
+#### 로그인
+
+<img src="./DGRR-App/img/MobileLogin.gif">
+
+#### 핀번호(일회용번호) 발급
+
+<img src="./DGRR-App/img/MobilePin.gif">
+
+<br/>
+
+### 태블릿(키오스크) 환경
+
+<hr/>
+<br/>
+
+#### 경쟁전(온라인매칭) 로그인
+
+#### 경쟁전(온라인매칭) 게임시작
+
+#### 경쟁전(온라인매칭) 매칭 결과
+
+#### 경쟁전(온라인매칭) 게임 화면
+
+#### 경쟁전(온라인매칭) 게임 결과
+
+<br/>
+
+#### 친선전(오프라인) 로그인
+
+#### 친선전(오프라인) 게임화면
+
+#### 친선전(오프라인) 게임결과
