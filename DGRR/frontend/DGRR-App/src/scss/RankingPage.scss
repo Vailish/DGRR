@@ -1,7 +1,7 @@
 .PageBase {
   display: flex;
-  flex-direction: column;
   background: linear-gradient(180deg, #501766 22vw, #F8F8FB 22vw);
+  flex-direction: column;
   flex-wrap: wrap;
   padding-top: 64 / 1080 * 100vh;
   padding-right: 12.5vw;
@@ -13,13 +13,39 @@
     margin-bottom: 5vw;
   }
 
+  .PageButton {
+    width: 2vw;
+    height: 2vw;
+    margin: 0vw 0.1vw;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-transition: background-color 0.3s;
+    transition: background-color 0.3s;
+    background-color: #F8F8FB;
+    font-size: 1.1vw;
+    font-weight: 600;
+    
+    &:hover:not(.ActivePageButton) {
+      background-color: #c6c6c6;
+    } 
+  }
+
+  .ActivePageButton {
+    background-color: #6c2488;
+    color: #fff;
+  }
+
+
+
+
   .ProfileBox {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 75vw;
     height: 26vw;
     padding: 48/1920*100vw 134/1920*100vw;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 7vw;
     box-sizing: border-box;
     border-radius: 10px;
@@ -36,7 +62,7 @@
       .UserNickName {
         text-align: start;
         margin-top: 0px;
-        margin-bottom: 8 / 1980 * 100vw;
+        margin-bottom: 1.5vw;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
@@ -71,17 +97,17 @@
 
       .RankText {
         margin: 0;
-        margin-bottom: 0.2vw;
         text-align: start;
+        margin-bottom: 0.2vw;
         font-size: 1.3vw;
         font-weight: 800;
       }
 
       .RecordText {
         margin: 0;
+        text-align: start;
         margin-top: 2vw;
         margin-bottom: 0.2vw;
-        text-align: start;
         font-size: 1.3vw;
         font-weight: 800;
       }
@@ -139,9 +165,9 @@
 
   .search-box {
     display: flex;
-    margin: 2.2vw 1.8vw 0.8vw 0vw;
     position: relative;
     width: 210px;
+    margin: 2.2vw 1.8vw 0.8vw 0vw;
     align-self: flex-end;
   }
   
