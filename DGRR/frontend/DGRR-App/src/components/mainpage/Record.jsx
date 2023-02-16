@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import baseaxios from '../../API/baseaxios'
 import ScoreTable from '../kiosk/offline/ScoreTable'
 
 const Record = ({ gameInfo }) => {
