@@ -72,9 +72,14 @@
         width: 60%;
         height: 30%;
         .GoNextButton {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           width: 20%;
           height: 50%;
-          color: white;
+          background: white;
+          color: purple;
+          border-radius: 1vw;
           font-size: 2vw;
         }
       }

@@ -12,7 +12,7 @@
 
 @keyframes loading_online_game {
   from {
-    transform: scaleY(0.1);
+    transform: scaleY(0);
   }
   to {
     transform: scaleY(2);
@@ -60,7 +60,7 @@
         .MatchedLoading {
           width: 100%;
           height: 20%;
-          border-radius: 5vw;
+          border-radius: 10vw;
           background: gray;
           .MatchedLoadingBar {
             width: 100%;

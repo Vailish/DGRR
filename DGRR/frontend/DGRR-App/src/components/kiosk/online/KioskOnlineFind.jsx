@@ -65,14 +65,14 @@ const KioskOnlineFind = () => {
 
   const whenMatched = () => {
     setisMatched(!isMatched)
-    goMatching()
+    // goMatching()
   }
 
-  const goMatching = () => {
-    setTimeout(() => {
-      navigate('/KioskOnlineMatching')
-    }, 2000)
-  }
+  // const goMatching = () => {
+  //   setTimeout(() => {
+  //     navigate('/KioskOnlineMatching')
+  //   }, 2000)
+  // }
 
   const reqMatching = async nickname => {
     console.log(JSON.stringify({ nickname }))
@@ -85,17 +85,15 @@ const KioskOnlineFind = () => {
       const requestImg = await api.get(imgUrl)
       oppositePlayer.profile = requestImg.data
       setflag(true)
-      setisMatched(true)
       whenMatched()
       console.log('내응답이야' + response.data.randomNumber)
       dispatch(loadBothPlayers(oppositePlayer, randomNumber))
-      navigate('/KioskOnlineMatching')
     }
   }
 
   return (
     <div className="KioskBackground" onClick={whenMatched}>
-      <KioskNavBlock goBackTo="/KioskOnlineLogin" />
+      <KioskNavBlock />
       {isMatched ? <MatchedWindow /> : null}
       <div className="OnlineFindContentBlock">
         <div className="OnlineFindCenterAlign">

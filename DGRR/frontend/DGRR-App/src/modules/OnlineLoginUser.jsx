@@ -6,6 +6,7 @@ const ONLINE_GAME_BOARD_CHANGE_OPPOSITE = 'KioskOnline/ONLINE_GAMEBOARD_CHANGE_O
 const LOAD_BOTH_PLAYERS = 'KioskOnline/LOAD_BOTH_PLAYERS'
 const MATCHING_PLAYER = 'KioskOnline/MATCHING_PLAYER'
 const ONLINE_SEND_ALL_DATA = 'KioskOnline/ONLINE_SEND_ALL_DATA'
+const START_GAME = 'Kioskonline/START_GAME'
 
 const testPlayer = {
   nickname: 'test!',
@@ -36,6 +37,7 @@ export const onlineSendAllData = gameData => ({
   type: ONLINE_SEND_ALL_DATA,
   gameData,
 })
+export const onlineStartGame = () => ({ type: START_GAME })
 
 // 초기 상태
 
@@ -59,6 +61,22 @@ const initialState = {
 
 const OnlineLoginUser = (state = initialState, action) => {
   switch (action.type) {
+    case START_GAME: {
+      const player = {}
+      const gamingPlayer = {
+        playerInfo: {},
+        gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+        gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
+      }
+      const oppositePlayer = {
+        playerInfo: {},
+        gameBoard: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+        gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
+      }
+      const SessionId = ''
+      const isGameFinish = [false, false]
+      return { ...state, player, gamingPlayer, oppositePlayer, SessionId, isGameFinish }
+    }
     case ADD_PLAYER: {
       const player = action.playerInfo
       if (player.point) {
@@ -116,7 +134,8 @@ const OnlineLoginUser = (state = initialState, action) => {
         gameBoardResult: ['', '', '', '', '', '', '', '', '', ''],
       }
       const SessionId = action.SessionId
-      return { ...state, gamingPlayer, oppositePlayer, SessionId }
+      const isGameFinish = [false, false]
+      return { ...state, gamingPlayer, oppositePlayer, SessionId, isGameFinish }
     }
     case ONLINE_GAME_BOARD_CHANGE: {
       // console.log('state : ', state)

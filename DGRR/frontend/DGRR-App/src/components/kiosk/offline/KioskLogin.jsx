@@ -7,10 +7,16 @@ import { api } from '../../../API/api'
 import KioskLoginPlayer from './KioskLoginPlayer'
 import KioskNavBlock from '../KioskNavBlock'
 import QRImage from '../../../img/mLogin.png'
+import { useEffect } from 'react'
+import { gameStart } from '../../../modules/OfflineLoginUsers'
 
 const KioskLogin = () => {
-  let pinNumber = undefined
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(gameStart())
+  }, [])
+  let pinNumber = undefined
   const players = useSelector(state => state.OfflineLoginUsers.players)
   const navigate = useNavigate()
 
@@ -87,10 +93,8 @@ const KioskLogin = () => {
           </div>
         </div>
       </div>
-      <div className="GameStartBlock">
-        <div to="/KioskOfflineGame" className="GameStartButton" onClick={onGameStart}>
-          시작
-        </div>
+      <div className="GameStartBlock" onClick={onGameStart}>
+        <div className="GameStartButton">시작</div>
       </div>
     </div>
   )
