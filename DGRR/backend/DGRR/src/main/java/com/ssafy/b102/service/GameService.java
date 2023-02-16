@@ -132,9 +132,6 @@ public class GameService {
 	public GameResponseDto createGame(GameRequestDto gameRequestDto) {
 		
 		// 중복 입력 방지
-		User me = userRepository.findByNickname(gameRequestDto.getNickname());
-		List<Matching> matchings = matchingRepository.findAllByMatchingNumber(me.getMatching().getMatchingNumber());
-		
 		Boolean gameType = gameRequestDto.getGameType();
 		LocalDateTime gameDate = LocalDateTime.now();
 		Game game = new Game();
