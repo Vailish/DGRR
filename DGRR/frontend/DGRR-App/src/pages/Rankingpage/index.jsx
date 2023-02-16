@@ -28,7 +28,7 @@ const Rankingpage = () => {
       alert('로그인 후 이용해 주세요.')
       navigate('/')
     }
-  }, [])
+  }, [getCookie('token')])
 
   useEffect(() => {
     if (userNick) {
@@ -50,7 +50,7 @@ const Rankingpage = () => {
     }
   }, [userInfo])
 
-  const fetchData = async (nickname) => {
+  const fetchData = useCallback(async (nickname) => {
     const requestRankingsPage = await baseaxios.get(`/api/v1/data/ranking/page/${1}`)
     const rankingsData = requestRankingsPage.data.rankings
     const totalPageNumData = requestRankingsPage.data.pageNumber
@@ -89,7 +89,7 @@ const Rankingpage = () => {
     } catch (error) {
       console.log(error)
     }
-  }
+  })
 
   const onMoveNickPage = nickname => {
     navigate(`/${nickname}`)
@@ -188,4 +188,4 @@ const Rankingpage = () => {
   )
 }
 
-export default Rankingpage
+export default React.memo(Rankingpage)
