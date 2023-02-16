@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import baseaxios from '../../API/baseaxios'
 import Nav from '../../components/mainpage/Nav'
@@ -6,9 +6,10 @@ import PieChart from '../../components/mainpage/PieChart'
 import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
 import PointCharts from '../../components/mainpage/PointCharts'
-import { getCookie, removeCookie, setCookie } from '../../cookies/Cookies'
+import { getCookie } from '../../cookies/Cookies'
 
 const Mainpage = () => {
+  const [myNickname, setMyNickname] = useState("")
   const [userInfo, setUserInfo] = useState([])
   const [userImgUrl, setUserImgUrl] = useState([])
   const [pointsInfo, setpointsInfo] = useState({})
@@ -29,21 +30,22 @@ const Mainpage = () => {
       alert('로그인 후 이용해 주세요.')
       navigate('/')
     }
-    fetchData()
-    fetchMatchData()
+    fetchUserNick()
   }, [])
 
   useEffect(() => {
-    if (userInfo.points < 1000) {
-      setTier('Bronze')
-    } else if (1000 <= userInfo.points < 1100) {
-      setTier('Silver')
-    } else if (1100 <= userInfo.points < 1200) {
-      setTier('Gold')
-    } else if (1200 <= userInfo.points < 1300) {
-      setTier('Platinum')
-    } else {
-      setTier('Diamond')
+    if (userInfo.points) {
+      if (userInfo.points <= 999) {
+        setTier('Bronze')
+      } else if (1000 <= userInfo.points && userInfo.points <= 1099) {
+        setTier('Silver')
+      } else if (1100 <= userInfo.points && userInfo.points  <= 1199) {
+        setTier('Gold')
+      } else if (1200 <= userInfo.points && userInfo.points  <= 1299) {
+        setTier('Platinum')
+      } else {
+        setTier('Diamond')
+      }
     }
   }, [userInfo])
 
@@ -61,7 +63,8 @@ const Mainpage = () => {
   }, [winning])
   
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    console.log("fetchdata")
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
     const requestRankings = await baseaxios.get(`/api/v1/data/ranking/user/${nickName}`)
@@ -78,12 +81,24 @@ const Mainpage = () => {
     setRankingInfo(rankingData)
     setWinning(winningData)
     setUserImgUrl(userimgData)
-  }
+  }, [nickName])
 
   const fetchMatchData = async () => {
+    console.log("fetchdata")
     const requestGames = await baseaxios.get(`/api/v1/games/${seletedCategory}/${nickName}`)
     const gamesData = requestGames.data.games
     setGamesInfo(gamesData)
+  }
+
+  const fetchUserNick = async () => {
+    try {
+      const userNum = getCookie('identifier')
+      const requestNickname = await baseaxios.post('api/v1/identifier', { 'identifier': userNum })
+      const nickData = requestNickname.data
+      setMyNickname(nickData.nickname)
+    } catch (error) {
+      console.log('fetchUserNick', error)
+    }
   }
 
   const handleClick = selected => {
@@ -98,6 +113,10 @@ const Mainpage = () => {
 
   const onVisible = () => {
     setVisible(!visible)
+  }
+
+  const clickMoreButton = () => {
+    navigate('/ranking', {state : {nickname : myNickname}})
   }
 
   return (
@@ -166,7 +185,7 @@ const Mainpage = () => {
           <div className="MainBox UserRankingBox">
             <div className="UserRankingBoxTitle">
               <h2 className="BoxTitle">나의 랭킹</h2>
-              <span className="RankingNav" onClick={() => navigate('/ranking', {state : {nickname : userInfo.nickname}})}>
+              <span className="RankingNav" onClick={() => clickMoreButton()}>
                 more▶
               </span>
             </div>

@@ -13,7 +13,6 @@ const Rankingpage = () => {
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
   const [winning, setWinning] = useState({})
-  const [searchValue, setSearchValue] = useState('')
   const [rankData, setRankData] = useState([])
   const [pageNum, setPageNum] = useState(1)
   const [tier, setTier] = useState("Bronze")
@@ -37,16 +36,18 @@ const Rankingpage = () => {
   }, [userNick])
   
   useEffect(() => {
-    if (userInfo.points < 1000) {
-      setTier('Bronze')
-    } else if (1000 <= userInfo.points < 1100) {
-      setTier('Silver')
-    } else if (1100 <= userInfo.points < 1200) {
-      setTier('Gold')
-    } else if (1200 <= userInfo.points < 1300) {
-      setTier('Platinum')
-    } else {
-      setTier('Diamond')
+    if (userInfo.points) {
+      if (userInfo.points <= 999) {
+        setTier('Bronze')
+      } else if (1000 <= userInfo.points && userInfo.points <= 1099) {
+        setTier('Silver')
+      } else if (1100 <= userInfo.points && userInfo.points  <= 1199) {
+        setTier('Gold')
+      } else if (1200 <= userInfo.points && userInfo.points  <= 1299) {
+        setTier('Platinum')
+      } else {
+        setTier('Diamond')
+      }
     }
   }, [userInfo])
 
