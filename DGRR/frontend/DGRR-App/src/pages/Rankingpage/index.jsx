@@ -13,7 +13,6 @@ const Rankingpage = () => {
   const [rankingInfo, setRankingInfo] = useState([])
   const [myRanking, setMyRanking] = useState('')
   const [winning, setWinning] = useState({})
-  const [searchValue, setSearchValue] = useState('')
   const [rankData, setRankData] = useState([])
   const [pageNum, setPageNum] = useState(1)
   const [tier, setTier] = useState("Bronze")
@@ -37,16 +36,18 @@ const Rankingpage = () => {
   }, [userNick])
   
   useEffect(() => {
-    if (userInfo.points < 1000) {
-      setTier('Bronze')
-    } else if (1000 <= userInfo.points < 1100) {
-      setTier('Silver')
-    } else if (1100 <= userInfo.points < 1200) {
-      setTier('Gold')
-    } else if (1200 <= userInfo.points < 1300) {
-      setTier('Platinum')
-    } else {
-      setTier('Diamond')
+    if (userInfo.points) {
+      if (userInfo.points <= 999) {
+        setTier('Bronze')
+      } else if (1000 <= userInfo.points && userInfo.points <= 1099) {
+        setTier('Silver')
+      } else if (1100 <= userInfo.points && userInfo.points  <= 1199) {
+        setTier('Gold')
+      } else if (1200 <= userInfo.points && userInfo.points  <= 1299) {
+        setTier('Platinum')
+      } else {
+        setTier('Diamond')
+      }
     }
   }, [userInfo])
 
@@ -89,7 +90,7 @@ const Rankingpage = () => {
     } catch (error) {
       console.log(error)
     }
-  })
+  },[userNick])
 
   const onMoveNickPage = nickname => {
     navigate(`/${nickname}`)
@@ -109,16 +110,16 @@ const Rankingpage = () => {
 
   const pageMove = page => {
     reqPageNation(page)
+    setPageNum(page)
   }
 
   return (
     <div className="PageBase">
-      <Nav username={userInfo.username}/>
+      <Nav/>
       <div className="ProfileBox">
         <div className="ProfileLeftBox">
           <div>
             <h2 className="UserNickName">{userInfo.nickname}</h2>
-            <p className="UserText">좋아요 댓글 구독 알람설정까지~!!</p>
           </div>
           <img src={userImgUrl} alt="ProfileImage" className="ProfileImg" />
         </div>
@@ -174,10 +175,10 @@ const Rankingpage = () => {
       </table>
 
       <div className='pageNation'>
-        {totalPageNum.map((pageNum, index) => {
+        {totalPageNum.map((data, index) => {
           return (
             <span index={index} key={index}>
-              <button type="button" onClick={() => pageMove(index + 1)}>
+              <button className={`PageButton ${data === pageNum ? "ActivePageButton" : undefined}`} type="button" onClick={() => pageMove(index + 1)}>
                 {index + 1}
               </button>{' '}
             </span>

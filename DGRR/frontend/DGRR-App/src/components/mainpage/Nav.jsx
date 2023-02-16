@@ -14,6 +14,7 @@ const Nav = () => {
   const handleClick = () => {
     fetchUserNick()
     navigate(`/${userNick}`)
+    window.scrollTo(0, 0);
   };
 
   const logout = () => {
@@ -26,6 +27,7 @@ const Nav = () => {
   const toMain = () => {
     fetchUserNick()
     navigate(`/${userNick}`)
+    window.scrollTo(0, 0);
   }
 
   const fetchUserNick = async () => {
