@@ -90,7 +90,7 @@ const Rankingpage = () => {
     } catch (error) {
       console.log(error)
     }
-  })
+  },[userNick])
 
   const onMoveNickPage = nickname => {
     navigate(`/${nickname}`)
@@ -110,6 +110,7 @@ const Rankingpage = () => {
 
   const pageMove = page => {
     reqPageNation(page)
+    setPageNum(page)
   }
 
   return (
@@ -119,7 +120,6 @@ const Rankingpage = () => {
         <div className="ProfileLeftBox">
           <div>
             <h2 className="UserNickName">{userInfo.nickname}</h2>
-            <p className="UserText">좋아요 댓글 구독 알람설정까지~!!</p>
           </div>
           <img src={userImgUrl} alt="ProfileImage" className="ProfileImg" />
         </div>
@@ -175,10 +175,10 @@ const Rankingpage = () => {
       </table>
 
       <div className='pageNation'>
-        {totalPageNum.map((pageNum, index) => {
+        {totalPageNum.map((data, index) => {
           return (
             <span index={index} key={index}>
-              <button type="button" onClick={() => pageMove(index + 1)}>
+              <button className={`PageButton ${data === pageNum ? "ActivePageButton" : undefined}`} type="button" onClick={() => pageMove(index + 1)}>
                 {index + 1}
               </button>{' '}
             </span>

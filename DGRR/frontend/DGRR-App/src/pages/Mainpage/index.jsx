@@ -7,6 +7,7 @@ import Record from '../../components/mainpage/Record'
 import '../../scss/MianPage.scss'
 import PointCharts from '../../components/mainpage/PointCharts'
 import { getCookie } from '../../cookies/Cookies'
+import { useLocation } from "react-router-dom";
 
 const Mainpage = () => {
   const [myNickname, setMyNickname] = useState("")
@@ -18,9 +19,10 @@ const Mainpage = () => {
   const [seletedCategory, setSeletedCategory] = useState('all')
   const [gamesInfo, setGamesInfo] = useState([])
   const [winning, setWinning] = useState({})
-  const { nickName } = useParams()
   const [visible, setVisible] = useState(false)
   const [tier, setTier] = useState("Bronze")
+  const { nickName } = useParams()
+  const { pathName } = useLocation();
   const winningBar = useRef();
   const navigate = useNavigate()
 
@@ -31,7 +33,12 @@ const Mainpage = () => {
       navigate('/')
     }
     fetchUserNick()
-  }, [])
+  }, []) 
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathName])
+  
 
   useEffect(() => {
     if (userInfo.points) {
@@ -64,7 +71,6 @@ const Mainpage = () => {
   
 
   const fetchData = useCallback(async () => {
-    console.log("fetchdata")
     const requestUser = await baseaxios.get(`/api/v1/user/${nickName}`)
     const requestPoints = await baseaxios.get(`/api/v1/data/points/${nickName}`)
     const requestRankings = await baseaxios.get(`/api/v1/data/ranking/user/${nickName}`)
@@ -84,7 +90,6 @@ const Mainpage = () => {
   }, [nickName])
 
   const fetchMatchData = async () => {
-    console.log("fetchdata")
     const requestGames = await baseaxios.get(`/api/v1/games/${seletedCategory}/${nickName}`)
     const gamesData = requestGames.data.games
     setGamesInfo(gamesData)
@@ -117,6 +122,11 @@ const Mainpage = () => {
 
   const clickMoreButton = () => {
     navigate('/ranking', {state : {nickname : myNickname}})
+  }
+
+  const clickRankingBar = (nick) => {
+    navigate(`/${nick}`)
+    window.scrollTo(0, 0);
   }
 
   return (
@@ -191,7 +201,10 @@ const Mainpage = () => {
             </div>
             {rankingInfo.map((data, index) => {
               return (
-                <div index={index} key={index} className={`RankingTextBox ${data.nickname === nickName && 'MyRankingTextBox'}`}>
+                <div index={index} key={index}
+                  className={`RankingTextBox ${data.nickname === nickName && 'MyRankingTextBox'}`}
+                  onClick={() => clickRankingBar(data.nickname)}
+                >
                   <span>{data.ranking}위</span> <span>{data.nickname}</span> <span>{data.point}pt</span>
                 </div>
               )
