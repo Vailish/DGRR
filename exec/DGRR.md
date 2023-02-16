@@ -2,7 +2,7 @@
 
 ## [백엔드 빌드 방법]
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5d391a1a-3d2c-43eb-bb35-bf5e34491ebe/Untitled.png)
+![Untitled](/img/1.png)
 
 STS에서 하단에 ‘Gradle Tasks’를 클릭하여 ‘build’를 누릅니다.
 
