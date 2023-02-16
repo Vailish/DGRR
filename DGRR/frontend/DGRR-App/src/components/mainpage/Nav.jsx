@@ -5,7 +5,7 @@ import baseaxios from '../../API/baseaxios'
 import ProfileModal from '../mainpage/ProfileModal'
 import '../../scss/MianPage.scss'
 
-const Nav = ({ username }) => {
+const Nav = () => {
   const navigate = useNavigate()
   const [userName, setUserName] = useState("")
   const [userNick, setUserNick] = useState("")
@@ -18,10 +18,13 @@ const Nav = ({ username }) => {
   const logout = () => {
     removeCookie('token')
     removeCookie('identifier')
+    alert("로그아웃 되었습니다.")
     navigate('/')
   }
 
   const toMain = () => {
+    fetchUserNick()
+    console.log(getCookie('identifier'))
     navigate(`/${userNick}`)
   }
 
@@ -30,20 +33,34 @@ const Nav = ({ username }) => {
     const requestNickname = await baseaxios.post('api/v1/identifier', { 'identifier': userNum })
     const nickData = requestNickname.data
     setUserNick(nickData.nickname)
-    setUserName(username)
+  }
+
+  const fetchUserName = async () => {
+    const requestUser = await baseaxios.get(`/api/v1/user/${userNick}`)
+    const userData = requestUser.data
+    setUserName(userData.username)
   }
 
   useEffect(() => {
     fetchUserNick()
+    fetchUserName()
   }, [])
+
+  useEffect(() => {
+    if (userNick) {
+      console.log("userNcik", userNick)
+      fetchUserName()
+    }
+  }, [userNick])
+  
 
   return (
     <nav className='Nav'>
       <p className='NavLogo' onClick={() => toMain(userNick)}>DG.RR</p>
       <div className='NavAvatar'>
-        <p onClick={() => handleClick()}>{userName}</p>
-        <p>|</p>
-        <p onClick={() => logout()}>로그아웃</p>
+        <div className='UserNameText' onClick={() => handleClick()}>{userName}</div>
+        <div className='DivideLine'>|</div>
+        <div className='LogoutText' onClick={() => logout()}>로그아웃</div>
       </div>
       {modalOpen && (
         <ProfileModal setModalOpen={setModalOpen} />

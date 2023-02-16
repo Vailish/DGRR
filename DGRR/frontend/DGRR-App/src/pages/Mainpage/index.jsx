@@ -26,6 +26,7 @@ const Mainpage = () => {
   useEffect(() => {
     if (getCookie('token')) {
     } else {
+      alert('로그인 후 이용해 주세요.')
       navigate('/')
     }
     fetchData()
@@ -48,8 +49,11 @@ const Mainpage = () => {
   useEffect(() => {
     fetchMatchData()
   }, [seletedCategory])
-  
 
+  useEffect(() => {
+    fetchData()
+  }, [nickName])
+  
   useEffect(() => {
     inputWinning()
   }, [winning])
