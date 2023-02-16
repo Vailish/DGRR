@@ -18,7 +18,7 @@ const MatchedWindow = React.memo(() => {
       }, 100)
       if (barLength >= 100) {
         clearInterval(loadingBar)
-        navigate('/KioskOnlineGame')
+        navigate('/KioskOnlineMatching')
       }
       return () => {
         clearInterval(loadingBar)
@@ -64,6 +64,7 @@ const KioskOnlineFind = () => {
   }, [timingMinute, timingSecond, flag])
 
   const whenMatched = () => {
+    console.log('잡힘')
     setisMatched(!isMatched)
     // goMatching()
   }
@@ -92,7 +93,7 @@ const KioskOnlineFind = () => {
   }
 
   return (
-    <div className="KioskBackground" onClick={whenMatched}>
+    <div className="KioskBackground">
       <KioskNavBlock />
       {isMatched ? <MatchedWindow /> : null}
       <div className="OnlineFindContentBlock">
