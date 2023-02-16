@@ -222,6 +222,7 @@
     margin-top: 16 / 1920 * 100vw;
 
     .RecordRateBar {
+      width: 19.9vw;
       display: flex;
       margin: 24/1920 * 100vw 40/1920 * 100vw 24/1920 * 100vw;
       justify-content: space-between;
@@ -377,14 +378,15 @@
           }
 
           .RoundRankingText {
-            width: 42px;
-            width: 42px;
+            width: 2.72vw;
+            font-size: 1.57vw;
             margin: 0px 12px 4px;
             line-height: 20px;
           }
 
           .ScoreTable {
-            width: 494px;
+
+            width: 32.15vw;
             height: 95%;
             margin-top: 4px;
             .FrameNumber {

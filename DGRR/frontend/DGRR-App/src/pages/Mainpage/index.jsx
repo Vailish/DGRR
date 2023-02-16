@@ -125,13 +125,13 @@ const Mainpage = () => {
   }
 
   const clickRankingBar = (nick) => {
-    navigate(`/${nick}`)
-    window.scrollTo(0, 0);
+    console.log('asdasdas')
+    window.location.href = `/${nick}`
   }
 
   return (
     <div className="PageBase">
-      <Nav username={userInfo.username} />
+      <Nav/>
       <div className="MainBox">
         <h2 className="UserNickName">{userInfo.nickname}</h2>
         

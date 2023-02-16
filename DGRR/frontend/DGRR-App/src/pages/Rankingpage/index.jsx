@@ -115,7 +115,7 @@ const Rankingpage = () => {
 
   return (
     <div className="PageBase">
-      <Nav username={userInfo.username}/>
+      <Nav/>
       <div className="ProfileBox">
         <div className="ProfileLeftBox">
           <div>
