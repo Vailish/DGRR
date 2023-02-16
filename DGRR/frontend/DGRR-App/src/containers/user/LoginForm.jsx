@@ -89,6 +89,7 @@ const LoginForm = () => {
         )
       }
     } catch (e) {
+      alert('존재하지 않거나 아이디와 패스워드가 일치하지 않습니다.')
       console.log(e)
     }
   }
