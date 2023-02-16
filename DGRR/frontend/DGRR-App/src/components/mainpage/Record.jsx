@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import baseaxios from '../../API/baseaxios'
 import ScoreTable from '../kiosk/offline/ScoreTable'
 
 const Record = ({ gameInfo }) => {
@@ -6,7 +7,7 @@ const Record = ({ gameInfo }) => {
     <div className="RecordBox">
       <div className="BaseRecordBox">
         <div className="LeftInfo">
-          <span>{gameInfo.gameDate} {gameInfo.gameType ? '랭킹전' : '친선전'}</span>
+          <span>{gameInfo.gameDate.substr(0, 10)} {gameInfo.gameType ? '랭킹전' : '친선전'}</span>
           <div className="MyScoreBoard">
             <div>
               <img className={`CrownImg ${gameInfo.rank !== 1 ? "Hidden": undefined }`} src={require('../../img/Crown.png')} alt="Crown.png" />
@@ -23,7 +24,7 @@ const Record = ({ gameInfo }) => {
           {(gameInfo.otherPlayers).map((data, index) => {
             return (
               <div index={index} key={index}>
-                <img src={require('../../img/profile.jpg')} alt="profileimg" className="ResultImg" /> <span>{data.rank}위</span>{' '}
+                <img src={data.profileImg} alt="profileimg" className="ResultImg" /> <span>{data.rank}위</span>{' '}
                 <span> {data.sumScore[data.sumScore.length - 1]}점</span>
               </div>
               )

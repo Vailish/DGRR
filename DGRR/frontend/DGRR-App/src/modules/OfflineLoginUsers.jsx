@@ -3,19 +3,21 @@ import { api } from '../API/api'
 const ADD_PLAYER = 'KioskOffline/ADD_PLAYER'
 const REMOVE_PLAYER = 'KioskOffline/REMOVE_PLAYER'
 const UPDATE_PLAYER = 'KioskOffline/UPDATE_PLAYER'
-const SEND_ALL_SCORE = 'KioskOffline/SEND_ALL_SCORE'
 const LOAD_PLAYERS = 'KioskOffline/LOAD_PLAYERS'
 const OFFLINE_GAME_BOARD_CHANGE = 'KioskOffline/OFFLINE_GAME_BOARD_CHANGE'
+const GAME_START = 'KioskOffline/GAME_START'
 
 // 액션 생성 함수
 
+export const gameStart = () => ({
+  type: GAME_START,
+})
 export const addPlayer = playerInfo => ({
   type: ADD_PLAYER,
   playerInfo,
 })
 export const removePlayer = player => ({ type: REMOVE_PLAYER, playerInfo: player })
 export const updatePlayer = () => ({ type: UPDATE_PLAYER, playerInfo: {} })
-export const sendAllScore = () => ({ type: SEND_ALL_SCORE, playerInfo: {} })
 export const loadPlayers = () => ({ type: LOAD_PLAYERS })
 export const offlineGameBoardChange = (playerNum, myFrame, orderNum, myValue) => ({
   type: OFFLINE_GAME_BOARD_CHANGE,
@@ -37,6 +39,12 @@ const initialState = {
 
 const OfflineLoginUsers = (state = initialState, action) => {
   switch (action.type) {
+    case GAME_START: {
+      const players = []
+      const gamingPlayers = {}
+      const isGameFinish = {}
+      return { ...state, players, gamingPlayers, isGameFinish }
+    }
     case ADD_PLAYER: {
       if (state.players.length === 4) {
         return state
@@ -48,28 +56,6 @@ const OfflineLoginUsers = (state = initialState, action) => {
     case REMOVE_PLAYER: {
       const players = state.players.filter(player => player !== action.playerInfo)
       return { ...state, players }
-    }
-    case SEND_ALL_SCORE: {
-      const nickname = state.players[0]
-      const gameType = false
-      const gameData = Object.values(state.gamingPlayers).map(player => {
-        const score = []
-        for (let num of player.gameBoard) {
-          if (num === 'X') {
-            score.push(10)
-          } else if (num === '/') {
-            score.push(10 - score[score.length - 1])
-          } else if (num === 'F' || num === '-' || num === '') {
-            score.push(0)
-          } else {
-            score.push(num)
-          }
-        }
-        return { nickname: player.playerInfo.nickname, score }
-      })
-      const myRequset = { nickname, gameType, gameData }
-      api.post('/api/v1/game', JSON.stringify(myRequset))
-      return state
     }
     case LOAD_PLAYERS: {
       const gamingPlayers = {}
@@ -96,9 +82,9 @@ const OfflineLoginUsers = (state = initialState, action) => {
       // 10을 입력하면 X로 변환, 첫번째 숫자에 따라 두번째 숫자의 크기 제한
       for (let index = 0; index < 18; index++) {
         if (index % 2) {
-          if (gameBoard[index] === 10) gameBoard[index] = 'X'
           if (gameBoard[index] === 'X') gameBoard[index] = ''
         } else if (!(index % 2)) {
+          if (gameBoard[index] === 10) gameBoard[index] = 'X'
           if (gameBoard[index] === 'X') {
             gameBoard[index + 1] = ''
           } else if (gameBoard[index] === '/') gameBoard[index] = ''

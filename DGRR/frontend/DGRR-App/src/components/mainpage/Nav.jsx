@@ -5,45 +5,70 @@ import baseaxios from '../../API/baseaxios'
 import ProfileModal from '../mainpage/ProfileModal'
 import '../../scss/MianPage.scss'
 
-const Nav = ({ username }) => {
+const Nav = () => {
   const navigate = useNavigate()
   const [userName, setUserName] = useState("")
   const [userNick, setUserNick] = useState("")
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleClick = () => {
-    setModalOpen(true);
+    fetchUserNick()
+    navigate(`/${userNick}`)
   };
 
   const logout = () => {
     removeCookie('token')
     removeCookie('identifier')
+    alert("로그아웃 되었습니다.")
     navigate('/')
   }
 
   const toMain = () => {
+    fetchUserNick()
     navigate(`/${userNick}`)
   }
 
   const fetchUserNick = async () => {
-    const userNum = getCookie('identifier')
-    const requestNickname = await baseaxios.post('api/v1/identifier', { 'identifier': userNum })
-    const nickData = requestNickname.data
-    setUserNick(nickData.nickname)
-    setUserName(username)
+    try {
+      const userNum = getCookie('identifier')
+      const requestNickname = await baseaxios.post('api/v1/identifier', { 'identifier': userNum })
+      const nickData = requestNickname.data
+      setUserNick(nickData.nickname)
+      
+    } catch (error) {
+      console.log('fetchUserNick', error)
+    }
+  }
+
+  const fetchUserName = async () => {
+    try {
+      const requestUser = await baseaxios.get(`/api/v1/user/${userNick}`)
+      const userData = requestUser.data
+      setUserName(userData.username)
+      
+    } catch (error) {
+      console.log('fetchUserName', error)
+    }
   }
 
   useEffect(() => {
     fetchUserNick()
   }, [])
 
+  useEffect(() => {
+    if (userNick) {
+      fetchUserName()
+    }
+  }, [userNick])
+  
+
   return (
     <nav className='Nav'>
       <p className='NavLogo' onClick={() => toMain(userNick)}>DG.RR</p>
       <div className='NavAvatar'>
-        <p onClick={() => handleClick()}>{userName}</p>
-        <p>|</p>
-        <p onClick={() => logout()}>로그아웃</p>
+        <div className='UserNameText' onClick={() => handleClick()}>{userName}</div>
+        <div className='DivideLine'>|</div>
+        <div className='LogoutText' onClick={() => logout()}>로그아웃</div>
       </div>
       {modalOpen && (
         <ProfileModal setModalOpen={setModalOpen} />

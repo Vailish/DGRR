@@ -18,6 +18,51 @@ const KioskOnlineGame = () => {
   const oppositeScoreArray = useSelector(state => state.OnlineLoginUser.oppositePlayer.gameBoard)
   const isGameFinish = useSelector(state => state.OnlineLoginUser.isGameFinish)
 
+  const makeAllScore = () => {
+    const nickname = player.nickname
+    const yourNickname = oppositePlayer.nickname
+    const gameType = true
+    const score = []
+    const yourScore = []
+    for (let num of scoreArray) {
+      if (num === 'X') {
+        score.push(10)
+      } else if (num === '/') {
+        score.push(10 - score[score.length - 1])
+      } else if (num === 'F' || num === '-' || num === '') {
+        score.push(0)
+      } else {
+        score.push(num)
+      }
+    }
+    for (let num of oppositeScoreArray) {
+      if (num === 'X') {
+        yourScore.push(10)
+      } else if (num === '/') {
+        yourScore.push(10 - yourScore[yourScore.length - 1])
+      } else if (num === 'F' || num === '-' || num === '') {
+        yourScore.push(0)
+      } else {
+        yourScore.push(num)
+      }
+    }
+    const gameData = [
+      { nickname, score },
+      { nickname: yourNickname, score: yourScore },
+    ]
+    const myRequset = { nickname, gameType, gameData }
+    sendAllScore(myRequset)
+  }
+
+  const sendAllScore = async myRequset => {
+    const url = '/api/v1/game'
+    const response = await api.post(url, JSON.stringify(myRequset))
+    if (response.data) {
+      alert('데이터 송신 성공', response.data)
+      navigate('/KioskOnlineResult', { state: { isWin } })
+    }
+  }
+
   const OnlineGamePlayerBlock = props => {
     const { playerNickname, playerProfile, playerColor } = props
     useLayoutEffect(() => {
@@ -40,7 +85,7 @@ const KioskOnlineGame = () => {
 
   const BothGameEnd = () => {
     const viewResult = () => {
-      navigate('/KioskOnlineResult', { state: { isWin } })
+      makeAllScore()
     }
     return (
       <div className="BothGameEndBlock">
@@ -101,7 +146,9 @@ const KioskOnlineGame = () => {
   const OnlineHelpMessageWindow = () => {
     return (
       <div className="OnlineHelpMessageWindow">
-        <div className="OnlineHelpMessageCircle">X</div>
+        <div className="OnlineHelpMessageCircle" onClick={helpMessage}>
+          X
+        </div>
         <div className="OnlineHelpCircleBlock">?</div>
         <div className="OnlineHelpMessageTitle"> 점수 입력 가이드</div>
         <div className="OnlineHelpMessageText">

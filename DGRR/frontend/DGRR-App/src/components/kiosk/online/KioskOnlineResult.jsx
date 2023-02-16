@@ -37,9 +37,6 @@ const ScoreUpDown = props => {
 const KioskOnlineResult = () => {
   const { state } = useLocation()
   const player = useSelector(state => state.OnlineLoginUser.player)
-  // const player = { point: 1100, nickname: '김볼링', ranking: '골드' }
-  // const isWin = true
-  // const state = { isWin }
   return (
     <div className="KioskBackground">
       <KioskNavBlock goFrontTo="/KioskOnlineLogin" />
@@ -51,7 +48,9 @@ const KioskOnlineResult = () => {
               <div className="OnlineRecordBlock">
                 <div className="OnlinePlayerName">{player.nickname}</div>
                 <div className="OnlineTierAndRecord">
-                  <img className="OnlineTier" src={src[`${player.tier}`]} alt={player.tier}></img>
+                  <div className="OnlineTier">
+                    <img className="OnlineTierImg" src={src[`${player.tier}`]} alt={player.tier} />
+                  </div>
                   <div className="OnlineRecord">
                     <ScoreUpDown point={player.point} isWin={state.isWin}></ScoreUpDown>
                     <div

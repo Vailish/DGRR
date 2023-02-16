@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../../../scss/KioskOnlineLogin.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -7,11 +7,17 @@ import { api } from '../../../API/api'
 import KioskNavBlock from '../KioskNavBlock'
 import KioskOnlineProfile from './KioskOnlineProfile'
 import QRImage from '../../../img/mLogin.png'
+import { onlineStartGame } from '../../../modules/OnlineLoginUser'
 
 const KioskOnlineLogin = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(onlineStartGame())
+  }, [])
+
   let pinNumber = undefined
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const player = useSelector(state => state.OnlineLoginUser.player)
   const nickname = player.nickname
   console.log(nickname)
@@ -57,7 +63,8 @@ const KioskOnlineLogin = () => {
       const response = await api.post(url, JSON.stringify({ nickname }))
       console.log(JSON.stringify({ nickname }))
       console.log(response.data)
-      if (response.data) navigate('/KioskOnlineFind')
+      // if (response.data)
+      navigate('/KioskOnlineFind')
     } else {
       alert('먼저 로그인을 해주세요')
     }
@@ -94,10 +101,8 @@ const KioskOnlineLogin = () => {
           </div>
         </div>
       </div>
-      <div className="OnlineGameStartBlock">
-        <div className="OnlineGameStartButton" onClick={() => reqJoin(nickname)}>
-          시작
-        </div>
+      <div className="OnlineGameStartBlock" onClick={() => reqJoin(nickname)}>
+        <div className="OnlineGameStartButton">시작</div>
       </div>
     </div>
   )
