@@ -184,7 +184,9 @@
 
 <br/>
 
-# 태블릿 환경
+# 주요기능
+
+## 태블릿 환경
 
 ## 경쟁전(1:1 화상채팅)
 
@@ -253,13 +255,13 @@
 - 그래프 등을 통해 본인 실력 변화를 시각적으로 보여준다.
 - 해당 서비스를 통해 진행한 게임의 전적을 카테고리별 조회가 가능하다.
 
-<img src="./DGRR/img/Mainpage(profile).gif">
+<img src="./DGRR/img/mainpage.gif">
 
 ## 유저 랭킹페이지
 - 본인의 티어, 랭킹, 포인트 등을 간략하게 볼 수 있다.
 - 해당 서비스를 사용하는 모든 유정의 랭킹 및 전적 정보를 확인할 수 있다.
 
-<img src="./DGRR/img/Mainpage(ranking).gif">
+<img src="./DGRR/img/rankingpage.gif">
 
 
 ## 메인페이지(상대전적확인)
