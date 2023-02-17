@@ -1,6 +1,6 @@
 ## [백엔드 빌드 방법]
 
-<img src="./img/1">
+<img src="./img/1.png">
 
 STS에서 하단에 ‘Gradle Tasks’를 클릭하여 ‘build’를 누릅니다.
 
