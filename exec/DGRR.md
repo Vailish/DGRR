@@ -1,6 +1,6 @@
 ## [백엔드 빌드 방법]
 
-![Untitled](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B102/-/blob/main/exec/img/1.png)
+![Untitled](./img/1.png)
 
 STS에서 하단에 ‘Gradle Tasks’를 클릭하여 ‘build’를 누릅니다.
 
